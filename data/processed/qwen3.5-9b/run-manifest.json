@@ -1,0 +1,194 @@
+{
+  "seed": 20260805,
+  "sampling": "with_replacement",
+  "warmup_runs": 5,
+  "formal_runs": 10,
+  "targets": [
+    2048,
+    8192,
+    16384,
+    28672
+  ],
+  "selections": [
+    {
+      "run": 1,
+      "phase": "warmup",
+      "pool_index": 16,
+      "source_id": "66f7c780bb02136c067c35e8",
+      "prompt_files": {
+        "2048": "prompts/2048/016-66f7c780bb02136c067c35e8.txt",
+        "8192": "prompts/8192/016-66f7c780bb02136c067c35e8.txt",
+        "16384": "prompts/16384/016-66f7c780bb02136c067c35e8.txt",
+        "28672": "prompts/28672/016-66f7c780bb02136c067c35e8.txt"
+      }
+    },
+    {
+      "run": 2,
+      "phase": "warmup",
+      "pool_index": 23,
+      "source_id": "670c090bbb02136c067d2404",
+      "prompt_files": {
+        "2048": "prompts/2048/023-670c090bbb02136c067d2404.txt",
+        "8192": "prompts/8192/023-670c090bbb02136c067d2404.txt",
+        "16384": "prompts/16384/023-670c090bbb02136c067d2404.txt",
+        "28672": "prompts/28672/023-670c090bbb02136c067d2404.txt"
+      }
+    },
+    {
+      "run": 3,
+      "phase": "warmup",
+      "pool_index": 28,
+      "source_id": "66eecc45821e116aacb225c3",
+      "prompt_files": {
+        "2048": "prompts/2048/028-66eecc45821e116aacb225c3.txt",
+        "8192": "prompts/8192/028-66eecc45821e116aacb225c3.txt",
+        "16384": "prompts/16384/028-66eecc45821e116aacb225c3.txt",
+        "28672": "prompts/28672/028-66eecc45821e116aacb225c3.txt"
+      }
+    },
+    {
+      "run": 4,
+      "phase": "warmup",
+      "pool_index": 4,
+      "source_id": "66fb8633bb02136c067c800b",
+      "prompt_files": {
+        "2048": "prompts/2048/004-66fb8633bb02136c067c800b.txt",
+        "8192": "prompts/8192/004-66fb8633bb02136c067c800b.txt",
+        "16384": "prompts/16384/004-66fb8633bb02136c067c800b.txt",
+        "28672": "prompts/28672/004-66fb8633bb02136c067c800b.txt"
+      }
+    },
+    {
+      "run": 5,
+      "phase": "warmup",
+      "pool_index": 26,
+      "source_id": "66f3ac0b821e116aacb2e203",
+      "prompt_files": {
+        "2048": "prompts/2048/026-66f3ac0b821e116aacb2e203.txt",
+        "8192": "prompts/8192/026-66f3ac0b821e116aacb2e203.txt",
+        "16384": "prompts/16384/026-66f3ac0b821e116aacb2e203.txt",
+        "28672": "prompts/28672/026-66f3ac0b821e116aacb2e203.txt"
+      }
+    },
+    {
+      "run": 6,
+      "phase": "formal",
+      "pool_index": 29,
+      "source_id": "6723a1ccbb02136c067d70b3",
+      "prompt_files": {
+        "2048": "prompts/2048/029-6723a1ccbb02136c067d70b3.txt",
+        "8192": "prompts/8192/029-6723a1ccbb02136c067d70b3.txt",
+        "16384": "prompts/16384/029-6723a1ccbb02136c067d70b3.txt",
+        "28672": "prompts/28672/029-6723a1ccbb02136c067d70b3.txt"
+      }
+    },
+    {
+      "run": 7,
+      "phase": "formal",
+      "pool_index": 23,
+      "source_id": "670c090bbb02136c067d2404",
+      "prompt_files": {
+        "2048": "prompts/2048/023-670c090bbb02136c067d2404.txt",
+        "8192": "prompts/8192/023-670c090bbb02136c067d2404.txt",
+        "16384": "prompts/16384/023-670c090bbb02136c067d2404.txt",
+        "28672": "prompts/28672/023-670c090bbb02136c067d2404.txt"
+      }
+    },
+    {
+      "run": 8,
+      "phase": "formal",
+      "pool_index": 5,
+      "source_id": "66ee981d821e116aacb22005",
+      "prompt_files": {
+        "2048": "prompts/2048/005-66ee981d821e116aacb22005.txt",
+        "8192": "prompts/8192/005-66ee981d821e116aacb22005.txt",
+        "16384": "prompts/16384/005-66ee981d821e116aacb22005.txt",
+        "28672": "prompts/28672/005-66ee981d821e116aacb22005.txt"
+      }
+    },
+    {
+      "run": 9,
+      "phase": "formal",
+      "pool_index": 17,
+      "source_id": "66ec332a821e116aacb1c042",
+      "prompt_files": {
+        "2048": "prompts/2048/017-66ec332a821e116aacb1c042.txt",
+        "8192": "prompts/8192/017-66ec332a821e116aacb1c042.txt",
+        "16384": "prompts/16384/017-66ec332a821e116aacb1c042.txt",
+        "28672": "prompts/28672/017-66ec332a821e116aacb1c042.txt"
+      }
+    },
+    {
+      "run": 10,
+      "phase": "formal",
+      "pool_index": 14,
+      "source_id": "66f2b5ec821e116aacb2b1ec",
+      "prompt_files": {
+        "2048": "prompts/2048/014-66f2b5ec821e116aacb2b1ec.txt",
+        "8192": "prompts/8192/014-66f2b5ec821e116aacb2b1ec.txt",
+        "16384": "prompts/16384/014-66f2b5ec821e116aacb2b1ec.txt",
+        "28672": "prompts/28672/014-66f2b5ec821e116aacb2b1ec.txt"
+      }
+    },
+    {
+      "run": 11,
+      "phase": "formal",
+      "pool_index": 24,
+      "source_id": "66f3df1e821e116aacb2f7be",
+      "prompt_files": {
+        "2048": "prompts/2048/024-66f3df1e821e116aacb2f7be.txt",
+        "8192": "prompts/8192/024-66f3df1e821e116aacb2f7be.txt",
+        "16384": "prompts/16384/024-66f3df1e821e116aacb2f7be.txt",
+        "28672": "prompts/28672/024-66f3df1e821e116aacb2f7be.txt"
+      }
+    },
+    {
+      "run": 12,
+      "phase": "formal",
+      "pool_index": 9,
+      "source_id": "67191791bb02136c067d406c",
+      "prompt_files": {
+        "2048": "prompts/2048/009-67191791bb02136c067d406c.txt",
+        "8192": "prompts/8192/009-67191791bb02136c067d406c.txt",
+        "16384": "prompts/16384/009-67191791bb02136c067d406c.txt",
+        "28672": "prompts/28672/009-67191791bb02136c067d406c.txt"
+      }
+    },
+    {
+      "run": 13,
+      "phase": "formal",
+      "pool_index": 22,
+      "source_id": "66f50109821e116aacb31f16",
+      "prompt_files": {
+        "2048": "prompts/2048/022-66f50109821e116aacb31f16.txt",
+        "8192": "prompts/8192/022-66f50109821e116aacb31f16.txt",
+        "16384": "prompts/16384/022-66f50109821e116aacb31f16.txt",
+        "28672": "prompts/28672/022-66f50109821e116aacb31f16.txt"
+      }
+    },
+    {
+      "run": 14,
+      "phase": "formal",
+      "pool_index": 27,
+      "source_id": "6719c1febb02136c067d44db",
+      "prompt_files": {
+        "2048": "prompts/2048/027-6719c1febb02136c067d44db.txt",
+        "8192": "prompts/8192/027-6719c1febb02136c067d44db.txt",
+        "16384": "prompts/16384/027-6719c1febb02136c067d44db.txt",
+        "28672": "prompts/28672/027-6719c1febb02136c067d44db.txt"
+      }
+    },
+    {
+      "run": 15,
+      "phase": "formal",
+      "pool_index": 5,
+      "source_id": "66ee981d821e116aacb22005",
+      "prompt_files": {
+        "2048": "prompts/2048/005-66ee981d821e116aacb22005.txt",
+        "8192": "prompts/8192/005-66ee981d821e116aacb22005.txt",
+        "16384": "prompts/16384/005-66ee981d821e116aacb22005.txt",
+        "28672": "prompts/28672/005-66ee981d821e116aacb22005.txt"
+      }
+    }
+  ]
+}

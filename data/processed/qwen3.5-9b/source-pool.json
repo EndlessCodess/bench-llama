@@ -1,0 +1,272 @@
+[
+  {
+    "pool_index": 0,
+    "source_id": "66ebd3ba5a08c7b9b35e0446",
+    "domain": "Code Repository Understanding",
+    "sub_domain": "Code repo QA",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "A"
+  },
+  {
+    "pool_index": 1,
+    "source_id": "6725dd39bb02136c067d861b",
+    "domain": "Long In-context Learning",
+    "sub_domain": "Many-shot learning",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "B"
+  },
+  {
+    "pool_index": 2,
+    "source_id": "67285f8ebb02136c067d905d",
+    "domain": "Long Structured Data Understanding",
+    "sub_domain": "Knowledge graph reasoning",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 3,
+    "source_id": "671b99e5bb02136c067d583d",
+    "domain": "Long-dialogue History Understanding",
+    "sub_domain": "Dialogue history QA",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 4,
+    "source_id": "66fb8633bb02136c067c800b",
+    "domain": "Multi-Document QA",
+    "sub_domain": "Multi-news",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "A"
+  },
+  {
+    "pool_index": 5,
+    "source_id": "66ee981d821e116aacb22005",
+    "domain": "Single-Document QA",
+    "sub_domain": "Financial",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 6,
+    "source_id": "66f51ab2821e116aacb325fb",
+    "domain": "Code Repository Understanding",
+    "sub_domain": "Code repo QA",
+    "difficulty": "hard",
+    "official_length": "long",
+    "answer": "C"
+  },
+  {
+    "pool_index": 7,
+    "source_id": "66f40501821e116aacb307e8",
+    "domain": "Long In-context Learning",
+    "sub_domain": "New language translation",
+    "difficulty": "easy",
+    "official_length": "long",
+    "answer": "B"
+  },
+  {
+    "pool_index": 8,
+    "source_id": "66f7f963bb02136c067c3be1",
+    "domain": "Long Structured Data Understanding",
+    "sub_domain": "Table QA",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 9,
+    "source_id": "67191791bb02136c067d406c",
+    "domain": "Long-dialogue History Understanding",
+    "sub_domain": "Dialogue history QA",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 10,
+    "source_id": "66f3fb15821e116aacb303dc",
+    "domain": "Multi-Document QA",
+    "sub_domain": "Financial",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "D"
+  },
+  {
+    "pool_index": 11,
+    "source_id": "66f920d8bb02136c067c4b81",
+    "domain": "Single-Document QA",
+    "sub_domain": "Literary",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 12,
+    "source_id": "6707f349bb02136c067d13b9",
+    "domain": "Code Repository Understanding",
+    "sub_domain": "Code repo QA",
+    "difficulty": "easy",
+    "official_length": "long",
+    "answer": "C"
+  },
+  {
+    "pool_index": 13,
+    "source_id": "66f2a80d821e116aacb2a760",
+    "domain": "Long In-context Learning",
+    "sub_domain": "New language translation",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "A"
+  },
+  {
+    "pool_index": 14,
+    "source_id": "66f2b5ec821e116aacb2b1ec",
+    "domain": "Long Structured Data Understanding",
+    "sub_domain": "Table QA",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 15,
+    "source_id": "67192e81bb02136c067d427f",
+    "domain": "Long-dialogue History Understanding",
+    "sub_domain": "Dialogue history QA",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "A"
+  },
+  {
+    "pool_index": 16,
+    "source_id": "66f7c780bb02136c067c35e8",
+    "domain": "Multi-Document QA",
+    "sub_domain": "Financial",
+    "difficulty": "hard",
+    "official_length": "long",
+    "answer": "C"
+  },
+  {
+    "pool_index": 17,
+    "source_id": "66ec332a821e116aacb1c042",
+    "domain": "Single-Document QA",
+    "sub_domain": "Academic",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "B"
+  },
+  {
+    "pool_index": 18,
+    "source_id": "66f40c5e821e116aacb30ad2",
+    "domain": "Code Repository Understanding",
+    "sub_domain": "Code repo QA",
+    "difficulty": "hard",
+    "official_length": "long",
+    "answer": "A"
+  },
+  {
+    "pool_index": 19,
+    "source_id": "66f19f04821e116aacb27bab",
+    "domain": "Long In-context Learning",
+    "sub_domain": "User guide QA",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "A"
+  },
+  {
+    "pool_index": 20,
+    "source_id": "66f7f382bb02136c067c3a6c",
+    "domain": "Long Structured Data Understanding",
+    "sub_domain": "Table QA",
+    "difficulty": "easy",
+    "official_length": "long",
+    "answer": "C"
+  },
+  {
+    "pool_index": 21,
+    "source_id": "671b2822bb02136c067d5020",
+    "domain": "Long-dialogue History Understanding",
+    "sub_domain": "Dialogue history QA",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "D"
+  },
+  {
+    "pool_index": 22,
+    "source_id": "66f50109821e116aacb31f16",
+    "domain": "Multi-Document QA",
+    "sub_domain": "Governmental",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "B"
+  },
+  {
+    "pool_index": 23,
+    "source_id": "670c090bbb02136c067d2404",
+    "domain": "Single-Document QA",
+    "sub_domain": "Detective",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "C"
+  },
+  {
+    "pool_index": 24,
+    "source_id": "66f3df1e821e116aacb2f7be",
+    "domain": "Code Repository Understanding",
+    "sub_domain": "Code repo QA",
+    "difficulty": "hard",
+    "official_length": "long",
+    "answer": "A"
+  },
+  {
+    "pool_index": 25,
+    "source_id": "67286533bb02136c067d919f",
+    "domain": "Long In-context Learning",
+    "sub_domain": "Many-shot learning",
+    "difficulty": "hard",
+    "official_length": "medium",
+    "answer": "D"
+  },
+  {
+    "pool_index": 26,
+    "source_id": "66f3ac0b821e116aacb2e203",
+    "domain": "Long Structured Data Understanding",
+    "sub_domain": "Table QA",
+    "difficulty": "hard",
+    "official_length": "long",
+    "answer": "D"
+  },
+  {
+    "pool_index": 27,
+    "source_id": "6719c1febb02136c067d44db",
+    "domain": "Long-dialogue History Understanding",
+    "sub_domain": "Dialogue history QA",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "D"
+  },
+  {
+    "pool_index": 28,
+    "source_id": "66eecc45821e116aacb225c3",
+    "domain": "Multi-Document QA",
+    "sub_domain": "Legal",
+    "difficulty": "hard",
+    "official_length": "short",
+    "answer": "C"
+  },
+  {
+    "pool_index": 29,
+    "source_id": "6723a1ccbb02136c067d70b3",
+    "domain": "Single-Document QA",
+    "sub_domain": "Event ordering",
+    "difficulty": "easy",
+    "official_length": "medium",
+    "answer": "D"
+  }
+]

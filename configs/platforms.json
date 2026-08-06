@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "cuda": {
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "{device_index}"
+      },
+      "backend_device": "CUDA0",
+      "memory_monitor": "nvml"
+    },
+    "cann": {
+      "environment": {
+        "ASCEND_RT_VISIBLE_DEVICES": "{device_index}"
+      },
+      "backend_device": "CANN0",
+      "memory_monitor": "none"
+    },
+    "metal": {
+      "environment": {},
+      "backend_device": "Metal",
+      "memory_monitor": "none"
+    },
+    "cpu": {
+      "environment": {},
+      "backend_device": "CPU",
+      "n_gpu_layers": 0,
+      "memory_monitor": "none"
+    }
+  }
+}

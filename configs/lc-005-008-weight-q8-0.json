@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "lc-005-008-weight-q8-0-v1",
+  "description": "Qwen3.5-9B Q8_0 weight quantization experiment",
+  "source_note": "Uses the confirmed 16K third length instead of the inconsistent 24K cell in v6.1.",
+  "experiment": {
+    "variable": "weight_quantization",
+    "value": "Q8_0",
+    "model_key": "q8_0"
+  },
+  "cases": [
+    {"id": "LC-005", "prompt_tokens": 2048, "output_tokens": 64},
+    {"id": "LC-006", "prompt_tokens": 8192, "output_tokens": 256},
+    {"id": "LC-007", "prompt_tokens": 16384, "output_tokens": 256},
+    {"id": "LC-008", "prompt_tokens": 28672, "output_tokens": 512}
+  ],
+  "runtime": {
+    "n_ctx": 262144,
+    "n_batch": 2048,
+    "n_ubatch": 512,
+    "n_gpu_layers": 99,
+    "parallel": 1,
+    "type_k": "f16",
+    "type_v": "f16",
+    "flash_attn": "auto",
+    "poll": 50,
+    "temperature": 0.0,
+    "seed": 42,
+    "ignore_eos": true,
+    "prefix_cache_hit_rate_pct": 0
+  }
+}

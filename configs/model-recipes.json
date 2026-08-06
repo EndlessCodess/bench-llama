@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "qwen3.5-9b-local-models-v1",
+  "source": {
+    "filename": "Qwen3.5-9B-BF16.gguf",
+    "size": 17920697312,
+    "sha256": "daebe40eeea7057c1cdf35ac56d13f507d8bf12171bbb7a6b6b0d3f05439159a"
+  },
+  "models": {
+    "f16": {
+      "filename": "Qwen3.5-9B-F16.gguf",
+      "size": 17920697312,
+      "sha256": "863a67e28486f4c3ad7a30c49614a398d5a07caf8d0067a018d0e5f0abf79f2d",
+      "conversion": "llama-quantize Qwen3.5-9B-BF16.gguf Qwen3.5-9B-F16.gguf F16 16"
+    },
+    "q8_0": {
+      "filename": "Qwen3.5-9B-Q8_0.gguf",
+      "size": 9527501792,
+      "sha256": "e09ce6a0a01199f869f914175a170391ccc91b47258a10eac56e085a0d396430",
+      "source_model": "f16",
+      "imatrix": null,
+      "conversion": "llama-quantize Qwen3.5-9B-F16.gguf Qwen3.5-9B-Q8_0.gguf Q8_0 16"
+    },
+    "q4_k_m": {
+      "filename": "Qwen3.5-9B-Q4_K_M.gguf",
+      "size": 5629109216,
+      "sha256": "922fa10334469760141429c6f325c683e1facf80696c41b5f673664afc47aa44",
+      "source_model": "f16",
+      "imatrix": null,
+      "conversion": "llama-quantize Qwen3.5-9B-F16.gguf Qwen3.5-9B-Q4_K_M.gguf Q4_K_M 16"
+    }
+  },
+  "notes": [
+    "No model-specific importance matrix was available for the current Q4_K_M conversion.",
+    "Keep the BF16 source model; converted files are separate outputs."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "name": "lc-005-028-v1",
+  "description": "Six one-variable experiment groups covering LC-005 through LC-028",
+  "jobs": [
+    {"id": "weight-q8-0", "config": "lc-005-008-weight-q8-0.json", "model_key": "q8_0"},
+    {"id": "weight-q4-k-m", "config": "lc-009-012-weight-q4-k-m.json", "model_key": "q4_k_m"},
+    {"id": "kv-q8-0", "config": "lc-013-016-kv-q8-0.json", "model_key": "f16"},
+    {"id": "kv-q4-0", "config": "lc-017-020-kv-q4-0.json", "model_key": "f16"},
+    {"id": "flash-attn-off", "config": "lc-021-024-flash-attn-off.json", "model_key": "f16"},
+    {"id": "poll-0", "config": "lc-025-028-poll-0.json", "model_key": "f16"}
+  ]
+}
