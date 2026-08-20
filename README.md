@@ -13,8 +13,31 @@ The current target platforms are:
 - Huawei Ascend CANN, including 310P and 910B
 - Apple Metal
 
-The benchmark uses `llama-cli` for formal end-to-end runs. The official
-`llama-bench` tool is retained only as an optional microbenchmark.
+## Methodology: single-turn requests on a persistent process
+
+The formal benchmark runs each case (5 warmup + 10 formal runs) inside **one
+`bench_run` process**: the model is loaded once, and every run is an
+independent **single-turn** request in the same `llama_context` with the KV
+cache cleared between runs (`llama_memory_clear`), so context never accumulates.
+This mirrors the request-based persistent-engine semantics of the SGLang/vLLM
+benchmarks:
+
+- **Warmup is meaningful**: model loading, CUDA context, and kernel
+  initialization happen exactly once per case; the warmup runs absorb these
+  one-time costs and the formal runs measure steady-state single-turn latency.
+- **Context never accumulates**: each run only occupies its own prompt's KV
+  cache, so all four input lengths (2K..28K) fit on a 32 GiB GPU, and the
+  per-run memory delta reflects one run's KV plus compute buffers.
+- **No `llama-cli`**: a small C++ tool (`bench_run.cpp`) calls `llama_decode`
+  directly and measures each run inside the process with `ggml_time_us` plus
+  `llama_synchronize` (CUDA is asynchronous), emitting one JSONL result event
+  per run on stdout.
+
+The chat template is applied inside `bench_run` through the same
+`common_chat_templates_apply` code path as `llama-server /apply-template`
+(including reasoning-template workarounds), so token counts match the prepared
+metadata exactly, and greedy sampling (`--temp 0` plus an EOG logit bias, i.e.
+`--ignore-eos`) keeps generation deterministic at the exact requested length.
 
 ## Status
 
@@ -24,7 +47,7 @@ Completed:
 - Implemented reproducible prompt preprocessing
 - Generated fixed 2K, 8K, 16K, and 28K prompt pools
 - Generated a fixed 5-run warmup and 10-run formal manifest
-- Implemented the formal `llama-cli` baseline runner
+- Implemented the `bench_run` C++ runner (single-turn, persistent process)
 - Added CUDA, CANN, Metal, and CPU device selection
 - Added per-run logs, memory monitoring, and unified summaries
 - Converted and verified F16, Q8_0, and Q4_K_M model variants
@@ -70,9 +93,12 @@ lengths. Platform-specific options are limited to backend and device selection.
 bench_test_llama/
 |-- README.md
 |-- README_ZH.md
-|-- bench_test.py
+|-- bench_run.cpp      <- C++ runner: one process runs the whole plan
+|-- CMakeLists.txt
+|-- bench_test.py      <- Python orchestrator (config, plan, monitoring, summary)
 |-- run_suite.py
 |-- prepare_dataset.py
+|-- build/             <- bench_run build output
 |-- configs/
 |   |-- fair-baseline.json
 |   `-- platforms.json
@@ -98,7 +124,7 @@ bench_test_llama/
 ```
 
 The `llama-bench-matrix.*` files are an earlier `llama-bench` prototype. They
-will not be used as the formal `llama-cli` runner.
+will not be used as the formal runner.
 
 Benchmark cases and hardware adaptation are both configuration-driven:
 
@@ -106,10 +132,31 @@ Benchmark cases and hardware adaptation are both configuration-driven:
 - `configs/platforms.json` defines visibility variables, llama.cpp device names,
   and memory monitoring methods.
 
-`bench_test.py` only handles the fixed run manifest, process execution, metric
-collection, and common result format. It does not hard-code an RTX 5090 or a
-physical device number. New backends should normally be added as profiles
-without changing the benchmark flow.
+`bench_test.py` only handles the fixed run manifest, plan generation, process
+execution, metric collection, and common result format. It does not hard-code
+an RTX 5090 or a physical device number. New backends should normally be added
+as profiles without changing the benchmark flow.
+
+## Build bench_run
+
+`bench_run` links against an existing llama.cpp build's shared libraries, so
+building llama.cpp itself is not required:
+
+```bash
+cd /path/to/bench_test_llama
+cmake -B build -DCMAKE_BUILD_TYPE=Release \
+  -DLLAMA_CPP_ROOT=/path/to/llama.cpp \
+  -DLLAMA_CPP_BUILD=/path/to/llama.cpp/build-cuda13
+cmake --build build -j
+```
+
+- `LLAMA_CPP_ROOT` is the llama.cpp source tree (for headers and `common/`).
+- `LLAMA_CPP_BUILD` is the build directory containing
+  `bin/{libllama,libllama-common,libggml,libggml-base}.so`; the executable
+  resolves them at runtime via `$ORIGIN` rpath. Point it at the CANN or Metal
+  build when running on those platforms.
+- `--version` prints the llama.cpp system info; a bare run with a 2-line
+  `plan.tsv` and `n_predict=8` is a quick smoke test.
 
 ## LC-001 through LC-028
 
@@ -124,11 +171,11 @@ on CUDA, CANN, and Metal.
 Validate all 28 cases without inference:
 
 ```bash
-./run_suite.py --llama-cli /path/to/llama-cli \
+./run_suite.py --bench-run /path/to/bench_run \
   --model f16=/path/to/Qwen3.5-9B-F16.gguf \
   --model q8_0=/path/to/Qwen3.5-9B-Q8_0.gguf \
   --model q4_k_m=/path/to/Qwen3.5-9B-Q4_K_M.gguf \
-  --platform cuda --device-index 6 --dry-run
+  --platform cuda --device-index 4 --dry-run
 ```
 
 Use `--smoke --continue-on-error` for one invocation of the first case in every group. Without
@@ -150,32 +197,29 @@ category at a time (repeatable or comma-separated, combined with `--job`):
 For example, run only the weight-quantization block:
 
 ```bash
-./run_suite.py --llama-cli /path/to/llama-cli \
+./run_suite.py --bench-run /path/to/bench_run \
   --model f16=/path/to/Qwen3.5-9B-F16.gguf \
   --model q8_0=/path/to/Qwen3.5-9B-Q8_0.gguf \
   --model q4_k_m=/path/to/Qwen3.5-9B-Q4_K_M.gguf \
-  --platform cuda --device-index 6 --group 1
+  --platform cuda --device-index 4 --group 1
 ```
 
 Without `--group` or `--job`, the whole suite runs.
 
-Physical limits in the accumulated-session mode on a 32 GiB single GPU: the
-15-turn session grows the context to 15x (input + output) tokens, so the 28K
-cases exceed `n_ctx` 262144 entirely, and the 8K/16K cases only fit with
-quantized weights or quantized KV caches. Only the 2K cases fit with the F16
-fair-baseline configuration. These cases are intentionally kept in the suite
-so the same definitions run on larger-memory devices.
-
-The exact Flash-Attention-off configuration does not fit the current RTX 5090:
-F16 weights, a 256K context, and batch 2048 require an additional compute
-buffer of approximately 8.54 GiB. The configuration is intentionally unchanged
-for execution on larger-memory devices; silently reducing the context or batch
-would invalidate the one-variable comparison.
+Because context never accumulates, every case fits on a 32 GiB single GPU even
+in the F16 fair-baseline configuration. The exact Flash-Attention-off
+configuration (LC-021..024) still needs more memory than the current RTX 5090
+provides: F16 weights, a 256K context, and batch 2048 require an additional
+compute buffer of approximately 8.54 GiB. The configuration is intentionally
+unchanged for execution on larger-memory devices; silently reducing the context
+or batch would invalidate the one-variable comparison.
 
 ## Requirements
 
 - Python 3.8 or newer
-- A local llama.cpp build containing `llama-server` and `llama-cli`
+- The llama.cpp source tree plus a build with shared libraries
+  (`libllama`, `libllama-common`, `libggml`, `libggml-base`) for `bench_run`,
+  and a build containing `llama-server` for dataset preprocessing
 - A Qwen3.5-9B GGUF model
 - No third-party Python packages are required for preprocessing
 
@@ -283,7 +327,7 @@ the BPE count by more than one token. Actual counts are always recorded in
 
 Important generated files:
 
-- `prompts/<target>/*.txt`: raw user prompts passed to `llama-cli -f`
+- `prompts/<target>/*.txt`: raw user prompts consumed by `bench_run`
 - `metadata.jsonl`: source, length, hash, and reference metadata per prompt
 - `source-pool.json`: the fixed balanced source pool
 - `run-manifest.json`: the fixed random run order shared by all targets
@@ -313,68 +357,73 @@ workbook's llama.cpp LC-003 cell. If 24576 is selected later, regenerate the
 prompt pool with `prepare_dataset.py --targets 2048,8192,24576,28672` and update
 the benchmark configuration; the runner does not need to change.
 
-First validate the inputs and inspect every command without starting inference:
+First validate the inputs and inspect every command (including the generated
+`plan.tsv`) without starting inference:
 
 ```bash
 cd /path/to/bench_test_llama
 
 ./bench_test.py \
-  --llama-cli /path/to/llama.cpp/build/bin/llama-cli \
+  --bench-run /path/to/bench_run \
   --model /path/to/Qwen3.5-9B-BF16.gguf \
   --platform cuda \
-  --device-index 6 \
+  --device-index 4 \
   --dry-run
 ```
 
-Remove `--dry-run` to execute all four cases. For CUDA, `--device-index 6`
-selects physical GPU 6. The runner sets `CUDA_VISIBLE_DEVICES=6`, so the device
+Remove `--dry-run` to execute all four cases. For CUDA, `--device-index 4`
+selects physical GPU 4. The runner sets `CUDA_VISIBLE_DEVICES=4`, so the device
 passed to llama.cpp is `CUDA0`.
 
 Run one case as a smoke test:
 
 ```bash
 ./bench_test.py \
-  --llama-cli /path/to/llama.cpp/build/bin/llama-cli \
+  --bench-run /path/to/bench_run \
   --model /path/to/Qwen3.5-9B-BF16.gguf \
   --platform cuda \
-  --device-index 6 \
+  --device-index 4 \
   --case LC-001 \
   --warmup-runs 0 \
   --formal-runs 1
 ```
 
-`LLAMA_CLI` and `LLAMA_MODEL` can be used instead of the corresponding path
-arguments. Each case runs as one `llama-cli` session: all 15 prompts (5 warmup
-+ 10 formal) are fed through stdin as consecutive chat turns in the same
-context window, so the KV cache persists across turns and only the first
-warmup turn pays model loading. The runner uses `--ignore-eos` to request an
-exact generation length and disables llama-cli's implicit warmup because the
-manifest already defines five explicit warmup runs. The stdin multiline
-protocol adds one trailing newline token to every prompt.
+`BENCH_RUN` and `LLAMA_MODEL` can be used instead of the corresponding path
+arguments. Each case runs as one `bench_run` process: the model is loaded once,
+and all 15 prompts (5 warmup + 10 formal) run sequentially as independent
+single-turn requests with the KV cache cleared between runs. `--parallel` must
+be 1. The plan file (`plan.tsv`) written under each case directory carries the
+prompt path, phase, manifest run, source ID, output length, and expected token
+count for every run.
 
-Each run creates `results/<timestamp>-llama-cli-<platform>-device<index>/` with:
+Each run creates `results/<timestamp>-bench-run-<platform>-device<index>/` with:
 
 - `manifest.json` for software, model, parameters, and the source run manifest
-- per-run stdout, stderr, and exact command files under each case directory
+- per-case `plan.tsv`, `session.command.txt`, `session.stdout.log`, and
+  `session.stderr.log`
 - `runs.jsonl` and `runs.csv` for individual measurements
 - `summary.json` and `summary.csv` aggregating successful formal runs only
 
-`prompt_tps_measured` and `generation_tps_measured` are parsed directly from
-llama-cli's per-turn timing lines. Per-turn wall time, RSS, and whole-device
-peak memory are externally measured. Fields ending in `_est`, including TTFT,
-TPOT, and ITL, are throughput-based estimates rather than true per-token
-instrumentation. CUDA memory is total physical-device usage, so both its
+`prompt_tps_measured`, `generation_tps_measured`, `prompt_eval_ms_measured`,
+`ttft_ms_measured` (prompt evaluation plus sampling — the first token is
+produced by the prefill forward pass itself, so no extra decode is included;
+this matches the serving-engine (vLLM/SGLang) definition of TTFT),
+`generation_eval_ms_measured`, and `e2e_ms_measured` are measured inside
+`bench_run` with `ggml_time_us` and `llama_synchronize`. `tpot_ms_measured` and
+`itl_ms_measured` are 1000 / `generation_tps_measured` (identical by definition
+for single-stream greedy generation). The per-run wall time, RSS, and
+whole-device peak memory are externally measured, and the memory window resets
+at every `run_start` event so the device-memory delta reflects one run's KV
+plus compute buffers. CUDA memory is total physical-device usage, so both its
 baseline and delta are recorded.
 
 `summary.csv` / `summary.json` report the five headline metrics with bilingual
 "Chinese/English" headers, one row per case: 首令牌延迟(ms)/TTFT(ms),
 每令牌时间(ms/token)/TPOT(ms/token), 令牌间延迟(ms/token)/ITL(ms/token),
 端到端耗时(s)/E2E(s), and 峰值显存(GB)/Peak Memory(GB). TTFT/TPOT/ITL are
-means over the successful formal turns (TTFT = prompt evaluation time plus one
-output token; TPOT and ITL are both 1000 / generation_tps), E2E is the mean
-per-turn wall time between consecutive timing lines, and peak memory is the
-maximum sampled device usage. Full per-turn detail stays in `runs.jsonl` and
-`runs.csv`.
+means over the successful formal runs, E2E is the mean `e2e_ms_measured`
+(converted to seconds), and peak memory is the maximum sampled device usage.
+Full per-turn detail stays in `runs.jsonl` and `runs.csv`.
 
 Run `./bench_test.py --help` for all options or `./bench_test.py --list-cases`
 for the four fixed cases.
@@ -387,16 +436,16 @@ selection change:
 
 ```bash
 # NVIDIA CUDA
-./bench_test.py --platform cuda --device-index 6 \
-  --llama-cli /path/to/cuda/llama-cli --model /path/to/model.gguf
+./bench_test.py --platform cuda --device-index 4 \
+  --bench-run /path/to/cuda/bench_run --model /path/to/model.gguf
 
 # Ascend CANN
 ./bench_test.py --platform cann --device-index 0 \
-  --llama-cli /path/to/cann/llama-cli --model /path/to/model.gguf
+  --bench-run /path/to/cann/bench_run --model /path/to/model.gguf
 
 # Apple Metal
 ./bench_test.py --platform metal \
-  --llama-cli /path/to/metal/llama-cli --model /path/to/model.gguf
+  --bench-run /path/to/metal/bench_run --model /path/to/model.gguf
 ```
 
 The built-in profiles map CUDA to `CUDA_VISIBLE_DEVICES` plus `CUDA0`, CANN to
@@ -412,7 +461,7 @@ machines.
 - Do not randomly sample again for each platform.
 - Reuse the committed or archived `run-manifest.json` on every platform.
 - Record the llama.cpp revision, build options, model checksum, and device name.
-- Keep raw `llama-cli` stdout, stderr, and the exact command for every run.
+- Keep raw `bench_run` stdout, stderr, and the exact command for every run.
 - Treat warmup runs separately and aggregate only the 10 formal runs.
 - Report measured and derived metrics with different field names.
 - Do not report old mock data as a formal benchmark result.

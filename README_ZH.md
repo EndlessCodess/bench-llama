@@ -10,7 +10,15 @@
 - 华为昇腾 CANN，包括 310P 和 910B
 - Apple Metal
 
-正式端到端测试使用 `llama-cli`。官方 `llama-bench` 仅作为可选的算子与吞吐微基准工具，不作为正式测试入口。
+## 方法学：常驻进程上的单轮对话
+
+正式基准中每个用例（5 次预热 + 10 次正式）都在**同一个 `bench_run` 进程**内执行：模型只加载一次，每次运行都是同一个 `llama_context` 中**相互独立的单轮请求**，每轮之间清空 KV 缓存（`llama_memory_clear`），上下文永不累积。这与 SGLang/vLLM 请求式常驻引擎基准的语义对齐：
+
+- **warm 有意义**：模型加载、CUDA 上下文与 kernel 初始化每用例只发生一次，由预热轮吸收；正式轮测的是稳态单轮延迟。
+- **上下文不累积**：每轮只占用自己 prompt 的 KV，因此 2K~28K 四档输入在 32 GiB 单卡上都能跑，且每轮显存增量只反映单轮 KV 加计算缓冲。
+- **不再使用 `llama-cli`**：由小 C++ 工具（`bench_run.cpp`）直接调用 `llama_decode`，进程内用 `ggml_time_us` + `llama_synchronize`（CUDA 异步必须）逐轮计时，stdout 输出 JSONL 事件流。
+
+chat template 在 `bench_run` 内部走与 `llama-server /apply-template` 相同的 `common_chat_templates_apply` 代码路径（含推理模板 workaround），token 数与预处理 metadata 完全一致；贪心采样（`--temp 0` + EOG logit bias，即 `--ignore-eos`）保证按指定长度确定性生成。
 
 ## 当前状态
 
@@ -20,7 +28,7 @@
 - 实现可复现的数据预处理脚本
 - 生成固定的 2K、8K、16K 和 28K prompt 池
 - 生成固定的 5 次预热和 10 次正式测试运行清单
-- 实现基于 `llama-cli` 的正式基线脚本（单进程会话模式：同一上下文窗口累积 15 轮，KV 缓存跨轮驻留复用）
+- 实现 `bench_run` C++ 执行工具（单轮 + 常驻进程）
 - 实现 CUDA、CANN、Metal 和 CPU 的设备选择
 - 实现逐次日志、内存监控和统一结果汇总
 - 输出双语（中文/英文）五指标汇总表：TTFT、TPOT、ITL、E2E、峰值显存
@@ -65,9 +73,12 @@
 bench_test_llama/
 |-- README.md
 |-- README_ZH.md
-|-- bench_test.py
+|-- bench_run.cpp      <- C++ 执行工具：单进程跑完整个计划
+|-- CMakeLists.txt
+|-- bench_test.py      <- Python 编排层（配置、plan、监控、汇总）
 |-- run_suite.py
 |-- prepare_dataset.py
+|-- build/             <- bench_run 构建产物
 |-- configs/
 |   |-- fair-baseline.json
 |   |-- lc-001-028-suite.json
@@ -101,19 +112,35 @@ bench_test_llama/
 `-- llama-bench-matrix.md
 ```
 
-`llama-bench-matrix.*` 是早期基于 `llama-bench` 的原型，不会作为正式 `llama-cli` 测试脚本使用。
+`llama-bench-matrix.*` 是早期基于 `llama-bench` 的原型，不会作为正式测试入口。
 
 测试场景与硬件适配均位于配置文件中：
 
 - `configs/fair-baseline.json`：用例、输入输出长度和公平基线公共参数
 - `configs/platforms.json`：设备可见性环境变量、llama.cpp 后端设备名和显存监控方式
 
-`bench_test.py` 本身负责读取固定清单、启动 `llama-cli`、采集指标和输出统一结果，不写死某张 RTX 5090 或某个物理卡号。增加新的后端时优先增加平台 profile，不修改测试主流程。
+`bench_test.py` 本身负责读取固定清单、生成 plan、启动 `bench_run`、采集指标和输出统一结果，不写死某张 RTX 5090 或某个物理卡号。增加新的后端时优先增加平台 profile，不修改测试主流程。
+
+## 构建 bench_run
+
+`bench_run` 链接现有 llama.cpp 构建的共享库，无需重新构建 llama.cpp：
+
+```bash
+cd /path/to/bench_test_llama
+cmake -B build -DCMAKE_BUILD_TYPE=Release \
+  -DLLAMA_CPP_ROOT=/path/to/llama.cpp \
+  -DLLAMA_CPP_BUILD=/path/to/llama.cpp/build-cuda13
+cmake --build build -j
+```
+
+- `LLAMA_CPP_ROOT`：llama.cpp 源码树（头文件与 `common/`）。
+- `LLAMA_CPP_BUILD`：包含 `bin/{libllama,libllama-common,libggml,libggml-base}.so` 的构建目录；可执行文件通过 `$ORIGIN` rpath 在运行时解析。CANN / Metal 平台把该变量指向对应的构建目录即可。
+- `--version` 打印 llama.cpp 系统信息；用手写两行 `plan.tsv`（`n_predict=8`）裸跑一次是快速冒烟方式。
 
 ## 环境要求
 
 - Python 3.8 或更高版本
-- 本地 llama.cpp 构建，且包含 `llama-server` 和 `llama-cli`
+- llama.cpp 源码树及其带共享库的构建（`libllama`、`libllama-common`、`libggml`、`libggml-base`）用于 `bench_run`；数据预处理还需要含 `llama-server` 的构建
 - Qwen3.5-9B GGUF 模型
 - 数据预处理不依赖第三方 Python 包
 
@@ -171,11 +198,11 @@ MODEL=/path/to/Qwen3.5-9B-BF16.gguf
 
 ```text
 目标长度       = 2048,8192,16384,28672
-来源池大小     = 30 条
+来源池大小     = 50 条
 随机种子       = 20260805
-预热次数       = 5
-正式测试次数   = 10
-抽样方式       = 有放回抽样
+预热次数       = 5（固定跑池内前 5 条，顺序固定）
+正式测试次数   = 100（50 条池顺序循环 2 遍，每条恰好测 2 次）
+抽样方式       = 无随机（warmup 固定顺序，formal 顺序循环）
 ```
 
 运行 `./prepare_dataset.py --help` 可以查看全部选项。
@@ -211,7 +238,7 @@ MODEL=/path/to/Qwen3.5-9B-BF16.gguf
 
 重要生成文件：
 
-- `prompts/<target>/*.txt`：通过 stdin 按会话轮次输入模型的原始用户 prompt
+- `prompts/<target>/*.txt`：由 `bench_run` 读取的原始用户 prompt
 - `metadata.jsonl`：每条 prompt 的来源、长度、哈希与标准答案信息
 - `source-pool.json`：固定且领域均衡的来源池
 - `run-manifest.json`：所有长度和平台共用的固定随机运行顺序
@@ -234,29 +261,29 @@ LC-004 = 28672 输入 / 512 输出
 
 因此当前方案是“我们确认的 16K 公平基线”，并非与表格中 llama.cpp 的 `LC-003=24576` 单元格逐字一致。若最终决定按 24576 执行，需要用 `prepare_dataset.py --targets 2048,8192,24576,28672` 重新生成对应 prompt 池，并修改基准配置，runner 本身无需修改。
 
-先用 dry-run 校验数据、模型路径和最终命令。该操作不会启动推理：
+先用 dry-run 校验数据、模型路径和最终命令（含生成的 `plan.tsv`）。该操作不会启动推理：
 
 ```bash
 cd /path/to/bench_test_llama
 
 ./bench_test.py \
-  --llama-cli /path/to/llama.cpp/build/bin/llama-cli \
+  --bench-run /path/to/bench_run \
   --model /path/to/Qwen3.5-9B-BF16.gguf \
   --platform cuda \
-  --device-index 6 \
+  --device-index 4 \
   --dry-run
 ```
 
-确认后删除 `--dry-run` 即可执行四组正式基线。CUDA 的 `--device-index 6` 指物理 6 号卡；脚本会设置 `CUDA_VISIBLE_DEVICES=6`，因此传给 llama.cpp 的设备名是 `CUDA0`。
+确认后删除 `--dry-run` 即可执行四组正式基线。CUDA 的 `--device-index 4` 指物理 4 号卡；脚本会设置 `CUDA_VISIBLE_DEVICES=4`，因此传给 llama.cpp 的设备名是 `CUDA0`。
 
 只运行一组或做一次冒烟测试：
 
 ```bash
 ./bench_test.py \
-  --llama-cli /path/to/llama.cpp/build/bin/llama-cli \
+  --bench-run /path/to/bench_run \
   --model /path/to/Qwen3.5-9B-BF16.gguf \
   --platform cuda \
-  --device-index 6 \
+  --device-index 4 \
   --case LC-001 \
   --warmup-runs 0 \
   --formal-runs 1
@@ -265,23 +292,23 @@ cd /path/to/bench_test_llama
 也可以通过环境变量指定两个主要路径：
 
 ```bash
-LLAMA_CLI=/path/to/llama-cli \
+BENCH_RUN=/path/to/bench_run \
 LLAMA_MODEL=/path/to/model.gguf \
-./bench_test.py --platform cuda --device-index 6
+./bench_test.py --platform cuda --device-index 4
 ```
 
-每个 case 只启动一个 `llama-cli` 进程，15 条 prompt（5 次预热 + 10 次正式）通过 stdin 作为同一上下文窗口中的连续对话轮次输入，KV 缓存跨轮驻留复用，只有第一轮预热承担模型加载。默认启用 `--ignore-eos`，确保生成指定数量的 token；同时禁用 `llama-cli` 自带的隐藏 warmup，因为测试清单已经明确给出了 5 次预热。stdin 多行协议会给每条 prompt 追加一个换行 token（已记录在 manifest 的 `metric_notes` 中）。
+每个 case 只启动一个 `bench_run` 进程：模型只加载一次，105 条 prompt（5 次预热 + 100 次正式，50 条池按序循环 2 遍，每条恰好测 2 次）作为相互独立的单轮请求顺序执行，每轮之间清空 KV 缓存；`--parallel` 必须为 1。每个 case 目录下的 `plan.tsv` 保存全部运行信息：prompt 路径、阶段、清单轮次、来源 ID、输出长度与预期 token 数。
 
-结果保存在 `results/<时间>-llama-cli-<平台>-device<编号>/`：
+结果保存在 `results/<时间>-bench-run-<平台>-device<编号>/`：
 
 - `manifest.json`：模型校验值、软件版本、测试参数和固定运行清单
-- `LC-xxx/session.stdout.log`、`session.stderr.log`、`session.command.txt`：整个会话的原始记录，另有每轮的 `{phase}-{run:02d}.stdout.log` / `.stderr.log` 切片
+- `LC-xxx/plan.tsv`、`session.command.txt`、`session.stdout.log`、`session.stderr.log`：完整命令与原始记录
 - `runs.jsonl` 和 `runs.csv`：逐次结构化结果
 - `summary.json` 和 `summary.csv`：只聚合正式运行的结果
 
-`prompt_tps_measured` 和 `generation_tps_measured` 直接解析自 `llama-cli` 每轮打印的 timing 行；进程 wall time、RSS 和整卡显存峰值由脚本外部采集。`ttft_ms_est`、`tpot_ms_est`、`itl_ms_est` 等带 `_est` 的字段是根据吞吐推导的估算值，不是真正逐 token 打点得到的 TTFT 或 ITL。CUDA 显存值是物理卡的总占用，不是该进程独占值，因此同时记录了启动前基线和增量。
+`prompt_tps_measured`、`generation_tps_measured`、`prompt_eval_ms_measured`、`ttft_ms_measured`（prefill + 采样：首 token 由 prefill forward 直接产出、无额外 decode，与 vLLM/SGLang 的 serving 口径一致）、`generation_eval_ms_measured`、`e2e_ms_measured` 全部由 `bench_run` 进程内以 `ggml_time_us` + `llama_synchronize` 实测；`tpot_ms_measured` 与 `itl_ms_measured` 均为 1000 / `generation_tps_measured`（单流贪心生成下两者按定义相同）。进程 wall time、RSS 和整卡显存峰值由脚本外部采集，且显存窗口在每次 `run_start` 事件重置，因此每轮显存增量只反映该轮 KV 加计算缓冲。CUDA 显存值是物理卡的总占用，不是该进程独占值，因此同时记录了基线和增量。
 
-`summary.csv` / `summary.json` 输出五项核心指标，表头为双语“中文/英文”，每个 case 一行：首令牌延迟(ms)/TTFT(ms)、每令牌时间(ms/token)/TPOT(ms/token)、令牌间延迟(ms/token)/ITL(ms/token)、端到端耗时(s)/E2E(s)、峰值显存(GB)/Peak Memory(GB)。TTFT/TPOT/ITL 取正式轮次均值（TTFT = prompt 处理时间 + 一个输出 token；TPOT 与 ITL 均为 1000 / generation_tps），E2E 为相邻 timing 行之间的每轮实测墙钟时间均值，峰值显存取采样最大值。逐轮明细仍保留在 `runs.jsonl` 和 `runs.csv` 中。
+`summary.csv` / `summary.json` 输出五项核心指标，表头为双语“中文/英文”，每个 case 一行：首令牌延迟(ms)/TTFT(ms)、每令牌时间(ms/token)/TPOT(ms/token)、令牌间延迟(ms/token)/ITL(ms/token)、端到端耗时(s)/E2E(s)、峰值显存(GB)/Peak Memory(GB)。TTFT/TPOT/ITL 取正式轮次均值，E2E 为 `e2e_ms_measured` 均值（换算为秒），峰值显存取采样最大值。逐轮明细仍保留在 `runs.jsonl` 和 `runs.csv` 中。
 
 运行 `./bench_test.py --help` 查看完整参数，运行 `./bench_test.py --list-cases` 查看四个固定测试项。
 
@@ -318,22 +345,22 @@ MODEL_DIR=/path/to/Qwen3.5-9B-GGUF
 
 ```bash
 ./run_suite.py \
-  --llama-cli /path/to/llama-cli \
+  --bench-run /path/to/bench_run \
   --model f16=/path/to/Qwen3.5-9B-F16.gguf \
   --model q8_0=/path/to/Qwen3.5-9B-Q8_0.gguf \
   --model q4_k_m=/path/to/Qwen3.5-9B-Q4_K_M.gguf \
-  --platform cuda --device-index 6 --dry-run
+  --platform cuda --device-index 4 --dry-run
 ```
 
 每组只运行第一个 2K 场景一次：
 
 ```bash
 ./run_suite.py \
-  --llama-cli /path/to/llama-cli \
+  --bench-run /path/to/bench_run \
   --model f16=/path/to/Qwen3.5-9B-F16.gguf \
   --model q8_0=/path/to/Qwen3.5-9B-Q8_0.gguf \
   --model q4_k_m=/path/to/Qwen3.5-9B-Q4_K_M.gguf \
-  --platform cuda --device-index 6 --smoke --skip-model-hash \
+  --platform cuda --device-index 4 --smoke --skip-model-hash \
   --continue-on-error
 ```
 
@@ -353,37 +380,35 @@ v6.1 表格按测试类别分成五块，`--group` 可以一块一块跑（可�
 
 ```bash
 ./run_suite.py \
-  --llama-cli /path/to/llama-cli \
+  --bench-run /path/to/bench_run \
   --model f16=/path/to/Qwen3.5-9B-F16.gguf \
   --model q8_0=/path/to/Qwen3.5-9B-Q8_0.gguf \
   --model q4_k_m=/path/to/Qwen3.5-9B-Q4_K_M.gguf \
-  --platform cuda --device-index 6 --group 1
+  --platform cuda --device-index 4 --group 1
 ```
 
 不指定 `--group` 或 `--job` 时执行整份套件。
 
-会话累积模式在 32 GiB 单卡上有物理限制：15 轮会话结束时上下文累计到 15 倍（输入 + 输出），28K 档整体超过 `n_ctx` 262144 上限，8K/16K 档只有在量化权重或量化 KV 的组合下才放得下，F16 公平基线配置只能覆盖 2K 档。这些用例刻意保留在套件中，硬件达到要求（例如更大显存）即可原样执行。
-
-在当前 RTX 5090 上，严格的 LC-021 至 LC-024 配置会在初始化时显存不足：F16 权重、256K context、batch 2048 且关闭 Flash Attention 时，仅 prompt-processing 计算缓冲区还需约 8.54 GiB。配置仍保留原规范，方便在大显存设备上直接执行。不要静默降低 context/batch、关闭 KV offload 或换成 Q8 权重，否则结果不再属于同一单变量实验。
+由于上下文永不累积，F16 公平基线配置的全部用例在 32 GiB 单卡上都能跑。当前 RTX 5090 上仍无法执行严格的 LC-021 至 LC-024 配置：F16 权重、256K context、batch 2048 且关闭 Flash Attention 时，仅 prompt-processing 计算缓冲区还需约 8.54 GiB。配置仍保留原规范，方便在大显存设备上直接执行。不要静默降低 context/batch、关闭 KV offload 或换成 Q8 权重，否则结果不再属于同一单变量实验。
 
 套件结果目录包含 `suite-manifest.json` 和跨任务的 `summary.json/csv`；每个实验组的子目录仍保留 `bench_test.py` 生成的完整 manifest、命令、原始日志和逐次结果。
 
 ## 多平台运行
 
-所有平台复用同一份 `fair-baseline.json`、prompt 池和 `run-manifest.json`，只替换各平台自己的 `llama-cli`、模型路径与平台 profile：
+所有平台复用同一份 `fair-baseline.json`、prompt 池和 `run-manifest.json`，只替换各平台自己的 `bench_run`、模型路径与平台 profile：
 
 ```bash
 # NVIDIA CUDA
-./bench_test.py --platform cuda --device-index 6 \
-  --llama-cli /path/to/cuda/llama-cli --model /path/to/model.gguf
+./bench_test.py --platform cuda --device-index 4 \
+  --bench-run /path/to/cuda/bench_run --model /path/to/model.gguf
 
 # Ascend CANN
 ./bench_test.py --platform cann --device-index 0 \
-  --llama-cli /path/to/cann/llama-cli --model /path/to/model.gguf
+  --bench-run /path/to/cann/bench_run --model /path/to/model.gguf
 
 # Apple Metal
 ./bench_test.py --platform metal \
-  --llama-cli /path/to/metal/llama-cli --model /path/to/model.gguf
+  --bench-run /path/to/metal/bench_run --model /path/to/model.gguf
 ```
 
 内置 profile 的设备映射如下：
@@ -402,8 +427,8 @@ CUDA 默认通过 NVML 采集整卡显存。其他平台可以用 `--memory-comm
 - 不要在不同平台上重新随机抽样。
 - 所有平台必须复用同一份 `run-manifest.json`。
 - 记录 llama.cpp 版本、构建选项、模型校验值和设备名称。
-- 保存每次运行的完整 `llama-cli` 命令、stdout 和 stderr。
-- 预热结果与正式结果分开，只聚合 10 次正式测试。
+- 保存每次运行的完整 `bench_run` 命令、stdout 和 stderr。
+- 预热结果与正式结果分开，只聚合 100 次正式测试。
 - 实测指标和推导指标必须使用不同的字段名称。
 - 不要把旧 mock 数据当作正式测试结果。
 

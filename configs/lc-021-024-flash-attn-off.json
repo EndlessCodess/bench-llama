@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "name": "lc-021-024-flash-attn-off-v1",
-  "description": "Qwen3.5-9B F16 baseline with Flash Attention disabled",
-  "source_note": "Uses the confirmed 16K third length.",
+  "name": "lc-021-024-flash-attn-off-v2",
+  "description": "Qwen3.5-9B Q8_0 with Flash Attention disabled (FA-off previously OOM'd on F16/BF16: KQ score matrix ~8.6 GiB)",
+  "source_note": "Group: faoff-q8_0. Model Qwen3.5-9B-Q8_0.gguf (sha256 e09ce6a0...d396430). F16/BF16 FA-off OOM'd (needed >32 GiB); Q8_0 drops weights 18->8.9 GiB so the 4 cases fit.",
   "experiment": {
     "variable": "flash_attention",
     "value": "off",
-    "model_key": "f16"
+    "model_key": "q8_0"
   },
   "cases": [
     {"id": "LC-021", "prompt_tokens": 2048, "output_tokens": 64},

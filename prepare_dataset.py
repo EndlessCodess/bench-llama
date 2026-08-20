@@ -63,29 +63,36 @@ def parse_args():
     )
     parser.add_argument("--server-timeout", type=float, default=120.0)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--only-manifest",
+        action="store_true",
+        help="regenerate run-manifest.json only, reusing existing prompts/source-pool.json",
+    )
     return parser.parse_args()
 
 
 def validate_args(args):
-    if args.model is None:
-        raise ValueError("--model or LLAMA_MODEL is required")
-    if args.llama_server is None:
-        raise ValueError("--llama-server or LLAMA_SERVER is required")
+    if not args.only_manifest:
+        if args.model is None:
+            raise ValueError("--model or LLAMA_MODEL is required")
+        if args.llama_server is None:
+            raise ValueError("--llama-server or LLAMA_SERVER is required")
 
     args.dataset = args.dataset.resolve()
     args.output = args.output.resolve()
-    args.model = args.model.resolve()
-    args.llama_server = args.llama_server.resolve()
+    if not args.only_manifest:
+        args.model = args.model.resolve()
+        args.llama_server = args.llama_server.resolve()
 
-    for label, path in (
-        ("dataset", args.dataset),
-        ("model", args.model),
-        ("llama-server", args.llama_server),
-    ):
-        if not path.is_file():
-            raise ValueError("{} does not exist: {}".format(label, path))
-    if not os.access(args.llama_server, os.X_OK):
-        raise ValueError("llama-server is not executable: {}".format(args.llama_server))
+        for label, path in (
+            ("dataset", args.dataset),
+            ("model", args.model),
+            ("llama-server", args.llama_server),
+        ):
+            if not path.is_file():
+                raise ValueError("{} does not exist: {}".format(label, path))
+        if not os.access(args.llama_server, os.X_OK):
+            raise ValueError("llama-server is not executable: {}".format(args.llama_server))
 
     try:
         args.targets = tuple(sorted({int(value) for value in args.targets.split(",")}))
@@ -340,6 +347,63 @@ def write_json(path, value):
     )
 
 
+def write_run_manifest(output, source_pool, seed, warmup_runs, formal_runs, targets):
+    if warmup_runs > len(source_pool):
+        raise ValueError(
+            "warmup runs {} must not exceed pool size {} (warmup is fixed sequential over the first N pool items)".format(
+                warmup_runs, len(source_pool)
+            )
+        )
+    if formal_runs % len(source_pool) != 0:
+        raise ValueError(
+            "formal runs {} must be a multiple of pool size {} (formal phase cycles the pool sequentially)".format(
+                formal_runs, len(source_pool)
+            )
+        )
+    passes = formal_runs // len(source_pool)
+
+    run_count = warmup_runs + formal_runs
+    # warmup 固定跑池内前 warmup_runs 条（pool 0..warmup_runs-1，顺序固定，无随机）；
+    # formal 按池内顺序（0..pool_size-1）循环 passes 遍：每条样本恰好出现 passes 次，无随机
+    warmup_sequence = list(range(warmup_runs))
+    formal_sequence = [pool_index for _ in range(passes) for pool_index in range(len(source_pool))]
+    selections = []
+    for run_index in range(run_count):
+        if run_index < warmup_runs:
+            pool_index = warmup_sequence[run_index]
+        else:
+            pool_index = formal_sequence[run_index - warmup_runs]
+        item = source_pool[pool_index]
+        source_id = item.get("_id", item.get("source_id"))
+        selections.append(
+            {
+                "run": run_index + 1,
+                "phase": "warmup" if run_index < warmup_runs else "formal",
+                "pass": None if run_index < warmup_runs else (run_index - warmup_runs) // len(source_pool) + 1,
+                "pool_index": pool_index,
+                "source_id": source_id,
+                "prompt_files": {
+                    str(target): "prompts/{}/{:03d}-{}.txt".format(
+                        target, pool_index, source_id
+                    )
+                    for target in targets
+                },
+            }
+        )
+    write_json(
+        output / "run-manifest.json",
+        {
+            "seed": seed,
+            "sampling": {"warmup": "fixed_sequential", "formal": "cycle_sequential_{}x".format(passes)},
+            "warmup_runs": warmup_runs,
+            "formal_runs": formal_runs,
+            "passes": passes,
+            "targets": list(targets),
+            "selections": selections,
+        },
+    )
+
+
 def prepare(args):
     if args.output.exists():
         if not args.force:
@@ -420,36 +484,8 @@ def prepare(args):
         )
     write_json(args.output / "source-pool.json", source_records)
 
-    run_rng = random.Random(args.seed)
-    run_count = args.warmup_runs + args.formal_runs
-    selections = []
-    for run_index in range(run_count):
-        pool_index = run_rng.randrange(len(source_pool))
-        item = source_pool[pool_index]
-        selections.append(
-            {
-                "run": run_index + 1,
-                "phase": "warmup" if run_index < args.warmup_runs else "formal",
-                "pool_index": pool_index,
-                "source_id": item["_id"],
-                "prompt_files": {
-                    str(target): "prompts/{}/{:03d}-{}.txt".format(
-                        target, pool_index, item["_id"]
-                    )
-                    for target in args.targets
-                },
-            }
-        )
-    write_json(
-        args.output / "run-manifest.json",
-        {
-            "seed": args.seed,
-            "sampling": "with_replacement",
-            "warmup_runs": args.warmup_runs,
-            "formal_runs": args.formal_runs,
-            "targets": list(args.targets),
-            "selections": selections,
-        },
+    write_run_manifest(
+        args.output, source_pool, args.seed, args.warmup_runs, args.formal_runs, args.targets
     )
 
     write_json(
@@ -476,6 +512,22 @@ def prepare(args):
 def main():
     args = parse_args()
     validate_args(args)
+    if args.only_manifest:
+        source_pool_path = args.output / "source-pool.json"
+        if not args.output.is_dir() or not source_pool_path.is_file():
+            raise ValueError(
+                "--only-manifest requires an existing prepared output with source-pool.json: {}".format(
+                    args.output
+                )
+            )
+        with source_pool_path.open(encoding="utf-8") as handle:
+            source_pool = json.load(handle)
+        targets = tuple(sorted(int(path.name) for path in (args.output / "prompts").iterdir()))
+        write_run_manifest(
+            args.output, source_pool, args.seed, args.warmup_runs, args.formal_runs, targets
+        )
+        print("rewrote run-manifest.json: {}".format(args.output / "run-manifest.json"), flush=True)
+        return 0
     prepare(args)
     return 0
 

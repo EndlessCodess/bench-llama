@@ -17,3 +17,13 @@ results/
 
 # OS junk
 .DS_Store
+
+# Build artifacts
+build/
+
+# Obsolete run-version archives & old manifest snapshots (kept locally only)
+data/processed/qwen3.5-9b-5x10-archive/
+data/processed/qwen3.5-9b/run-manifest-v*-*.json
+
+# Suite run logs
+rounds*-run.log
