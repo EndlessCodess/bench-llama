@@ -1,0 +1,717 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+REVIEW ARTICLE
+OPEN
+Cell–cell communication: new insights and clinical
+implications
+Jimeng Su1,2,3, Ying Song1,2, Zhipeng Zhu1,2, Xinyue Huang4, Jibiao Fan3, Jie Qiao5,6,7,8✉and Fengbiao Mao1,2✉
+Multicellular organisms are composed of diverse cell types that must coordinate their behaviors through communication. Cell–cell
+communication (CCC) is essential for growth, development, differentiation, tissue and organ formation, maintenance, and
+physiological regulation. Cells communicate through direct contact or at a distance using ligand–receptor interactions. So cellular
+communication encompasses two essential processes: cell signal conduction for generation and intercellular transmission of
+signals, and cell signal transduction for reception and procession of signals. Deciphering intercellular communication networks is
+critical for understanding cell differentiation, development, and metabolism. First, we comprehensively review the historical
+milestones in CCC studies, followed by a detailed description of the mechanisms of signal molecule transmission and the
+importance of the main signaling pathways they mediate in maintaining biological functions. Then we systematically introduce a
+series of human diseases caused by abnormalities in cell communication and their progress in clinical applications. Finally, we
+summarize various methods for monitoring cell interactions, including cell imaging, proximity-based chemical labeling, mechanical
+force analysis, downstream analysis strategies, and single-cell technologies. These methods aim to illustrate how biological
+functions depend on these interactions and the complexity of their regulatory signaling pathways to regulate crucial physiological
+processes, including tissue homeostasis, cell development, and immune responses in diseases. In addition, this review enhances our
+understanding of the biological processes that occur after cell–cell binding, highlighting its application in discovering new
+therapeutic targets and biomarkers related to precision medicine. This collective understanding provides a foundation for
+developing new targeted drugs and personalized treatments.
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+INTRODUCTION
+The coordination of cellular activities, essential for multicellular
+existence, is contingent upon cell–cell interactions (CCIs) among a
+variety of cell types and tissues throughout an organism.1–3
+Cell–cell communication (CCC) is an essential process that
+profoundly inﬂuences an organism’s homeostasis, development,
+and disease processes.4 Typically, CCC involves interactions with
+secreted ligands and plasma membrane receptors, yet it also
+includes secretases, extracellular matrix proteins, transporters, and
+direct cell-to-cell contact mechanisms.5 Different cells employ
+different CCCs to ensure biological development, homeostasis,
+and tissue repair.
+Essentially, CCC is a fundamental characteristic of multicellular
+organisms.6 The dynamic communication network established
+between cells through collaboration plays a pivotal role in various
+biological
+processes.6–8
+This
+interaction
+is
+integral
+to
+the
+functioning of living organisms, inﬂuencing cellular metabolism,
+energy transformation, maintenance of physiological functions,
+regulation of growth, development, immune responses, single-cell
+functions, and other critical life processes.9 For example, during
+immune responses, CCCs enable immune cells to recognize and
+combat pathogens. In growth and development, CCCs regulate
+cell proliferation and differentiation, facilitating the normal
+development of organs and tissues. Diseases typically manifest
+when cells fail to interact correctly or misinterpret molecular
+information.5
+CCCs reﬂect the fundamental level of physiological commu-
+nication, triggering responses to internal or external environments
+essential for survival. When cells communicate with each other,
+extracellular signals typically induce intracellular signal transduc-
+tion cascades, leading to cellular responses such as changes in the
+cytoskeleton, metabolism, or gene expression.10 The regulation
+and feedback mechanisms at various levels of these transduction
+cascades modulate the pathway’s activity over time.11 Signal
+pathways are the basis of internal communication and response to
+the external environment in organisms. They are responsible for
+converting
+extracellular
+signals
+into
+intracellular
+responses,
+thereby regulating cell behavior and function. These pathways
+involve a series of precise molecular events, including the
+reception of signals, ampliﬁcation, distribution, and the triggering
+of speciﬁc cellular responses.12,13 Critical cellular determinations,
+such as cytoskeletal reorganization, cell cycle checkpoints, and
+Received: 29 December 2023 Revised: 9 May 2024 Accepted: 2 June 2024
+1Institute of Medical Innovation and Research, Peking University Third Hospital, Beijing, China; 2Cancer Center, Peking University Third Hospital, Beijing, China; 3College of Animal
+Science and Technology, Yangzhou University, Yangzhou, Jiangsu, China; 4Biomedical Research Institute, Shenzhen Peking University-the Hong Kong University of Science and
+Technology Medical Center, Shenzhen, China; 5State Key Laboratory of Female Fertility Promotion, Department of Obstetrics and Gynecology, Peking University Third Hospital,
+Beijing, China; 6National Clinical Research Center for Obstetrics and Gynecology (Peking University Third Hospital), Beijing, China; 7Key Laboratory of Assisted Reproduction
+(Peking University), Ministry of Education, Beijing, China and 8Beijing Key Laboratory of Reproductive Endocrinology and Assisted Reproductive Technology, Beijing, China
+Correspondence: Jie Qiao (jie.qiao@263.net) or Fengbiao Mao (fengbiaomao@bjmu.edu.cn)
+These authors contributed equally: Jimeng Su, Ying Song.
+www.nature.com/sigtrans
+Signal Transduction and Targeted Therapy
+
+
+
+programmed cell death, are contingent upon the stringent
+temporal regulation and the speciﬁc spatial distribution of
+activated signal transducers.14 Understanding how these path-
+ways are disrupted in diseases offers the possibility for developing
+new therapeutic approaches.15–17
+The complexity of CCC has been recognized as part of the
+molecular mechanisms of developmental biology, carcinogenesis,
+and organ dysfunction.18 Exploring CCC dynamic changes under
+different conditions provides deeper insights into the underlying
+mechanisms of diverse biological processes and helps elucidate
+the mechanisms behind the onset and progression of diseases.
+Over the decade, single-cell RNA sequencing has gained wide-
+spread use across multiple research ﬁelds to investigate the critical
+role of ligand–receptor dynamics in intercellular communication.19
+Technologies
+like
+single-cell
+RNA
+sequencing
+(scRNA-Seq)
+empower researchers to explore the intricate communication
+patterns between different cell types within multicellular organ-
+isms, offering fresh perspectives on cell communication mechan-
+isms, cell functions, and the organization of cell populations. The
+analysis of intercellular communication assists in understanding
+the interplay between cells, dissecting communication networks,
+uncovering various cell interactions in the developmental process,
+exploring the tumor immune microenvironment, and identifying
+potential therapeutic targets for diseases.20 Therefore, identifying
+and quantifying intercellular signaling pathways have become
+standard practices across diverse disciplines.
+Activating
+speciﬁc
+cell
+signaling
+pathways
+through
+ligand–receptor interactions (LRIs) constitutes a fundamental
+mode of cell communication and is intricately linked to various
+degenerative processes and diseases. Different cell types share
+common
+biological
+elements
+facilitating
+these
+interactions,
+encompassing ligands, surface receptors, adhesion proteins,
+intracellular adaptors, as well as glycans, lipids, cytoskeletons,
+and scaffolding proteins.21 Comprehending the orchestration of
+biophysical, genetic, and biochemical events in CCCs by these
+shared components across various cell types is crucial for
+developing clinical therapies based on proteins and cells that
+either modulate or utilize intercellular communication.22,23 The
+analysis of LRIs provides the foundation for comprehending cell
+behavior and responses to neighboring cells.24
+Historically, CCC research has primarily been conﬁned to
+experiments conducted in vitro involving one or two types of
+cells and a limited set of genes. With advancements in science and
+technology, data acquisition at the single-cell level enables the
+detection of low-abundance genes and provides a robust
+foundation for cell communication study. In recent years, multiple
+research efforts have concentrated on intercellular signaling by
+employing either the co-expression of all genes or particular cell
+markers,25,26 the resemblance in expression patterns.27 or the
+characteristics of regulatory networks.28 Understanding LRIs is an
+effective approach to understand cellular communication at the
+single-cell level, and a multitude of research endeavors are
+dedicated to formulating strategies to construct cellular commu-
+nication networks based on these interactions. Harnessing these
+technologies, many laboratories have developed various algo-
+rithms and softwares for cell communication research.
+The review comprehensively outlines the experimental and
+computational CCC methods rooted in chemistry and biology to
+decode the complexities of CCCs. It extensively examines how
+biological functions rely on CCCs to regulate crucial physiological
+process, including tissue homeostasis, cell development as well as
+immune responses.5,24 Furthermore, this review sheds light on the
+role of CCC mechanisms in regulating various diseases, which
+have not only expanded our understanding of CCC but also paved
+the way for innovative clinical treatments.
+RESEARCH HISTORY AND MILESTONE EVENTS OF CCC
+In multicellular organisms, cells have evolved different intercellular
+communication modes to develop and regulate their coordinated
+functions.29 At the macroscopic level, direct physical contacts
+between adjacent cells lead to the formation of tissues and barrier
+structures, while at the microscopic scale, they drive changes in
+cellular signaling pathways and activation states.24 Comprehend-
+ing how biological components synergize to orchestrate biochem-
+ical, genetic, and biophysically mediated cell interaction events
+among diverse cell types constitutes the essence of enhancing our
+understanding of the biology underlying CCCs (Fig. 1).
+Identifying cell surface receptors and their ligands, such as
+growth factors, is crucial for understanding how cells perceive and
+respond to external signals. During a research endeavor exploring
+the speciﬁc growth-stimulating impacts of mouse sarcoma on the
+sensory and sympathetic nervous systems of chick embryos, it was
+unveiled that mouse sarcoma had the ability to generate a speciﬁc
+factor to speciﬁcally promote the growth and development of
+nerve cells.30 Later, this factor is well-known as nerve growth
+factor (NGF) and stands as the inaugural growth factor to be
+discovered, unveiling the pivotal role of extracellular factors in
+modulating cell growth and differentiation. This revelation has
+exerted a profound impact on the evolution of neuroscience and
+cellular biology. With a deepening understanding of cellular
+signaling molecules, researchers have begun to investigate how
+signal transduction pathways alter in human diseases. Disrupting
+and/or altering these cell interaction events can lead to severe
+downstream
+pathophysiological
+effects.
+Research
+on
+obese
+hyperglycemic mouse models has revealed that insulin resistance
+is associated with dysfunction of insulin receptors.31 Insulin exerts
+its effects by binding to its receptors on the cell surface. Insulin
+resistance may be caused by a reduction of insulin receptors or
+receptor dysfunction, leading to decreased efﬁciency of insulin
+Fig. 1
+Milestone events of CCC research. Key events in the development of CCC were retrospectively summarized from 1951 to the present
+day. Detailed information on milestone events are narrated in this review
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+2
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+signal transduction. Even if insulin successfully binds to its
+receptor, certain components of the signaling pathway may be
+impaired, affecting the biological effects of insulin. The studies of
+the molecular mechanisms of insulin resistance enhance our
+understanding of how cell function and disease states can be
+inﬂuenced at the single-cell level by regulating the interactions
+between signaling molecules and receptors, offering potential
+new targets for the treatment of metabolic diseases. Communica-
+tion errors can lead to diseases such as cancer metastasis, motor
+neuron diseases, virus-host interactions, and diabetes. Therefore,
+research into CCCs can enhance understanding of disease
+mechanisms
+and
+facilitate
+the
+development
+of
+pharmaceuticals.32–35
+Optical microscopy has been widely used as a powerful means
+for over a century to visualize the sites of CCCs and understand
+the spatial or organizational structures underlying these interac-
+tions. Early examples of studying cell contact interfaces based on
+microscopy include the direct observation of cell dissociation in
+sponges and the aggregation of cells into tissue-like structures in
+higher animals using optical microscopy.36,37 With the improve-
+ment of ﬂuorescent dyes and optical systems, scientists began to
+utilize ﬂuorescent materials to study cells and tissues. An early
+study ﬁrst reported the primary structure of the green ﬂuorescent
+protein (GFP) from the jellyﬁsh Aequorea victoria.38 It not only
+identiﬁed the amino acid sequence of GFP but also laid the
+foundation for subsequent research utilizing GFP as a reporter
+gene to visualize and track speciﬁc proteins, organelles, and
+intercellular communication within cells. GFP not only enables the
+direct observation of gene expression in living cells but also allows
+for the tracking of speciﬁc processes within cells through GFP-
+tagged proteins. Without affecting the growth and development
+of the host cell, the ﬂuorescence can be stably inherited by
+offspring, making it an ideal tool for tracking and studying the
+dynamics of gene expression.39
+Super-resolution methodologies have made signiﬁcant strides,
+transcending this limitation through techniques such as near-
+ﬁeld,40 stimulated emission depletion,41 structured illumina-
+tion,42,43 and reversible saturable optical ﬂuorescence transitions
+microscopy.44 Yet, the objective remains to achieve a ﬂuorescence
+technology
+capable
+of
+attaining
+resolutions
+closer
+to
+the
+molecular scale. A technique known as GFP reconstitution across
+synaptic partners (GRASP) employs the fusion of two nonﬂuor-
+escent split GFP fragments onto interacting partners on opposing
+cells to detect CCCs.45 Upon close contact between cells, the split
+proteins associate, reconstituting the GFP. This method has been
+expanded to include other split ﬂuorescent protein fragments, YFP
+(yellow) and CFP (cyan), for the simultaneous imaging of multiple
+synaptic interaction factors.46 An advanced imaging technique
+known as optical super-resolution microscopy, speciﬁcally photo-
+activated localization microscopy, enables the observation of
+ﬂuorescent proteins within cells at nanometer resolution.47
+On the other hand, high-throughput technologies are powerful
+and economical tools for ultra-high-throughput transcription and
+protein analysis,48–52 which have greatly accelerated our under-
+standing
+of
+the
+gene
+expression,
+regulation
+and
+network
+complexity of mammalian cells.53–59 For example, the develop-
+ment of Drop-Seq.60 and inDrop.61 has enabled simultaneous
+analysis of a large number of single cells, signiﬁcantly improving
+sequencing efﬁciency and enhancing our understanding of
+complex tissues and cellular biology. Understanding the spatial
+organization of cells within tissues and how they communicate is
+essential for deciphering the principles of tissue architecture and
+organ
+function.62,63
+Thus,
+spatial
+transcriptome
+technology,
+namely multiplexed error-robust ﬂuorescence in situ hybridization
+(MERFISH), was developed to simultaneously measure the copy
+numbers and spatial distribution of hundreds to thousands of RNA
+species in individual cells by using single-molecule FISH ﬂuor-
+escent probes that bind with high speciﬁcity to the desired RNA
+targets.64 Due to its high speciﬁcity, sensitivity, and spatial
+resolution, MERFISH has a wide range of applications in basic
+biology and medical ﬁelds.65,66
+Meanwhile,
+spatial
+proteome
+approaches
+are
+emerging
+research ﬁelds focusing on understanding the qualitative and
+quantitative aspects of protein composition within single cells.
+Immunohistochemistry
+and
+immunoﬂuorescence
+techniques,
+combined with microscopic imaging technology, can display the
+distribution and density of cells in tumor tissue samples, as well as
+the physiological and biochemical activities involved by different
+cells.67,68 For example, CODEX (CO-Detection by indEXing)62 and
+Cell DIVE69 are cutting-edge high-dimensional imaging technol-
+ogies that have revolutionized the study of cell communication
+and tissue analysis. The core design principle of CODEX is to label
+each antibody with a speciﬁc oligonucleotide “barcode”, of which
+the complementary sequence is bound with the ﬂuorescent dyes
+used for subsequent imaging.62,70 In contrast, each antibody used
+in Cell DIVE is directly labeled with ﬂuorescent dyes, followed by
+multiple rounds of staining, imaging and ﬂuorescence quenching.
+Therefore, both CODEX and Cell DIVE offer high-dimensional
+imaging of dozens of proteins within individual cells, enabling
+researchers to analyze the spatial organization of cells, their
+interactions, and signaling states within tissues. Furthermore,
+novel single-cell spatial in situ imaging technologies, such as
+GeoMx DSP spatial multi-omics technology, break through the
+limitations of the number of detected proteins and enable
+spatially proﬁling 570+ protein targets and the whole transcrip-
+tome
+separately
+or
+simultaneously.63,71
+Collectively,
+these
+advanced spatial single-cell imaging technologies will drive
+deeper insights for cell typing, tissue phenotyping, cell–cell
+interactions, cellular processes, and biomarker discovery.
+MOLECULAR MECHANISM OF CCC
+Cell signaling, which involves transmitting information between
+cells or subcellular components, is an inherent characteristic of
+living organisms. In diverse tissues and organs, cell signaling
+facilitates communication and homeostasis, which are vital for
+cellular interactions within their local environment. Signals can
+propagate through various mechanisms, including chemical
+alterations, mechanical forces, or their synergistic effects. A
+multitude of extracellular signals and cellular membrane proteins
+trigger selective intracellular pathways, inﬂuencing crucial cellular
+outcomes such as survival, apoptosis, growth, motility, differentia-
+tion, and speciﬁc functions like muscular contraction, synaptic
+activity, or thrombocyte activation.72 Typical examples are the
+triggering of the transforming growth factor-β (TGF-β) signaling
+pathway in the context of tissue ﬁbrosis.73 and the excessive
+activation of the Ras signaling pathway in numerous cancer
+types.74 Over the last decades, extensive research into cell
+signaling pathways has culminated in the creation of therapeutics
+rooted in biological science, and the complexity revealed by drugs
+currently in clinical use continues to uncover further insights into
+the extent of interactions between signaling networks.75 Cellular
+communication encompasses two essential processes: cell signal
+conduction, focusing on the generation and intercellular transmis-
+sion of signals, and cell signal transduction, which emphasizes the
+reception of signals and how signals are converted and processed
+upon receipt (Fig. 2).
+Mechanisms of CCC in physiological homeostasis
+Cellular communication involves cells recognizing, receiving, and
+responding to external signal molecules, which can be light,
+electricity, or chemical molecules. Finally, the interaction of
+receptors can activate a series of downstream physiological and
+biochemical processes, which play an important role in coordinat-
+ing cell function. Cellular communication involves the transmis-
+sion of signals from signal generation to signal transduction. Cell
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+3
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+signal transduction is the process through which biological
+information (excitation or inhibition) is transformed and trans-
+mitted between cells or within cells, leading to various biological
+effects. This typically refers to transmembrane signal transduction,
+wherein bioactive substances activate or inhibit cell function
+through receptors or ion channels. Generally, the chemical
+substances involved in intercellular signal communication or
+intracellular signal transduction are known as signal molecules,
+while small molecules specialized in carrying biological informa-
+tion are called messenger molecules. The chains of signal
+molecules that complete the conversion and transmission of
+biological information within or between cells are referred to as
+signal transduction pathways. Therefore, the essence of cell signal
+transduction lies in the intracellular transformation and transmis-
+sion of biological information through speciﬁc signal transduction
+pathways, which may involve regulating the gene expression
+processes of related functional proteins.
+The steps of cell signal conduction
+Production and release of signaling molecules:
+Certain cells,
+such as neurons or endocrine cells, react to external stimuli or
+internal needs by creating and releasing signaling molecules like
+neurotransmitters, hormones, or chemokines. These molecules
+serve as messengers to communicate messages to neighboring
+cells.
+Neurons, as the primary cells that participate in information
+processing, come in a myriad of distinct cell types differentiated
+by morphology, location, connectivity, and chemical properties.76
+The various chemicals that transmit information between neurons
+are known as neurotransmitters. Owing to the central role of
+neurotransmitters in cerebral function, neurotransmitter receptors
+along
+with
+other
+proteins
+engaged
+in
+the
+synthesis
+and
+deactivation of neurotransmitters emerge as critical targets in
+the development of curative medications for mental and nerve
+disorders,
+ache
+and
+many
+other
+conditions.77
+As
+gaseous
+neurotransmitters, such as nitric oxide (NO) and carbon monoxide
+(CO), play a regulatory role in vasodilation and neural transmis-
+sion.78,79 The nervous system typically enables information to be
+transmitted rapidly between different regions of the body.
+In contrast, hormonal communication is predicated on the
+synthesis and dissemination of a plethora of glandular hormones,
+coupled with their transportation via the bloodstream, making it
+more suited to situations requiring broader and more sustained
+regulatory actions. These two systems of communication are
+mutually complementary, with neural stimuli capable of affecting
+the secretion of certain hormones, and conversely.80 Certain
+hormones are tailored to interact exclusively with a limited array
+of target cells, whereas others exert inﬂuence across a broad
+spectrum of cell types throughout the organism. To preserve
+homeostasis and adapt effectively to environmental alterations,
+the biosynthesis and release of hormones are subject to rigorous
+regulation. This regulatory mechanism is achieved through a
+complex interplay among multiple hormones, which reciprocally
+regulate one another, rather than being governed by a solitary
+hormone. Hormones play a pivotal role in orchestrating a
+multitude of bodily functions, encompassing growth and devel-
+opment, metabolic processes, electrolyte equilibrium, and repro-
+ductive functions.
+Cytokines are produced by speciﬁc cells (such as immune cells,
+endothelial cells, etc.) in response to speciﬁc stimuli, such as
+infection, injury, inﬂammatory responses, or the action of other
+cytokines, and are released into the extracellular environment.
+Fig. 2
+Representative signal pathways of CCC. Cellular communication is the process of signal construction to signal transduction. The
+interactions of ligands and receptors usually affect cell metabolism and energy transformation of different cell types to maintain the normal
+function of organisms. Ligands are active substances capable of speciﬁcally binding to receptors. Receptors speciﬁcally recognize and bind to
+signaling molecules, converting them into intracellular signals to perform speciﬁc physiological functions. One of the major signaling
+pathways within the signal transduction pathway are GPCRs pathways, including PKA and PKC systems. The others are enzyme-coupled
+receptor pathways, including PKG and MAPK systems. AC adenylate cyclase, cAMP cyclic adenosine monophosphate, cGMP cyclic guanosine
+monophosphate, CO carbon monoxide, DAG diacylglycerol, ERK extracellular regulated protein kinases, GC guanylate cyclase, GDP guanosine-
+5’-diphosphate, GPCR G-protein-coupled receptor, GTP guanosine triphosphate, IP3 inositol trisphosphate, IP3R inositol trisphosphate
+receptor, MAPK mitogen-activated protein kinase, MEK mitogen-activated extracellular signal-regulated kinase, NO nitric oxide, Pi PIP2
+phosphatidylinositol-4,5-bisphosphate, PKA protein kinase A, PKC protein kinase C, PKG protein kinase G, PLC phospholipase C
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+4
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+Cytokines are capable of activating a variety of cell types within a
+speciﬁc tissue or initiating diversiﬁed signaling pathways within a
+speciﬁc cell type, exempliﬁed by interleukins and interferons,
+regulating various physiological processes, encompassing immu-
+nity, development, growth, and tissue repair.81,82 Serving as
+pivotal mediators of intercellular communication within the
+immune system, dysregulation in cytokine expression or their
+intracellular signaling pathways disrupts immune homeostasis,
+precipitating the onset of pathologies such as chronic inﬂamma-
+tion, autoimmune syndromes, and malignant tumors.83
+The production of signaling molecules initiates with gene
+expression. Speciﬁc stimuli, such as extracellular signals or
+changes in internal states, trigger the transcription and translation
+of speciﬁc genes, leading to the production of proteins or small
+molecules as signaling molecules. Prior to maturation and
+activation, these protein signaling molecules typically go through
+a sequence of post-transcriptional modiﬁcations (such as splicing)
+and posttranslational modiﬁcations (such as phosphorylation and
+glycosylation). Meanwhile, some small-molecule signaling sub-
+stances are synthesized within the cell through speciﬁc biochem-
+ical
+pathways.
+Before
+their
+release,
+signaling
+molecules
+accumulate and are stored in speciﬁc organelles within the cell.
+For instance, neurotransmitters are usually stored in synaptic
+vesicles of presynaptic neurons.84
+When cells receive stimuli to release signaling molecules, such
+as electrical, chemical, or mechanical signals, the vesicles storing
+these signaling molecules move to the vicinity of the cell
+membrane and fuse with it. Through exocytosis, the signaling
+molecules are released outside the cell, a process that is
+particularly important for proteins and certain large molecular
+signaling molecules. On the other hand, some small molecules
+and lipophilic signaling molecules directly pass through the cell
+membrane to enter or exit the cell without vesicle-mediated
+processes. Besides NO and CO, hydrogen sulﬁde is another well-
+recognized gaseous signaling molecule.85 These gaseous mole-
+cules are unique in their mode of action as they can freely diffuse
+across cell membranes, enabling rapid signaling without the need
+for speciﬁc receptors or transport mechanisms for their release
+and action.
+Transmission of signaling molecules:
+Signaling molecules can
+reach target cells via diffusion, blood circulation, direct contact, or
+intercellular junctions. In the context of multicellular organisms,
+four fundamental forms of intercellular signaling exist: autocrine
+signaling, paracrine signaling, signaling through gap junctions,
+and endocrine signaling. Autocrine signaling is prevalent in tumor
+cells, wherein cells secrete ligands to induce responses via
+homologous receptors expressed on the same cell. Paracrine
+signaling
+affects
+nearby
+cells
+by
+secreting
+local
+chemical
+mediators into the extracellular ﬂuid, which act on adjacent target
+cells through local diffusion. Signal transmission across gap
+junctions involves molecules passing directly between cells.
+Endocrine signaling occurs when endocrine cells secrete sub-
+stances into the bloodstream, distributing them to various body
+parts via circulation.
+For long-distance signals, the bloodstream is the primary mode
+of transmission. Endocrine cells regulate the production and
+release of hormones by monitoring the concentration of speciﬁc
+substances in the blood, such as glucose, electrolytes, and other
+hormones. These hormones are then transported to various parts
+of the body through the bloodstream, exerting regulatory effects
+on distant target cells, thereby maintaining physiological equili-
+brium and adapting to changes in the external environment.86 For
+local signals, transmission through intercellular spaces or direct
+cell contact is more common. Neurotransmitters primarily transmit
+information through paracrine signaling. They are produced and
+released by neurons at the presynaptic end, and transmitted
+across the synaptic gap to the adjacent postsynaptic neuron or
+effector cell. Once released, neurotransmitters diffuse across
+synapses. In conjunction with the primarily chemical synapses,
+electrical synapses also exist, facilitating the intercellular ﬂow of
+ions via gap junctions. Electrical synapses enable the transmission
+of simple electrical signals among neurons, while chemical
+synapses allow excitation, inhibition, and complexity of biochem-
+ical information to be passed among cells.77 Cytokines typically act
+on neighboring cells through paracrine signaling, especially
+during immune responses and inﬂammation. However, in some
+cases, they can also be released into the bloodstream to regulate
+systemic immune responses and inﬂammation. Certain cytokines
+that exist in a membrane-bound form require direct contact with
+receptors on adjacent cells to transmit signals.87,88
+Binding of signaling molecules to receptors:
+Signaling molecules
+bind speciﬁcally to receptors on the surface or inside the target
+cell, forming receptor-ligand complexes that activate the receptor.
+Receptors are proteins or glycoproteins designed to recognize and
+bind speciﬁc signaling molecules, converting external signals into
+internal ones. Hormones travel to target cells via the bloodstream
+and bind to speciﬁc receptors located on the cell surface or within
+the cell. These receptors have binding sites that are highly
+complementary to the hormone molecules, allowing hormones to
+speciﬁcally recognize and bind to their receptors. Upon binding to
+its receptor, the hormone typically induces a conformational
+change in the receptor, thereby activating it. For cell surface
+receptors,
+this
+conformational
+change
+can
+directly
+trigger
+intracellular signaling pathways. For intracellular receptors such
+as steroid hormone receptors, the hormone–receptor complex
+often translocates to the nucleus, interacts with DNA, and
+inﬂuences the expression of speciﬁc genes.
+Neurotransmitter molecules, liberated from presynaptic vesicles,
+traverse
+the
+synaptic
+cleft
+and
+bind
+to
+proteins
+on
+the
+postsynaptic neuron’s surface membrane known as neurotrans-
+mitter receptors, altering the function of the postsynaptic neuron.
+There are two types of neurotransmitter receptors: ligand-gated
+ion channel receptors (LGICs) and G-protein-coupled receptors
+(GPCRs). LGIC receptors are proteins speciﬁcally designed to
+rapidly transduce chemical signals of neurotransmitters directly
+into electrical responses.89,90 A part of the protein is dedicated to
+binding with neurotransmitter molecules on the extracellular side
+of the protein. The portion of the protein embedded within the
+cell membrane acts as an ion channel, creating a ﬂuid-ﬁlled
+passage in the membrane for the transit of charged ions, but ions
+are unable to pass across lipid or other solid membrane
+constituents. This synaptic transmission modality allows for the
+direct ﬂow of ions across the outer cell membrane rapidly. When a
+neurotransmitter binds to the receptor, the exchange of nucleo-
+tide guanosine-5’-diphosphate (GDP) and guanosine triphosphate
+(GTP) on the protein’s intracellular side is expedited, culminating
+in the split of the G protein into α- and β/γ-subunits, both two
+types of subunits can act upon “effector” proteins, altering cellular
+biochemistry, physiology, and gene expression, initiating intracel-
+lular chemical signaling events.84,89,90
+Cytokines are classiﬁed as secreted growth factors that instigate
+signal transduction within target cells through binding with the
+extracellular domains of cell surface receptors, forcing receptor
+dimerization.91 Most cytokines contain binding sites for both high-
+afﬁnity and low-afﬁnity receptors.92,93 Typically, the high-afﬁnity
+receptor subunit acts as a cytokine-speciﬁc, private receptor that
+determines
+cell
+speciﬁcity
+as
+well
+as
+the
+cytokine’s
+dose
+sensitivity.94 In contrast, the low-afﬁnity receptor subunits are
+common to be shared among various cytokines and mainly have
+an impact on the efﬁciency of complex assembly, thereby
+affecting the maximum strength and duration of receptor
+signaling.92,95
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+5
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+The steps of cell signal transduction
+Signal transduction and ampliﬁcation:
+The activation of recep-
+tors sets off a cascade of cellular responses internally. Signals are
+transduced and ampliﬁed within the cell through mechanisms like
+second messengers, switch proteins, enzyme cascades, etc.
+Second messengers are small molecular compounds that carry
+information within the cell. The second messengers play a crucial
+role in cell signaling, capable of transforming the activation of a
+cell surface receptor into the activation of multiple molecules
+within
+the
+cell,
+thereby
+amplifying
+and
+conveying
+signals
+internally. This process activates or inhibits speciﬁc target proteins
+and enzymes, triggering a cascade of downstream reactions.
+Through these reactions, second messengers are instrumental in
+regulating a myriad of cellular functions. The discovery of this
+signal transduction pathway has laid the foundational framework
+for understanding how cells communicate via chemical signals.
+An early study elucidated for the ﬁrst time the role of cyclic
+adenosine monophosphate (cAMP) as a second messenger within
+the cell, demonstrating its capacity to translate the cell surface
+receptor’s response to hormones and neurotransmitters into
+intracellular biochemical activities.96 When external signaling
+molecules such as adrenaline bind to GPCRs, the associated G
+proteins are activated. The α subunit of the G protein activates
+adenylate cyclase (AC), converting ATP into cAMP. cAMP, serving
+as a second messenger, activates protein kinase A (PKA). In cardiac
+cells, the increase in cAMP leads to the activation of PKA, which
+phosphorylates L-type calcium channels, increasing the inﬂux of
+calcium ions, thereby enhancing the contractile force of the
+heart.97–99
+Calcium ions (Ca2+) are important second messengers involved
+in various signaling pathways. When external signals such as
+neurotransmitters or hormones act on cells, the opening of
+calcium channels or the release of Ca2+ from the endopl
+
+Question:
+In this review, which statements is correct?
+
+A. In CCC history, researcher found that the growth factor could facilitate the growth of cells and given the fact that platelet and other cells could release growth factors. Therefore, cancer cells’ growth mainly is stimulated by other cells signals.
+B. In CCC mechanism, it mentioned that the endocrine cells regulate the secretion by detecting the concentration of specific substances. Therefore, by employing single cell seq technique, researcher could analyze how the endocrine cells could be activated by glucose, electrolytes, and other hormones by specific computational tools mentioned in this article.
+C. This article summarizes the computational tools for analyzing the cell-cell interaction. The tools in permutation-based tool can generally classified into two categories (discrete and continuous) based on the methods to evaluate the interactions.
+D. The summary part mentioned the potential improvements by including multi-omics methods. Therefore, to better understand the CCC mechanism, researcher could involve transcriptomics, viriomics, and etc.
+
+Select the correct answer.

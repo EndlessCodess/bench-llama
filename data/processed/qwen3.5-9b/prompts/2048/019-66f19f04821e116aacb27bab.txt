@@ -1,0 +1,234 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+Introduction
+1
+Safety notes
+2
+Description
+3
+Functions
+4
+Mounting and dismantling
+5
+Connecting
+6
+Parameter setting
+7
+Planning/configuring
+8
+Maintenance and service
+9
+Messages and diagnostics
+10
+Technical data
+11
+Dimensional drawings
+12
+Process data and data sets
+13
+Connection examples
+14
+Coordination types
+A
+References
+B
+
+
+Legal information
+Warning notice system
+This manual contains notices you have to observe in order to ensure your personal safety, as well as to prevent 
+damage to property. The notices referring to your personal safety are highlighted in the manual by a safety alert 
+symbol, notices referring only to property damage have no safety alert symbol. These notices shown below are 
+graded according to the degree of danger.
+DANGER
+indicates that death or severe personal injury will result if proper precautions are not taken.
+WARNING
+indicates that death or severe personal injury may result if proper precautions are not taken.
+CAUTION
+indicates that minor personal injury can result if proper precautions are not taken.
+NOTICE
+indicates that property damage can result if proper precautions are not taken.
+If more than one degree of danger is present, the warning notice representing the highest degree of danger will 
+be used. A notice warning of injury to persons with a safety alert symbol may also include a warning relating to 
+property damage.
+Qualified Personnel
+The product/system described in this documentation may be operated only by personnel qualified for the specific 
+task in accordance with the relevant documentation, in particular its warning notices and safety instructions. 
+Qualified personnel are those who, based on their training and experience, are capable of identifying risks and 
+avoiding potential hazards when working with these products/systems.
+Proper use of Siemens products
+Note the following:
+WARNING
+Siemens products may only be used for the applications described in the catalog and in the relevant technical 
+documentation. If products and components from other manufacturers are used, these must be recommended or 
+approved by Siemens. Proper transport, storage, installation, assembly, commissioning, operation and maintenance 
+are required to ensure that the products operate safely and without any problems. The permissible ambient 
+conditions must be complied with. The information in the relevant documentation must be observed.
+Trademarks
+All names identified by ® are registered trademarks of Siemens Aktiengesellschaft. The remaining trademarks in 
+this publication may be trademarks whose use by third parties for their own purposes could violate the rights of 
+the owner.
+Disclaimer of Liability
+We have reviewed the contents of this publication to ensure consistency with the hardware and software 
+described. Since variance cannot be precluded entirely, we cannot guarantee full consistency.  However, the 
+information in this publication is reviewed regularly and any necessary corrections are included in subsequent 
+editions.
+Siemens Aktiengesellschaft
+Smart Infrastructure
+Electrical Products
+Postfach 10 09 53
+93009 Regensburg
+GERMANY
+A5E50183188002A/RS-AA/001
+Ⓟ 09/2024 Subject to change
+Copyright © Siemens 2024.
+All rights reserved
+
+
+Table of contents
+1
+Introduction........................................................................................................................................... 9
+1.1
+Responsibility of the user for system configuration and functionality..................................... 9
+1.2
+Purpose of the manual......................................................................................................... 9
+1.3
+Required basic knowledge.................................................................................................. 10
+1.4
+Scope of the manual.......................................................................................................... 10
+1.5
+Additional documentation ................................................................................................. 10
+1.6
+Siemens Industry Online Support ....................................................................................... 11
+1.7
+Siemens Industry Online Support app................................................................................. 12
+1.8
+Support Request ................................................................................................................ 13
+1.9
+History............................................................................................................................... 13
+2
+Safety notes ......................................................................................................................................... 15
+2.1
+General safety notes .......................................................................................................... 15
+2.2
+Qualified personnel required .............................................................................................. 16
+2.3
+Current information about operational safety ..................................................................... 16
+2.4
+Intended use...................................................................................................................... 16
+2.5
+Declaration of conformity .................................................................................................. 17
+2.6
+Five safety rules for working in or on electrical systems....................................................... 17
+2.7
+ESD Guidelines................................................................................................................... 18
+2.8
+Cybersecurity information.................................................................................................. 19
+2.9
+Data security in automation ............................................................................................... 20
+2.10
+Approvals, test certificates, characteristics .......................................................................... 22
+2.11
+Requirements for switching high-efficiency motors............................................................. 22
+2.12
+Voltages ............................................................................................................................ 23
+2.13
+Notes on the protection of device connections ................................................................... 23
+2.14
+Recycling and disposal ....................................................................................................... 23
+3
+Description........................................................................................................................................... 25
+3.1
+System overview................................................................................................................ 25
+3.1.1
+Product description............................................................................................................ 25
+3.1.2
+Applications....................................................................................................................... 29
+3.1.2.1
+ATEX.................................................................................................................................. 30
+3.1.3
+Operating principle............................................................................................................ 31
+3.2
+SIRIUS 3RC7 ILM (intelligent link module)........................................................................... 32
+3.2.1
+Product description............................................................................................................ 32
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+3
+
+
+3.2.2
+Article numbers ................................................................................................................. 33
+3.2.3
+Monitoring switching elements.......................................................................................... 34
+3.2.4
+Interfaces .......................................................................................................................... 34
+3.3
+SIRIUS 3RA8 ILF intelligent load feeder ............................................................................... 35
+3.3.1
+Overview........................................................................................................................... 35
+3.3.2
+Intelligent load feeders for self-assembly with a 3RC7 ILM .................................................. 36
+3.3.2.1
+Recommended combinations............................................................................................. 37
+3.3.2.2
+Possible combinations for 400 V AC, Class 10E.................................................................... 39
+3.3.3
+Pre-assembled SIRIUS 3RA8 ILF intelligent load feeders ....................................................... 40
+3.3.4
+Application environment.................................................................................................... 41
+3.4
+Accessories/ spare parts ..................................................................................................... 42
+3.4.1
+Accessories for 3RC7 ILM and 3RA8 ILF............................................................................... 42
+3.4.2
+Kits for setting up intelligent load feeders for reversing starting .......................................... 42
+4
+Functions ............................................................................................................................................. 43
+4.1
+Overview of functions........................................................................................................ 44
+4.2
+Basic configuration............................................................................................................. 45
+4.2.1
+Rated operational current Ie............................................................................................... 46
+4.2.2
+Load type .......................................................................................................................... 46
+4.2.3
+Interlock time .................................................................................................................... 47
+4.3
+Load protection.................................................................................................................. 48
+4.3.1
+Electronic motor overload protection.................................................................................. 48
+4.3.1.1
+Trip class............................................................................................................................ 49
+4.3.1.2
+Response to overload thermal motor model........................................................................ 50
+4.3.1.3
+Recovery time.................................................................................................................... 51
+4.3.1.4
+Motor heating limit – maintenance demanded ................................................................... 51
+4.3.1.5
+Non-volatile tripping status................................................................................................ 51
+4.3.2
+Current asymmetry ............................................................................................................ 52
+4.3.3
+Mains voltage .................................................................................................................... 52
+4.3.3.1
+Response to faulty main voltage......................................................................................... 53
+4.3.3.2
+Reset mode at faulty main voltage ..................................................................................... 53
+4.3.3.3
+Rotation direction monitoring ........................................................................................... 53
+4.3.3.4
+Rated mains voltage and operating range 
+
+Question:
+Which of the following is incorrect according to the handbook?
+
+A. When the contactor opens and the device stops working, I should check the ER LED for error messages. Such thing may happen when the current is below a set lower limit.
+B. Whether I want to mount the load feeder of size S0 for direct or reversing starting, I should lock the 3RC7 ILM on the contactor by pulling the locking slide downwards.
+C. A DIN rail adapter is a must if I mount size S0 load feeders for reversing starting. The DIN adapter is mounted in the same way as the motor starter protector.
+D. If I only have 3RC7 ILM Power Cable, I must install the 3RA8 ILF device group side by side with a maximum distance of 4.5 centimeters.
+
+Select the correct answer.

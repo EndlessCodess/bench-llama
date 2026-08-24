@@ -1,0 +1,124 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+{
+    "question_id": "a9f6b44c",
+    "question_type": "multi-session",
+    "question": "",
+    "answer": "",
+    "question_date": "2023/03/20 (Mon) 23:57",
+    "haystack_dates": [
+        "2023/03/20 (Mon) 00:12",
+        "2023/03/20 (Mon) 00:25",
+        "2023/03/20 (Mon) 00:35",
+        "2023/03/20 (Mon) 00:39",
+        "2023/03/20 (Mon) 01:05",
+        "2023/03/20 (Mon) 02:04",
+        "2023/03/20 (Mon) 02:14",
+        "2023/03/20 (Mon) 03:27",
+        "2023/03/20 (Mon) 05:11",
+        "2023/03/20 (Mon) 05:14",
+        "2023/03/20 (Mon) 05:44",
+        "2023/03/20 (Mon) 05:52",
+        "2023/03/20 (Mon) 07:03",
+        "2023/03/20 (Mon) 07:32",
+        "2023/03/20 (Mon) 07:49",
+        "2023/03/20 (Mon) 09:19",
+        "2023/03/20 (Mon) 09:57",
+        "2023/03/20 (Mon) 10:35",
+        "2023/03/20 (Mon) 10:49",
+        "2023/03/20 (Mon) 12:00",
+        "2023/03/20 (Mon) 12:18",
+        "2023/03/20 (Mon) 12:57",
+        "2023/03/20 (Mon) 13:02",
+        "2023/03/20 (Mon) 13:35",
+        "2023/03/20 (Mon) 14:31",
+        "2023/03/20 (Mon) 14:43",
+        "2023/03/20 (Mon) 14:57",
+        "2023/03/20 (Mon) 16:45",
+        "2023/03/20 (Mon) 16:48",
+        "2023/03/20 (Mon) 17:01",
+        "2023/03/20 (Mon) 17:20",
+        "2023/03/20 (Mon) 17:22",
+        "2023/03/20 (Mon) 17:29",
+        "2023/03/20 (Mon) 17:29",
+        "2023/03/20 (Mon) 18:26",
+        "2023/03/20 (Mon) 18:33",
+        "2023/03/20 (Mon) 18:42",
+        "2023/03/20 (Mon) 18:43",
+        "2023/03/20 (Mon) 20:39",
+        "2023/03/20 (Mon) 21:13",
+        "2023/03/20 (Mon) 21:42",
+        "2023/03/20 (Mon) 22:23",
+        "2023/03/20 (Mon) 22:51",
+        "2023/03/20 (Mon) 22:54",
+        "2023/03/20 (Mon) 22:58",
+        "2023/03/20 (Mon) 23:52"
+    ],
+    "haystack_session_ids": [
+        "837f258b",
+        "sharegpt_mOi5glx_0",
+        "sharegpt_quVKffw_0",
+        "sharegpt_F5ZBqrY_53",
+        "a195ae17",
+        "ec8d10c7_2",
+        "ca896bdc_1",
+        "ultrachat_175847",
+        "e7c5d63e",
+        "35bc3132_2",
+        "ultrachat_494373",
+        "388bb1a2",
+        "ultrachat_161276",
+        "answer_cc021f81_2",
+        "ec830058_1",
+        "ultrachat_543946",
+        "e10dfffb_1",
+        "answer_cc021f81_3",
+        "ultrachat_539849",
+        "a8151fbc",
+        "d4912cd9",
+        "bb107057_4",
+        "ultrachat_384978",
+        "ultrachat_279504",
+        "949d51ef",
+        "3cd2f8ab",
+        "4e1059f9",
+        "ultrachat_468681",
+        "3489fa38_2",
+        "fdd0f680_1",
+        "f5cf8815_1",
+        "sharegpt_AqgYTct_0",
+        "b7e36cc5_2",
+        "ultrachat_38281",
+        "sharegpt_steeMuu_0",
+        "answer_cc021f81_1",
+        "1126be1e_1",
+        "e03c71c5_1",
+        "9daf69c1",
+        "sharegpt_2BSXlAr_0",
+        "6351589f_1",
+        "sharegpt_8ziBSjY_19",
+        "6121e797_1",
+        "aa3406a3_1",
+        "cd28071c_1",
+        "d4ee4710"
+    ],
+    "haystack_sessions": [
+        [
+            {
+                "role": "user",
+                "content": "I'm looking for recommendations on the best type of oil to use for my Toyota Corolla. I'm due for an oil change soon and I want to make sure I get the right one."
+            },
+            {
+                "role": "assistant",
+                "content": "Choosing the right oil for your Toyota Corolla can be a bit overwhelming with all the options available. But don't worry, I'm here to help you make an informed decision.\n\n**What to consider:**\n\n1. **Viscosity**: This refers to the oil's thickness and flowability. Thicker oils are better for cold weather and provide better lubrication, while thinner oils are better for hot weather and improve fuel efficiency.\n2. **Oil type**: There are conventional, synthetic, and synthetic blend oils. Synthetic oils are more expensive but offer better performance and protection.\n3. **Toyota's 
+
+Question:
+Which of the topics has been asked by the users for suggestions?
+
+A. Online resources to study Mexican
+B. How to enrich the time spend on the road
+C. Plants that are easy to grow
+D. What brand of new car should the user buy
+
+Select the correct answer.

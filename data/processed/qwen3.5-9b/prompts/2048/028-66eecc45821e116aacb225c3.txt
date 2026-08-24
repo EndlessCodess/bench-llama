@@ -1,0 +1,143 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+WORLD TRADE 
+ORGANIZATION 
+ 
+ 
+WT/DS379/R 
+22 October 2010 
+ 
+ 
+(10-5262) 
+ 
+ 
+ 
+Original:   English 
+ 
+ 
+UNITED STATES – DEFINITIVE ANTI-DUMPING AND 
+COUNTERVAILING DUTIES ON CERTAIN PRODUCTS 
+FROM CHINA  
+ 
+ 
+ 
+ 
+Report of the Panel 
+ 
+ 
+ 
+ 
+ 
+
+
+WT/DS379/R 
+Page 206 
+ 
+ 
+ 
+acting purely as intermediaries, on a transaction-by-transaction basis, rather than as 
+distributor/stockists or as bulk purchasers.  This is further suggested by the "ex-works" delivery terms 
+of a number of purchases865, a phrase generally synonymous with "ex-factory".  That said, there is no 
+reference in the USDOC's determination in the OTR investigation to any evidence regarding the 
+precise role played by the trading companies from which GTC and TUTRIC purchased rubber inputs, 
+nor any indication that the USDOC made inquiries in that regard.  Before us, the United States makes 
+no arguments in this respect.  We consider that, for the reasons explained above, given the 
+methodology that the USDOC chose to use to the establish the existence and amount of the benefit to 
+the tire producers from their purchases of inputs from trading companies, it was incumbent on the 
+USDOC to have investigated the precise role played by the trading companies, so as to ensure that its 
+methodology did not calculate a benefit in excess of that conferred by the government provision of 
+SOE-produced inputs. 
+12.58 The record evidence presented to us does not indicate that the USDOC undertook any such 
+inquiries.  Therefore, there is nothing before us that demonstrates that, under the particular facts of the 
+investigation, the USDOC's methodology could not and did not give rise to a calculation of benefit in 
+excess of that conferred by the provision of the inputs.  We therefore find on this basis that the 
+USDOC acted inconsistently with the United States' obligations under Article 1.1 and Article 14 of 
+the SCM Agreement. 
+XIII. 
+CHINA'S CONSEQUENTIAL CLAIMS 
+13.1 
+We now turn to various consequential claims raised by China.  In particular, at 
+paragraph B.1(e) of its request for establishment of the Panel, China alleges consequential violations 
+of Articles 10 and 32.1 of the SCM Agreement, and of Article VI:3 of the GATT 1994, "in connection 
+with all countervailing duty investigations, determinations and orders specified above" (i.e., specified 
+at paragraphs B.1(a)-(d) of the request for establishment of the Panel).  China requests findings in 
+respect of these consequential claims at paragraphs 468 (a), (b), (d), (e), (f), and (g) of its first written 
+submission, and at paragraphs 315 (a), (b), (c), (e), (f), (g), and (h) of its second written submission.  
+We note that China has presented no argumentation in support of these consequential claims, but 
+simply requests findings on them in the paragraphs just identified.  Particularly under these 
+circumstances, in the light of the findings we have made supra, we see no need to rule on these 
+consequential claims.  We therefore apply judicial economy in respect of all of them. 
+13.2 
+We recall, however, that in respect of its other allegations pursuant to Article 10 and 32.1 of 
+the SCM Agreement and Article VI:3 of the GATT 1994 (specifically, those raised in connection with 
+its claims addressed at Sections XI and XII.D.2 supra, and Section XIV, infra) China did present 
+argumentation.  As set forth in the respective sections and as summarized below at Section XVII, we 
+have examined and made findings in respect of these allegations.   
+XIV. 
+CHINA'S CLAIMS PERTAINING TO "DOUBLE REMEDIES" 
+A. 
+INTRODUCTION 
+14.1 
+We now consider China's claims with respect to "double remedies".  China's claims in this 
+respect arise from the concurrent imposition, by the United States, of countervailing duties and of 
+                                                   
+865 See Exhibit US-156.  Ex Works is defined as:  "An <Incoterm> whereby the seller is responsible 
+only for having the ordered <goods> available for pickup at the agreed place, which is usually the seller's own 
+premises.  The seller is also usually responsible for export packing to the extent that the transportation 
+particulars are made available [...]".  (A to Z of international trade, F. Reynolds (ICC Publishing S.A., 2002), 
+p. 79). 
+
+
+ 
+WT/DS379/R  
+ 
+Page 207 
+ 
+ 
+ 
+anti-dumping duties calculated pursuant to the USDOC's NME methodology on products from China 
+in the four sets of parallel anti-dumping and countervailing duty investigations at issue. 
+1. 
+Background 
+14.2 
+In anti-dumping investigations involving products from countries it considers to be non-
+market economies ("NMEs"), the USDOC calculates the normal value on the basis of surrogate values 
+taken from countries which it considers to be "market economies" rather than on the basis of the 
+prices or costs of production actually incurred by the investigated producer.866  Specifically, under its 
+NME methodology, the USDOC:  (i) determines the quantities of the factors of production (e.g. inputs, 
+labour, energy) actually used by the respondent producer in producing the investigated good; (ii) 
+multiplies those quantities by the prices of each of those factors based on a "surrogate value" from a 
+market economy country (or, where available, the actual price paid for an input imported from a 
+market economy country); and (iii) adds an amount for factory overhead, selling, general and 
+administrative (SG&A) expenses, and profit, calculated on the basis of ratios of these costs to the 
+costs of the other inputs in the surrogate country.867 
+14.3 
+The USDOC generally treats China as an NME in anti-dumping investigations, and did so in 
+the anti-dumping investigations at issue in this dispute.  As a result, the USDOC applied its NME 
+methodology in calculating the normal value for the investigated Chinese producers.  The normal 
+value so constructed was then used to determine these producers' dumping margins. 
+14.4 
+As China points out, the four countervailing duty investigations at issue in this dispute mark a 
+policy change on the part of the USDOC.  The USDOC had taken the position, in 1984, that its 
+countervailing duty legislation did not apply to imports from non-market economies:  In its 
+investigations on Wire Rod from Poland and from Czechoslovakia, the USDOC determined that it was 
+impossible to identify a "bounty" or "grant" within the meaning of U.S. countervailing duty law in 
+NMEs, because of the pervasive role played by the governments of such centrally-planned economies.  
+This interpretation of the U.S. countervailing duty statute was affirmed by the U.S. Court of Appeals 
+for the Federal Circuit in Georgetown Steel.868  In March 2007, the United States reversed this 
+longstanding policy of not applying U.S. countervailing duty legislation to NMEs:  In the CFS Paper 
+investigation, the USDOC considered that while still not a market economy, China's economy had 
+evolved sufficiently that it was possible to identify and countervail subsidies granted by China.869  At 
+the same time, the USDOC maintained China's NME status for purposes of applying the U.S. anti-
+dumping regime.870  Ultimately, no duties were imposed in the CFS 
+
+Question:
+What are the differences between the Panel and the Appellate Body on the issue of double relief caused by the United States of double taxation?
+
+A. The panel held the thought that this problem cannot be resolved, but the Appellate held that the United States dual relief measures were consistent with SCM.
+B. The Appellate held the thought that this problem cannot be resolved in accordance with the provisions of the WTO, but the panel held that the United States dual relief measures were not consistent with Article 19.3 of the SCM.
+C. The Group believes that United States' non-market economy approach to China, i.e., the use of market economy countries with roughly the same level of economic status as China's economy, instead of using China's raw data, may provide relief to countervailing duty. The Appellate Body held that appropriate was not explicit but needed to be determined by reference to the collective circumstances and that the provision should not be read in an overly rigid manner.
+D. The Group found that the countervailing duty imposed by the United States was not levied at an appropriate amount and that it was levied in a significantly higher amount than the amount of the subsidy found to exist. The Appellate Body held that the WTO did not prohibit the simultaneous application of anti-dumping and countervailing provisions, and that, according to its findings, the amount of countervailing duties did not exceed the amount of subsidies found to exist.
+
+Select the correct answer.

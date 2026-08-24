@@ -1,0 +1,754 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+A grammar of
+Kalamang
+Eline Visser
+language
+science
+press
+Comprehensive Grammar Library 4
+
+
+Comprehensive Grammar Library
+Editor: Martin Haspelmath
+In this series:
+1. Jacques, Guillaume. A grammar of Japhug.
+2. Grimm, Nadine. A grammar of Gyeli.
+3. Maurer-Cecchini, Philippe. A grammar of Tuatschin: A Sursilvan Romansh dialect.
+4. Visser, Eline. A grammar of Kalamang.
+This series grew out of the grammars published in Studies in Diversity Linguistics, which are
+proudly mentioned:
+4. Berghäll, Liisa. A grammar of Mauwake.
+5. Wilbur, Joshua. A grammar of Pite Saami.
+7. Schackow, Diana. A grammar of Yakkha.
+8. Liljegren, Henrik. A grammar of Palula.
+9. Shimelman, Aviva. A grammar of Yauyos Quechua.
+11. Kluge, Angela. A grammar of Papuan Malay.
+12. Kieviet, Paulus. A grammar of Rapa Nui.
+22. Döhler, Christian. A grammar of Komnzo.
+23. Yakpo, Kofi. A grammar of Pichi.
+ISSN (print): 2748-971X
+ISSN (electronic): 2749-7798
+
+
+A grammar of
+Kalamang
+Eline Visser
+language
+science
+press
+
+
+Eline Visser. 2022. A grammar of Kalamang (Comprehensive Grammar Library
+4). Berlin: Language Science Press.
+This title can be downloaded at:
+http://langsci-press.org/catalog/book/344
+© 2022, Eline Visser
+Published under the Creative Commons Attribution 4.0 Licence (CC BY 4.0):
+http://creativecommons.org/licenses/by/4.0/
+ISBN: 978-3-96110-343-0 (Digital)
+978-3-98554-039-6 (Hardcover)
+ISSN (print): 2748-971X
+ISSN (electronic): 2749-7798
+DOI: 10.5281/zenodo.6499927
+Source code available from www.github.com/langsci/344
+Collaborative reading: paperhive.org/documents/remote?type=langsci&id=344
+Cover and concept of design: Ulrike Harbort
+Typesetting: Eline Visser, Sebastian Nordhoff
+Proofreading: Amir Ghorbanpour, Amy Amoakuh, Andi Hölzl, Heriberto
+Avelino, Bev Erasmus, Bianca Prandi, Cesar Perez Guarda, Christopher
+Straughn, Craevschi Alexandru, Fahad Almalki, Jeroen van de Weijer, Katja
+Politt, Liam McKnight, Ludger Paschen, Maša Beslin, Matthew Windsor,
+Neneng Sri, Jean Nitzke, Phil Duncan, Siva Kalyan, Sune Gregersen, Thera
+Crane, Tihomir Rangelov, Yvonne Treis
+Fonts: Libertinus, Arimo, DejaVu Sans Mono
+Typesetting software: XƎL
+A
+T
+EX
+Language Science Press
+xHain
+Grünberger Str. 16
+10243 Berlin, Germany
+langsci-press.org
+Storage and cataloguing done by FU Berlin
+
+
+Contents
+Acknowledgments
+ix
+Abbreviations
+xi
+Ringkasan Bahasa Indonesia [Indonesian summary]
+xv
+1
+Introduction
+1
+1.1
+Local setting . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1
+1.1.1
+Physical geography . . . . . . . . . . . . . . . . . . . . .
+1
+1.1.2
+Linguistic geography . . . . . . . . . . . . . . . . . . . .
+4
+1.2
+History of settlement and contact . . . . . . . . . . . . . . . . .
+5
+1.3
+Ethnographic and socio-economic remarks . . . . . . . . . . . .
+7
+1.4
+Sociolinguistic situation . . . . . . . . . . . . . . . . . . . . . . .
+13
+1.5
+Previous accounts of Kalamang and its genealogical affiliations .
+17
+1.6
+This study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+1.6.1
+Background to this study . . . . . . . . . . . . . . . . . .
+19
+1.6.2
+Aims and theoretical framework
+. . . . . . . . . . . . .
+19
+1.6.3
+Relation with consultants, other speakers and the
+community
+. . . . . . . . . . . . . . . . . . . . . . . . .
+21
+1.6.4
+Data and research methods
+. . . . . . . . . . . . . . . .
+25
+1.6.5
+Recording and data management . . . . . . . . . . . . .
+31
+1.6.6
+Notation systems . . . . . . . . . . . . . . . . . . . . . .
+32
+1.6.7
+Malay and Indonesian . . . . . . . . . . . . . . . . . . .
+34
+2
+Short grammatical overview of Kalamang
+37
+2.1
+Phonology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+37
+2.2
+Morphophonology . . . . . . . . . . . . . . . . . . . . . . . . . .
+38
+2.3
+Nouns, noun phrases and postpositional phrases . . . . . . . . .
+39
+2.4
+Pronouns . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+41
+2.5
+Demonstratives
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+43
+2.6
+Verbs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+2.7
+Simple clauses . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+46
+
+
+Contents
+2.8
+Complex predicates . . . . . . . . . . . . . . . . . . . . . . . . .
+48
+2.9
+Clausal modification . . . . . . . . . . . . . . . . . . . . . . . . .
+48
+2.10 Topic and focus
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+49
+2.11 Areal linguistic context . . . . . . . . . . . . . . . . . . . . . . .
+50
+3
+Phonetics, phonology and morphophonology
+55
+3.1
+Phoneme inventory . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+3.1.1
+Consonants . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+3.1.2
+Vowels . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+65
+3.2
+Phonotactics and syllable structure
+. . . . . . . . . . . . . . . .
+69
+3.2.1
+Syllable structure . . . . . . . . . . . . . . . . . . . . . .
+70
+3.2.2
+Phonotactics of consonants . . . . . . . . . . . . . . . .
+71
+3.2.3
+Phonotactics of vowels . . . . . . . . . . . . . . . . . . .
+72
+3.2.4
+Vowel sequences . . . . . . . . . . . . . . . . . . . . . .
+72
+3.3
+Prosody . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+74
+3.3.1
+Stress assignment . . . . . . . . . . . . . . . . . . . . . .
+74
+3.3.2
+Length . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+85
+3.3.3
+Intonation . . . . . . . . . . . . . . . . . . . . . . . . . .
+86
+3.4
+Morphophonology . . . . . . . . . . . . . . . . . . . . . . . . . .
+96
+3.4.1
+Lenition . . . . . . . . . . . . . . . . . . . . . . . . . . .
+96
+3.4.2
+Elision of k
+. . . . . . . . . . . . . . . . . . . . . . . . .
+97
+3.4.3
+Assimilation . . . . . . . . . . . . . . . . . . . . . . . . .
+99
+3.4.4
+Palatalisation/assibilation . . . . . . . . . . . . . . . . .
+101
+3.4.5
+Metathesis . . . . . . . . . . . . . . . . . . . . . . . . . .
+102
+3.4.6
+Unresolved morphophonological features
+. . . . . . . .
+102
+3.5
+The phonology of interjections . . . . . . . . . . . . . . . . . . .
+108
+4
+Morphological units and processes
+111
+4.1
+Morphological units . . . . . . . . . . . . . . . . . . . . . . . . .
+111
+4.1.1
+Word . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+111
+4.1.2
+Bases and roots . . . . . . . . . . . . . . . . . . . . . . .
+112
+4.1.3
+Affix . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+112
+4.1.4
+Clitic . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+113
+4.1.5
+Particle
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+115
+4.1.6
+Comparison with native speakers’ spelling . . . . . . . .
+116
+4.2
+Morphological processes . . . . . . . . . . . . . . . . . . . . . .
+117
+4.2.1
+Reduplication . . . . . . . . . . . . . . . . . . . . . . . .
+117
+4.2.2
+Compounding . . . . . . . . . . . . . . . . . . . . . . . .
+124
+4.2.3
+Affixation and cliticisation . . . . . . . . . . . . . . . . .
+125
+ii
+
+
+Contents
+5
+Word classes
+129
+5.1
+Verbs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+129
+5.2
+Nouns . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+133
+5.3
+Pronouns . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+135
+5.4
+Quantifiers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+137
+5.4.1
+Numerals
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+138
+5.4.2
+Non-numeral quantifiers . . . . . . . . . . . . . . . . . .
+140
+5.5
+Demonstratives
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+140
+5.6
+Postpositions . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+142
+5.7
+Adverbial modifiers . . . . . . . . . . . . . . . . . . . . . . . . .
+143
+5.8
+Question words . . . . . . . . . . . . . . . . . . . . . . . . . . .
+144
+5.9
+Conjunctions . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+146
+5.10 Interjections . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+147
+6
+Nouns, noun phrases and postpositional phrases
+151
+6.1
+Noun subclasses . . . . . . . . . . . . . . . . . . . . . . . . . . .
+151
+6.1.1
+Proper nouns . . . . . . . . . . . . . . . . . . . . . . . .
+151
+6.1.2
+Common nouns . . . . . . . . . . . . . . . . . . . . . . .
+152
+6.2
+Noun derivation . . . . . . . . . . . . . . . . . . . . . . . . . . .
+157
+6.2.1
+Verb-to-noun derivation . . . . . . . . . . . . . . . . . .
+157
+6.2.2
+Agentive nominalisation . . . . . . . . . . . . . . . . . .
+159
+6.2.3
+Nominal compounds . . . . . . . . . . . . . . . . . . . .
+160
+6.2.4
+Reduplication of nouns . . . . . . . . . . . . . . . . . . .
+164
+6.3
+Noun phrase structure
+. . . . . . . . . . . . . . . . . . . . . . .
+166
+6.3.1
+Nominal possessors . . . . . . . . . . . . . . . . . . . . .
+166
+6.3.2
+Quantifiers
+. . . . . . . . . . . . . . . . . . . . . . . . .
+167
+6.3.3
+Possessive pronouns . . . . . . . . . . . . . . . . . . . .
+169
+6.3.4
+Demonstratives . . . . . . . . . . . . . . . . . . . . . . .
+169
+6.3.5
+Attributive use of predicates . . . . . . . . . . . . . . . .
+170
+6.3.6
+Relative clauses . . . . . . . . . . . . . . . . . . . . . . .
+173
+6.4
+Postpositions . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+174
+6.4.1
+Introduction . . . . . . . . . . . . . . . . . . . . . . . . .
+174
+6.4.2
+Object =at ‘obj’ . . . . . . . . . . . . . . . . . . . . . . .
+175
+6.4.3
+Comitative =bon ‘com’ . . . . . . . . . . . . . . . . . . .
+176
+6.4.4
+Instrumental =ki ‘ins’
+. . . . . . . . . . . . . . . . . . .
+178
+6.4.5
+Benefactive =ki ‘ben’ . . . . . . . . . . . . . . . . . . . .
+178
+6.4.6
+Similative =kap ‘sim’ . . . . . . . . . . . . . . . . . . . .
+179
+6.4.7
+Locative =ko ‘loc’
+. . . . . . . . . . . . . . . . . . . . .
+179
+6.4.8
+Lative =ka ‘lat’ . . . . . . . . . . . . . . . . . . . . . . .
+182
+iii
+
+
+Contents
+6.4.9
+Animate locative/lative =konggo/=kongga ‘an.loc/an.lat’ 183
+6.5
+Nominal coordination . . . . . . . . . . . . . . . . . . . . . . . .
+185
+7
+Pronouns and person reference and address
+187
+7.1
+Pronominal person reference and address . . . . . . . . . . . . .
+187
+7.1.1
+Morphosyntactic properties . . . . . . . . . . . . . . . .
+189
+7.1.2
+Clusivity . . . . . . . . . . . . . . . . . . . . . . . . . . .
+190
+7.1.3
+Number . . . . . . . . . . . . . . . . . . . . . . . . . . .
+190
+7.1.4
+‘Alone’ pronouns . . . . . . . . . . . . . . . . . . . . . .
+192
+7.1.5
+Collective pronouns
+. . . . . . . . . . . . . . . . . . . .
+194
+7.1.6
+Possessive pronouns . . . . . . . . . . . . . . . . . . . .
+194
+7.1.7
+Pronominal address . . . . . . . . . . . . . . . . . . . . .
+195
+7.2
+Non-pronominal person reference and address . . . . . . . . . .
+195
+7.2.1
+Kinship terms . . . . . . . . . . . . . . . . . . . . . . . .
+195
+7.2.2
+Names . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+200
+7.2.3
+Non-pronominal address . . . . . . . . . . . . . . . . . .
+201
+8
+Quantifiers
+203
+8.1
+Numerals . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+203
+8.1.1
+Classifiers . . . . . . . . . . . . . . . . . . . . . . . . . .
+206
+8.1.2
+Other structural properties of numeral quantifiers
+. . .
+209
+8.2
+Non-numeral quantifiers . . . . . . . . . . . . . . . . . . . . . .
+210
+8.3
+Quantifier inflection . . . . . . . . . . . . . . . . . . . . . . . . .
+212
+9
+Possessive and associative constructions
+217
+9.1
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+217
+9.2
+Possessive constructions with nominal possessors . . . . . . . .
+219
+9.3
+Basic possessive constructions . . . . . . . . . . . . . . . . . . .
+220
+9.4
+Possessive constructions with a freestanding possessive pronoun
+222
+9.5
+Double possessive marking . . . . . . . . . . . . . . . . . . . . .
+223
+9.6
+Possessive constructions with a pronoun and possessive suffix .
+224
+9.7
+Associative relations with =kin . . . . . . . . . . . . . . . . . . .
+225
+10 Demonstratives
+229
+10.1 Basic forms and inflections . . . . . . . . . . . . . . . . . . . . .
+229
+10.1.1
+The basic forms . . . . . . . . . . . . . . . . . . . . . . .
+229
+10.1.2
+“Empty” demonstrative affixes . . . . . . . . . . . . . . .
+231
+10.1.3
+Manner, quality, quantity and degree suffixes . . . . . .
+232
+10.1.4
+Postpositions on demonstratives
+. . . . . . . . . . . . .
+233
+iv
+
+
+Contents
+10.2 Demonstrative function . . . . . . . . . . . . . . . . . . . . . . .
+234
+10.2.1
+Proximal wa ‘prox’ . . . . . . . . . . . . . . . . . . . . .
+236
+10.2.2
+Distal me ‘dist’ . . . . . . . . . . . . . . . . . . . . . . .
+239
+10.2.3
+Far distal owa ‘fdist’ . . . . . . . . . . . . . . . . . . . .
+245
+10.2.4
+Anaphoric opa ‘ana’ . . . . . . . . . . . . . . . . . . . .
+247
+10.2.5
+Elevational demonstratives yawe ‘down’ and osa ‘up’
+.
+248
+11 Verbs
+253
+11.1 Verb classes
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+253
+11.1.1
+Regular verbs . . . . . . . . . . . . . . . . . . . . . . . .
+254
+11.1.2
+Irregular verbs
+. . . . . . . . . . . . . . . . . . . . . . .
+254
+11.2 Verb derivation
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+261
+11.2.1
+Noun incorporation
+. . . . . . . . . . . . . . . . . . . .
+261
+11.2.2
+Noun-to-verb derivation . . . . . . . . . . . . . . . . . .
+264
+11.3 Reduplication of verbs . . . . . . . . . . . . . . . . . . . . . . . .
+264
+11.4 Valency changing . . . . . . . . . . . . . . . . . . . . . . . . . .
+267
+11.4.1
+Reflexive constructions . . . . . . . . . . . . . . . . . . .
+267
+11.4.2
+Reciprocal constructions . . . . . . . . . . . . . . . . . .
+269
+11.4.3
+Applicative constructions . . . . . . . . . . . . . . . . .
+273
+11.4.4
+Causative constructions . . . . . . . . . . . . . . . . . .
+275
+11.5 Plural number . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+279
+11.6 Fossilised morphology
+. . . . . . . . . . . . . . . . . . . . . . .
+279
+11.6.1
+Austronesian loan verbs . . . . . . . . . . . . . . . . . .
+279
+11.6.2
+Verbs in -uk . . . . . . . . . . . . . . . . . . . . . . . . .
+281
+12 The clause
+283
+12.1 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+283
+12.2 Verbal clauses . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+284
+12.2.1
+Valency
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+284
+12.2.2
+Comparative constructions
+. . . . . . . . . . . . . . . .
+290
+12.2.3
+Existential and possessive clauses . . . . . . . . . . . . .
+291
+12.3 Non-verbal clauses
+. . . . . . . . . . . . . . . . . . . . . . . . .
+292
+12.3.1
+Nominal clauses
+. . . . . . . . . . . . . . . . . . . . . .
+293
+12.3.2
+Demonstrative clauses . . . . . . . . . . . . . . . . . . .
+294
+12.3.3
+Quantifier clauses . . . . . . . . . . . . . . . . . . . . . .
+295
+12.3.4
+Locative and lative clauses . . . . . . . . . . . . . . . . .
+295
+12.3.5
+Equative constructions . . . . . . . . . . . . . . . . . . .
+296
+12.3.6
+Similative constructions . . . . . . . . . . . . . . . . . .
+297
+v
+
+
+Contents
+12.4 Non-declarative clauses . . . . . . . . . . . . . . . . . . . . . . .
+300
+12.4.1
+Interrogative clauses . . . . . . . . . . . . . . . . . . . .
+300
+12.4.2
+Imperative clauses
+. . . . . . . . . . . . . . . . . . . . .
+304
+12.5 Negative clauses . . . . . . . . . . . . . . . . . . . . . . . . . . .
+305
+12.5.1
+Negation of declarative verbal main clauses . . . . . . .
+305
+12.5.2
+Negation in non-declaratives
+. . . . . . . . . . . . . . .
+307
+12.5.3
+Negation in non-verbal clauses . . . . . . . . . . . . . .
+308
+12.5.4
+Dedicated negative verbs . . . . . . . . . . . . . . . . . .
+310
+12.5.5
+Negative polarity items
+. . . . . . . . . . . . . . . . . .
+313
+12.6 Variation in clausal structure . . . . . . . . . . . . . . . . . . . .
+314
+12.6.1
+Elision of arguments . . . . . . . . . . . . . . . . . . . .
+314
+12.6.2
+Reordering arguments . . . . . . . . . . . . . . . . . . .
+317
+13 Complex predicates
+319
+13.1 Complex predicates with predicate linker =i
+. . . . . . . . . . .
+320
+13.1.1
+Aspectual serialisation with koyet ‘to be finished’ . . . .
+321
+13.1.2
+Motion . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+322
+13.1.3
+Action and result . . . . . . . . . . . . . . . . . . . . . .
+324
+13.1.4
+Durative and ‘until’-constructions
+. . . . . . . . . . . .
+324
+13.1.5
+With give-constructions . . . . . . . . . . . . . . . . . .
+326
+13.1.6
+With become-constructions . . . . . . . . . . . . . . . .
+326
+13.2 Complex predicates with dependent verbs
+. . . . . . . . . . . .
+327
+13.2.1
+With kuru ‘bring’ . . . . . . . . . . . . . . . . . . . . . .
+327
+13.2.2
+With bon ‘bring’
+. . . . . . . . . . . . . . . . . . . . . .
+328
+13.2.3
+With toni ‘say; think; want’ . . . . . . . . . . . . . . . .
+329
+13.2.4
+With eranun ‘cannot’ . . . . . . . . . . . . . . . . . . . .
+330
+13.3 Complex source, goal and location predicates . . . . . . . . . . .
+330
+13.3.1
+Complex locative and lative predicates . . . . . . . . . .
+330
+13.3.2
+Complex causative predicates . . . . . . . . . . . . . . .
+333
+13.4 Serial verb constructions . . . . . . . . . . . . . . . . . . . . . .
+333
+13.4.1
+Symmetrical SVCs
+. . . . . . . . . . . . . . . . . . . . .
+334
+13.4.2
+Asymmetrical SVCs . . . . . . . . . . . . . . . . . . . . .
+335
+14 Clausal modification
+341
+14.1 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+341
+14.2 Mood, aspect and modality marking . . . . . . . . . . . . . . . .
+344
+14.2.1
+Mood
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+344
+14.2.2
+Aspect . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+353
+14.2.3
+Modal markers . . . . . . . . . . . . . . . . . . . . . . .
+360
+vi
+
+
+Contents
+14.3 Adverbial modifiers . . . . . . . . . . . . . . . . . . . . . . . . .
+363
+14.3.1
+Manner adverbials . . . . . . . . . . . . . . . . . . . . .
+364
+14.3.2
+Adverbials of degree 
+
+Question:
+Translate the following kalamang into english: terus ter-nan koyet inier tamu kon misis wis. Which of the following translations is correct?
+
+A. Then we finished drinking coffee, me and a guest, miss, yesterday morning.
+B. Then we finished drinking tea, me and a guest, miss, yesterday morning.
+C. Then we finished drinking coffee, me and a guest, miss, today morning.
+D. Then we finished drinking coffee, me and a guest, mrs, today morning.
+
+Select the correct answer.

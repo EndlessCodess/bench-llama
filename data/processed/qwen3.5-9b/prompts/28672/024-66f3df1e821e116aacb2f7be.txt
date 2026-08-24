@@ -1,0 +1,3302 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+cmake_minimum_required(VERSION 3.13...3.16)
+
+if (${CMAKE_VERSION} VERSION_LESS 3.16)
+  cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+else ()
+  cmake_policy(VERSION 3.16)
+endif ()
+
+# The version number.
+set(HYPRE_VERSION 2.31.0)
+set(HYPRE_NUMBER  23100)
+set(HYPRE_DATE    2024/02/14)
+set(HYPRE_TIME    00:00:00)
+set(HYPRE_BUGS    https://github.com/hypre-space/hypre/issues)
+set(HYPRE_SRCDIR  "${PROJECT_SOURCE_DIR}")
+
+set(PROJECT_NAME HYPRE)
+project(${PROJECT_NAME}
+  VERSION ${HYPRE_VERSION}
+  LANGUAGES C)
+
+# We use C99 by default, but users are free to specify any newer standard version
+set(CMAKE_C_STANDARD 99)
+
+if (${HYPRE_SOURCE_DIR} STREQUAL ${HYPRE_BINARY_DIR})
+  message(FATAL_ERROR "In-place build not allowed! Please use a separate build directory. See the Users Manual or INSTALL file for details.")
+endif ()
+
+if (EXISTS ${HYPRE_SOURCE_DIR}/../.git)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} describe --match v* --long --abbrev=9
+                  OUTPUT_VARIABLE develop_string
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} describe --match v* --abbrev=0
+                  OUTPUT_VARIABLE develop_lastag
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} rev-list --count ${develop_lastag}..HEAD
+                  OUTPUT_VARIABLE develop_number
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} rev-parse --abbrev-ref HEAD
+                  OUTPUT_VARIABLE develop_branch
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if (${develop_string} MATCHES ".*")
+    set(HYPRE_DEVELOP_STRING  ${develop_string})
+    set(HYPRE_DEVELOP_NUMBER  ${develop_number})
+    set(HYPRE_BRANCH_NAME     ${develop_branch})
+    if (develop_branch MATCHES "master")
+      set(HYPRE_DEVELOP_BRANCH  ${develop_branch})
+    else ()
+      message(STATUS "NOTE: On branch ${develop_branch}, not the main development branch")
+    endif ()
+  else ()
+    message(STATUS "NOTE: Could not describe development branch")
+  endif ()
+else ()
+  message(STATUS "NOTE: Could not find .git directory")
+endif ()
+
+# Set cmake module path
+set(CMAKE_MODULE_PATH "${HYPRE_SOURCE_DIR}/config/cmake" "${CMAKE_MODULE_PATH}")
+include(HYPRE_CMakeUtilities)
+
+# Set default installation directory, but provide a means for users to change
+set(HYPRE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/hypre" CACHE PATH
+    "Installation directory for HYPRE")
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "${HYPRE_INSTALL_PREFIX}" CACHE INTERNAL "" FORCE)
+endif ()
+
+# Set default compile optimization flag
+set(HYPRE_BUILD_TYPE "Release" CACHE STRING
+    "Optimization flags: set to Debug, Release, RelWithDebInfo, or MinSizeRel")
+
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE "${HYPRE_BUILD_TYPE}" CACHE INTERNAL "" FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif ()
+
+# Configuration options
+option(HYPRE_ENABLE_SHARED           "Build a shared library" OFF)
+option(HYPRE_ENABLE_BIGINT           "Use long long int for HYPRE_Int" OFF)
+option(HYPRE_ENABLE_MIXEDINT         "Use long long int for HYPRE_BigInt, int for HYPRE_INT" OFF)
+option(HYPRE_ENABLE_SINGLE           "Use float for HYPRE_Real" OFF)
+option(HYPRE_ENABLE_LONG_DOUBLE      "Use long double for HYPRE_Real" OFF)
+option(HYPRE_ENABLE_COMPLEX          "Use complex values" OFF)
+option(HYPRE_ENABLE_HYPRE_BLAS       "Use internal BLAS library" ON)
+option(HYPRE_ENABLE_HYPRE_LAPACK     "Use internal LAPACK library" ON)
+option(HYPRE_ENABLE_PERSISTENT_COMM  "Use persistent communication" OFF)
+option(HYPRE_ENABLE_FEI              "Use FEI" OFF) # TODO: Add this cmake feature
+option(HYPRE_WITH_MPI                "Compile with MPI" ON)
+option(HYPRE_WITH_GPU_AWARE_MPI      "Compile with device aware GPU support" OFF)
+option(HYPRE_WITH_OPENMP             "Use OpenMP" OFF)
+option(HYPRE_ENABLE_HOPSCOTCH        "Use hopscotch hashing with OpenMP" OFF)
+option(HYPRE_WITH_SUPERLU            "Use TPL SuperLU" OFF)
+option(HYPRE_WITH_DSUPERLU           "Use TPL SuperLU_Dist" OFF)
+option(HYPRE_WITH_MAGMA              "Use TPL MAGMA" OFF)
+option(HYPRE_WITH_CALIPER            "Use Caliper" OFF)
+option(HYPRE_PRINT_ERRORS            "Print HYPRE errors" OFF)
+option(HYPRE_TIMING                  "Use HYPRE timing routines" OFF)
+option(HYPRE_BUILD_EXAMPLES          "Build examples" OFF)
+option(HYPRE_BUILD_TESTS             "Build tests" OFF)
+option(HYPRE_USING_HOST_MEMORY       "Use host memory" ON)
+set(HYPRE_WITH_EXTRA_CFLAGS       "" CACHE STRING "Define extra C compile flags")
+set(HYPRE_WITH_EXTRA_CXXFLAGS     "" CACHE STRING "Define extra CXX compile flags")
+# GPU options
+option(HYPRE_WITH_CUDA               "Use CUDA. Require cuda-8.0 or higher" OFF)
+option(HYPRE_WITH_SYCL               "Use SYCL" OFF)
+option(HYPRE_ENABLE_UNIFIED_MEMORY   "Use unified memory for allocating the memory" OFF)
+option(HYPRE_ENABLE_DEVICE_MALLOC_ASYNC "Use device async malloc" OFF)
+# CUDA options
+option(HYPRE_ENABLE_CUDA_STREAMS     "Use CUDA streams" ON)
+option(HYPRE_ENABLE_CUSPARSE         "Use cuSPARSE" ON)
+option(HYPRE_ENABLE_CUSOLVER         "Use cuSOLVER" OFF)
+option(HYPRE_ENABLE_DEVICE_POOL      "Use device memory pool" OFF)
+option(HYPRE_ENABLE_CUBLAS           "Use cuBLAS" OFF)
+option(HYPRE_ENABLE_CURAND           "Use cuRAND" ON)
+option(HYPRE_ENABLE_GPU_PROFILING    "Use NVTX on CUDA" OFF)
+set(HYPRE_CUDA_SM "70" CACHE STRING  "Target CUDA architecture.")
+# oneAPI options
+option(HYPRE_ENABLE_ONEMKLSPARSE     "Use oneMKL sparse" ON)
+option(HYPRE_ENABLE_ONEMKLBLAS       "Use oneMKL blas" ON)
+option(HYPRE_ENABLE_ONEMKLRAND       "Use oneMKL rand" ON)
+set(HYPRE_SYCL_TARGET            ""   CACHE STRING  "Target SYCL architecture, e.g. 'spir64_gen'.")
+set(HYPRE_SYCL_TARGET_BACKEND    ""   CACHE STRING  "Additional SYCL backend options, e.g. '-device 12.1.0,12.4.0'.")
+# Umpire resource management options
+option(HYPRE_WITH_UMPIRE             "Use Umpire Allocator for device and unified memory" OFF)
+option(HYPRE_WITH_UMPIRE_HOST        "Use Umpire Allocator for host memory" OFF)
+option(HYPRE_WITH_UMPIRE_DEVICE      "Use Umpire Allocator for device memory" OFF)
+option(HYPRE_WITH_UMPIRE_UM          "Use Umpire Allocator for unified memory" OFF)
+option(HYPRE_WITH_UMPIRE_PINNED      "Use Umpire Allocator for pinned memory" OFF)
+option(TPL_UMPIRE_LIBRARIES          "List of absolute paths to Umpire link libraries [].")
+option(TPL_UMPIRE_INCLUDE_DIRS       "List of absolute paths to Umpire include directories [].")
+
+option(TPL_SUPERLU_LIBRARIES         "List of absolute paths to SuperLU link libraries [].")
+option(TPL_SUPERLU_INCLUDE_DIRS      "List of absolute paths to SuperLU include directories [].")
+option(TPL_DSUPERLU_LIBRARIES        "List of absolute paths to SuperLU_Dist link libraries [].")
+option(TPL_DSUPERLU_INCLUDE_DIRS     "List of absolute paths to SuperLU_Dist include directories [].")
+option(TPL_MAGMA_LIBRARIES           "List of absolute paths to MAGMA link libraries [].")
+option(TPL_MAGMA_INCLUDE_DIRS        "List of absolute paths to MAGMA include directories [].")
+option(TPL_BLAS_LIBRARIES            "Optional list of absolute paths to BLAS libraries, otherwise use FindBLAS to locate [].")
+option(TPL_LAPACK_LIBRARIES          "Optional list of absolute paths to LAPACK libraries, otherwise use FindLAPACK to locate [].")
+option(TPL_FEI_INCLUDE_DIRS          "List of absolute paths to FEI include directories [].")
+
+# Set config name values
+if (HYPRE_ENABLE_SHARED)
+  set(HYPRE_SHARED ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_BIGINT)
+  set(HYPRE_BIGINT ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_MIXEDINT)
+  set(HYPRE_MIXEDINT ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_SINGLE)
+  set(HYPRE_SINGLE ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_LONG_DOUBLE)
+  set(HYPRE_LONG_DOUBLE ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_COMPLEX)
+  set(HYPRE_COMPLEX ON CACHE BOOL "" FORCE)
+endif ()
+
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set(HYPRE_DEBUG ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_HYPRE_BLAS)
+  set(HYPRE_USING_HYPRE_BLAS ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_HYPRE_LAPACK)
+  set(HYPRE_USING_HYPRE_LAPACK ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_PERSISTENT_COMM)
+  set(HYPRE_USING_PERSISTENT_COMM ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_MPI)
+  set(HYPRE_HAVE_MPI ON CACHE BOOL "" FORCE)
+  set(HYPRE_SEQUENTIAL OFF CACHE BOOL "" FORCE)
+else ()
+  set(HYPRE_SEQUENTIAL ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_OPENMP)
+  set(HYPRE_USING_OPENMP ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_HOPSCOTCH)
+  set(HYPRE_HOPSCOTCH ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_SUPERLU)
+  set(HYPRE_USING_SUPERLU ON CACHE BOOL "" FORCE)
+  add_compile_definitions(HAVE_SUPERLU)
+endif ()
+
+if (HYPRE_WITH_DSUPERLU)
+  set(HYPRE_USING_DSUPERLU ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_HYPRE_BLAS OFF CACHE BOOL "" FORCE)
+  set(HYPRE_USING_HYPRE_LAPACK OFF CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_MAGMA)
+  set(HYPRE_USING_MAGMA ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_ENABLE_FEI)
+  set(HYPRE_USING_FEI ON CACHE BOOL "" FORCE)
+  message(WARNING "CMake support for FEI is not complete!")
+endif ()
+
+if (HYPRE_WITH_CALIPER)
+  set(HYPRE_USING_CALIPER ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_SHARED OR HYPRE_BIGINT OR HYPRE_SINGLE OR HYPRE_LONG_DOUBLE)
+  # FEI doesn't currently compile with shared
+  set(HYPRE_USING_FEI OFF CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_SEQUENTIAL)
+  set(HYPRE_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_UMPIRE)
+  set(HYPRE_USING_UMPIRE ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_UMPIRE_DEVICE ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_UMPIRE_UM ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_UMPIRE_HOST)
+  set(HYPRE_USING_UMPIRE ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_UMPIRE_HOST ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_UMPIRE_DEVICE)
+  set(HYPRE_USING_UMPIRE ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_UMPIRE_DEVICE ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_UMPIRE_UM)
+  set(HYPRE_USING_UMPIRE ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_UMPIRE_UM ON CACHE BOOL "" FORCE)
+endif ()
+
+if (HYPRE_WITH_UMPIRE_PINNED)
+  set(HYPRE_USING_UMPIRE ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_UMPIRE_PINNED ON CACHE BOOL "" FORCE)
+endif ()
+
+# CUDA
+if (HYPRE_WITH_CUDA)
+  enable_language(CXX)
+  message(STATUS "Enabled support for CXX.")
+
+  # Enforce C++11
+  if (NOT CMAKE_CXX_STANDARD OR CMAKE_CXX_STANDARD LESS 11)
+    set(CMAKE_CXX_STANDARD 11)
+  endif ()
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+  message(STATUS "Using CXX standard: c++${CMAKE_CXX_STANDARD}")
+
+  # Add any extra CXX compiler flags HYPRE_WITH_EXTRA_CXXFLAGS
+  if (NOT HYPRE_WITH_EXTRA_CXXFLAGS STREQUAL "")
+    string(REPLACE " " ";" HYPRE_WITH_EXTRA_CXXFLAGS "${HYPRE_WITH_EXTRA_CXXFLAGS}")
+    add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:${HYPRE_WITH_EXTRA_CXXFLAGS}>")
+  endif ()
+
+  # Check if CUDA is available, then enable it
+  include(CheckLanguage)
+  check_language(CUDA)
+
+  # Use ${CMAKE_CXX_COMPILER} as the cuda host compiler.
+  if (NOT CMAKE_CUDA_HOST_COMPILER)
+    set(CMAKE_CUDA_HOST_COMPILER ${CMAKE_CXX_COMPILER})
+  endif ()
+
+  if (CMAKE_CUDA_COMPILER)
+
+    enable_language(CUDA)
+    message(STATUS "Enabled support for CUDA.")
+
+    if (NOT CMAKE_CUDA_STANDARD OR CMAKE_CUDA_STANDARD EQUAL 98)
+      set(CMAKE_CUDA_STANDARD 11)
+    endif ()
+
+    set(CMAKE_CUDA_STANDARD_REQUIRED ON CACHE BOOL "" FORCE)
+
+    if (HYPRE_ENABLE_DEVICE_MALLOC_ASYNC)
+      set(HYPRE_USING_DEVICE_MALLOC_ASYNC ON CACHE BOOL "" FORCE)
+    endif ()
+
+    set(HYPRE_USING_CUDA ON CACHE BOOL "" FORCE)
+    set(HYPRE_USING_GPU ON CACHE BOOL "" FORCE)
+
+    if (HYPRE_ENABLE_UNIFIED_MEMORY)
+      set(HYPRE_USING_UNIFIED_MEMORY ON CACHE BOOL "" FORCE)
+    else ()
+      set(HYPRE_USING_DEVICE_MEMORY ON CACHE BOOL "" FORCE)
+    endif ()
+
+    # Check if examples are enabled, but not unified memory
+    if (HYPRE_BUILD_EXAMPLES AND NOT HYPRE_ENABLE_UNIFIED_MEMORY)
+      message(WARNING "Running the examples on GPUs requires Unified Memory!
+        Examples will not be built!")
+      set(HYPRE_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    endif ()
+
+    if (CMAKE_VERSION VERSION_LESS 3.18.0)
+      add_compile_options("$<$<COMPILE_LANGUAGE:CUDA>:-arch=sm_${HYPRE_CUDA_SM}>")
+    else ()
+      set(CMAKE_CUDA_ARCHITECTURES "${HYPRE_CUDA_SM}")
+    endif ()
+    message(STATUS "Using CUDA architecture: ${HYPRE_CUDA_SM}")
+
+    add_compile_options("$<$<COMPILE_LANGUAGE:CUDA>:-expt-extended-lambda>")
+
+    set(HYPRE_USING_HOST_MEMORY OFF CACHE BOOL "" FORCE)
+
+    if (HYPRE_ENABLE_CUDA_STREAMS)
+      set(HYPRE_USING_CUDA_STREAMS ON CACHE BOOL "" FORCE)
+    endif (HYPRE_ENABLE_CUDA_STREAMS)
+
+    if (HYPRE_ENABLE_DEVICE_POOL)
+      set(HYPRE_USING_DEVICE_POOL ON CACHE BOOL "" FORCE)
+    endif (HYPRE_ENABLE_DEVICE_POOL)
+
+    # TODO Eventually should require cmake>=3.17
+    # and use cmake's FindCUDAToolkit. Now collect
+    # CUDA optional libraries.
+    include(HYPRE_SetupCUDAToolkit)
+  else ()
+    message(WARNING "No CUDA support!")
+    set(HYPRE_USING_HOST_MEMORY ON CACHE BOOL "" FORCE)
+  endif (CMAKE_CUDA_COMPILER)
+endif (HYPRE_WITH_CUDA)
+
+# SYCL
+if (HYPRE_WITH_SYCL)
+  enable_language(CXX)
+  message(STATUS "Enabled support for CXX.")
+
+  # Enforce C++17
+  if (NOT CMAKE_CXX_STANDARD OR CMAKE_CXX_STANDARD LESS 17)
+    set(CMAKE_CXX_STANDARD 17)
+  endif ()
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+  message(STATUS "Using CXX standard: c++${CMAKE_CXX_STANDARD}")
+
+  # Set CXX compiler to dpcpp
+  # WM: note that dpcpp is deprecated, but for now oneMKL looks for the dpcpp compiler to configure things appropriately for the sycl backend
+  set(CMAKE_CXX_COMPILER "dpcpp")
+
+  # Set linker to dpcpp
+  set(CMAKE_LINKER "dpcpp")
+  set(CMAKE_CXX_LINK_EXECUTABLE "<CMAKE_LINKER> <FLAGS> <CMAKE_CXX_LINK_FLAGS> <LINK_FLAGS> <OBJECTS>  -o <TARGET> <LINK_LIBRARIES>")
+  set(CMAKE_CXX_LINKER_WRAPPER_FLAG " ")
+  set(CMAKE_CXX_LINKER_WRAPPER_FLAG_SEP " ")
+
+  # Add any extra CXX compiler flags HYPRE_WITH_EXTRA_CXXFLAGS
+  if (NOT HYPRE_WITH_EXTRA_CXXFLAGS STREQUAL "")
+    string(REPLACE " " ";" HYPRE_WITH_EXTRA_CXXFLAGS "${HYPRE_WITH_EXTRA_CXXFLAGS}")
+    add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:${HYPRE_WITH_EXTRA_CXXFLAGS}>")
+  endif ()
+
+  set(HYPRE_USING_SYCL ON CACHE BOOL "" FORCE)
+  set(HYPRE_USING_GPU ON CACHE BOOL "" FORCE)
+
+  if (HYPRE_ENABLE_UNIFIED_MEMORY)
+    set(HYPRE_USING_UNIFIED_MEMORY ON CACHE BOOL "" FORCE)
+  else ()
+    set(HYPRE_USING_DEVICE_MEMORY ON CACHE BOOL "" FORCE)
+  endif ()
+
+  # Check if examples are enabled, but not unified memory
+  if (HYPRE_BUILD_EXAMPLES AND NOT HYPRE_ENABLE_UNIFIED_MEMORY)
+    message(WARNING "Running the examples on GPUs requires Unified Memory!
+      Examples will not be built!")
+    set(HYPRE_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+  endif ()
+
+  add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-fsycl>")
+  add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:-fsycl-unnamed-lambda>")
+  add_link_options("-fsycl")
+  add_link_options("-fsycl-device-code-split=per_kernel")
+  add_link_options("-Wl,--no-relax")
+
+  if (HYPRE_SYCL_TARGET)
+    add_link_options("SHELL:-fsycl-targets=${HYPRE_SYCL_TARGET}")
+  endif ()
+  if (HYPRE_SYCL_TARGET_BACKEND)
+    add_link_options("SHELL:-Xsycl-target-backend '${HYPRE_SYCL_TARGET_BACKEND}'")
+  endif ()
+
+  set(HYPRE_USING_HOST_MEMORY OFF CACHE BOOL "" FORCE)
+
+  if (HYPRE_ENABLE_CUDA_STREAMS)
+    set(HYPRE_USING_CUDA_STREAMS ON CACHE BOOL "" FORCE)
+  endif (HYPRE_ENABLE_CUDA_STREAMS)
+
+endif (HYPRE_WITH_SYCL)
+
+# Add any extra C compiler flags HYPRE_WITH_EXTRA_CFLAGS
+if (NOT HYPRE_WITH_EXTRA_CFLAGS STREQUAL "")
+  string(REPLACE " " ";" HYPRE_WITH_EXTRA_CFLAGS "${HYPRE_WITH_EXTRA_CFLAGS}")
+  add_compile_options("$<$<COMPILE_LANGUAGE:C>:${HYPRE_WITH_EXTRA_CFLAGS}>")
+endif ()
+
+# Set library build type (must appear before add_library calls)
+if (HYPRE_SHARED)
+  set(BUILD_SHARED_LIBS ON CACHE INTERNAL "" FORCE)
+else ()
+  set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "" FORCE)
+endif ()
+
+# Create the HYPRE library object
+add_library(${PROJECT_NAME})
+
+# Headers and sources
+set(HYPRE_HEADERS "")
+
+# Headers and sources: .
+set(HYPRE_MAIN_HEADERS
+  ${CMAKE_CURRENT_BINARY_DIR}/HYPRE_config.h
+  HYPREf.h
+  HYPRE.h
+  )
+
+set(HYPRE_HEADERS ${HYPRE_HEADERS} ${HYPRE_MAIN_HEADERS})
+
+# Headers and sources: blas
+if (HYPRE_USING_HYPRE_BLAS)
+  add_subdirectory(blas)
+else ()
+  # Use TPL_BLAS_LIBRARIES if set.
+  if (TPL_BLAS_LIBRARIES)
+    message(STATUS "Using TPL_BLAS_LIBRARIES='${TPL_BLAS_LIBRARIES}'")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "${TPL_BLAS_LIBRARIES}")
+  else ()
+    # Find system blas
+    find_package(BLAS REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PUBLIC "${BLAS_LIBRARIES}")
+  endif ()
+  target_compile_definitions(${PROJECT_NAME} PUBLIC "USE_VENDOR_BLAS")
+endif ()
+
+# Headers and sources: lapack
+if (HYPRE_USING_HYPRE_LAPACK)
+  add_subdirectory(lapack)
+else ()
+  # Use TPL_LAPACK_LIBRARIES if set.
+  if (TPL_LAPACK_LIBRARIES)
+    message(STATUS "Using TPL_LAPACK_LIBRARIES='${TPL_LAPACK_LIBRARIES}'")
+    target_link_libraries(${PROJECT_NAME} PUBLIC "${TPL_LAPACK_LIBRARIES}")
+  else ()
+    # Find system lapack
+    find_package(LAPACK REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PUBLIC "${LAPACK_LIBRARIES}")
+  endif ()
+endif ()
+
+# Find SUPERLU, if requested
+if (HYPRE_USING_SUPERLU)
+  if (NOT TPL_SUPERLU_LIBRARIES)
+    message(FATAL_ERROR "TPL_SUPERLU_LIBRARIES option should be set for SuperLU support.")
+  endif ()
+
+  if (NOT TPL_SUPERLU_INCLUDE_DIRS)
+    message(FATAL_ERROR "TPL_SUPERLU_INCLUDE_DIRS option be set for SuperLU support.")
+  endif ()
+
+  foreach (dir ${TPL_SUPERLU_INCLUDE_DIRS})
+    if (NOT EXISTS ${dir})
+      message(FATAL_ERROR "SuperLU include directory not found: ${dir}")
+    endif ()
+    set(CMAKE_C_FLAGS "-I${dir} ${CMAKE_C_FLAGS}")
+  endforeach ()
+  message(STATUS "Enabled support for using SUPERLU.")
+  set(SUPERLU_FOUND TRUE)
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${TPL_SUPERLU_LIBRARIES} stdc++)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${TPL_SUPERLU_INCLUDE_DIRS})
+endif (HYPRE_USING_SUPERLU)
+
+if (SUPERLU_FOUND)
+  set(HYPRE_USING_SUPERLU TRUE)
+endif ()
+
+# Find DSUPERLU, if requested
+if (HYPRE_USING_DSUPERLU)
+  if (NOT TPL_DSUPERLU_LIBRARIES)
+    message(FATAL_ERROR "TPL_DSUPERLU_LIBRARIES option should be set for SuperLU_Dist support.")
+  endif ()
+
+  if (NOT TPL_DSUPERLU_INCLUDE_DIRS)
+    message(FATAL_ERROR "TPL_DSUPERLU_INCLUDE_DIRS option be set for SuperLU_Dist support.")
+  endif ()
+
+  foreach (dir ${TPL_DSUPERLU_INCLUDE_DIRS})
+    if (NOT EXISTS ${dir})
+      message(FATAL_ERROR "SuperLU_Dist include directory not found: ${dir}")
+    endif ()
+    set(CMAKE_C_FLAGS "-I${dir} ${CMAKE_C_FLAGS}")
+  endforeach ()
+  message(STATUS "Enabled support for using DSUPERLU.")
+  set(DSUPERLU_FOUND TRUE)
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${TPL_DSUPERLU_LIBRARIES} stdc++)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${TPL_DSUPERLU_INCLUDE_DIRS})
+endif (HYPRE_USING_DSUPERLU)
+
+if (DSUPERLU_FOUND)
+  set(HYPRE_USING_DSUPERLU TRUE)
+endif ()
+
+# TODO: Check for case if MAGMA without CUDA/HIP
+# Find MAGMA, if requested
+if (HYPRE_USING_MAGMA)
+  if (NOT TPL_MAGMA_LIBRARIES)
+    message(FATAL_ERROR "TPL_MAGMA_LIBRARIES option should be set for MAGMA support.")
+  endif ()
+
+  if (NOT TPL_MAGMA_INCLUDE_DIRS)
+    message(FATAL_ERROR "TPL_MAGMA_INCLUDE_DIRS option be set for MAGMA support.")
+  endif ()
+
+  foreach (dir ${TPL_MAGMA_INCLUDE_DIRS})
+    if (NOT EXISTS ${dir})
+      message(FATAL_ERROR "MAGMA include directory not found: ${dir}")
+    endif ()
+    set(CMAKE_C_FLAGS "-I${dir} ${CMAKE_C_FLAGS}")
+  endforeach ()
+  message(STATUS "Enabled support for using MAGMA.")
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${TPL_MAGMA_LIBRARIES} stdc++)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${TPL_MAGMA_INCLUDE_DIRS})
+endif (HYPRE_USING_MAGMA)
+
+# Find FEI, if requested
+if (HYPRE_USING_FEI)
+  enable_language(CXX)
+
+  if (NOT TPL_FEI_INCLUDE_DIRS)
+    message(FATAL_ERROR "TPL_FEI_INCLUDE_DIRS option should be set for FEI support.")
+  endif ()
+
+  foreach (dir ${TPL_FEI_INCLUDE_DIRS})
+    if (NOT EXISTS ${dir})
+      message(FATAL_ERROR "FEI include directory not found: ${dir}")
+    endif ()
+    set(CMAKE_C_FLAGS "-I${dir} ${CMAKE_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-I${dir} ${CMAKE_CXX_FLAGS}")
+  endforeach ()
+  message(STATUS "Enabled support for using FEI.")
+  set(FEI_FOUND TRUE)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${TPL_FEI_INCLUDE_DIRS})
+endif(HYPRE_USING_FEI)
+
+if (HYPRE_USING_CUDA)
+  target_link_libraries(${PROJECT_NAME} PUBLIC "${EXPORT_INTERFACE_CUDA_LIBS}")
+  if (HYPRE_HAVE_MPI)
+    target_include_directories(${PROJECT_NAME} PUBLIC
+      ${MPI_CXX_INCLUDE_DIRS})
+  endif ()
+endif ()
+
+if (HYPRE_USING_SYCL)
+  target_include_directories(${PROJECT_NAME} PUBLIC $ENV{DPLROOT}/include)
+  if (HYPRE_ENABLE_ONEMKLSPARSE)
+    set(HYPRE_USING_ONEMKLSPARSE ON CACHE BOOL "" FORCE)
+  endif()
+  if (HYPRE_ENABLE_ONEMKLBLAS)
+    set(HYPRE_USING_ONEMKLBLAS ON CACHE BOOL "" FORCE)
+  endif()
+  if (HYPRE_ENABLE_ONEMKLRAND)
+    set(HYPRE_USING_ONEMKLRAND ON CACHE BOOL "" FORCE)
+  endif()
+  if (HYPRE_USING_ONEMKLSPARSE OR HYPRE_USING_ONEMKLBLAS OR HYPRE_USING_ONEMKLRAND)
+    set(MKL_LINK static)
+    set(MKL_THREADING sequential)
+    find_package(MKL CONFIG REQUIRED HINTS "$ENV{MKLROOT}/lib/cmake/mkl")
+    target_compile_options(${PROJECT_NAME} PUBLIC $<TARGET_PROPERTY:MKL::MKL,INTERFACE_COMPILE_OPTIONS>)
+    target_include_directories(${PROJECT_NAME} PUBLIC $<TARGET_PROPERTY:MKL::MKL,INTERFACE_INCLUDE_DIRECTORIES>)
+    target_link_libraries(${PROJECT_NAME} PUBLIC $<LINK_ONLY:MKL::MKL>)
+  endif()
+endif()
+
+if (HYPRE_USING_CALIPER)
+  if (NOT TPL_CALIPER_LIBRARIES OR NOT TPL_CALIPER_INCLUDE_DIRS)
+    message(FATAL_ERROR "Both TPL_CALIPER_LIBRARIES and TPL_CALIPER_INCLUDE_DIRS options must be set for Caliper support.")
+  endif ()
+
+  foreach (dir ${TPL_CALIPER_INCLUDE_DIRS})
+    if (NOT EXISTS ${dir})
+      message(FATAL_ERROR "Caliper include directory not found: ${dir}")
+    endif ()
+    set(CMAKE_C_FLAGS "-I${dir} ${CMAKE_C_FLAGS}")
+  endforeach ()
+  message(STATUS "Enabled support for using Caliper.")
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${TPL_CALIPER_LIBRARIES})
+  target_include_directories(${PROJECT_NAME} PUBLIC ${TPL_CALIPER_INCLUDE_DIRS})
+
+endif()
+
+# Find Umpire, if requested
+if (HYPRE_USING_UMPIRE)
+  if (NOT TPL_UMPIRE_LIBRARIES OR NOT TPL_UMPIRE_INCLUDE_DIRS)
+    message(FATAL_ERROR "Both TPL_UMPIRE_LIBRARIES and TPL_UMPIRE_INCLUDE_DIRS options must be set for Umpire support.")
+  endif ()
+
+  foreach (dir ${TPL_UMPIRE_INCLUDE_DIRS})
+    if (NOT EXISTS ${dir})
+      message(FATAL_ERROR "Umpire include directory not found: ${dir}")
+    endif ()
+    set(CMAKE_C_FLAGS "-I${dir} ${CMAKE_C_FLAGS}")
+  endforeach ()
+  message(STATUS "Enabled support for using Umpire.")
+  target_link_libraries(${PROJECT_NAME} PUBLIC ${TPL_UMPIRE_LIBRARIES})
+  target_include_directories(${PROJECT_NAME} PUBLIC ${TPL_UMPIRE_INCLUDE_DIRS})
+endif ()
+
+# Configure a header file to pass CMake settings to the source code
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/config/HYPRE_config.h.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/HYPRE_config.h"
+  )
+
+# Headers and sources: remaining subdirectories
+set(HYPRE_DIRS utilities multivector krylov seq_mv seq_block_mv parcsr_mv parcsr_block_mv distributed_matrix IJ_mv matrix_matrix distributed_ls parcsr_ls struct_mv struct_ls sstruct_mv sstruct_ls)
+foreach (DIR IN LISTS HYPRE_DIRS)
+  add_subdirectory(${DIR})
+  target_include_directories(${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${DIR}>)
+endforeach ()
+
+# BINARY must be first in order to get the correct HYPRE_config.h file
+target_include_directories(${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${HYPRE_BINARY_DIR}>
+  $<BUILD_INTERFACE:${HYPRE_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/blas>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lapack>
+  $<INSTALL_INTERFACE:include>
+  )
+
+if (HYPRE_USING_CUDA)
+  set_source_files_properties(${HYPRE_GPU_SOURCES} PROPERTIES LANGUAGE CUDA)
+endif ()
+
+if (HYPRE_USING_SYCL)
+  set_source_files_properties(${HYPRE_GPU_SOURCES} PROPERTIES LANGUAGE CXX)
+endif ()
+
+# Set MPI compile flags
+if (NOT HYPRE_SEQUENTIAL)
+  find_program(MPIEXEC_EXECUTABLE NAMES mpiexec mpirun)
+  find_package(MPI REQUIRED)
+  target_link_libraries(${PROJECT_NAME} PUBLIC MPI::MPI_C)
+endif (NOT HYPRE_SEQUENTIAL)
+
+# Set OpenMP compile flags
+if (HYPRE_USING_OPENMP)
+  find_package(OpenMP REQUIRED)
+  target_link_libraries(${PROJECT_NAME} PUBLIC OpenMP::OpenMP_C)
+endif (HYPRE_USING_OPENMP)
+
+if (MSVC)
+  target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
+  if (MSVC_VERSION LESS 1928) # Visual Studio 2019 version 16.8 claims full C11 support
+    # Use the C++ compiler to compile these files to get around lack of C99 support
+    set_source_files_properties(utilities/hopscotch_hash.c       PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(utilities/merge_sort.c           PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(seq_mv/csr_matop.c               PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_mv/par_csr_matop.c        PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_mv/par_csr_matvec.c       PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/ams.c                  PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/aux_interp.c           PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_add_cycle.c        PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_amg_setup.c        PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_coarsen.c          PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_cgc_coarsen.c      PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_jacobi_interp.c    PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_mgr_setup.c        PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_rap.c              PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_relax.c            PROPERTIES COMPILE_FLAGS /TP)
+    set_source_files_properties(parcsr_ls/par_strength.c         PROPERTIES COMPILE_FLAGS /TP)
+  endif()
+  if (MSVC_VERSION LESS 1900) #1900 is studio 2015, next older is 1800 which is studio 2013
+    #Fix issue with visual studio 2013
+    set_source_files_properties(struct_ls/pfmg3_setup_rap.c      PROPERTIES COMPILE_FLAGS /Od)
+  endif()
+endif ()
+
+if (HYPRE_USING_FEI)
+  add_subdirectory(FEI_mv)
+endif ()
+
+# Build the examples directory, if requested
+if (HYPRE_BUILD_EXAMPLES)
+  add_subdirectory(examples)
+endif ()
+
+# Build the test directory, if requested
+if (HYPRE_BUILD_TESTS)
+  add_subdirectory(test)
+endif ()
+
+include(GNUInstallDirs)
+install(TARGETS ${PROJECT_NAME}
+  EXPORT HYPRETargets
+  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+  INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+install(FILES ${HYPRE_HEADERS} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  HYPREConfigVersion.cmake
+  VERSION ${PACKAGE_VERSION}
+  COMPATIBILITY SameMajorVersion
+  )
+
+install(EXPORT HYPRETargets
+  FILE HYPRETargets.cmake
+  NAMESPACE HYPRE::
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/HYPRE"
+  )
+
+configure_package_config_file(
+  config/HYPREConfig.cmake.in HYPREConfig.cmake
+  INSTALL_DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/HYPREConfig.cmake"
+  )
+install(
+  FILES
+      "${CMAKE_CURRENT_BINARY_DIR}/HYPREConfig.cmake"
+      "${CMAKE_CURRENT_BINARY_DIR}/HYPREConfigVersion.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/HYPRE"
+  )
+
+export(EXPORT HYPRETargets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/HYPRETargets.cmake"
+  NAMESPACE HYPRE::
+  )
+
+# Declare an alias so that consumers can depend on HYPRE::HYPRE target
+# also when using HYPRE via add_directory or FetchContent
+add_library(HYPRE::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+export(PACKAGE ${PROJECT_NAME})
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * hypre_IJMatrix Fortran interface
+ *
+ *****************************************************************************/
+
+#include "./_hypre_IJ_mv.h"
+#include "fortran.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*--------------------------------------------------------------------------
+ * hypre_IJMatrixSetObject
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijmatrixsetobject, HYPRE_IJMATRIXSETOBJECT)
+( hypre_F90_Obj *matrix,
+  hypre_F90_Obj *object,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( hypre_IJMatrixSetObject(
+                hypre_F90_PassObj (HYPRE_IJMatrix, matrix),
+                (void *)         *object  ) );
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * HYPRE_IJMatrix Fortran interface
+ *
+ *****************************************************************************/
+
+#include "./_hypre_IJ_mv.h"
+#include "fortran.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorCreate
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorcreate, HYPRE_IJVECTORCREATE)
+( hypre_F90_Comm *comm,
+  hypre_F90_BigInt *jlower,
+  hypre_F90_BigInt *jupper,
+  hypre_F90_Obj *vector,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorCreate(
+                hypre_F90_PassComm (comm),
+                hypre_F90_PassBigInt (jlower),
+                hypre_F90_PassBigInt (jupper),
+                hypre_F90_PassObjRef (HYPRE_IJVector, vector)  ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorDestroy
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectordestroy, HYPRE_IJVECTORDESTROY)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorDestroy(
+                hypre_F90_PassObj (HYPRE_IJVector, vector) ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorInitialize
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorinitialize, HYPRE_IJVECTORINITIALIZE)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorInitialize(
+                hypre_F90_PassObj (HYPRE_IJVector, vector) ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorSetValues
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorsetvalues, HYPRE_IJVECTORSETVALUES)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *num_values,
+  hypre_F90_BigIntArray *indices,
+  hypre_F90_ComplexArray *values,
+  hypre_F90_Int *ierr        )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorSetValues(
+                hypre_F90_PassObj (HYPRE_IJVector, vector),
+                hypre_F90_PassInt (num_values),
+                hypre_F90_PassBigIntArray (indices),
+                hypre_F90_PassComplexArray (values)      ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorAddToValues
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectoraddtovalues, HYPRE_IJVECTORADDTOVALUES)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *num_values,
+  hypre_F90_BigIntArray *indices,
+  hypre_F90_ComplexArray *values,
+  hypre_F90_Int *ierr        )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorAddToValues(
+                hypre_F90_PassObj (HYPRE_IJVector, vector),
+                hypre_F90_PassInt (num_values),
+                hypre_F90_PassBigIntArray (indices),
+                hypre_F90_PassComplexArray (values)      ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorAssemble
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorassemble, HYPRE_IJVECTORASSEMBLE)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorAssemble(
+                hypre_F90_PassObj (HYPRE_IJVector, vector) ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorGetValues
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorgetvalues, HYPRE_IJVECTORGETVALUES)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *num_values,
+  hypre_F90_BigIntArray *indices,
+  hypre_F90_ComplexArray *values,
+  hypre_F90_Int *ierr        )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorGetValues(
+                hypre_F90_PassObj (HYPRE_IJVector, vector),
+                hypre_F90_PassInt (num_values),
+                hypre_F90_PassBigIntArray (indices),
+                hypre_F90_PassComplexArray (values)      ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorSetMaxOffProcElmts
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorsetmaxoffprocelmt, HYPRE_IJVECTORSETMAXOFFPROCELMT)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *max_off_proc_elmts,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorSetMaxOffProcElmts(
+                hypre_F90_PassObj (HYPRE_IJVector, vector),
+                hypre_F90_PassInt (max_off_proc_elmts) ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorSetObjectType
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorsetobjecttype, HYPRE_IJVECTORSETOBJECTTYPE)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *type,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           ( HYPRE_IJVectorSetObjectType(
+                hypre_F90_PassObj (HYPRE_IJVector, vector),
+                hypre_F90_PassInt (type)    ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorGetObjectType
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorgetobjecttype, HYPRE_IJVECTORGETOBJECTTYPE)
+( hypre_F90_Obj *vector,
+  hypre_F90_Int *type,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           (HYPRE_IJVectorGetObjectType(
+               hypre_F90_PassObj (HYPRE_IJVector, vector),
+               hypre_F90_PassIntRef (type)    ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorGetLocalRange
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorgetlocalrange, HYPRE_IJVECTORGETLOCALRANGE)
+( hypre_F90_Obj *vector,
+  hypre_F90_BigInt *jlower,
+  hypre_F90_BigInt *jupper,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           (HYPRE_IJVectorGetLocalRange(
+               hypre_F90_PassObj (HYPRE_IJVector, vector),
+               hypre_F90_PassBigIntRef (jlower),
+               hypre_F90_PassBigIntRef (jupper)  ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorGetObject
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorgetobject, HYPRE_IJVECTORGETOBJECT)
+( hypre_F90_Obj *vector,
+  hypre_F90_Obj *object,
+  hypre_F90_Int *ierr    )
+{
+   *ierr = (hypre_F90_Int)
+           (HYPRE_IJVectorGetObject(
+               hypre_F90_PassObj (HYPRE_IJVector, vector),
+               (void **)         object  ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorRead
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorread, HYPRE_IJVECTORREAD)
+( char     *filename,
+  hypre_F90_Comm *comm,
+  hypre_F90_Int *object_type,
+  hypre_F90_Obj *vector,
+  hypre_F90_Int *ierr      )
+{
+   *ierr = (hypre_F90_Int)
+           (HYPRE_IJVectorRead(
+               (char *)            filename,
+               hypre_F90_PassComm (comm),
+               hypre_F90_PassInt (object_type),
+               hypre_F90_PassObjRef (HYPRE_IJVector, vector)       ) );
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJVectorPrint
+ *--------------------------------------------------------------------------*/
+
+void
+hypre_F90_IFACE(hypre_ijvectorprint, HYPRE_IJVECTORPRINT)
+( hypre_F90_Obj *vector,
+  char     *filename,
+  hypre_F90_Int *ierr      )
+{
+   *ierr = (hypre_F90_Int)
+           (HYPRE_IJVectorPrint(
+               hypre_F90_PassObj (HYPRE_IJVector, vector),
+               (char *)          filename ) );
+}
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * Member functions for hypre_AuxParCSRMatrix class.
+ *
+ *****************************************************************************/
+
+#include "_hypre_IJ_mv.h"
+#include "aux_parcsr_matrix.h"
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParCSRMatrixCreate
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_AuxParCSRMatrixCreate( hypre_AuxParCSRMatrix **aux_matrix,
+                             HYPRE_Int               local_num_rows,
+                             HYPRE_Int               local_num_cols,
+                             HYPRE_Int              *sizes )
+{
+   hypre_AuxParCSRMatrix  *matrix;
+
+   matrix = hypre_CTAlloc(hypre_AuxParCSRMatrix,  1, HYPRE_MEMORY_HOST);
+
+   hypre_AuxParCSRMatrixLocalNumRows(matrix) = local_num_rows;
+   hypre_AuxParCSRMatrixLocalNumRownnz(matrix) = local_num_rows;
+   hypre_AuxParCSRMatrixLocalNumCols(matrix) = local_num_cols;
+
+   hypre_AuxParCSRMatrixRowSpace(matrix) = sizes;
+
+   /* set defaults */
+   hypre_AuxParCSRMatrixNeedAux(matrix) = 1;
+   hypre_AuxParCSRMatrixMaxOffProcElmts(matrix) = 0;
+   hypre_AuxParCSRMatrixCurrentOffProcElmts(matrix) = 0;
+   hypre_AuxParCSRMatrixOffProcIIndx(matrix) = 0;
+   hypre_AuxParCSRMatrixRownnz(matrix) = NULL;
+   hypre_AuxParCSRMatrixRowLength(matrix) = NULL;
+   hypre_AuxParCSRMatrixAuxJ(matrix) = NULL;
+   hypre_AuxParCSRMatrixAuxData(matrix) = NULL;
+   hypre_AuxParCSRMatrixIndxDiag(matrix) = NULL;
+   hypre_AuxParCSRMatrixIndxOffd(matrix) = NULL;
+   hypre_AuxParCSRMatrixDiagSizes(matrix) = NULL;
+   hypre_AuxParCSRMatrixOffdSizes(matrix) = NULL;
+   /* stash for setting or adding on/off-proc values */
+   hypre_AuxParCSRMatrixOffProcI(matrix) = NULL;
+   hypre_AuxParCSRMatrixOffProcJ(matrix) = NULL;
+   hypre_AuxParCSRMatrixOffProcData(matrix) = NULL;
+   hypre_AuxParCSRMatrixMemoryLocation(matrix) = HYPRE_MEMORY_HOST;
+#if defined(HYPRE_USING_GPU)
+   hypre_AuxParCSRMatrixMaxStackElmts(matrix) = 0;
+   hypre_AuxParCSRMatrixCurrentStackElmts(matrix) = 0;
+   hypre_AuxParCSRMatrixStackI(matrix) = NULL;
+   hypre_AuxParCSRMatrixStackJ(matrix) = NULL;
+   hypre_AuxParCSRMatrixStackData(matrix) = NULL;
+   hypre_AuxParCSRMatrixStackSorA(matrix) = NULL;
+   hypre_AuxParCSRMatrixUsrOnProcElmts(matrix) = -1;
+   hypre_AuxParCSRMatrixUsrOffProcElmts(matrix) = -1;
+   hypre_AuxParCSRMatrixInitAllocFactor(matrix) = 5;
+   hypre_AuxParCSRMatrixGrowFactor(matrix) = 2;
+#endif
+
+   *aux_matrix = matrix;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParCSRMatrixDestroy
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_AuxParCSRMatrixDestroy( hypre_AuxParCSRMatrix *matrix )
+{
+   HYPRE_Int   num_rownnz;
+   HYPRE_Int   num_rows;
+   HYPRE_Int  *rownnz;
+   HYPRE_Int   i;
+
+   if (matrix)
+   {
+      rownnz     = hypre_AuxParCSRMatrixRownnz(matrix);
+      num_rownnz = hypre_AuxParCSRMatrixLocalNumRownnz(matrix);
+      num_rows = hypre_AuxParCSRMatrixLocalNumRows(matrix);
+
+      if (hypre_AuxParCSRMatrixAuxJ(matrix))
+      {
+         if (hypre_AuxParCSRMatrixRownnz(matrix))
+         {
+            for (i = 0; i < num_rownnz; i++)
+            {
+               hypre_TFree(hypre_AuxParCSRMatrixAuxJ(matrix)[rownnz[i]], HYPRE_MEMORY_HOST);
+            }
+         }
+         else
+         {
+            for (i = 0; i < num_rows; i++)
+            {
+               hypre_TFree(hypre_AuxParCSRMatrixAuxJ(matrix)[i], HYPRE_MEMORY_HOST);
+            }
+         }
+
+         hypre_TFree(hypre_AuxParCSRMatrixAuxJ(matrix), HYPRE_MEMORY_HOST);
+      }
+
+      if (hypre_AuxParCSRMatrixAuxData(matrix))
+      {
+         if (hypre_AuxParCSRMatrixRownnz(matrix))
+         {
+            for (i = 0; i < num_rownnz; i++)
+            {
+               hypre_TFree(hypre_AuxParCSRMatrixAuxData(matrix)[rownnz[i]], HYPRE_MEMORY_HOST);
+            }
+            hypre_TFree(hypre_AuxParCSRMatrixAuxData(matrix), HYPRE_MEMORY_HOST);
+         }
+         else
+         {
+            for (i = 0; i < num_rows; i++)
+            {
+               hypre_TFree(hypre_AuxParCSRMatrixAuxData(matrix)[i], HYPRE_MEMORY_HOST);
+            }
+            hypre_TFree(hypre_AuxParCSRMatrixAuxData(matrix), HYPRE_MEMORY_HOST);
+         }
+      }
+
+      hypre_TFree(hypre_AuxParCSRMatrixRownnz(matrix), HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParCSRMatrixRowLength(matrix), HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParCSRMatrixRowSpace(matrix), HYPRE_MEMORY_HOST);
+
+      hypre_TFree(hypre_AuxParCSRMatrixIndxDiag(matrix), HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParCSRMatrixIndxOffd(matrix), HYPRE_MEMORY_HOST);
+
+      hypre_TFree(hypre_AuxParCSRMatrixDiagSizes(matrix), HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParCSRMatrixOffdSizes(matrix), HYPRE_MEMORY_HOST);
+
+      hypre_TFree(hypre_AuxParCSRMatrixOffProcI(matrix),    HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParCSRMatrixOffProcJ(matrix),    HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParCSRMatrixOffProcData(matrix), HYPRE_MEMORY_HOST);
+
+#if defined(HYPRE_USING_GPU)
+      hypre_TFree(hypre_AuxParCSRMatrixStackI(matrix),    hypre_AuxParCSRMatrixMemoryLocation(matrix));
+      hypre_TFree(hypre_AuxParCSRMatrixStackJ(matrix),    hypre_AuxParCSRMatrixMemoryLocation(matrix));
+      hypre_TFree(hypre_AuxParCSRMatrixStackData(matrix), hypre_AuxParCSRMatrixMemoryLocation(matrix));
+      hypre_TFree(hypre_AuxParCSRMatrixStackSorA(matrix), hypre_AuxParCSRMatrixMemoryLocation(matrix));
+#endif
+
+      hypre_TFree(matrix, HYPRE_MEMORY_HOST);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParCSRMatrixSetRownnz
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_AuxParCSRMatrixSetRownnz( hypre_AuxParCSRMatrix *matrix )
+{
+   HYPRE_Int   local_num_rows = hypre_AuxParCSRMatrixLocalNumRows(matrix);
+   HYPRE_Int  *row_space      = hypre_AuxParCSRMatrixRowSpace(matrix);
+   HYPRE_Int   num_rownnz_old = hypre_AuxParCSRMatrixLocalNumRownnz(matrix);
+   HYPRE_Int  *rownnz_old     = hypre_AuxParCSRMatrixRownnz(matrix);
+   HYPRE_Int  *rownnz;
+
+   HYPRE_Int   i, ii, local_num_rownnz;
+
+   /* Count number of nonzero rows */
+   local_num_rownnz = 0;
+#ifdef HYPRE_USING_OPENMP
+   #pragma omp parallel for private(i) reduction(+:local_num_rownnz) HYPRE_SMP_SCHEDULE
+#endif
+   for (i = 0; i < local_num_rows; i++)
+   {
+      if (row_space[i] > 0)
+      {
+         local_num_rownnz++;
+      }
+   }
+
+   if (local_num_rownnz != local_num_rows)
+   {
+      rownnz = hypre_CTAlloc(HYPRE_Int, local_num_rownnz, HYPRE_MEMORY_HOST);
+
+      /* Find nonzero rows */
+      local_num_rownnz = 0;
+      for (i = 0; i < local_num_rows; i++)
+      {
+         if (row_space[i] > 0)
+         {
+            rownnz[local_num_rownnz++] = i;
+         }
+      }
+
+      /* Free memory if necessary */
+      if (rownnz_old && rownnz && (local_num_rownnz < num_rownnz_old))
+      {
+         ii = 0;
+         for (i = 0; i < num_rownnz_old; i++)
+         {
+            if (rownnz_old[i] == rownnz[ii])
+            {
+               ii++;
+            }
+            else
+            {
+               hypre_TFree(hypre_AuxParCSRMatrixAuxJ(matrix)[rownnz_old[i]], HYPRE_MEMORY_HOST);
+               hypre_TFree(hypre_AuxParCSRMatrixAuxData(matrix)[rownnz_old[i]], HYPRE_MEMORY_HOST);
+            }
+
+            if (ii == local_num_rownnz)
+            {
+               i = i + 1;
+               for (; i < num_rownnz_old; i++)
+               {
+                  hypre_TFree(hypre_AuxParCSRMatrixAuxJ(matrix)[rownnz_old[i]],
+                              HYPRE_MEMORY_HOST);
+                  hypre_TFree(hypre_AuxParCSRMatrixAuxData(matrix)[rownnz_old[i]],
+                              HYPRE_MEMORY_HOST);
+               }
+               break;
+            }
+         }
+      }
+      hypre_TFree(rownnz_old, HYPRE_MEMORY_HOST);
+
+      hypre_AuxParCSRMatrixLocalNumRownnz(matrix) = local_num_rownnz;
+      hypre_AuxParCSRMatrixRownnz(matrix) = rownnz;
+   }
+   else
+   {
+      hypre_TFree(rownnz_old, HYPRE_MEMORY_HOST);
+      hypre_AuxParCSRMatrixLocalNumRownnz(matrix) = local_num_rows;
+      hypre_AuxParCSRMatrixRownnz(matrix) = NULL;
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParCSRMatrixInitialize_v2
+ *--------------------------------------------------------------------------*/
+HYPRE_Int
+hypre_AuxParCSRMatrixInitialize_v2( hypre_AuxParCSRMatrix *matrix,
+                                    HYPRE_MemoryLocation memory_location )
+{
+   HYPRE_Int local_num_rows = hypre_AuxParCSRMatrixLocalNumRows(matrix);
+   HYPRE_Int max_off_proc_elmts = hypre_AuxParCSRMatrixMaxOffProcElmts(matrix);
+
+   hypre_AuxParCSRMatrixMemoryLocation(matrix) = memory_location;
+
+   if (local_num_rows < 0)
+   {
+      return -1;
+   }
+
+   if (local_num_rows == 0)
+   {
+      return 0;
+   }
+
+#if defined(HYPRE_USING_GPU)
+   if (memory_location != HYPRE_MEMORY_HOST)
+   {
+      /* GPU assembly */
+      hypre_AuxParCSRMatrixNeedAux(matrix) = 1;
+   }
+   else
+#endif
+   {
+      /* CPU assembly */
+      /* allocate stash for setting or adding off processor values */
+      if (max_off_proc_elmts > 0)
+      {
+         hypre_AuxParCSRMatrixOffProcI(matrix)    = hypre_CTAlloc(HYPRE_BigInt, 2 * max_off_proc_elmts,
+                                                                  HYPRE_MEMORY_HOST);
+         hypre_AuxParCSRMatrixOffProcJ(matrix)    = hypre_CTAlloc(HYPRE_BigInt,   max_off_proc_elmts,
+                                                                  HYPRE_MEMORY_HOST);
+         hypre_AuxParCSRMatrixOffProcData(matrix) = hypre_CTAlloc(HYPRE_Complex,  max_off_proc_elmts,
+                                                                  HYPRE_MEMORY_HOST);
+      }
+
+      if (hypre_AuxParCSRMatrixNeedAux(matrix))
+      {
+         HYPRE_Int      *row_space = hypre_AuxParCSRMatrixRowSpace(matrix);
+         HYPRE_Int      *rownnz    = hypre_AuxParCSRMatrixRownnz(matrix);
+         HYPRE_BigInt  **aux_j     = hypre_CTAlloc(HYPRE_BigInt *,  local_num_rows, HYPRE_MEMORY_HOST);
+         HYPRE_Complex **aux_data  = hypre_CTAlloc(HYPRE_Complex *, local_num_rows, HYPRE_MEMORY_HOST);
+
+         HYPRE_Int       local_num_rownnz;
+         HYPRE_Int       i, ii;
+
+         if (row_space)
+         {
+            /* Count number of nonzero rows */
+            local_num_rownnz = 0;
+            for (i = 0; i < local_num_rows; i++)
+            {
+               if (row_space[i] > 0)
+               {
+                  local_num_rownnz++;
+               }
+            }
+
+            if (local_num_rownnz != local_num_rows)
+            {
+               rownnz = hypre_CTAlloc(HYPRE_Int, local_num_rownnz, HYPRE_MEMORY_HOST);
+
+               /* Find nonzero rows */
+               local_num_rownnz = 0;
+               for (i = 0; i < local_num_rows; i++)
+               {
+                  if (row_space[i] > 0)
+                  {
+                     rownnz[local_num_rownnz++] = i;
+                  }
+               }
+
+               hypre_AuxParCSRMatrixLocalNumRownnz(matrix) = local_num_rownnz;
+               hypre_AuxParCSRMatrixRownnz(matrix) = rownnz;
+            }
+         }
+
+         if (!hypre_AuxParCSRMatrixRowLength(matrix))
+         {
+            hypre_AuxParCSRMatrixRowLength(matrix) = hypre_CTAlloc(HYPRE_Int, local_num_rows,
+                                                                   HYPRE_MEMORY_HOST);
+         }
+
+         if (row_space)
+         {
+            if (local_num_rownnz != local_num_rows)
+            {
+               for (i = 0; i < local_num_rownnz; i++)
+               {
+                  ii = rownnz[i];
+                  aux_j[ii] = hypre_CTAlloc(HYPRE_BigInt, row_space[ii], HYPRE_MEMORY_HOST);
+                  aux_data[ii] = hypre_CTAlloc(HYPRE_Complex, row_space[ii], HYPRE_MEMORY_HOST);
+               }
+            }
+            else
+            {
+               for (i = 0; i < local_num_rows; i++)
+               {
+                  aux_j[i] = hypre_CTAlloc(HYPRE_BigInt, row_space[i], HYPRE_MEMORY_HOST);
+                  aux_data[i] = hypre_CTAlloc(HYPRE_Complex, row_space[i], HYPRE_MEMORY_HOST);
+               }
+            }
+         }
+         else
+         {
+            row_space = hypre_CTAlloc(HYPRE_Int, local_num_rows, HYPRE_MEMORY_HOST);
+            for (i = 0; i < local_num_rows; i++)
+            {
+               row_space[i] = 30;
+               aux_j[i] = hypre_CTAlloc(HYPRE_BigInt, 30, HYPRE_MEMORY_HOST);
+               aux_data[i] = hypre_CTAlloc(HYPRE_Complex, 30, HYPRE_MEMORY_HOST);
+            }
+            hypre_AuxParCSRMatrixRowSpace(matrix) = row_space;
+         }
+         hypre_AuxParCSRMatrixAuxJ(matrix) = aux_j;
+         hypre_AuxParCSRMatrixAuxData(matrix) = aux_data;
+      }
+      else
+      {
+         hypre_AuxParCSRMatrixIndxDiag(matrix) = hypre_CTAlloc(HYPRE_Int, local_num_rows, HYPRE_MEMORY_HOST);
+         hypre_AuxParCSRMatrixIndxOffd(matrix) = hypre_CTAlloc(HYPRE_Int, local_num_rows, HYPRE_MEMORY_HOST);
+      }
+   }
+
+   return hypre_error_flag;
+}
+
+HYPRE_Int
+hypre_AuxParCSRMatrixInitialize(hypre_AuxParCSRMatrix *matrix)
+{
+   if (matrix)
+   {
+      return hypre_AuxParCSRMatrixInitialize_v2(matrix, hypre_AuxParCSRMatrixMemoryLocation(matrix));
+   }
+
+   return -2;
+}
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * HYPRE_IJMatrix interface
+ *
+ *****************************************************************************/
+
+#include "./_hypre_IJ_mv.h"
+
+#include "../HYPRE.h"
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixCreate
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixCreate( MPI_Comm        comm,
+                      HYPRE_BigInt    ilower,
+                      HYPRE_BigInt    iupper,
+                      HYPRE_BigInt    jlower,
+                      HYPRE_BigInt    jupper,
+                      HYPRE_IJMatrix *matrix )
+{
+   HYPRE_BigInt info[2];
+   HYPRE_Int num_procs;
+   HYPRE_Int myid;
+
+   hypre_IJMatrix *ijmatrix;
+
+   HYPRE_BigInt  row0, col0, rowN, colN;
+
+   ijmatrix = hypre_CTAlloc(hypre_IJMatrix, 1, HYPRE_MEMORY_HOST);
+
+   hypre_IJMatrixComm(ijmatrix)           = comm;
+   hypre_IJMatrixObject(ijmatrix)         = NULL;
+   hypre_IJMatrixTranslator(ijmatrix)     = NULL;
+   hypre_IJMatrixAssumedPart(ijmatrix)    = NULL;
+   hypre_IJMatrixObjectType(ijmatrix)     = HYPRE_UNITIALIZED;
+   hypre_IJMatrixAssembleFlag(ijmatrix)   = 0;
+   hypre_IJMatrixPrintLevel(ijmatrix)     = 0;
+   hypre_IJMatrixOMPFlag(ijmatrix)        = 0;
+
+   hypre_MPI_Comm_size(comm, &num_procs);
+   hypre_MPI_Comm_rank(comm, &myid);
+
+
+   if (ilower > iupper + 1 || ilower < 0)
+   {
+      hypre_error_in_arg(2);
+      hypre_TFree(ijmatrix, HYPRE_MEMORY_HOST);
+      return hypre_error_flag;
+   }
+
+   if (iupper < -1)
+   {
+      hypre_error_in_arg(3);
+      hypre_TFree(ijmatrix, HYPRE_MEMORY_HOST);
+      return hypre_error_flag;
+   }
+
+   if (jlower > jupper + 1 || jlower < 0)
+   {
+      hypre_error_in_arg(4);
+      hypre_TFree(ijmatrix, HYPRE_MEMORY_HOST);
+      return hypre_error_flag;
+   }
+
+   if (jupper < -1)
+   {
+      hypre_error_in_arg(5);
+      hypre_TFree(ijmatrix, HYPRE_MEMORY_HOST);
+      return hypre_error_flag;
+   }
+
+   hypre_IJMatrixRowPartitioning(ijmatrix)[0] = ilower;
+   hypre_IJMatrixRowPartitioning(ijmatrix)[1] = iupper + 1;
+   hypre_IJMatrixColPartitioning(ijmatrix)[0] = jlower;
+   hypre_IJMatrixColPartitioning(ijmatrix)[1] = jupper + 1;
+
+   /* now we need the global number of rows and columns as well
+      as the global first row and column index */
+
+   /* proc 0 has the first row and col */
+   if (myid == 0)
+   {
+      info[0] = ilower;
+      info[1] = jlower;
+   }
+   hypre_MPI_Bcast(info, 2, HYPRE_MPI_BIG_INT, 0, comm);
+   row0 = info[0];
+   col0 = info[1];
+
+   /* proc (num_procs-1) has the last row and col */
+   if (myid == (num_procs - 1))
+   {
+      info[0] = iupper;
+      info[1] = jupper;
+   }
+   hypre_MPI_Bcast(info, 2, HYPRE_MPI_BIG_INT, num_procs - 1, comm);
+
+   rowN = info[0];
+   colN = info[1];
+
+   hypre_IJMatrixGlobalFirstRow(ijmatrix) = row0;
+   hypre_IJMatrixGlobalFirstCol(ijmatrix) = col0;
+   hypre_IJMatrixGlobalNumRows(ijmatrix) = rowN - row0 + 1;
+   hypre_IJMatrixGlobalNumCols(ijmatrix) = colN - col0 + 1;
+
+   *matrix = (HYPRE_IJMatrix) ijmatrix;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixDestroy( HYPRE_IJMatrix matrix )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (ijmatrix)
+   {
+      if hypre_IJMatrixAssumedPart(ijmatrix)
+      {
+         hypre_AssumedPartitionDestroy((hypre_IJAssumedPart*)hypre_IJMatrixAssumedPart(ijmatrix));
+      }
+      if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+      {
+         hypre_IJMatrixDestroyParCSR( ijmatrix );
+      }
+      else if ( hypre_IJMatrixObjectType(ijmatrix) != -1 )
+      {
+         hypre_error_in_arg(1);
+         return hypre_error_flag;
+      }
+   }
+
+   hypre_TFree(ijmatrix, HYPRE_MEMORY_HOST);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixInitialize( HYPRE_IJMatrix matrix )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      hypre_IJMatrixInitializeParCSR( ijmatrix ) ;
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+
+}
+
+HYPRE_Int
+HYPRE_IJMatrixInitialize_v2( HYPRE_IJMatrix matrix, HYPRE_MemoryLocation memory_location )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      hypre_IJMatrixInitializeParCSR_v2( ijmatrix, memory_location ) ;
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetPrintLevel( HYPRE_IJMatrix matrix,
+                             HYPRE_Int print_level )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   hypre_IJMatrixPrintLevel(ijmatrix) = (print_level > 0) ? print_level : 0;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * This is a helper routine to compute a prefix sum of integer values.
+ *
+ * The current implementation is okay for modest numbers of threads.
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_PrefixSumInt(HYPRE_Int   nvals,
+                   HYPRE_Int  *vals,
+                   HYPRE_Int  *sums)
+{
+   HYPRE_Int  j, nthreads, bsize;
+
+   nthreads = hypre_NumThreads();
+   bsize = (nvals + nthreads - 1) / nthreads; /* This distributes the remainder */
+
+   if (nvals < nthreads || bsize == 1)
+   {
+      sums[0] = 0;
+      for (j = 1; j < nvals; j++)
+      {
+         sums[j] += sums[j - 1] + vals[j - 1];
+      }
+   }
+   else
+   {
+
+      /* Compute preliminary partial sums (in parallel) within each interval */
+#ifdef HYPRE_USING_OPENMP
+      #pragma omp parallel for private(j) HYPRE_SMP_SCHEDULE
+#endif
+      for (j = 0; j < nvals; j += bsize)
+      {
+         HYPRE_Int  i, n = hypre_min((j + bsize), nvals);
+
+         sums[j] = 0;
+         for (i = j + 1; i < n; i++)
+         {
+            sums[i] = sums[i - 1] + vals[i - 1];
+         }
+      }
+
+      /* Compute final partial sums (in serial) for the first entry of every interval */
+      for (j = bsize; j < nvals; j += bsize)
+      {
+         sums[j] = sums[j - bsize] + sums[j - 1] + vals[j - 1];
+      }
+
+      /* Compute final partial sums (in parallel) for the remaining entries */
+#ifdef HYPRE_USING_OPENMP
+      #pragma omp parallel for private(j) HYPRE_SMP_SCHEDULE
+#endif
+      for (j = bsize; j < nvals; j += bsize)
+      {
+         HYPRE_Int  i, n = hypre_min((j + bsize), nvals);
+
+         for (i = j + 1; i < n; i++)
+         {
+            sums[i] += sums[j];
+         }
+      }
+   }
+
+   return hypre_error_flag;
+}
+
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetValues( HYPRE_IJMatrix       matrix,
+                         HYPRE_Int            nrows,
+                         HYPRE_Int           *ncols,
+                         const HYPRE_BigInt  *rows,
+                         const HYPRE_BigInt  *cols,
+                         const HYPRE_Complex *values )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (nrows == 0)
+   {
+      return hypre_error_flag;
+   }
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   /*
+   if (!ncols)
+   {
+      hypre_error_in_arg(3);
+      return hypre_error_flag;
+   }
+   */
+
+   if (!rows)
+   {
+      hypre_error_in_arg(4);
+      return hypre_error_flag;
+   }
+
+   if (!cols)
+   {
+      hypre_error_in_arg(5);
+      return hypre_error_flag;
+   }
+
+   if (!values)
+   {
+      hypre_error_in_arg(6);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) != HYPRE_PARCSR )
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   HYPRE_IJMatrixSetValues2(matrix, nrows, ncols, rows, NULL, cols, values);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+HYPRE_Int
+HYPRE_IJMatrixSetValues2( HYPRE_IJMatrix       matrix,
+                          HYPRE_Int            nrows,
+                          HYPRE_Int           *ncols,
+                          const HYPRE_BigInt  *rows,
+                          const HYPRE_Int     *row_indexes,
+                          const HYPRE_BigInt  *cols,
+                          const HYPRE_Complex *values )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (nrows == 0)
+   {
+      return hypre_error_flag;
+   }
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (nrows < 0)
+   {
+      hypre_error_in_arg(2);
+      return hypre_error_flag;
+   }
+
+   /*
+   if (!ncols)
+   {
+      hypre_error_in_arg(3);
+      return hypre_error_flag;
+   }
+   */
+
+   if (!rows)
+   {
+      hypre_error_in_arg(4);
+      return hypre_error_flag;
+   }
+
+   if (!cols)
+   {
+      hypre_error_in_arg(6);
+      return hypre_error_flag;
+   }
+
+   if (!values)
+   {
+      hypre_error_in_arg(7);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) != HYPRE_PARCSR )
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+#if defined(HYPRE_USING_GPU)
+   HYPRE_ExecutionPolicy exec = hypre_GetExecPolicy1( hypre_IJMatrixMemoryLocation(matrix) );
+
+   if (exec == HYPRE_EXEC_DEVICE)
+   {
+      hypre_IJMatrixSetAddValuesParCSRDevice(ijmatrix, nrows, ncols, rows, row_indexes, cols, values,
+                                             "set");
+   }
+   else
+#endif
+   {
+      HYPRE_Int *row_indexes_tmp = (HYPRE_Int *) row_indexes;
+      HYPRE_Int *ncols_tmp = ncols;
+
+      if (!ncols_tmp)
+      {
+         HYPRE_Int i;
+         ncols_tmp = hypre_TAlloc(HYPRE_Int, nrows, HYPRE_MEMORY_HOST);
+         for (i = 0; i < nrows; i++)
+         {
+            ncols_tmp[i] = 1;
+         }
+      }
+
+      if (!row_indexes)
+      {
+         row_indexes_tmp = hypre_CTAlloc(HYPRE_Int, nrows, HYPRE_MEMORY_HOST);
+         hypre_PrefixSumInt(nrows, ncols_tmp, row_indexes_tmp);
+      }
+
+      if (hypre_IJMatrixOMPFlag(ijmatrix))
+      {
+         hypre_IJMatrixSetValuesOMPParCSR(ijmatrix, nrows, ncols_tmp, rows, row_indexes_tmp, cols, values);
+      }
+      else
+      {
+         hypre_IJMatrixSetValuesParCSR(ijmatrix, nrows, ncols_tmp, rows, row_indexes_tmp, cols, values);
+      }
+
+      if (!ncols)
+      {
+         hypre_TFree(ncols_tmp, HYPRE_MEMORY_HOST);
+      }
+
+      if (!row_indexes)
+      {
+         hypre_TFree(row_indexes_tmp, HYPRE_MEMORY_HOST);
+      }
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+HYPRE_Int
+HYPRE_IJMatrixSetConstantValues( HYPRE_IJMatrix matrix, HYPRE_Complex value)
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      return ( hypre_IJMatrixSetConstantValuesParCSR( ijmatrix, value));
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixAddToValues( HYPRE_IJMatrix       matrix,
+                           HYPRE_Int            nrows,
+                           HYPRE_Int           *ncols,
+                           const HYPRE_BigInt  *rows,
+                           const HYPRE_BigInt  *cols,
+                           const HYPRE_Complex *values )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (nrows == 0)
+   {
+      return hypre_error_flag;
+   }
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (nrows < 0)
+   {
+      hypre_error_in_arg(2);
+      return hypre_error_flag;
+   }
+
+   /*
+   if (!ncols)
+   {
+      hypre_error_in_arg(3);
+      return hypre_error_flag;
+   }
+   */
+
+   if (!rows)
+   {
+      hypre_error_in_arg(4);
+      return hypre_error_flag;
+   }
+
+   if (!cols)
+   {
+      hypre_error_in_arg(5);
+      return hypre_error_flag;
+   }
+
+   if (!values)
+   {
+      hypre_error_in_arg(6);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) != HYPRE_PARCSR )
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   HYPRE_IJMatrixAddToValues2(matrix, nrows, ncols, rows, NULL, cols, values);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixAddToValues2( HYPRE_IJMatrix       matrix,
+                            HYPRE_Int            nrows,
+                            HYPRE_Int           *ncols,
+                            const HYPRE_BigInt  *rows,
+                            const HYPRE_Int     *row_indexes,
+                            const HYPRE_BigInt  *cols,
+                            const HYPRE_Complex *values )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (nrows == 0)
+   {
+      return hypre_error_flag;
+   }
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (nrows < 0)
+   {
+      hypre_error_in_arg(2);
+      return hypre_error_flag;
+   }
+
+   /*
+   if (!ncols)
+   {
+      hypre_error_in_arg(3);
+      return hypre_error_flag;
+   }
+   */
+
+   if (!rows)
+   {
+      hypre_error_in_arg(4);
+      return hypre_error_flag;
+   }
+
+   if (!cols)
+   {
+      hypre_error_in_arg(6);
+      return hypre_error_flag;
+   }
+
+   if (!values)
+   {
+      hypre_error_in_arg(7);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) != HYPRE_PARCSR )
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+#if defined(HYPRE_USING_GPU)
+   HYPRE_ExecutionPolicy exec = hypre_GetExecPolicy1( hypre_IJMatrixMemoryLocation(matrix) );
+
+   if (exec == HYPRE_EXEC_DEVICE)
+   {
+      hypre_IJMatrixSetAddValuesParCSRDevice(ijmatrix, nrows, ncols, rows, row_indexes, cols, values,
+                                             "add");
+   }
+   else
+#endif
+   {
+      HYPRE_Int *row_indexes_tmp = (HYPRE_Int *) row_indexes;
+      HYPRE_Int *ncols_tmp = ncols;
+
+      if (!ncols_tmp)
+      {
+         HYPRE_Int i;
+         ncols_tmp = hypre_TAlloc(HYPRE_Int, nrows, HYPRE_MEMORY_HOST);
+         for (i = 0; i < nrows; i++)
+         {
+            ncols_tmp[i] = 1;
+         }
+      }
+
+      if (!row_indexes)
+      {
+         row_indexes_tmp = hypre_CTAlloc(HYPRE_Int, nrows, HYPRE_MEMORY_HOST);
+         hypre_PrefixSumInt(nrows, ncols_tmp, row_indexes_tmp);
+      }
+
+      if (hypre_IJMatrixOMPFlag(ijmatrix))
+      {
+         hypre_IJMatrixAddToValuesOMPParCSR(ijmatrix, nrows, ncols_tmp, rows, row_indexes_tmp, cols, values);
+      }
+      else
+      {
+         hypre_IJMatrixAddToValuesParCSR(ijmatrix, nrows, ncols_tmp, rows, row_indexes_tmp, cols, values);
+      }
+
+      if (!ncols)
+      {
+         hypre_TFree(ncols_tmp, HYPRE_MEMORY_HOST);
+      }
+
+      if (!row_indexes)
+      {
+         hypre_TFree(row_indexes_tmp, HYPRE_MEMORY_HOST);
+      }
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixAssemble( HYPRE_IJMatrix matrix )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+#if defined(HYPRE_USING_GPU)
+      HYPRE_ExecutionPolicy exec = hypre_GetExecPolicy1( hypre_IJMatrixMemoryLocation(matrix) );
+
+      if (exec == HYPRE_EXEC_DEVICE)
+      {
+         return ( hypre_IJMatrixAssembleParCSRDevice( ijmatrix ) );
+      }
+      else
+#endif
+      {
+         return ( hypre_IJMatrixAssembleParCSR( ijmatrix ) );
+      }
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixGetRowCounts( HYPRE_IJMatrix matrix,
+                            HYPRE_Int      nrows,
+                            HYPRE_BigInt  *rows,
+                            HYPRE_Int     *ncols )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (nrows == 0)
+   {
+      return hypre_error_flag;
+   }
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (nrows < 0)
+   {
+      hypre_error_in_arg(2);
+      return hypre_error_flag;
+   }
+
+   if (!rows)
+   {
+      hypre_error_in_arg(3);
+      return hypre_error_flag;
+   }
+
+   if (!ncols)
+   {
+      hypre_error_in_arg(4);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      hypre_IJMatrixGetRowCountsParCSR( ijmatrix, nrows, rows, ncols );
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixGetValues( HYPRE_IJMatrix matrix,
+                         HYPRE_Int      nrows,
+                         HYPRE_Int     *ncols,
+                         HYPRE_BigInt  *rows,
+                         HYPRE_BigInt  *cols,
+                         HYPRE_Complex *values )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (nrows == 0)
+   {
+      return hypre_error_flag;
+   }
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (!ncols)
+   {
+      hypre_error_in_arg(3);
+      return hypre_error_flag;
+   }
+
+   if (!rows)
+   {
+      hypre_error_in_arg(4);
+      return hypre_error_flag;
+   }
+
+   if (!cols)
+   {
+      hypre_error_in_arg(5);
+      return hypre_error_flag;
+   }
+
+   if (!values)
+   {
+      hypre_error_in_arg(6);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      hypre_IJMatrixGetValuesParCSR( ijmatrix, nrows, ncols,
+                                     rows, cols, values );
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetObjectType( HYPRE_IJMatrix matrix,
+                             HYPRE_Int      type )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   hypre_IJMatrixObjectType(ijmatrix) = type;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixGetObjectType( HYPRE_IJMatrix  matrix,
+                             HYPRE_Int      *type )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   *type = hypre_IJMatrixObjectType(ijmatrix);
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixGetLocalRange( HYPRE_IJMatrix  matrix,
+                             HYPRE_BigInt   *ilower,
+                             HYPRE_BigInt   *iupper,
+                             HYPRE_BigInt   *jlower,
+                             HYPRE_BigInt   *jupper )
+{
+   hypre_IJMatrix  *ijmatrix = (hypre_IJMatrix *) matrix;
+   HYPRE_BigInt    *row_partitioning;
+   HYPRE_BigInt    *col_partitioning;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   row_partitioning = hypre_IJMatrixRowPartitioning(ijmatrix);
+   col_partitioning = hypre_IJMatrixColPartitioning(ijmatrix);
+
+   *ilower = row_partitioning[0];
+   *iupper = row_partitioning[1] - 1;
+   *jlower = col_partitioning[0];
+   *jupper = col_partitioning[1] - 1;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+/**
+   Returns a pointer to an underlying ijmatrix type used to implement IJMatrix.
+   Assumes that the implementation has an underlying matrix, so it would not
+   work with a direct implementation of IJMatrix.
+
+   @return integer error code
+   @param IJMatrix [IN]
+   The ijmatrix to be pointed to.
+*/
+
+HYPRE_Int
+HYPRE_IJMatrixGetObject( HYPRE_IJMatrix   matrix,
+                         void           **object )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   *object = hypre_IJMatrixObject( ijmatrix );
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetRowSizes( HYPRE_IJMatrix   matrix,
+                           const HYPRE_Int *sizes )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      return ( hypre_IJMatrixSetRowSizesParCSR( ijmatrix, sizes ) );
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetDiagOffdSizes( HYPRE_IJMatrix   matrix,
+                                const HYPRE_Int *diag_sizes,
+                                const HYPRE_Int *offdiag_sizes )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      hypre_IJMatrixSetDiagOffdSizesParCSR( ijmatrix, diag_sizes, offdiag_sizes );
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+   return hypre_error_flag;
+
+}
+
+/*--------------------------------------------------------------------------
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetMaxOffProcElmts( HYPRE_IJMatrix matrix,
+                                  HYPRE_Int      max_off_proc_elmts)
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR )
+   {
+      return ( hypre_IJMatrixSetMaxOffProcElmtsParCSR(ijmatrix,
+                                                      max_off_proc_elmts) );
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixRead
+ *
+ * Reads data from file in ASCII format and creates an IJMatrix on host memory
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixRead( const char     *filename,
+                    MPI_Comm        comm,
+                    HYPRE_Int       type,
+                    HYPRE_IJMatrix *matrix_ptr )
+{
+   hypre_IJMatrixRead(filename, comm, type, matrix_ptr, 0);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixReadBinary
+ *
+ * Reads data from file in binary format and creates an IJMatrix
+ * on host memory.
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixReadBinary( const char     *filename,
+                          MPI_Comm        comm,
+                          HYPRE_Int       type,
+                          HYPRE_IJMatrix *matrix_ptr )
+{
+   hypre_IJMatrixReadBinary(filename, comm, type, matrix_ptr);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixReadMM
+ *
+ * Reads matrix-market data from file in ASCII format and creates an
+ * IJMatrix on host memory.
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixReadMM( const char     *filename,
+                      MPI_Comm        comm,
+                      HYPRE_Int       type,
+                      HYPRE_IJMatrix *matrix_ptr )
+{
+   hypre_IJMatrixRead(filename, comm, type, matrix_ptr, 1);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixPrint
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixPrint( HYPRE_IJMatrix  matrix,
+                     const char     *filename )
+{
+   if (!matrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( (hypre_IJMatrixObjectType(matrix) != HYPRE_PARCSR) )
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   void *object;
+   HYPRE_IJMatrixGetObject(matrix, &object);
+   hypre_ParCSRMatrix *par_csr = (hypre_ParCSRMatrix*) object;
+
+   hypre_ParCSRMatrixPrintIJ(par_csr, 0, 0, filename);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixPrintBinary
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixPrintBinary( HYPRE_IJMatrix  matrix,
+                           const char     *filename )
+{
+   void    *object;
+
+   if (!matrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if ( (hypre_IJMatrixObjectType(matrix) != HYPRE_PARCSR) )
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   HYPRE_IJMatrixGetObject(matrix, &object);
+   hypre_ParCSRMatrixPrintBinaryIJ((hypre_ParCSRMatrix*) object, 0, 0, filename);
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixSetOMPFlag
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixSetOMPFlag( HYPRE_IJMatrix matrix,
+                          HYPRE_Int      omp_flag )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   hypre_IJMatrixOMPFlag(ijmatrix) = omp_flag;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixTranspose
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixTranspose( HYPRE_IJMatrix  matrix_A,
+                         HYPRE_IJMatrix *matrix_AT )
+{
+   hypre_IJMatrix   *ij_A = (hypre_IJMatrix *) matrix_A;
+   hypre_IJMatrix   *ij_AT;
+   HYPRE_Int         i;
+
+   if (!ij_A)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   ij_AT = hypre_CTAlloc(hypre_IJMatrix, 1, HYPRE_MEMORY_HOST);
+
+   hypre_IJMatrixComm(ij_AT)           = hypre_IJMatrixComm(ij_A);
+   hypre_IJMatrixObject(ij_AT)         = NULL;
+   hypre_IJMatrixTranslator(ij_AT)     = NULL;
+   hypre_IJMatrixAssumedPart(ij_AT)    = NULL;
+   hypre_IJMatrixObjectType(ij_AT)     = hypre_IJMatrixObjectType(ij_A);
+   hypre_IJMatrixAssembleFlag(ij_AT)   = 1;
+   hypre_IJMatrixPrintLevel(ij_AT)     = hypre_IJMatrixPrintLevel(ij_A);
+   hypre_IJMatrixGlobalFirstRow(ij_AT) = hypre_IJMatrixGlobalFirstCol(ij_A);
+   hypre_IJMatrixGlobalFirstCol(ij_AT) = hypre_IJMatrixGlobalFirstRow(ij_A);
+   hypre_IJMatrixGlobalNumRows(ij_AT)  = hypre_IJMatrixGlobalNumCols(ij_A);
+   hypre_IJMatrixGlobalNumCols(ij_AT)  = hypre_IJMatrixGlobalNumRows(ij_A);
+
+   for (i = 0; i < 2; i++)
+   {
+      hypre_IJMatrixRowPartitioning(ij_AT)[i] = hypre_IJMatrixColPartitioning(ij_A)[i];
+      hypre_IJMatrixColPartitioning(ij_AT)[i] = hypre_IJMatrixRowPartitioning(ij_A)[i];
+   }
+
+   if (hypre_IJMatrixObjectType(ij_A) == HYPRE_PARCSR)
+   {
+      hypre_IJMatrixTransposeParCSR(ij_A, ij_AT);
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   *matrix_AT = (HYPRE_IJMatrix) ij_AT;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixNorm
+ *
+ *  TODO: Add other norms
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixNorm( HYPRE_IJMatrix  matrix,
+                    HYPRE_Real     *norm )
+{
+   hypre_IJMatrix *ijmatrix = (hypre_IJMatrix *) matrix;
+
+   if (!ijmatrix)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   if (hypre_IJMatrixObjectType(ijmatrix) == HYPRE_PARCSR)
+   {
+      hypre_IJMatrixNormParCSR(ijmatrix, norm);
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * HYPRE_IJMatrixAdd
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+HYPRE_IJMatrixAdd( HYPRE_Complex    alpha,
+                   HYPRE_IJMatrix   matrix_A,
+                   HYPRE_Complex    beta,
+                   HYPRE_IJMatrix   matrix_B,
+                   HYPRE_IJMatrix  *matrix_C )
+{
+   hypre_IJMatrix   *ij_A = (hypre_IJMatrix *) matrix_A;
+   hypre_IJMatrix   *ij_B = (hypre_IJMatrix *) matrix_B;
+   hypre_IJMatrix   *ij_C;
+
+   HYPRE_BigInt     *row_partitioning_A;
+   HYPRE_BigInt     *col_partitioning_A;
+   HYPRE_BigInt     *row_partitioning_B;
+   HYPRE_BigInt     *col_partitioning_B;
+   HYPRE_Int         i;
+
+   if (!ij_A)
+   {
+      hypre_error_in_arg(1);
+      return hypre_error_flag;
+   }
+
+   /* Check if A and B have the same row/col partitionings */
+   row_partitioning_A = hypre_IJMatrixRowPartitioning(ij_A);
+   row_partitioning_B = hypre_IJMatrixRowPartitioning(ij_B);
+   col_partitioning_A = hypre_IJMatrixColPartitioning(ij_A);
+   col_partitioning_B = hypre_IJMatrixColPartitioning(ij_B);
+   for (i = 0; i < 2; i++)
+   {
+      if (row_partitioning_A[i] != row_partitioning_B[i])
+      {
+         hypre_error_w_msg(HYPRE_ERROR_GENERIC,
+                           "Input matrices must have same row partitioning!");
+         return hypre_error_flag;
+      }
+
+      if (col_partitioning_A[i] != col_partitioning_B[i])
+      {
+         hypre_error_w_msg(HYPRE_ERROR_GENERIC,
+                           "Input matrices must have same col partitioning!");
+         return hypre_error_flag;
+      }
+   }
+
+   ij_C = hypre_CTAlloc(hypre_IJMatrix, 1, HYPRE_MEMORY_HOST);
+
+   hypre_IJMatrixComm(ij_C)            = hypre_IJMatrixComm(ij_A);
+   hypre_IJMatrixObject(ij_C)          = NULL;
+   hypre_IJMatrixTranslator(ij_C)      = NULL;
+   hypre_IJMatrixAssumedPart(ij_C)     = NULL;
+   hypre_IJMatrixObjectType(ij_C)      = hypre_IJMatrixObjectType(ij_A);
+   hypre_IJMatrixAssembleFlag(ij_C)    = 1;
+   hypre_IJMatrixPrintLevel(ij_C)      = hypre_IJMatrixPrintLevel(ij_A);
+
+   /* Copy row/col partitioning of A to C */
+   for (i = 0; i < 2; i++)
+   {
+      hypre_IJMatrixRowPartitioning(ij_C)[i] = row_partitioning_A[i];
+      hypre_IJMatrixColPartitioning(ij_C)[i] = col_partitioning_A[i];
+   }
+
+   if (hypre_IJMatrixObjectType(ij_A) == HYPRE_PARCSR)
+   {
+      hypre_IJMatrixAddParCSR(alpha, ij_A, beta, ij_B, ij_C);
+   }
+   else
+   {
+      hypre_error_in_arg(1);
+   }
+
+   *matrix_C = (HYPRE_IJMatrix) ij_C;
+
+   return hypre_error_flag;
+}
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/*----------------------------------------------------
+ * Functions for the IJ assumed partition fir IJ_Matrix
+ *-----------------------------------------------------*/
+
+#include "_hypre_IJ_mv.h"
+
+/*------------------------------------------------------------------
+ * hypre_IJMatrixCreateAssumedPartition -
+ * Each proc gets it own range. Then
+ * each needs to reconcile its actual range with its assumed
+ * range - the result is essentila a partition of its assumed range -
+ * this is the assumed partition.
+ *--------------------------------------------------------------------*/
+
+
+HYPRE_Int
+hypre_IJMatrixCreateAssumedPartition( hypre_IJMatrix *matrix)
+{
+   HYPRE_BigInt global_num_rows;
+   HYPRE_BigInt global_first_row;
+   HYPRE_Int myid;
+   HYPRE_BigInt row_start = 0, row_end = 0;
+   HYPRE_BigInt *row_partitioning = hypre_IJMatrixRowPartitioning(matrix);
+
+   MPI_Comm   comm;
+
+   hypre_IJAssumedPart *apart;
+
+   global_num_rows = hypre_IJMatrixGlobalNumRows(matrix);
+   global_first_row = hypre_IJMatrixGlobalFirstRow(matrix);
+   comm = hypre_IJMatrixComm(matrix);
+
+   /* find out my actual range of rows and rowumns */
+   row_start = row_partitioning[0];
+   row_end = row_partitioning[1] - 1;
+   hypre_MPI_Comm_rank(comm, &myid );
+
+   /* allocate space */
+   apart = hypre_CTAlloc(hypre_IJAssumedPart,  1, HYPRE_MEMORY_HOST);
+
+   /* get my assumed partitioning  - we want row partitioning of the matrix
+      for off processor values - so we use the row start and end
+      Note that this is different from the assumed partitioning for the parcsr matrix
+      which needs it for matvec multiplications and therefore needs to do it for
+      the col partitioning */
+   hypre_GetAssumedPartitionRowRange( comm, myid, global_first_row,
+                                      global_num_rows, &(apart->row_start), &(apart->row_end));
+
+   /*allocate some space for the partition of the assumed partition */
+   apart->length = 0;
+   /*room for 10 owners of the assumed partition*/
+   apart->storage_length = 10; /*need to be >=1 */
+   apart->proc_list = hypre_TAlloc(HYPRE_Int,  apart->storage_length, HYPRE_MEMORY_HOST);
+   apart->row_start_list =   hypre_TAlloc(HYPRE_BigInt,  apart->storage_length, HYPRE_MEMORY_HOST);
+   apart->row_end_list =   hypre_TAlloc(HYPRE_BigInt,  apart->storage_length, HYPRE_MEMORY_HOST);
+
+   /* now we want to reconcile our actual partition with the assumed partition */
+   hypre_LocateAssumedPartition(comm, row_start, row_end, global_first_row,
+                                global_num_rows, apart, myid);
+
+   /* this partition will be saved in the matrix data structure until the matrix is destroyed */
+   hypre_IJMatrixAssumedPart(matrix) = apart;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------
+ * hypre_IJVectorCreateAssumedPartition -
+
+ * Essentially the same as for a matrix!
+
+ * Each proc gets it own range. Then
+ * each needs to reconcile its actual range with its assumed
+ * range - the result is essentila a partition of its assumed range -
+ * this is the assumed partition.
+ *--------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_IJVectorCreateAssumedPartition( hypre_IJVector *vector)
+{
+   HYPRE_BigInt  global_num, global_first_row;
+   HYPRE_Int     myid;
+   HYPRE_BigInt  start, end;
+   HYPRE_BigInt *partitioning = hypre_IJVectorPartitioning(vector);
+   MPI_Comm      comm;
+
+   hypre_IJAssumedPart *apart;
+
+   global_num = hypre_IJVectorGlobalNumRows(vector);
+   global_first_row = hypre_IJVectorGlobalFirstRow(vector);
+   comm = hypre_ParVectorComm(vector);
+
+   /* find out my actualy range of rows */
+   start = partitioning[0];
+   end   = partitioning[1] - 1;
+
+   hypre_MPI_Comm_rank(comm, &myid);
+
+   /* allocate space */
+   apart = hypre_CTAlloc(hypre_IJAssumedPart, 1, HYPRE_MEMORY_HOST);
+
+   /* get my assumed partitioning  - we want partitioning of the vector that the
+      matrix multiplies - so we use the col start and end */
+   hypre_GetAssumedPartitionRowRange(comm, myid, global_first_row,
+                                     global_num, &(apart->row_start), &(apart->row_end));
+
+   /*allocate some space for the partition of the assumed partition */
+   apart->length = 0;
+   /*room for 10 owners of the assumed partition*/
+   apart->storage_length = 10; /*need to be >=1 */
+   apart->proc_list      = hypre_TAlloc(HYPRE_Int, apart->storage_length, HYPRE_MEMORY_HOST);
+   apart->row_start_list = hypre_TAlloc(HYPRE_BigInt, apart->storage_length, HYPRE_MEMORY_HOST);
+   apart->row_end_list   = hypre_TAlloc(HYPRE_BigInt, apart->storage_length, HYPRE_MEMORY_HOST);
+
+   /* now we want to reconcile our actual partition with the assumed partition */
+   hypre_LocateAssumedPartition(comm, start, end, global_first_row,
+                                global_num, apart, myid);
+
+   /* this partition will be saved in the vector data structure until the vector is destroyed */
+   hypre_IJVectorAssumedPart(vector) = apart;
+
+   return hypre_error_flag;
+}
+
+
+# Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+# HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+
+set(HDRS
+  aux_parcsr_matrix.h
+  aux_par_vector.h
+  HYPRE_IJ_mv.h
+  _hypre_IJ_mv.h
+  IJ_matrix.h
+  IJ_vector.h
+)
+
+set(SRCS
+  aux_parcsr_matrix.c
+  aux_par_vector.c
+  F90_HYPRE_IJMatrix.c
+  F90_HYPRE_IJVector.c
+  F90_IJMatrix.c
+  HYPRE_IJMatrix.c
+  HYPRE_IJVector.c
+  IJ_assumed_part.c
+  IJMatrix.c
+  IJMatrix_parcsr.c
+  IJVector.c
+  IJVector_parcsr.c
+  IJMatrix_parcsr_device.c
+  IJVector_parcsr_device.c
+)
+
+target_sources(${PROJECT_NAME}
+  PRIVATE ${SRCS}
+          ${HDRS}
+)
+
+if (HYPRE_USING_CUDA OR HYPRE_USING_SYCL)
+  set(GPU_SRCS
+    IJMatrix_parcsr_device.c
+    IJVector_parcsr_device.c
+  )
+  convert_filenames_to_full_paths(GPU_SRCS)
+  set(HYPRE_GPU_SOURCES ${HYPRE_GPU_SOURCES} ${GPU_SRCS} PARENT_SCOPE)
+endif ()
+
+convert_filenames_to_full_paths(HDRS)
+set(HYPRE_HEADERS ${HYPRE_HEADERS} ${HDRS} PARENT_SCOPE)
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * Member functions for hypre_AuxParVector class.
+ *
+ *****************************************************************************/
+
+#include "_hypre_IJ_mv.h"
+#include "aux_par_vector.h"
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParVectorCreate
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_AuxParVectorCreate( hypre_AuxParVector **aux_vector_ptr)
+{
+   hypre_AuxParVector  *aux_vector;
+
+   aux_vector = hypre_CTAlloc(hypre_AuxParVector, 1, HYPRE_MEMORY_HOST);
+
+   /* set defaults */
+   hypre_AuxParVectorMaxOffProcElmts(aux_vector)     = 0;
+   hypre_AuxParVectorCurrentOffProcElmts(aux_vector) = 0;
+
+   /* stash for setting or adding off processor values */
+   hypre_AuxParVectorOffProcI(aux_vector)            = NULL;
+   hypre_AuxParVectorOffProcData(aux_vector)         = NULL;
+   hypre_AuxParVectorMemoryLocation(aux_vector)      = HYPRE_MEMORY_HOST;
+
+#if defined(HYPRE_USING_GPU)
+   hypre_AuxParVectorMaxStackElmts(aux_vector)       = 0;
+   hypre_AuxParVectorCurrentStackElmts(aux_vector)   = 0;
+   hypre_AuxParVectorStackI(aux_vector)              = NULL;
+   hypre_AuxParVectorStackVoff(aux_vector)           = NULL;
+   hypre_AuxParVectorStackData(aux_vector)           = NULL;
+   hypre_AuxParVectorStackSorA(aux_vector)           = NULL;
+   hypre_AuxParVectorUsrOffProcElmts(aux_vector)     = -1;
+   hypre_AuxParVectorInitAllocFactor(aux_vector)     = 1.5;
+   hypre_AuxParVectorGrowFactor(aux_vector)          = 2.0;
+#endif
+
+   *aux_vector_ptr = aux_vector;
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParVectorDestroy
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_AuxParVectorDestroy( hypre_AuxParVector *aux_vector )
+{
+   if (aux_vector)
+   {
+      hypre_TFree(hypre_AuxParVectorOffProcI(aux_vector),    HYPRE_MEMORY_HOST);
+      hypre_TFree(hypre_AuxParVectorOffProcData(aux_vector), HYPRE_MEMORY_HOST);
+
+#if defined(HYPRE_USING_GPU)
+      HYPRE_MemoryLocation  memory_location = hypre_AuxParVectorMemoryLocation(aux_vector);
+
+      hypre_TFree(hypre_AuxParVectorStackI(aux_vector),    memory_location);
+      hypre_TFree(hypre_AuxParVectorStackVoff(aux_vector), memory_location);
+      hypre_TFree(hypre_AuxParVectorStackData(aux_vector), memory_location);
+      hypre_TFree(hypre_AuxParVectorStackSorA(aux_vector), memory_location);
+#endif
+
+      hypre_TFree(aux_vector, HYPRE_MEMORY_HOST);
+   }
+
+   return hypre_error_flag;
+}
+
+/*--------------------------------------------------------------------------
+ * hypre_AuxParVectorInitialize_v2
+ *--------------------------------------------------------------------------*/
+
+HYPRE_Int
+hypre_AuxParVectorInitialize_v2( hypre_AuxParVector   *aux_vector,
+                                 HYPRE_MemoryLocation  memory_location )
+{
+   hypre_AuxParVectorMemoryLocation(aux_vector) = memory_location;
+
+   if (memory_location == HYPRE_MEMORY_HOST)
+   {
+      /* CPU assembly */
+      /* allocate stash for setting or adding off processor values */
+      HYPRE_Int max_off_proc_elmts = hypre_AuxParVectorMaxOffProcElmts(aux_vector);
+      if (max_off_proc_elmts > 0)
+      {
+         hypre_AuxParVectorOffProcI(aux_vector)    = hypre_CTAlloc(HYPRE_BigInt,  max_off_proc_elmts,
+                                                                   HYPRE_MEMORY_HOST);
+         hypre_AuxParVectorOffProcData(aux_vector) = hypre_CTAlloc(HYPRE_Complex, max_off_proc_elmts,
+                                                                   HYPRE_MEMORY_HOST);
+      }
+   }
+
+   return hypre_error_flag;
+}
+
+
+/******************************************************************************
+ * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+ * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR MIT)
+ ******************************************************************************/
+
+/******************************************************************************
+ *
+ * IJMatrix_ISIS interface
+ *
+ *****************************************************************************/
+
+#include "_hypre_IJ_mv.h"
+
+/******************************************************************************
+ *
+ * hypre_IJMatrixSetLocalSizeISIS
+ *
+ * sets local number of rows and number of columns of diagonal matrix on
+ * current processor.
+ *
+ *****************************************************************************/
+
+HYPRE_Int
+hypre_IJMatrixSetLocalSizeISIS(hypre_IJMatrix *matrix,
+                               HYPRE_Int       local_m,
+                               HYPRE_Int       local_n)
+{
+   HYPRE_Int ierr = 0;
+   hypre_AuxParCSRMatrix *aux_data;
+   aux_data = hypre_IJMatrixTranslator(matrix);
+   if (aux_data)
+   {
+      hypre_AuxParCSRMatrixLocalNumRows(aux_data) = local_m;
+      hypre_AuxParCSRMatrixLocalNumCols(aux_data) = local_n;
+   }
+   else
+   {
+      hypre_IJMatrixTranslator(matrix) =
+         hypre_AuxParCSRMatrixCreate(local_m, local_n, NULL);
+   }
+   return ierr;
+}
+
+/******************************************************************************
+ *
+ * hypre_IJMatrixCreateISIS
+ *
+ * creates AuxParCSRMatrix and ParCSRMatrix if necessary,
+ * generates arrays row_starts and col_starts using either previously
+ * set data local_m and local_n (user defined) or generates them evenly
+ * distributed if not previously defined by user.
+ *
+ *****************************************************************************/
+HYPRE_Int
+hypre_IJMatrixCreateISIS(hypre_IJMatrix *matrix)
+{
+   MPI_Comm comm = hypre_IJMatrixContext(matrix);
+   HYPRE_BigInt global_m = hypre_IJMatrixM(matrix);
+   HYPRE_BigInt global_n = hypre_IJMatrixN(matrix);
+   hypre_AuxParCSRMatrix *aux_matrix = hypre_IJMatrixTranslator(matrix);
+   HYPRE_Int local_m;
+   HYPRE_Int local_n;
+   HYPRE_Int ierr = 0;
+
+
+   HYPRE_BigInt *row_starts;
+   HYPRE_BigInt *col_starts;
+   HYPRE_Int num_cols_offd = 0;
+   HYPRE_Int num_nonzeros_diag = 0;
+   HYPRE_Int num_nonzeros_offd = 0;
+   HYPRE_Int num_procs, my_id;
+   HYPRE_Int equal;
+   HYPRE_Int i;
+   hypre_MPI_Comm_size(comm, &num_procs);
+   hypre_MPI_Comm_rank(comm, &my_id);
+
+   if (aux_matrix)
+   {
+      local_m = hypre_AuxParCSRMatrixLocalNumRows(aux_matrix);
+      local_n = hypre_AuxParCSRMatrixLocalNumCols(aux_matrix);
+   }
+   else
+   {
+      aux_matrix = hypre_AuxParCSRMatrixCreate(-1, -1, NULL);
+      local_m = -1;
+      local_n = -1;
+      hypre_IJMatrixTranslator(matrix) = aux_matrix;
+   }
+
+   if (local_m < 0)
+   {
+      row_starts = NULL;
+   }
+   else
+   {
+      row_starts = hypre_CTAlloc(HYPRE_Int, num_procs + 1, HYPRE_MEMORY_HOST);
+
+      if (my_id == 0 && (HYPRE_BigInt)local_m == global_m)
+      {
+         row_starts[1] = (HYPRE_BigInt)local_m;
+      }
+      else
+      {
+         HYPRE_BigInt big_local_m = (HYPRE_BigInt) local_m;
+         hypre_MPI_Allgather(&big_local_m, 1, HYPRE_MPI_BIG_INT, &row_starts[1], 1, HYPRE_MPI_BIG_INT, comm);
+      }
+
+   }
+   if (local_n < 0)
+   {
+      col_starts = NULL;
+   }
+   else
+   {
+      col_starts = hypre_CTAlloc(HYPRE_Int, num_procs + 1, HYPRE_MEMORY_HOST);
+
+      if (my_id == 0 && local_n == global_n)
+      {
+         col_starts[1] = (HYPRE_BigInt)local_n;
+      }
+      else
+      {
+         HYPRE_BigInt big_local_n = (HYPRE_BigInt) local_n;
+         hypre_MPI_Allgather(&big_local_n, 1, HYPRE_MPI_BIG_INT, &col_starts[1], 1, HYPRE_MPI_BIG_INT, comm);
+      }
+   }
+
+   if (row_starts && col_starts)
+   {
+      equal = 1;
+      for (i = 0; i < num_procs; i++)
+      {
+         row_starts[i + 1] += row_starts[i];
+         col_starts[i + 1] += col_starts[i];
+         if (row_starts[i + 1] != col_starts[i + 1])
+         {
+            equal = 0;
+         }
+      }
+      if (equal)
+      {
+         hypre_TFree(col_starts, HYPRE_MEMORY_HOST);
+         col_starts = row_starts;
+      }
+   }
+
+   hypre_IJMatrixLocalStorage(matrix) = hypre_ParCSRMatrixCreate(comm, global_m,
+                                                                 global_n, row_starts, col_starts, num_cols_offd,
+                                                                 num_nonzeros_diag, num_nonzeros_offd);
+   return ierr;
+}
+
+/******************************************************************************
+ *
+ * hypre_IJMatrixSetRowSizesISIS
+ *
+ *****************************************************************************/
+HYPRE_Int
+hypre_IJMatrixSetRowSizesISIS(hypre_IJMatrix *matrix,
+                              HYPRE_Int          *sizes)
+{
+   HYPRE_Int *row_space;
+   HYPRE_Int local_num_rows;
+   HYPRE_Int i;
+   hypre_AuxParCSRMatrix *aux_matrix;
+   aux_matrix = hypre_IJMatrixTranslator(matrix);
+   if (aux_matrix)
+   {
+      local_num_rows = hypre_AuxParCSRMatrixLocalNumRows(aux_matrix);
+   }
+   else
+   {
+      return -1;
+   }
+
+   row_space =  hypre_AuxParCSRMatrixRowSpace(aux_matrix);
+   if (!row_space)
+   {
+      row_space = hypre_CTAlloc(HYPRE_Int,  local_num_rows, HYPRE_MEMORY_HOST);
+   }
+   for (i = 0; i < local_num_rows; i++)
+   {
+      row_space[i] = sizes[i];
+   }
+   hypre_AuxParCSRMatrixRowSpace(aux_matrix) = row_space;
+   return 0;
+}
+
+/******************************************************************************
+ *
+ * hypre_IJMatrixSetDiagRowSizesISIS
+ * sets diag_i inside the diag part of the ParCSRMatrix,
+ * requires exact sizes for diag
+ *
+ *****************************************************************************/
+HYPRE_Int
+hypre_IJMatrixSetDiagRowSizesISIS(hypre_IJMatrix *matrix,
+                                  HYPRE_Int             *sizes)
+{
+   HYPRE_Int local_num_rows;
+   HYPRE_Int i;
+   hypre_ParCSRMatrix *par_matrix;
+   hypre_CSRMatrix *diag;
+   HYPRE_Int *diag_i;
+   par_matrix = hypre_IJMatrixLocalStorage(matrix);
+   if (!par_matrix)
+   {
+      return -1;
+   }
+
+   diag =  hypre_ParCSRMatrixDiag(par_matrix);
+   diag_i =  hypre_CSRMatrixI(diag);
+   local_num_rows = hypre_CSRMatrixNumRows(diag);
+   if (!diag_i)
+   {
+      diag_i = hypre_CTAlloc(HYPRE_Int,  local_num_rows + 1, HYPRE_MEMORY_HOST);
+   }
+   for (i = 0; i < local_num_rows + 1; i++)
+   {
+      diag_i[i] = sizes[i];
+   }
+   hypre_CSRMatrixI(diag) = diag_i;
+   hypre_CSRMatrixNumNonzeros(diag) = diag_i[local_num_rows];
+   return 0;
+}
+
+/******************************************************************************
+ *
+ * hypre_IJMatrixSetOffDiagRowSizesISIS
+ * sets offd_i inside the offd part of the ParCSRMatrix,
+ * requires exact sizes for offd
+ *
+ *****************************************************************************/
+HYPRE_Int
+hypre_IJMatrixSetOffDiagRowSizesISIS(hypre_IJMatrix *matrix,
+                                     HYPRE_Int       *sizes)
+{
+   
+
+Question:
+What inputs are necessary to create an instance of HYPRE_SStructMatrix? And what procedures are necessary to finalize its setup process?
+
+A. An MPI communicator and a HYPRE_SStructGraph are necessary to create. HYPRE_SStructMatrixAssemble must be called before finalizing the matrix setup.
+B. An MPI communicator, a HYPRE_SStructGrid, and a corresponding stencil are necessary to create. HYPRE_SStructMatrixAssemble must be called before finalizing the matrix setup.
+C. An MPI communicator and a HYPRE_SStructGraph are necessary to create. HYPRE_SStructMatrixSetBoxValues must be called before finalizing the matrix setup.
+D. An MPI communicator and a HYPRE_SStructGrid are necessary to create. HYPRE_SStructMatrixSetBoxValues must be called before finalizing the matrix setup.
+
+Select the correct answer.

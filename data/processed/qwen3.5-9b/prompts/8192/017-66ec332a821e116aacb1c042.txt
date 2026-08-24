@@ -1,0 +1,870 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+DERIVATIVE SECURITIES, OR 
+ more  
+simply 
+derivatives, play a large and increasingly 
+important role in financial markets. These are 
+securities whose prices are determined by, 
+or “derive from,” the prices of other securi-
+ties. These assets are also called  
+contingent 
+claims because their payoffs are contingent 
+on the prices of other securities. Options and 
+futures contracts are both derivative securi-
+ties. We will see that their payoffs depend on 
+the value of other securities. Swaps, which we 
+will discuss in Chapter 23, also are derivatives. 
+Because the value of derivatives depends 
+on the value of other securities, they can be 
+powerful tools for both hedging and specula-
+tion. We will investigate these applications in 
+the next four chapters, starting in this chapter 
+with options. 
+ 
+Trading of standardized options contracts 
+on a national exchange started in 1973 when 
+the Chicago Board Options Exchange (CBOE) 
+began listing call options. These contracts 
+were almost immediately a great success, 
+crowding out the previously existing over-the-
+counter trading in stock options. Option con-
+tracts are traded now on several exchanges. 
+They are written on common stock, stock 
+indexes, foreign exchange, agricultural com-
+modities, precious metals, and interest rate 
+futures. In addition, the over-the-counter 
+market has enjoyed a tremendous resurgence 
+in recent years as trading in custom-tailored 
+options has exploded. Popular and potent 
+tools in modifying portfolio characteristics, 
+options have become essential tools a portfo-
+lio manager must understand. 
+ 
+This chapter is an introduction to options 
+markets. It explains how puts and calls work 
+and examines their investment characteris-
+tics. Popular option strategies are considered 
+next. Finally, we examine a range of securities 
+with embedded options such as callable or 
+convertible bonds, and we take a quick look 
+at some so-called exotic options. 
+ 
+ 
+20
+ 
+Options Markets: 
+Introduction 0
+ 
+PART VI 
+ 
+CHAPTER TWENTY 
+
+
+668 
+P A R T  V I  Options, Futures, and Other Derivatives
+ 20.1 The Option Contract 
+ 
+Example 20.1 
+ 
+ 
+Profits and Losses on a Call Option 
+ 
+Consider the January 2010 expiration call option on a share of IBM with an exercise price 
+of $130 that was selling on December 2, 2009, for $2.18. Exchange-traded options expire 
+on the third Friday of the expiration month, which for this option was January 15, 2010. 
+Until the expiration date, the purchaser of the calls may buy shares of IBM for $130. On 
+December 2, IBM sells for $127.21. Because the stock price is currently less than $130 a 
+share, exercising the option to buy at $130 clearly would make no sense at that moment. 
+Indeed, if IBM remains below $130 by the expiration date, the call will be left to expire 
+worthless. On the other hand, if IBM is selling above $130 at expiration, the call holder 
+will find it optimal to exercise. For example, if IBM sells for $132 on January 15, the 
+option will be exercised, as it will give its holder the right to pay $130 for a stock worth 
+$132. The value of the option on the expiration date would then be
+ 
+Value at expiration 5 Stock price 2 Exercise price 5 $132 2 $130 5 $2 
+Despite the $2 payoff at expiration, the call holder still realizes a loss of $.18 on the invest-
+ment because the initial purchase price was $2.18:
+ 
+Profit 5 Final value 2 Original investment 5 $2.00 2 $2.18 5 2$.18 
+ 
+A  
+call option 
+ gives its holder the right to purchase an asset for a specified price, called 
+the  
+exercise, 
+ or  
+ 
+strike, price, 
+ on or before some specified expiration date. For example, a 
+January call option on IBM stock with exercise price $130 entitles its owner to purchase 
+IBM stock for a price of $130 at any time up to and including the expiration date in January. 
+The holder of the call is not required to exercise the option. The holder will choose to exer-
+cise only if the market value of the underlying asset exceeds the exercise price. In that case, 
+the option holder may “call away” the asset for the exercise price. Otherwise, the option 
+may be left unexercised. If it is not exercised before the expiration date of the contract, a 
+call option simply expires and no longer has value. Therefore, if the stock price is greater 
+than the exercise price on the expiration date, the value of the call option equals the differ-
+ence between the stock price and the exercise price; but if the stock price is less than the 
+exercise price at expiration, the call will be worthless. The  
+net profit on the call is the value 
+of the option minus the price originally paid to purchase it. 
+ 
+The purchase price of the option is called the  
+ 
+premium. 
+ It represents the compensation 
+the purchaser of the call must pay for the right to exercise the option if exercise becomes 
+profitable. 
+ 
+Sellers of call options, who are said to  
+write calls, receive premium income now as pay-
+ment against the possibility they will be required at some later date to deliver the asset in 
+return for an exercise price less than the market value of the asset. If the option is left to 
+expire worthless, however, then the writer of the call clears a profit equal to the premium 
+income derived from the initial sale of the option. But if the call is exercised, the profit to 
+the option writer is the premium income derived when the option was initially sold minus 
+the difference between the value of the stock that must be delivered and the exercise price 
+that is paid for those shares. If that difference is larger than the initial premium, the writer 
+will incur a loss. 
+
+
+ 
+C H A P T E R  2 0  Options Markets: Introduction 
+669
+Nevertheless, exercise of the call is optimal at expiration if the stock price exceeds the 
+exercise price because the exercise proceeds will offset at least part of the cost of the 
+option. The investor in the call will clear a profit if IBM is selling above $132.18 at 
+the expiration date. At that stock price, the proceeds from exercise will just cover the origi-
+nal cost of the call. 
+ 
+Example 20.2 
+ 
+ 
+Profits and Losses on a Put Option 
+ 
+Now consider the January 2010 expiration put option on IBM with an exercise price of 
+$130, selling on December 2, 2009, for $4.79. It entitled its owner to sell a share of IBM for 
+$130 at any time until January 15. If the holder of the put buys a share of IBM and imme-
+diately exercises the right to sell at $130, net proceeds will be $130  
+2 $127.21  
+5 $2.79. 
+Obviously, an investor who pays $4.79 for the put has no intention of exercising it imme-
+diately. If, on the other hand, IBM sells for $123 at expiration, the put turns out to be a 
+profitable investment. Its value at expiration would be
+ 
+Value at expiration 5 Exercise price 2 Stock price 5 $130 2 $123 5 $7 
+and the investor’s profit would be $7.00  
+2 $4.79  
+5 $2.21. This is a holding period return 
+of $2.21/$4.79  
+5 .461, or 46.1%—over only 44 days! Apparently, put option sellers on 
+December 2 (who were on the other side of the transaction) did not consider this outcome 
+very likely. 
+ 
+A  
+put option 
+ gives its holder the right to  
+sell an asset for a specified exercise or strike 
+price on or before some expiration date. A January expiration put on IBM with exercise 
+price $130 entitles its owner to sell IBM stock to the put writer at a price of $130 at any 
+time before expiration in January even if the market price of IBM is less than $130. While 
+profits on call options increase when the asset  
+increases in value, profits on put options 
+increase when the asset value  
+falls. A put will be exercised only if the exercise price is 
+greater than the price of the underlying asset, that is, only if its holder can deliver for the 
+exercise price an asset with market value less than the exercise price. (One doesn’t need to 
+own the shares of IBM to exercise the IBM put option. Upon exercise, the investor’s broker 
+purchases the necessary shares of IBM at the market price and immediately delivers, or 
+“puts them,” to an option writer for the exercise price. The owner of the put profits by the 
+difference between the exercise price and market price.) 
+ 
+An option is described as  
+ 
+in the money 
+ when its exercise would produce profits 
+for its holder. An option is  
+ 
+out of the money 
+ when exercise would be unprofitable. 
+Therefore, a call option is in the money when the asset price is greater than the exercise 
+price. It is out of the money when the asset price is less than the exercise price; no one 
+would exercise the right to purchase for the strike price an asset worth less than that 
+price. Conversely, put options are in the money when the exercise price exceeds the 
+asset’s value, because delivery of the lower-valued asset in exchange for the exercise 
+price is profitable for the holder. Options are  
+ 
+at the money 
+ when the exercise price and 
+asset price are equal. 
+
+
+670 
+P A R T  V I  Options, Futures, and Other Derivatives
+ 
+Options Trading 
+ 
+Some options trade on over-the-counter markets. 
+The OTC market offers the advantage that the terms 
+of the option contract—the exercise price, expiration 
+date, and number of shares committed—can be tai-
+lored to the needs of the traders. The costs of estab-
+lishing an OTC option contract, however, are higher 
+than for exchange-traded options. 
+ 
+Options contracts traded on exchanges are stan-
+dardized by allowable expiration dates and exercise 
+prices for each listed option. Each stock option con-
+tract provides for the right to buy or sell 100 shares 
+of stock (except when stock splits occur after the 
+contract is listed and the contract is adjusted for the 
+terms of the split). 
+ 
+Standardization of the terms of listed option con-
+tracts means all market participants trade in a lim-
+ited and uniform set of securities. This increases the 
+depth of trading in any particular option, which low-
+ers trading costs and results in a more competitive 
+market. Exchanges, therefore, offer two important 
+benefits: ease of trading, which flows from a central 
+marketplace where buyers and sellers or their repre-
+sentatives congregate; and a liquid secondary market where buyers and sellers of options 
+can transact quickly and cheaply. 
+ 
+Until recently, most options trading in the United States took place on the Chicago 
+Board Options Exchange. However, by 2003 the International Securities Exchange, an 
+electronic exchange based in New York, displaced the CBOE as the largest options market. 
+Options trading in Europe is uniformly transacted in electronic exchanges. 
+ 
+Figure 20.1 is a selection of listed stock option quotations for IBM. The last recorded 
+price on the New York Stock Exchange for IBM shares was $127.21 per share. 
+1 Options 
+are reported on IBM at exercise prices of $120 through $135.
+ 
+The exercise (or strike) prices bracket the stock price. While exercise prices generally 
+are set at five-point intervals, larger intervals sometimes are set for stocks selling above 
+$100, and intervals of $2.50 may be used for stocks selling at low prices. If the stock price 
+moves outside the range of exercise prices of the existing set of options, new options with 
+appropriate exercise prices may be offered. Therefore, at any time, both in-the-money and 
+out-of-the-money options will be listed, as in this example. 
+ 
+Figure 20.1 shows both call and put options listed for each expiration date and exercise 
+price. The three sets of columns for each option report closing price, trading volume in 
+contracts, and open interest (number of outstanding contracts). When we compare prices 
+of call options with the same expiration date but different exercise prices in  
+Figure 20.1 
+, 
+we see that the value of a call is lower when the exercise price is higher. This makes sense, 
+because the right to purchase a share at a lower exercise price is more valuable than the 
+right to purchase at a higher price. Thus the January expiration IBM call option with strike 
+1 
+Occasionally, this price may not match the closing price listed for the stock on the stock market page. This is 
+because some NYSE stocks also trade on exchanges that close after the NYSE, and the stock pages may reflect 
+the more recent closing price. The options exchanges, however, close with the NYSE, so the closing NYSE stock 
+price is appropriate for comparison with the closing option price. 
+ 
+PRICES AT CLOSE DECEMBER 02, 2009
+Expiration
+Dec 2009
+Jan 2010
+Apr 2010
+Jul 2010
+Dec 2009
+Jan 2010
+Apr 2010
+Jul 2010
+Dec 2009
+Jan 2010
+Apr 2010
+Jul 2010
+Dec 2009
+Jan 2010
+Apr 2010
+Jul 2010
+120
+120
+120
+120
+125
+125
+125
+125
+130
+130
+130
+130
+135
+135
+135
+135
+7.75
+8.63
+11.25
+13.30
+3.25
+4.75
+7.90
+10.05
+0.77
+2.18
+5.49
+7.75
+0.11
+0.84
+3.45
+5.67
+197
+130
+43
+34
+416
+278
+69
+7
+2108
+3489
+29
+31
+214
+176
+126
+6
+2370
+21884
+1705
+108
+14419
+14180
+3652
+150
+11033
+19278
+2773
+111
+8955
+24556
+3798
+140
+0.26
+1.18
+4.20
+6.70
+1.02
+2.44
+6.05
+8.85
+3.55
+4.79
+8.50
+11.30
+7.65
+7.75
+11.50
+13.80
+644
+1267
+33
+1
+1872
+1060
+82
+15
+844
+198
+66
+85
+86
+24
+45
+1
+8806
+8871
+1903
+34
+9203
+9094
+1122
+215
+4233
+3273
+1312
+228
+631
+776
+433
+113
+Call
+Put
+I B M (IBM)
+Underlying Stock Price: 127.21
+Strike
+Last
+Volume
+Open
+Interest
+Last
+Volume
+Open
+Interest
+ 
+Figure 20.1 
+  
+Stock options on IBM 
+  
+Closing prices 
+as of December 2, 2009 
+Source: The Wall Street Journal Online, December 3, 2009.
+
+
+ 
+C H A P T E R  2 0  Options Markets: Introduction 
+671
+price $130 sells for $2.18 whereas the $135 exercise price January call sells for only $.84. 
+Conversely, put options are worth  
+more when the exercise price is higher: You would rather 
+have the right to sell shares for $135 than for $130, and this is reflected in the prices of the 
+puts. The January expiration put option with strike price $135 sells for $7.75, whereas the 
+$130 exercise price January put sells for only $4.79. 
+ 
+If an option does not trade on a given day, three dots will appear in the volume and price 
+columns. Because trading is infrequent, it is not unusual to find option prices that appear 
+out of line with other prices. You might see, for example, two calls with different exercise 
+prices that seem to sell for the same price. This discrepancy arises because the last trades 
+for these options may have occurred at different times during the day. At any moment, the 
+call with the lower exercise price must be worth more than an otherwise-identical call with 
+a higher exercise price. 
+ 
+Expirations of most exchange-traded options tend to be fairly short, ranging up to only 
+several months. For larger firms and several stock indexes, however, longer-term options 
+are traded with expirations ranging up to several years. These options are called LEAPS 
+(for  
+L 
+ong- 
+T 
+erm  
+E 
+quity  
+A 
+ntici 
+P 
+ation  
+S 
+ecurities). 
+ 
+CONCEPT 
+CHECK 
+ 
+1 
+ 
+a. What will be the proceeds and net profits to an investor who purchases the January 
+expiration IBM calls with exercise price $125 if the stock price at expiration is $135? 
+What if the stock price at expiration is $115? 
+ 
+ 
+b. 
+ Now answer part ( 
+a 
+) for an investor who purchases a January expiration IBM put option 
+with exercise price $125. 
+ 
+ 
+American and European Options 
+ 
+An  
+ 
+American option 
+ allows its holder to exercise the right to purchase (if a call) or sell (if 
+a put) the underlying asset on  
+or before the expiration date.  
+ 
+European options allow for 
+exercise of the option only on the expiration date. American options, because they allow 
+more leeway than their European counterparts, generally will be more valuable. Virtually 
+all traded options in the United States are American style. Foreign currency options and 
+stock index options are notable exceptions to this rule, however. 
+ 
+Adjustments in Option Contract Terms 
+ 
+Because options convey the right to buy or sell shares at a stated price, stock splits 
+would radically alter their value if the terms of the options contract were not adjusted to 
+account for the stock split. For example, reconsider the IBM call options in  
+Figure 20.1 
+. 
+If IBM were to announce a 2-for-1 split, its share price would fall from about $127 to 
+about $63.50. A call option with exercise price $130 would be just about worthless, with 
+virtually no possibility that the stock would sell at more than $130 before the options 
+expired. 
+ 
+To account for a stock split, the exercise price is reduced by a factor of the split, and 
+the number of options held is increased by that factor. For example, each original call 
+option with exercise price of $130 would be altered after a 2-for-1 split to 2 new options, 
+with each new option carrying an exercise price of $65. A similar adjustment is made 
+for stock dividends of more than 10%; the number of shares covered by each option is 
+increased in proportion to the stock dividend, and the exercise price is reduced by that 
+proportion. 
+
+
+672 
+P A R T  V I  Options, Futures, and Other Derivatives
+ 
+In contrast to stock dividends, cash dividends do not affect the terms of an option con-
+tract. Because payment of a cash dividend reduces the selling price of the stock without 
+inducing offsetting adjustments in the option contract, the value of the option is affected by 
+dividend policy. Other things being equal, call option values are lower for high-dividend 
+payout policies, because such policies slow the rate of increase of stock prices; conversely, 
+put values are higher for high-dividend payouts. (Of course, the option values do not nec-
+essarily rise or fall on the dividend payment or ex-dividend dates. Dividend payments are 
+anticipated, so the effect of the payment already is built into the original option price.) 
+ 
+CONCEPT 
+CHECK 
+ 
+2 
+ 
+Suppose that IBM’s stock price at the exercise date is $140, and the exercise price of the call 
+is $130. What is the payoff on one option contract? After a 2-for-1 split, the stock price is 
+$70, the exercise price is $65, and the option holder now can purchase 200 shares. Show that 
+the split leaves the payoff from the option unaffected. 
+ 
+ 
+The Options Clearing Corporation 
+ 
+The Options Clearing Corporation (OCC), the clearinghouse for options trading, is jointly 
+owned by the exchanges on which stock options are traded. Buyers and sellers of options 
+who agree on a price will strike a deal. At this point, the OCC steps in. The OCC places 
+itself between the two traders, becoming the effective buyer of the option from the writer 
+and the effective writer of the option to the buyer. All individuals, therefore, deal only with 
+the OCC, which effectively guarantees contract performance. 
+ 
+When an option holder exercises an option, the OCC arranges for a member firm with 
+clients who have written that option to make good on the option obligation. The mem-
+ber firm selects from its clients who have written that option to fulfill the contract. The 
+selected client must deliver 100 shares of stock at a price equal to the exercise price for 
+each call option contract written or must purchase 100 shares at the exercise price for each 
+put option contract written. 
+ 
+Because the OCC guarantees contract performance, option writers are required to post 
+margin to guarantee that they can fulfill their contract obligations. The margin required is 
+determined in part by the amount by which the option is in the money, because that value 
+is an indicator of the potential obligation of the option writer. When the required margin 
+exceeds the posted margin, the writer will receive a margin call. In contrast, the holder of 
+the option need not post margin because the holder will exercise the option only if it is 
+profitable to do so. After purchase of the option, no further money is at risk. 
+ 
+Margin requirements are determined in part by the other securities held in the investor’s 
+portfolio. For example, a call option writer owning the stock against which the option is 
+written can satisfy the margin requirement simply by allowing a broker to hold that stock 
+in the brokerage account. The stock is then guaranteed to be available for delivery should 
+the call option be exercised. If the underlying security is not owned, however, the margin 
+requirement is determined by the value of the underlying security as well as by the amount 
+by which the option is in or out of the money. Out-of-the-money options require less mar-
+gin from the writer, for expected payouts are lower. 
+ 
+Other Listed Options 
+ 
+Options on assets other than stocks are also widely traded. These include options on mar-
+ket indexes and industry indexes, on foreign currency, and even on the futures prices of 
+agricultural products, gold, silver, fixed-income securities, and stock indexes. We will dis-
+cuss these in turn. 
+
+
+ 
+C H A P T E R  2 0  Options Markets: Introduction 
+673
+ 
+Index Options 
+ An index option is a call or put based on a stock market index such 
+as the S&P 500 or the NASDAQ 100. Index options are traded on several broad-based 
+indexes as well as on several industry-specific indexes and even commodity price indexes. 
+We discussed many of these indexes in Chapter 2. 
+ 
+The construction of the indexes can vary across contracts or exchanges. For example, the 
+S&P 100 index is a value-weighted average of the 100 stocks in the Standard & Poor’s 100 
+stock group. The weights are proportional to the market value of outstanding equity for each 
+stock. The Dow Jones Industrial Index, by contrast, is a price-weighted average of 30 stocks. 
+ 
+Option contracts on many foreign stock indexes also trade. For example, options on the 
+(Japanese) Nikkei Stock Index trade on the Chicago Mercantile Exchange, and options on 
+the Eurotop 100 and Japan indexes trade on the American Stock Exchange. The Chicago 
+Board Options Exchange, as well as the Amex, lists options on industry indexes such as 
+the biotech or financial industries. 
+ 
+In contrast to stock options, index options do not require that the call writer actually 
+“deliver the index” upon exercise or that the put writer “purchase the index.” Instead, 
+a cash settlement procedure is used. The payoff that would accrue upon exercise of the 
+option is calculated, and the option writer simply pays that amount to the option holder. 
+The payoff is equal to the difference between the exercise price of the option and the value 
+of the index. For example, if the S&P index is at 1100 when a call option on the index with 
+exercise price 1090 is exercised, the holder of the call receives a cash payment of the dif-
+ference, 1100 
+2 
+1090, times the contract multiplier of $100, or $1,000 per contract. 
+ 
+Options on the major indexes, that is, the S&P 100 (often called the OEX after its 
+ticker symbol), the S&P 500 (the SPX), the NASDAQ 100 (the NDX), and the Dow Jones 
+Industrials (the DJX), are the most actively traded contracts on the CBOE. Together, these 
+contracts dominate CBOE volume. 
+ 
+Futures Options 
+ Futures options give their holders the right to buy or sell a speci-
+fied futures contract, using as a futures price the exercise price of the option. Although the 
+delivery process is slightly complicated, the terms of futures options contracts are designed 
+in effect to allow the option to be written on the futures price itself. The option holder 
+receives upon exercise a net payoff equal to the difference between the current futures 
+price on the specified asset and the exercise price of the option. Thus if the futures price is, 
+say, $37, and the call has an exercise price of $35, the holder who exercises the call option 
+on the futures gets a payoff of $2. 
+ 
+Foreign Currency Options 
+ A currency option offers the right to buy or sell a quan-
+tity of foreign currency for a specified amount of domestic currency. Currency option con-
+tracts call for purchase or sale of the currency in exchange for a specified number of U.S. 
+dollars. Contracts are quoted in cents or fractions of a cent per unit of foreign currency. 
+ 
+There is an important difference between currency options and currency  
+futures options. 
+The former provide payoffs that depend on the difference between the exercise price and 
+the exchange rate at maturity. The latter are foreign exchange futures options that provide 
+payoffs that depend on the difference between the exercise price and the exchange rate 
+ 
+futures price at maturity. Because exchange rates and exchange rate futures prices gener-
+ally are not equal, the options and futures-options contracts will have different values, even 
+with identical expiration dates and exercise prices. Trading volume in currency futures 
+options dominates by far trading in currency options. 
+ 
+ 
+Interest Rate Options 
+ Options are traded on Treasury notes and bonds, Treasury 
+bills, certificates of deposit, GNMA pass-through certificates, and yields on Treasury 
+and Eurodollar securities of various maturities. Options on several interest rate futures 
+
+
+674 
+P A R T  V I  Options, Futures, and Other Derivatives
+also trade. Among these are contracts on Treasury bond, Treasury note, municipal bond, 
+LIBOR, Euribor, 
+ 
+2 and Eurodollar futures.
+ 20.2 Values of Options at Expiration 
+ 
+Call Options 
+ 
+Recall that a call option gives the right to purchase a security at the exercise price. Suppose 
+you hold a call option on FinCorp stock with an exercise price of $100, and FinCorp is now 
+selling at $110. You can exercise your option to purchase the stock at $100 and simultane-
+ously sell the shares at the market price of $110, clearing $10 per share. Yet if the shares 
+sell below $100, you can sit on the option and do nothing, realizing no further gain or loss. 
+The value of the call option at expiration equals2
+ 
+Payoff to call holder 5 ST 2 X
+if ST . X
+0
+if ST # X  
+where  
+S 
+ 
+T 
+ is the value of the stock at expiration and  
+X is the exercise price. This formula 
+emphasizes the option property because the payoff cannot be negative. That is, the option 
+is exercised only if  
+S 
+ 
+T 
+ exceeds  
+X. If  
+S 
+ 
+T 
+ is less than  
+X, exercise does not occur, and the 
+option expires with zero value. The loss to the option holder in this case equals the price 
+originally paid for the option. More generally, the  
+profit to the option holder is the value of 
+the option at expiration minus the original purchase price. 
+ 
+The value at expiration of the call with exercise price $100 is given by the schedule:
+Stock price:
+$90
+$100
+$110
+$120
+$130
+Option value:
+0
+0
+10
+20
+30
+For stock prices at or below $100, the option is worthless. Above $100, the option is worth 
+the excess of the stock price over $100. The option’s value increases by $1 for each dollar 
+increase in the stock price. This relationship can be depicted graphically as in  
+Figure 20.2 
+. 
+ 
+The solid line in  
+Figure 20.2 depicts the value of the call at expiration. The net  
+profit to 
+the holder of the call equals the gross payoff less the initial investment in the call. Suppose 
+the call cost $14. Then the profit to the call holder would be given by the dashed (bottom) 
+line of  
+Figure 20.2 
+. At option expiration, the investor suffers a loss of $14 if the stock price 
+is less than or equal to $100. 
+ 
+Profits do not become positive unless the stock price at expiration exceeds $114. The 
+break-even point is $114, because at that price the payoff to the call,  
+S 
+ 
+T 
+  
+2  
+X  
+5 $114  
+2 
+$100  
+5 $14, equals the initial cost of the call. 
+ 
+Conversely, the writer of the call incurs losses if the stock price is high. In that scenario, 
+the writer will receive a call and will be obligated to deliver a stock worth  
+S 
+ 
+T 
+ for only  
+X 
+dollars:
+ 
+Payoff to call writer 5 2(ST 2 X)
+if ST . X
+0
+if ST # X  
+ 
+2 
+The Euribor market is similar to the LIBOR market (see Chapter 2), but the interest rate charged in the Euribor 
+market is the interbank rate for euro-denominated deposits. 
+ 
+
+
+ 
+C H A P T E R  2 0  Options Markets: Introduction 
+675
+The call writer, who is exposed to losses if 
+the stock price increases, is willing to bear 
+this risk in return for the option premium. 
+ 
+Figure 20.3 depicts the payoff and profit 
+diagrams for the call writer. These are the 
+mirror images of the corresponding dia-
+grams for call holders. The break-even 
+point for the option writer also is $114. The 
+(negative) payoff at that point just offsets 
+the premium originally received when the 
+option was written. 
+ 
+Put Options 
+ 
+A put option is the right to sell an asset at 
+the exercise price. In this case, the holder 
+will not exercise the option unless the asset 
+is worth  
+less than the exercise price. For 
+example, if FinCorp shares were to fall to 
+$90, a put option with exercise price $100 could be exercised to clear $10 for its holder. 
+The holder would purchase a share for $90 and simultaneously deliver it to the put option 
+writer for the exercise price of $100. 
+ 
+The value of a put option at expiration is
+ 
+Payoff to put holder 5 0
+if ST $ X
+X 2 ST
+if ST , X  
+The solid line in  
+Figure 20.4 illustrates the payoff at expiration to the holder of a put option 
+on FinCorp stock with an exercise price of $100. If the stock price at expiration is above 
+$100, the put has no value, as the right to sell the shares at $100 would not be exercised. 
+Below a price of $100, the put value at expiration increases by $1 for each dollar the stock 
+price falls. The dashed line in  
+Figure 20.4 is a graph of the put option owner’s profit at 
+expiration, net of the initial cost of the put. 
+ 
+Writing puts  
+naked (i.e., writing a put 
+without an offsetting short position in the 
+stock for hedging purposes) exposes the 
+writer to losses if the market falls. Writing 
+naked out-of-the-money puts was once con-
+sidered an attractive way to generate income, 
+as it was believed that as long as the market 
+did not fall sharply before the option expira-
+tion, the option premium could be collected 
+without the put holder ever exercising the 
+option against the writer. Because only sharp 
+drops in the market could result in losses to 
+the put writer, the strategy was not viewed 
+as overly risky. However, in the wake of the 
+market crash of October 1987, such put writ-
+ers suffered huge losses. Participants now 
+perceive much greater risk to this strategy. 
+$30
+ST
+80
+90
+100
+110
+120
+Cost of Option
+Profit
+Payoff = Value at Expiration
+−$14
+−$10
+0
+$10
+$20
+ 
+Figure 20.2 
+  
+Payoff and profit to call option at expiration 
+$14
+0
+$100
+$114
+Profit
+Payoff
+ST
+ 
+Figure 20.3 
+  
+Payoff and profit to call writers at expiration 
+
+
+676 
+P A R T  V I  Options, Futures, and Other Derivatives
+ 
+Option versus Stock Investments 
+ 
+Purchasing call options is a bullish strategy; that is, the calls provide profits when stock 
+prices increase. Purchasing puts, in contrast, is a bearish strategy. Symmetrically, writing 
+calls is bearish, whereas writing puts is bullish. Because option values depend on the price of 
+the underlying stock, purchase of options may be viewed as a substitute for direct purchase 
+or sale of a stock. Why might an option strategy be preferable to direct stock transactions? 
+ 
+For example, why would you purchase a call option rather than buy shares of stock 
+directly? Maybe you have some information that leads you to believe the stock will 
+increase in value from its current level, which in our examples we will take to be $100. You 
+know your analysis could be incorrect, however, and that shares also could fall in price. 
+Suppose a 6-month maturity call option with exercise price $100 currently sells for $10, 
+and the interest rate for the period is 3%. Consider these three strategies for investing a 
+sum of money, say, $10,000. For simplicity, suppose the firm will not pay any 
+
+Question:
+XYZ Corp. will pay a $2 per share dividend in two months. Its stock price currently is $90 per share. A call option on XYZ has an exercise price of $85 and 3-month time to expiration. The risk-free interest rate is 0.6% per month, and the stock’s volatility (standard deviation) = 24% per month. Find the Black-Scholes value of the option (Round your answer to 2 decimal places).
+
+A. 5.47
+B. 6.76
+C. 8.62
+D. 9.20
+
+Select the correct answer.

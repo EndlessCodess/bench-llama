@@ -1,0 +1,149 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+cmake_minimum_required(VERSION 3.13...3.16)
+
+if (${CMAKE_VERSION} VERSION_LESS 3.16)
+  cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+else ()
+  cmake_policy(VERSION 3.16)
+endif ()
+
+# The version number.
+set(HYPRE_VERSION 2.31.0)
+set(HYPRE_NUMBER  23100)
+set(HYPRE_DATE    2024/02/14)
+set(HYPRE_TIME    00:00:00)
+set(HYPRE_BUGS    https://github.com/hypre-space/hypre/issues)
+set(HYPRE_SRCDIR  "${PROJECT_SOURCE_DIR}")
+
+set(PROJECT_NAME HYPRE)
+project(${PROJECT_NAME}
+  VERSION ${HYPRE_VERSION}
+  LANGUAGES C)
+
+# We use C99 by default, but users are free to specify any newer standard version
+set(CMAKE_C_STANDARD 99)
+
+if (${HYPRE_SOURCE_DIR} STREQUAL ${HYPRE_BINARY_DIR})
+  message(FATAL_ERROR "In-place build not allowed! Please use a separate build directory. See the Users Manual or INSTALL file for details.")
+endif ()
+
+if (EXISTS ${HYPRE_SOURCE_DIR}/../.git)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} describe --match v* --long --abbrev=9
+                  OUTPUT_VARIABLE develop_string
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} describe --match v* --abbrev=0
+                  OUTPUT_VARIABLE develop_lastag
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} rev-list --count ${develop_lastag}..HEAD
+                  OUTPUT_VARIABLE develop_number
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process(COMMAND git -C ${HYPRE_SOURCE_DIR} rev-parse --abbrev-ref HEAD
+                  OUTPUT_VARIABLE develop_branch
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if (${develop_string} MATCHES ".*")
+    set(HYPRE_DEVELOP_STRING  ${develop_string})
+    set(HYPRE_DEVELOP_NUMBER  ${develop_number})
+    set(HYPRE_BRANCH_NAME     ${develop_branch})
+    if (develop_branch MATCHES "master")
+      set(HYPRE_DEVELOP_BRANCH  ${develop_branch})
+    else ()
+      message(STATUS "NOTE: On branch ${develop_branch}, not the main development branch")
+    endif ()
+  else ()
+    message(STATUS "NOTE: Could not describe development branch")
+  endif ()
+else ()
+  message(STATUS "NOTE: Could not find .git directory")
+endif ()
+
+# Set cmake module path
+set(CMAKE_MODULE_PATH "${HYPRE_SOURCE_DIR}/config/cmake" "${CMAKE_MODULE_PATH}")
+include(HYPRE_CMakeUtilities)
+
+# Set default installation directory, but provide a means for users to change
+set(HYPRE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/hypre" CACHE PATH
+    "Installation directory for HYPRE")
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "${HYPRE_INSTALL_PREFIX}" CACHE INTERNAL "" FORCE)
+endif ()
+
+# Set default compile optimization flag
+set(HYPRE_BUILD_TYPE "Release" CACHE STRING
+    "Optimization flags: set to Debug, Release, RelWithDebInfo, or MinSizeRel")
+
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE "${HYPRE_BUILD_TYPE}" CACHE INTERNAL "" FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif ()
+
+# Configuration options
+option(HYPRE_ENABLE_SHARED           "Build a shared library" OFF)
+option(HYPRE_ENABLE_BIGINT           "Use long long int for HYPRE_Int" OFF)
+option(HYPRE_ENABLE_MIXEDINT         "Use long long int for HYPRE_BigInt, int for HYPRE_INT" OFF)
+option(HYPRE_ENABLE_SINGLE           "Use float for HYPRE_Real" OFF)
+option(HYPRE_ENABLE_LONG_DOUBLE      "Use long double for HYPRE_Real" OFF)
+option(HYPRE_ENABLE_COMPLEX          "Use complex values" OFF)
+option(HYPRE_ENABLE_HYPRE_BLAS       "Use internal BLAS library" ON)
+option(HYPRE_ENABLE_HYPRE_LAPACK     "Use internal LAPACK library" ON)
+option(HYPRE_ENABLE_PERSISTENT_COMM  "Use persistent communication" OFF)
+option(HYPRE_ENABLE_FEI              "Use FEI" OFF) # TODO: Add this cmake feature
+option(HYPRE_WITH_MPI                "Compile with MPI" ON)
+option(HYPRE_WITH_GPU_AWARE_MPI      "Compile with device aware GPU support" OFF)
+option(HYPRE_WITH_OPENMP             "Use OpenMP" OFF)
+option(HYPRE_ENABLE_HOPSCOTCH        "Use hopscotch hashing with OpenMP" OFF)
+option(HYPRE_WITH_SUPERLU            "Use TPL SuperLU" OFF)
+option(HYPRE_WITH_DSUPERLU           "Use TPL SuperLU_Dist" OFF)
+option(HYPRE_WITH_MAGMA              "Use TPL MAGMA" OFF)
+option(HYPRE_WITH_CALIPER            "Use Caliper" OFF)
+option(HYPRE_PRINT_ERRORS            "Print HYPRE errors" OFF)
+option(HYPRE_TIMING                  "Use HYPRE timing routines" OFF)
+option(HYPRE_BUILD_EXAMPLES          "Build examples" OFF)
+option(HYPRE_BUILD_TESTS             "Build tests" OFF)
+option(HYPRE_USING_HOST_MEMORY       "Use host memory" ON)
+set(HYPRE_WITH_EXTRA_CFLAGS       "" CACHE STRING "Define extra C compile flags")
+set(HYPRE_WITH_EXTRA_CXXFLAGS     "" CACHE STRING "Define extra CXX compile flags")
+# GPU options
+option(HYPRE_WITH_CUDA               "Use CUDA. Require cuda-8.0 or higher" OFF)
+option(HYPRE_WITH_SYCL               "Use SYCL" OFF)
+option(HYPRE_ENABLE_UNIFIED_MEMORY   "Use unified memory for allocating the memory" OFF)
+option(HYPRE_ENABLE_DEVICE_MALLOC_ASYNC "Use device async malloc" OFF)
+# CUDA options
+option(HYPRE_ENABLE_CUDA_STREAMS     "Use CUDA streams" ON)
+option(HYPRE_ENABLE_CUSPARSE         "Use cuSPARSE" ON)
+option(HYPRE_ENABLE_CUSOLVER         "Use cuSOLVER" OFF)
+option(HYPRE_ENABLE_DEVICE_POOL      "Use device memory pool" OFF)
+option(HYPRE_ENABLE_CUBLAS           "Use cuBLAS" OFF)
+option(HYPRE_ENABLE_CURAND           "Use cuRAND" ON)
+option(HYPRE_ENABLE_GPU_PROFILING    "Use NVTX on CUDA" OFF)
+set(HYPRE_CUDA_SM "70" CACHE STRING  "Target CUDA architecture.")
+# oneAPI options
+option(HYPRE_ENABLE_ONEMKLSPARSE     "Use oneMKL sparse" ON)
+option(HYPRE_ENABLE_ONEMKLBLAS       "Use oneMKL blas" ON)
+option(HYPRE_ENABLE_ONEMKLRAND       "Use oneMKL rand" ON)
+set(HYPRE_SYCL_TARGET            ""   CACHE STRING  "Target SYCL architecture, e.g. 'spir64_gen'.")
+set(HYPRE_SYCL_TARGET_BACKEND    ""   CACHE STRING  "Additional SYCL backend options, e.g. '-device 12.1.0,12.4.0'.")
+# Umpire resource management options
+option(HYPRE_WITH_UMPIRE             "Use Umpire Allocator for device and unified memory" OFF)
+option(HYPRE_WITH_UMPIRE_HOST        "Use Umpire Allocator for host memory" OFF)
+option(HYPRE_WITH_UMPIRE_DEVICE      "Use Umpire Allocator for device memory" OFF)
+option(HYPRE_WITH_UMPIRE_UM          "Use Umpire Allocator for unified memory" OFF)
+option(HYPRE_WITH_UMPIRE_PINNED      "Use Umpire Allocator for pinned memory" OFF)
+option(TPL_UMPIRE_LIBRARIES          "List of absolute paths to Umpire link libraries [].")
+option(TPL_UMPIRE_INCLUDE_DIRS       "List of absolute paths to Umpire include directories [].")
+
+option(TPL_SUPERLU_LIBRARIES         "List of absolute paths to SuperLU link libraries [].")
+
+
+Question:
+What inputs are necessary to create an instance of HYPRE_SStructMatrix? And what procedures are necessary to finalize its setup process?
+
+A. An MPI communicator and a HYPRE_SStructGraph are necessary to create. HYPRE_SStructMatrixAssemble must be called before finalizing the matrix setup.
+B. An MPI communicator, a HYPRE_SStructGrid, and a corresponding stencil are necessary to create. HYPRE_SStructMatrixAssemble must be called before finalizing the matrix setup.
+C. An MPI communicator and a HYPRE_SStructGraph are necessary to create. HYPRE_SStructMatrixSetBoxValues must be called before finalizing the matrix setup.
+D. An MPI communicator and a HYPRE_SStructGrid are necessary to create. HYPRE_SStructMatrixSetBoxValues must be called before finalizing the matrix setup.
+
+Select the correct answer.

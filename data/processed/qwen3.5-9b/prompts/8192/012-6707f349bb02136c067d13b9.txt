@@ -1,0 +1,763 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+import argparse
+import os
+
+from Cython import Tempita
+
+
+def process_tempita(pxifile, outfile) -> None:
+    with open(pxifile, encoding="utf-8") as f:
+        tmpl = f.read()
+    pyxcontent = Tempita.sub(tmpl)
+
+    with open(outfile, "w", encoding="utf-8") as f:
+        f.write(pyxcontent)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("infile", type=str, help="Path to the input file")
+    parser.add_argument("-o", "--outdir", type=str, help="Path to the output directory")
+    args = parser.parse_args()
+
+    if not args.infile.endswith(".in"):
+        raise ValueError(f"Unexpected extension: {args.infile}")
+
+    outdir_abs = os.path.join(os.getcwd(), args.outdir)
+    outfile = os.path.join(
+        outdir_abs, os.path.splitext(os.path.split(args.infile)[1])[0]
+    )
+
+    process_tempita(args.infile, outfile)
+
+
+main()
+
+
+<picture align="center">
+  <source media="(prefers-color-scheme: dark)" srcset="https://pandas.pydata.org/static/img/pandas_white.svg">
+  <img alt="Pandas Logo" src="https://pandas.pydata.org/static/img/pandas.svg">
+</picture>
+
+-----------------
+
+# pandas: powerful Python data analysis toolkit
+
+| | |
+| --- | --- |
+| Testing | [![CI - Test](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml) [![Coverage](https://codecov.io/github/pandas-dev/pandas/coverage.svg?branch=main)](https://codecov.io/gh/pandas-dev/pandas) |
+| Package | [![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/pandas/) [![PyPI Downloads](https://img.shields.io/pypi/dm/pandas.svg?label=PyPI%20downloads)](https://pypi.org/project/pandas/) [![Conda Latest Release](https://anaconda.org/conda-forge/pandas/badges/version.svg)](https://anaconda.org/conda-forge/pandas) [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pandas.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/pandas) |
+| Meta | [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](https://numfocus.org) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3509134.svg)](https://doi.org/10.5281/zenodo.3509134) [![License - BSD 3-Clause](https://img.shields.io/pypi/l/pandas.svg)](https://github.com/pandas-dev/pandas/blob/main/LICENSE) [![Slack](https://img.shields.io/badge/join_Slack-information-brightgreen.svg?logo=slack)](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) |
+
+
+## What is it?
+
+**pandas** is a Python package that provides fast, flexible, and expressive data
+structures designed to make working with "relational" or "labeled" data both
+easy and intuitive. It aims to be the fundamental high-level building block for
+doing practical, **real world** data analysis in Python. Additionally, it has
+the broader goal of becoming **the most powerful and flexible open source data
+analysis / manipulation tool available in any language**. It is already well on
+its way towards this goal.
+
+## Table of Contents
+
+- [Main Features](#main-features)
+- [Where to get it](#where-to-get-it)
+- [Dependencies](#dependencies)
+- [Installation from sources](#installation-from-sources)
+- [License](#license)
+- [Documentation](#documentation)
+- [Background](#background)
+- [Getting Help](#getting-help)
+- [Discussion and Development](#discussion-and-development)
+- [Contributing to pandas](#contributing-to-pandas)
+
+## Main Features
+Here are just a few of the things that pandas does well:
+
+  - Easy handling of [**missing data**][missing-data] (represented as
+    `NaN`, `NA`, or `NaT`) in floating point as well as non-floating point data
+  - Size mutability: columns can be [**inserted and
+    deleted**][insertion-deletion] from DataFrame and higher dimensional
+    objects
+  - Automatic and explicit [**data alignment**][alignment]: objects can
+    be explicitly aligned to a set of labels, or the user can simply
+    ignore the labels and let `Series`, `DataFrame`, etc. automatically
+    align the data for you in computations
+  - Powerful, flexible [**group by**][groupby] functionality to perform
+    split-apply-combine operations on data sets, for both aggregating
+    and transforming data
+  - Make it [**easy to convert**][conversion] ragged,
+    differently-indexed data in other Python and NumPy data structures
+    into DataFrame objects
+  - Intelligent label-based [**slicing**][slicing], [**fancy
+    indexing**][fancy-indexing], and [**subsetting**][subsetting] of
+    large data sets
+  - Intuitive [**merging**][merging] and [**joining**][joining] data
+    sets
+  - Flexible [**reshaping**][reshape] and [**pivoting**][pivot-table] of
+    data sets
+  - [**Hierarchical**][mi] labeling of axes (possible to have multiple
+    labels per tick)
+  - Robust IO tools for loading data from [**flat files**][flat-files]
+    (CSV and delimited), [**Excel files**][excel], [**databases**][db],
+    and saving/loading data from the ultrafast [**HDF5 format**][hdfstore]
+  - [**Time series**][timeseries]-specific functionality: date range
+    generation and frequency conversion, moving window statistics,
+    date shifting and lagging
+
+
+   [missing-data]: https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html
+   [insertion-deletion]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#column-selection-addition-deletion
+   [alignment]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html?highlight=alignment#intro-to-data-structures
+   [groupby]: https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#group-by-split-apply-combine
+   [conversion]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#dataframe
+   [slicing]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#slicing-ranges
+   [fancy-indexing]: https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced
+   [subsetting]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#boolean-indexing
+   [merging]: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#database-style-dataframe-or-named-series-joining-merging
+   [joining]: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#joining-on-index
+   [reshape]: https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html
+   [pivot-table]: https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html
+   [mi]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#hierarchical-indexing-multiindex
+   [flat-files]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#csv-text-files
+   [excel]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#excel-files
+   [db]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#sql-queries
+   [hdfstore]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#hdf5-pytables
+   [timeseries]: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#time-series-date-functionality
+
+## Where to get it
+The source code is currently hosted on GitHub at:
+https://github.com/pandas-dev/pandas
+
+Binary installers for the latest released version are available at the [Python
+Package Index (PyPI)](https://pypi.org/project/pandas) and on [Conda](https://anaconda.org/conda-forge/pandas).
+
+```sh
+# conda
+conda install -c conda-forge pandas
+```
+
+```sh
+# or PyPI
+pip install pandas
+```
+
+The list of changes to pandas between each release can be found
+[here](https://pandas.pydata.org/pandas-docs/stable/whatsnew/index.html). For full
+details, see the commit logs at https://github.com/pandas-dev/pandas.
+
+## Dependencies
+- [NumPy - Adds support for large, multi-dimensional arrays, matrices and high-level mathematical functions to operate on these arrays](https://www.numpy.org)
+- [python-dateutil - Provides powerful extensions to the standard datetime module](https://dateutil.readthedocs.io/en/stable/index.html)
+- [pytz - Brings the Olson tz database into Python which allows accurate and cross platform timezone calculations](https://github.com/stub42/pytz)
+
+See the [full installation instructions](https://pandas.pydata.org/pandas-docs/stable/install.html#dependencies) for minimum supported versions of required, recommended and optional dependencies.
+
+## Installation from sources
+To install pandas from source you need [Cython](https://cython.org/) in addition to the normal
+dependencies above. Cython can be installed from PyPI:
+
+```sh
+pip install cython
+```
+
+In the `pandas` directory (same one where you found this file after
+cloning the git repo), execute:
+
+```sh
+pip install .
+```
+
+or for installing in [development mode](https://pip.pypa.io/en/latest/cli/pip_install/#install-editable):
+
+
+```sh
+python -m pip install -ve . --no-build-isolation -Ceditable-verbose=true
+```
+
+See the full instructions for [installing from source](https://pandas.pydata.org/docs/dev/development/contributing_environment.html).
+
+## License
+[BSD 3](LICENSE)
+
+## Documentation
+The official documentation is hosted on [PyData.org](https://pandas.pydata.org/pandas-docs/stable/).
+
+## Background
+Work on ``pandas`` started at [AQR](https://www.aqr.com/) (a quantitative hedge fund) in 2008 and
+has been under active development since then.
+
+## Getting Help
+
+For usage questions, the best place to go to is [StackOverflow](https://stackoverflow.com/questions/tagged/pandas).
+Further, general questions and discussions can also take place on the [pydata mailing list](https://groups.google.com/forum/?fromgroups#!forum/pydata).
+
+## Discussion and Development
+Most development discussions take place on GitHub in this repo, via the [GitHub issue tracker](https://github.com/pandas-dev/pandas/issues).
+
+Further, the [pandas-dev mailing list](https://mail.python.org/mailman/listinfo/pandas-dev) can also be used for specialized discussions or design issues, and a [Slack channel](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) is available for quick development related questions.
+
+There are also frequent [community meetings](https://pandas.pydata.org/docs/dev/development/community.html#community-meeting) for project maintainers open to the community as well as monthly [new contributor meetings](https://pandas.pydata.org/docs/dev/development/community.html#new-contributor-meeting) to help support new contributors.
+
+Additional information on the communication channels can be found on the [contributor community](https://pandas.pydata.org/docs/development/community.html) page.
+
+## Contributing to pandas
+
+[![Open Source Helpers](https://www.codetriage.com/pandas-dev/pandas/badges/users.svg)](https://www.codetriage.com/pandas-dev/pandas)
+
+All contributions, bug reports, bug fixes, documentation improvements, enhancements, and ideas are welcome.
+
+A detailed overview on how to contribute can be found in the **[contributing guide](https://pandas.pydata.org/docs/dev/development/contributing.html)**.
+
+If you are simply looking to start working with the pandas codebase, navigate to the [GitHub "issues" tab](https://github.com/pandas-dev/pandas/issues) and start looking through interesting issues. There are a number of issues listed under [Docs](https://github.com/pandas-dev/pandas/issues?labels=Docs&sort=updated&state=open) and [good first issue](https://github.com/pandas-dev/pandas/issues?labels=good+first+issue&sort=updated&state=open) where you could start out.
+
+You can also triage issues which may include reproducing bug reports, or asking for vital information such as version numbers or reproduction instructions. If you would like to start triaging issues, one easy way to get started is to [subscribe to pandas on CodeTriage](https://www.codetriage.com/pandas-dev/pandas).
+
+Or maybe through using pandas you have an idea of your own or are looking for something in the documentation and thinking ‘this can be improved’...you can do something about it!
+
+Feel free to ask questions on the [mailing list](https://groups.google.com/forum/?fromgroups#!forum/pydata) or on [Slack](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack).
+
+As contributors and maintainers to this project, you are expected to abide by pandas' code of conduct. More information can be found at: [Contributor Code of Conduct](https://github.com/pandas-dev/.github/blob/master/CODE_OF_CONDUCT.md)
+
+<hr>
+
+[Go to Top](#table-of-contents)
+
+
+About the Copyright Holders
+===========================
+
+*   Copyright (c) 2008-2011 AQR Capital Management, LLC
+
+    AQR Capital Management began pandas development in 2008. Development was
+    led by Wes McKinney. AQR released the source under this license in 2009.
+*   Copyright (c) 2011-2012, Lambda Foundry, Inc.
+
+    Wes is now an employee of Lambda Foundry, and remains the pandas project
+    lead.
+*   Copyright (c) 2011-2012, PyData Development Team
+
+    The PyData Development Team is the collection of developers of the PyData
+    project. This includes all of the PyData sub-projects, including pandas. The
+    core team that coordinates development on GitHub can be found here:
+    https://github.com/pydata.
+
+Full credits for pandas contributors can be found in the documentation.
+
+Our Copyright Policy
+====================
+
+PyData uses a shared copyright model. Each contributor maintains copyright
+over their contributions to PyData. However, it is important to note that
+these contributions are typically only changes to the repositories. Thus,
+the PyData source code, in its entirety, is not the copyright of any single
+person or institution. Instead, it is the collective copyright of the
+entire PyData Development Team. If individual contributors want to maintain
+a record of what changes/contributions they have specific copyright on,
+they should indicate their copyright in the commit message of the change
+when they commit the change to one of the PyData repositories.
+
+With this in mind, the following banner should be used in any source code
+file to indicate the copyright and license terms:
+
+```
+#-----------------------------------------------------------------------------
+# Copyright (c) 2012, PyData Development Team
+# All rights reserved.
+#
+# Distributed under the terms of the BSD Simplified License.
+#
+# The full license is in the LICENSE file, distributed with this software.
+#-----------------------------------------------------------------------------
+```
+
+Other licenses can be found in the LICENSES directory.
+
+License
+=======
+
+pandas is distributed under a 3-clause ("Simplified" or "New") BSD
+license. Parts of NumPy, SciPy, numpydoc, bottleneck, which all have
+BSD-compatible licenses, are included. Their licenses follow the pandas
+license.
+
+
+#!/usr/bin/env python3
+
+# Note: This file has to live next to setup.py or versioneer will not work
+import argparse
+import os
+import sys
+
+import versioneer
+
+sys.path.insert(0, "")
+
+
+def write_version_info(path) -> None:
+    version = None
+    git_version = None
+
+    try:
+        import _version_meson
+
+        version = _version_meson.__version__
+        git_version = _version_meson.__git_version__
+    except ImportError:
+        version = versioneer.get_version()
+        git_version = versioneer.get_versions()["full-revisionid"]
+    if os.environ.get("MESON_DIST_ROOT"):
+        path = os.path.join(os.environ.get("MESON_DIST_ROOT"), path)
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(f'__version__="{version}"\n')
+        file.write(f'__git_version__="{git_version}"\n')
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-o",
+        "--outfile",
+        type=str,
+        help="Path to write version info to",
+        required=False,
+    )
+    parser.add_argument(
+        "--print",
+        default=False,
+        action="store_true",
+        help="Whether to print out the version",
+        required=False,
+    )
+    args = parser.parse_args()
+
+    if args.outfile:
+        if not args.outfile.endswith(".py"):
+            raise ValueError(
+                f"Output file must be a Python file. "
+                f"Got: {args.outfile} as filename instead"
+            )
+
+        write_version_info(args.outfile)
+
+    if args.print:
+        try:
+            import _version_meson
+
+            version = _version_meson.__version__
+        except ImportError:
+            version = versioneer.get_version()
+        print(version)
+
+
+main()
+
+
+"""
+Public testing utility functions.
+"""
+
+from pandas._testing import (
+    assert_extension_array_equal,
+    assert_frame_equal,
+    assert_index_equal,
+    assert_series_equal,
+)
+
+__all__ = [
+    "assert_extension_array_equal",
+    "assert_frame_equal",
+    "assert_series_equal",
+    "assert_index_equal",
+]
+
+
+# This file helps to compute a version number in source trees obtained from
+# git-archive tarball (such as those provided by github's download-from-tag
+# feature). Distribution tarballs (built by setup.py sdist) and build
+# directories (produced by setup.py build) will contain a much shorter file
+# that just contains the computed version number.
+
+# This file is released into the public domain.
+# Generated by versioneer-0.28
+# https://github.com/python-versioneer/python-versioneer
+
+"""Git implementation of _version.py."""
+
+from collections.abc import Callable
+import errno
+import functools
+import os
+import re
+import subprocess
+import sys
+
+
+def get_keywords():
+    """Get the keywords needed to look up the version information."""
+    # these strings will be replaced by git during git-archive.
+    # setup.py/versioneer.py will grep for the variable names, so they must
+    # each be defined on a line of their own. _version.py will just call
+    # get_keywords().
+    git_refnames = " (HEAD -> main)"
+    git_full = "4f328f08df90906198b3a3f955ab321018964f0a"
+    git_date = "2024-10-10 15:19:55 +0200"
+    keywords = {"refnames": git_refnames, "full": git_full, "date": git_date}
+    return keywords
+
+
+class VersioneerConfig:
+    """Container for Versioneer configuration parameters."""
+
+
+def get_config():
+    """Create, populate and return the VersioneerConfig() object."""
+    # these strings are filled in when 'setup.py versioneer' creates
+    # _version.py
+    cfg = VersioneerConfig()
+    cfg.VCS = "git"
+    cfg.style = "pep440"
+    cfg.tag_prefix = "v"
+    cfg.parentdir_prefix = "pandas-"
+    cfg.versionfile_source = "pandas/_version.py"
+    cfg.verbose = False
+    return cfg
+
+
+class NotThisMethod(Exception):
+    """Exception raised if a method is not valid for the current scenario."""
+
+
+LONG_VERSION_PY: dict[str, str] = {}
+HANDLERS: dict[str, dict[str, Callable]] = {}
+
+
+def register_vcs_handler(vcs, method):  # decorator
+    """Create decorator to mark a method as the handler of a VCS."""
+
+    def decorate(f):
+        """Store f in HANDLERS[vcs][method]."""
+        if vcs not in HANDLERS:
+            HANDLERS[vcs] = {}
+        HANDLERS[vcs][method] = f
+        return f
+
+    return decorate
+
+
+def run_command(commands, args, cwd=None, verbose=False, hide_stderr=False, env=None):
+    """Call the given command(s)."""
+    assert isinstance(commands, list)
+    process = None
+
+    popen_kwargs = {}
+    if sys.platform == "win32":
+        # This hides the console window if pythonw.exe is used
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        popen_kwargs["startupinfo"] = startupinfo
+
+    for command in commands:
+        dispcmd = str([command] + args)
+        try:
+            # remember shell=False, so use git.cmd on windows, not just git
+            process = subprocess.Popen(
+                [command] + args,
+                cwd=cwd,
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=(subprocess.PIPE if hide_stderr else None),
+                **popen_kwargs,
+            )
+            break
+        except OSError:
+            e = sys.exc_info()[1]
+            if e.errno == errno.ENOENT:
+                continue
+            if verbose:
+                print(f"unable to run {dispcmd}")
+                print(e)
+            return None, None
+    else:
+        if verbose:
+            print(f"unable to find command, tried {commands}")
+        return None, None
+    stdout = process.communicate()[0].strip().decode()
+    if process.returncode != 0:
+        if verbose:
+            print(f"unable to run {dispcmd} (error)")
+            print(f"stdout was {stdout}")
+        return None, process.returncode
+    return stdout, process.returncode
+
+
+def versions_from_parentdir(parentdir_prefix, root, verbose):
+    """Try to determine the version from the parent directory name.
+
+    Source tarballs conventionally unpack into a directory that includes both
+    the project name and a version string. We will also support searching up
+    two directory levels for an appropriately named parent directory
+    """
+    rootdirs = []
+
+    for _ in range(3):
+        dirname = os.path.basename(root)
+        if dirname.startswith(parentdir_prefix):
+            return {
+                "version": dirname[len(parentdir_prefix) :],
+                "full-revisionid": None,
+                "dirty": False,
+                "error": None,
+                "date": None,
+            }
+        rootdirs.append(root)
+        root = os.path.dirname(root)  # up a level
+
+    if verbose:
+        print(
+            f"Tried directories {rootdirs!s} \
+            but none started with prefix {parentdir_prefix}"
+        )
+    raise NotThisMethod("rootdir doesn't start with parentdir_prefix")
+
+
+@register_vcs_handler("git", "get_keywords")
+def git_get_keywords(versionfile_abs):
+    """Extract version information from the given file."""
+    # the code embedded in _version.py can just fetch the value of these
+    # keywords. When used from setup.py, we don't want to import _version.py,
+    # so we do it with a regexp instead. This function is not used from
+    # _version.py.
+    keywords = {}
+    try:
+        with open(versionfile_abs, encoding="utf-8") as fobj:
+            for line in fobj:
+                if line.strip().startswith("git_refnames ="):
+                    mo = re.search(r'=\s*"(.*)"', line)
+                    if mo:
+                        keywords["refnames"] = mo.group(1)
+                if line.strip().startswith("git_full ="):
+                    mo = re.search(r'=\s*"(.*)"', line)
+                    if mo:
+                        keywords["full"] = mo.group(1)
+                if line.strip().startswith("git_date ="):
+                    mo = re.search(r'=\s*"(.*)"', line)
+                    if mo:
+                        keywords["date"] = mo.group(1)
+    except OSError:
+        pass
+    return keywords
+
+
+@register_vcs_handler("git", "keywords")
+def git_versions_from_keywords(keywords, tag_prefix, verbose):
+    """Get version information from git keywords."""
+    if "refnames" not in keywords:
+        raise NotThisMethod("Short version file found")
+    date = keywords.get("date")
+    if date is not None:
+        # Use only the last line.  Previous lines may contain GPG signature
+        # information.
+        date = date.splitlines()[-1]
+
+        # git-2.2.0 added "%cI", which expands to an ISO-8601 -compliant
+        # datestamp. However we prefer "%ci" (which expands to an "ISO-8601
+        # -like" string, which we must then edit to make compliant), because
+        # it's been around since git-1.5.3, and it's too difficult to
+        # discover which version we're using, or to work around using an
+        # older one.
+        date = date.strip().replace(" ", "T", 1).replace(" ", "", 1)
+    refnames = keywords["refnames"].strip()
+    if refnames.startswith("$Format"):
+        if verbose:
+            print("keywords are unexpanded, not using")
+        raise NotThisMethod("unexpanded keywords, not a git-archive tarball")
+    refs = {r.strip() for r in refnames.strip("()").split(",")}
+    # starting in git-1.8.3, tags are listed as "tag: foo-1.0" instead of
+    # just "foo-1.0". If we see a "tag: " prefix, prefer those.
+    TAG = "tag: "
+    tags = {r[len(TAG) :] for r in refs if r.startswith(TAG)}
+    if not tags:
+        # Either we're using git < 1.8.3, or there really are no tags. We use
+        # a heuristic: assume all version tags have a digit. The old git %d
+        # expansion behaves like git log --decorate=short and strips out the
+        # refs/heads/ and refs/tags/ prefixes that would let us distinguish
+        # between branches and tags. By ignoring refnames without digits, we
+        # filter out many common branch names like "release" and
+        # "stabilization", as well as "HEAD" and "master".
+        tags = {r for r in refs if re.search(r"\d", r)}
+        if verbose:
+            print(f"discarding '{','.join(refs - tags)}', no digits")
+    if verbose:
+        print(f"likely tags: {','.join(sorted(tags))}")
+    for ref in sorted(tags):
+        # sorting will prefer e.g. "2.0" over "2.0rc1"
+        if ref.startswith(tag_prefix):
+            r = ref[len(tag_prefix) :]
+            # Filter out refs that exactly match prefix or that don't start
+            # with a number once the prefix is stripped (mostly a concern
+            # when prefix is '')
+            if not re.match(r"\d", r):
+                continue
+            if verbose:
+                print(f"picking {r}")
+            return {
+                "version": r,
+                "full-revisionid": keywords["full"].strip(),
+                "dirty": False,
+                "error": None,
+                "date": date,
+            }
+    # no suitable tags, so version is "0+unknown", but full hex is still there
+    if verbose:
+        print("no suitable tags, using unknown + full revision id")
+    return {
+        "version": "0+unknown",
+        "full-revisionid": keywords["full"].strip(),
+        "dirty": False,
+        "error": "no suitable tags",
+        "date": None,
+    }
+
+
+@register_vcs_handler("git", "pieces_from_vcs")
+def git_pieces_from_vcs(tag_prefix, root, verbose, runner=run_command):
+    """Get version from 'git describe' in the root of the source tree.
+
+    This only gets called if the git-archive 'subst' keywords were *not*
+    expanded, and _version.py hasn't already been rewritten with a short
+    version string, meaning we're inside a checked out source tree.
+    """
+    GITS = ["git"]
+    if sys.platform == "win32":
+        GITS = ["git.cmd", "git.exe"]
+
+    # GIT_DIR can interfere with correct operation of Versioneer.
+    # It may be intended to be passed to the Versioneer-versioned project,
+    # but that should not change where we get our version from.
+    env = os.environ.copy()
+    env.pop("GIT_DIR", None)
+    runner = functools.partial(runner, env=env)
+
+    _, rc = runner(GITS, ["rev-parse", "--git-dir"], cwd=root, hide_stderr=not verbose)
+    if rc != 0:
+        if verbose:
+            print(f"Directory {root} not under git control")
+        raise NotThisMethod("'git rev-parse --git-dir' returned error")
+
+    # if there is a tag matching tag_prefix, this yields TAG-NUM-gHEX[-dirty]
+    # if there isn't one, this yields HEX[-dirty] (no NUM)
+    describe_out, rc = runner(
+        GITS,
+        [
+            "describe",
+            "--tags",
+            "--dirty",
+            "--always",
+            "--long",
+            "--match",
+            f"{tag_prefix}[[:digit:]]*",
+        ],
+        cwd=root,
+    )
+    # --long was added in git-1.5.5
+    if describe_out is None:
+        raise NotThisMethod("'git describe' failed")
+    describe_out = describe_out.strip()
+    full_out, rc = runner(GITS, ["rev-parse", "HEAD"], cwd=root)
+    if full_out is None:
+        raise NotThisMethod("'git rev-parse' failed")
+    full_out = full_out.strip()
+
+    pieces = {}
+    pieces["long"] = full_out
+    pieces["short"] = full_out[:7]  # maybe improved later
+    pieces["error"] = None
+
+    branch_name, rc = runner(GITS, ["rev-parse", "--abbrev-ref", "HEAD"], cwd=root)
+    # --abbrev-ref was added in git-1.6.3
+    if rc != 0 or branch_name is None:
+        raise NotThisMethod("'git rev-parse --abbrev-ref' returned error")
+    branch_name = branch_name.strip()
+
+    if branch_name == "HEAD":
+        # If we aren't exactly on a branch, pick a branch which represents
+        # the current commit. If all else fails, we are on a branchless
+        # commit.
+        branches, rc = runner(GITS, ["branch", "--contains"], cwd=root)
+        # --contains was added in git-1.5.4
+        if rc != 0 or branches is None:
+            raise NotThisMethod("'git branch --contains' returned error")
+        branches = branches.split("\n")
+
+        # Remove the first line if we're running detached
+        if "(" in branches[0]:
+            branches.pop(0)
+
+        # Strip off the leading "* " from the list of branches.
+        branches = [branch[2:] for branch in branches]
+        if "master" in branches:
+            branch_name = "master"
+        elif not branches:
+            branch_name = None
+        else:
+            # Pick the first branch that is returned. Good or bad.
+            branch_name = branches[0]
+
+    pieces["branch"] = branch_name
+
+    # parse describe_out. It will be like TAG-NUM-gHEX[-dirty] or HEX[-dirty]
+    # TAG might have hyphens.
+    git_describe = describe_out
+
+    # look for -dirty suffix
+    dirty = git_describe.endswith("-dirty")
+    pieces["dirty"] = dirty
+    if dirty:
+        git_describe = git_describe[: git_describe.rindex("-dirty")]
+
+    # now we have TAG-NUM-gHEX or HEX
+
+    if "-" in git_describe:
+        # TAG-NUM-gHEX
+        mo = re.search(r"^(.+)-(\d+)-g([0-9a-f]+)$", git_describe)
+        if not mo:
+            # unparsable. Maybe git-describe is misbehaving?
+            pieces["error"] = f"unable to parse git-describe output: '{describe_out}'"
+            return pieces
+
+        # tag
+        full_tag = mo.group(1)
+        if not full_tag.startswith(tag_prefix):
+            if verbose:
+                fmt = "tag '%s' doesn't start with prefix '%s'"
+                print(fmt % (full_tag, tag_prefix))
+            pieces["error"] = (
+                f"tag '{full_tag}' doesn't start with prefix '{tag_prefix}'"
+            )
+            return pieces
+        pieces["closest-tag"] = full_tag[len(tag_prefix) :]
+
+        # distance: number of commits since tag
+        pieces["distance"] = int(mo.group(2))
+
+        # commit: short hex revision ID
+        pieces["short"] = mo.group(3)
+
+    else:
+        # HEX: no tags
+        pieces["closest-tag"] = 
+
+Question:
+Suppose you are analyzing the results of chimeric RNA events (RNA transcribed from different DNA fused together) by STAR_fusion with a group of samples. The result file named chimeric.tsv is a tsv file containing four columns (chimeric_events, counts, and samples, types). If you want to transform the tsv file into a matrix with rowname being the chimeric events, column name being the samples and the values of the matrix being the counts. How would use pandas to do this in python? Just list the functions flow (Hints: a sample could be identified with multiple chimeric events and same events with different types, and a chimeric event may happen in different samples; Assume you have typed the following code:Import pandas as pd)
+
+A. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) -> matrix=Chimeric.pivot(index='chimeric_events', columns='samples', values='counts')
+B. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) ->matrix= chimeric.groupby(["chimeric_events", "samples"]).first().unstack()
+C. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) ->matrix= chimeric.groupby(["chimeric_events", "samples"]).counts.first().unstack()
+D. Chimeric=pd.read_csv(“chimeric.tsv”) ->matrix= Chimeric.pivot(index='chimeric_events', columns='samples', values='counts')
+
+Select the correct answer.

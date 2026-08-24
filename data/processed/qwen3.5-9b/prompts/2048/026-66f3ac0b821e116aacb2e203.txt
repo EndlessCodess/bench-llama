@@ -1,0 +1,35 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+Symbol    EndDate IndustryCode  TotalAssets  TotalLiability  IntangibleAsset     NetProfit  OperatingEvenue  OperatingCost  OperationProfit
+      1 1990-12-31          NaN 2.919190e+09    5.628000e+07     0.000000e+00           NaN              NaN            NaN              NaN
+      1 1991-12-31          J66 4.354460e+09    7.723000e+07     0.000000e+00           NaN     3.346900e+08   1.882300e+08     1.501800e+08
+      1 1992-12-31          J66 7.522847e+09    1.958932e+08     0.000000e+00           NaN     4.755108e+08   2.546128e+08     2.257430e+08
+      1 1993-12-31          J66 9.337871e+09    8.148741e+09     0.000000e+00  2.733111e+08              NaN            NaN     3.204618e+08
+      1 1994-12-31          J66 1.548841e+10    1.382858e+10     0.000000e+00  3.563280e+08              NaN            NaN     4.159742e+08
+      1 1995-12-31          J66 2.031248e+10    1.835194e+10     0.000000e+00  4.350597e+08              NaN            NaN     5.010883e+08
+      1 1996-12-31          J66 3.002203e+10    2.748234e+10     0.000000e+00  7.873006e+08              NaN            NaN     9.167787e+08
+      1 1997-12-31          J66 3.179863e+10    2.839795e+10     0.000000e+00  8.203918e+08              NaN            NaN     9.620847e+08
+      1 1998-12-31          J66 3.939986e+10    3.572350e+10     0.000000e+00  7.642491e+08              NaN            NaN     8.505829e+08
+      1 1999-12-31          J66 4.586897e+10    4.296814e+10              NaN  5.551911e+08              NaN            NaN     6.063740e+08
+      1 2000-12-31          J66 6.722750e+10    6.248862e+10     1.982460e+06  5.065518e+08              NaN            NaN     5.536314e+08
+      1 2001-12-31          J66 1.201270e+11    1.164993e+11     3.566298e+07  4.023604e+08              NaN            NaN     5.617485e+08
+      1 2002-12-31          J66 1.661664e+11    1.623984e+11     5.233168e+07  4.322249e+08              NaN            NaN     6.492686e+08
+      1 2003-12-31          J66 1.928510e+11    1.888859e+11     8.709089e+07  3.165457e+08              NaN            NaN     3.685372e+08
+      1 2004-12-31          J66 2.042864e+11    1.996018e+11     6.585707e+07  2.897743e+08              NaN            NaN     4.985166e+08
+      1 2005-12-31          J66 2.292164e+11    2.241734e+11     4.158046e+07  3.517275e+08              NaN            NaN     6.747545e+08
+      1 2006-12-31          J66 2.605763e+11    2.541018e+11     2.656741e+07  1.302907e+09              NaN            NaN     1.905169e+09
+      1 2007-12-31          J66 3.525394e+11    3.395333e+11     6.772500e+07  2.649903e+09              NaN            NaN     3.721942e+09
+      1 2008-12-31          J66 4.744402e+11    4.580394e+11     1.139170e+08  6.140350e+08              NaN            NaN     8.034260e+08
+      1 2009-12-31          J66 5.878110e+11    5.673414e+11     1.567880e+08  5.030729e+09     0.000000e+00   0.000000e+00     6.159127e+09
+      1 2010-12-31          J66 7.27
+
+Question:
+For end dates on 2021-12-31, which company has the highest total asset/total liability ratio? Please provide the stock symbol of the company, and the value of the total asset/total liability ratio (rounded to the nearest whole number).
+
+A. 600052；32
+B. 000722；30
+C. 000416；30
+D. 000416；29
+
+Select the correct answer.

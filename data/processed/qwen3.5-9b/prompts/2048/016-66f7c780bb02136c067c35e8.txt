@@ -1,0 +1,206 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+1
+2020 JD.com Environmental, Social and Governance Report
+
+
+Contents
+Overview
+Special Topic: Combating COVID-19
+Corporate Governance
+Environmental Protection
+Working Environment
+Product Responsibility
+Community Responsibility
+Appendix
+About JD.com
+01
+Report Profile
+Letter from the Chairman
+Statement from the Board
+ESG Governance System
+Strategic Position, Mission, Vision, and Values
+Corporate Social Responsibility Strategic 
+Framework
+Materiality Assessment and Stakeholder 
+Engagement
+02
+03
+05
+05
+06
+07
+09
+Emergency Assistance
+Science and Technology
+Protecting Public Health
+Comprehensive Assistance to Recovery
+Internal Control and Compliance 
+Management
+Information Security
+Anti-corruption
+11
+11
+12
+12
+14
+15
+17
+Green Operation
+Low-carbon and Green Supply Chain
+Green Lifestyle Advocacy
+19
+20
+23
+Human Resource Compliance Management
+Ensuring High-quality Employment
+Supplier Admittance and Compliance 
+Management
+Supplier Environmental and Social Risk 
+Identification Management
+Supplier Digital Management 
+Platform Management
+Quality Management
+Intellectual Property Protection
+Content Governance
+Customer Service
+Organizations and Corporate Clients Growth
+36
+36
+37
+38
+39
+40
+Appendix 1: Key Performance
+Appendix 2: Content Index
+Appendix 3: GRI Standards Content Index
+Appendix 4: External Verification Certificate
+47
+49
+51
+53
+Corporate Philanthropy and Social 
+Responsibility
+Focus Areas and Practices
+44
+45
+27
+28
+33
+33
+34
+Supplier Management
+
+
+01
+2020 JD.com Environmental, Social and Governance Report
+About JD.com 
+JD.com is a leading technology driven e-commerce company transforming to become the leading supply chain-based technology and 
+service provider. The company’s cutting-edge retail infrastructure seeks to enable consumers to buy whatever they want, whenever and 
+wherever they want it. The company has opened its technology and infrastructure to partners, brands and other sectors, as part of its 
+Retail as a Service oﬀering to help drive productivity and innovation across a range of industries. JD.com is the largest retailer in China, 
+a member of the NASDAQ100 and a Fortune Global 500 company.
+
+
+02
+2020 JD.com Environmental, Social and Governance Report
+Overview
+Report Proﬁle
+Release Form of the Report
+Reference and Principles
+Reporting Scope
+Source of Information 
+Currency
+Referential Description
+Contact Us
+This Environmental, Social and Governance (hereinafter referred to as “ESG”) report is distributed electronically in Chinese and English.
+This report references the United Nations Sustainable Development Goals (UN SDGs), the GRI Standards issued by the Global 
+Sustainability Standards Board (GSSB), the ESG Reporting Guide from the Nasdaq Stock Market, industrial standards prepared by the 
+Sustainability Accounting Standards Board (SASB), and the ESG Reporting Guide from the Hong Kong Stock Exchange (HKEX). The 
+report also considers the four disclosure principles of Materiality, Quantitative, Balance, and Consistency.
+The report aims to provide information on the ESG-related performance of the Group from January 1 to December 31 of 2020, and on 
+material issues and boundaries identiﬁed by materiality analysis.
+The information and data in this report are mainly from the Group’s database, internal statistical reports, and public information， 
+including prospectuses, annual reports, and media releases.
+Unless speciﬁed, the monetary amounts shown in this report are all presented in RMB.
+For ease of presentation, “JD,” “the Group,” and “we” all refer to “JD.com.”
+We value your feedback and opinions, and appreciate you emailing us at ir@jd.com, or mailing a letter to JD.com, No. 18 Kechuang 11 
+Street, Building A, Floor 20, Beijing Economic-Technological Development Area, Beijing, 100176, People’s Republic of China.
+For more information, please visit our oﬃcial website at https://ir.jd.com/.
+
+
+03
+2020 JD.com Environmental, Social and Governance Report
+Powered by Technology for a More Productive and Sustainable World
+Letter from the Chairman
+2020 was an extraordinary year for 
+JD and the world. We witnessed the 
+systematic inﬂuence of public health 
+risks applied to the global economy, 
+environment, and society. According 
+to the “Global Risks Report 2021” issued 
+by the World Economic Forum, the 
+pandemic has exacerbated the global 
+economic recession, social inequalities, 
+and societal divisiveness, while 
+introducing increased uncertainty for 
+the world’s development prospects.
+In terms of risk likelihood and impact 
+for the next decade, extreme weather, 
+climate action failure, human-led 
+environmental damage, public health 
+crises, and biodiversity loss constitute 
+the ﬁve most signiﬁcant risks globally. 
+Actively seeking solutions to these risks 
+will bring new growth opportunities to 
+the post-pandemic world.
+More people recognize the importance 
+of building a community with a shared 
+future for humankind and promoting 
+sustainable development. Currently, 
+more than 20 countries and regions 
+around the world—including China—
+have committed to “zero-carbon” 
+ambitions, and major economies have 
+devoted themselves to a green recovery. 
+ESG investment that incorporates 
+environmental and social factors 
+into the overall risk assessment of 
+enterprises, and pays more attention to 
+long-term value creation, is becoming a 
+mainstream trend of the global capital 
+markets. In this context, the world’s 
+leading companies have updated 
+their sustainable development goals 
+and strengthened their mission and 
+commitment to the future. JD is one 
+of these leading companies—in 2020, 
+we released a new group mission—
+Powered by Technology for a More 
+Productive and Sustainable World.
+Digital and intelligent technologies have 
+become drivers for JD to accelerate 
+innovation during this pandemic. At 
+diﬀerent stages of the crisis, by relying 
+on the Digitally Intelligent Social Supply 
+Chain, JD has created social value in 
+ﬁghting COVID-19, through protecting 
+people’s livelihoods, supporting the 
+economy, and stabilizing employment 
+with a strong social responsibility 
+mission and technological means. 
+With technology, we respond to 
+urgent anti-epidemic needs, stabilize 
+prices, and ensure supplies. With 
+“new infrastructure,” we 
+
+Question:
+What changes have taken place in JD's ESG initiatives over the past four years?
+
+A. In terms of supplier management, JD has continuously improved the standards and systems related to green procurement by establishing a negative list mechanism for green procurement suppliers. In 2022, JD initiated a questionnaire survey to evaluate suppliers' ESG (Environmental, Social, and Governance) performance. In 2023, JD issued questionnaires to suppliers with higher ESG scores, receiving 461 valid responses. From 2024 onwards, JD has incorporated ESG clauses into supplier contracts, requiring suppliers to make commitments regarding ESG-related requirements and strictly abide by the "JD Group Supplier Code of Conduct."
+B. JD strives to ensure a diverse employee demographic structure. In 2020, the total number of employees within the JD system reached 360,000, with a proportion of 1.5% being employees with disabilities. In 2021, the total number of employees surpassed 420,000, among which over 80% hailed from rural areas. By 2022, the number declined to 370,000, but the rural population proportion remained at 80%. In 2023, the cumulative number of employees exceeded 360,000, with a female employee ratio of 21%.
+C. JD has made efforts in green operations, including promoting green commuting among employees and other initiatives. Since 2016, JD has established a strategic partnership with Didi, and in 2021, it forged a cooperation with CaoCao online car-hailing platform to provide carpooling services for employees. In 2021, the company's self-operated new energy shuttle buses at its headquarters have reached 80, with an additional 37 vehicles added in 2022. In response to the pandemic, JD has provided remote work systems for its employees, with the number of online meetings surpassing 1.6 million in 2021 and soaring to nearly 3.8 million in 2022. Notably, in 2023 alone, the number of online meetings conducted through Joymeeting exceeded 18 million.
+D. In terms of social welfare, JD is dedicated to giving back to society, making contributions in various fields such as targeted poverty alleviation, green environmental protection, inclusive healthcare, caring for vulnerable groups, emergency rescue and disaster relief. In 2021, JD initiated a series of projects and established funds in the healthcare sector; in 2022, JD played a vital role in ensuring the supply of essential goods during the pandemic; and in 2023, JD donated nearly 70,000 books to over one hundred primary schools.
+
+Select the correct answer.

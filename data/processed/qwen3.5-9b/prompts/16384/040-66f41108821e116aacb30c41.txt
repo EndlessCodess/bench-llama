@@ -1,0 +1,976 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+FORM 10-K 
+(Mark One)
+☑ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(D) OF THE SECURITIES EXCHANGE ACT OF 1934
+FOR THE FISCAL YEAR ENDED MAY 31, 2023 
+OR
+☐TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(D) OF THE SECURITIES EXCHANGE ACT OF 1934
+FOR THE TRANSITION PERIOD FROM
+TO
+.
+Commission File No. 1-10635 
+NIKE, Inc. 
+(Exact name of Registrant as specified in its charter)
+Oregon
+93-0584541
+(State or other jurisdiction of incorporation)
+(IRS Employer Identification No.)
+One Bowerman Drive, Beaverton, Oregon 97005-6453 
+(Address of principal executive offices and zip code)
+(503) 671-6453 
+(Registrant's telephone number, including area code)
+SECURITIES REGISTERED PURSUANT TO SECTION 12(B) OF THE ACT:
+Class B Common Stock
+NKE
+New York Stock Exchange
+(Title of each class)
+(Trading symbol)
+(Name of each exchange on which registered)
+SECURITIES REGISTERED PURSUANT TO SECTION 12(G) OF THE ACT:
+NONE
+Indicate by check mark:
+YES
+NO
+• if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act.
+þ
+¨
+• if the registrant is not required to file reports pursuant to Section 13 or Section 15(d) of the Act.
+¨
+þ
+• whether the registrant (1) has filed all reports required to be filed by Section 13 or 15(d) of the Securities 
+Exchange Act of 1934 during the preceding 12 months (or for such shorter period that the registrant was required 
+to file such reports), and (2) has been subject to such filing requirements for the past 90 days.
+þ
+¨
+• whether the registrant has submitted electronically every Interactive Data File required to be submitted pursuant to 
+Rule 405 of Regulation S-T (§232.405 of this chapter) during the preceding 12 months (or for such shorter period 
+that the registrant was required to submit such files).
+þ
+¨
+• whether the registrant is a large accelerated filer, an accelerated filer, a non-accelerated filer, a smaller reporting company or an emerging growth 
+company. See the definitions of “large accelerated filer,” “accelerated filer,” “smaller reporting company,” and “emerging growth company” in Rule 12b-2 of 
+the Exchange Act.
+Large accelerated filer
+þ
+Accelerated filer ☐
+Non-accelerated filer ☐
+Smaller reporting company ☐
+Emerging growth company ☐
+• if an emerging growth company, if the registrant has elected not to use the extended transition period for 
+complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the 
+Exchange Act.
+¨
+• whether the registrant has filed a report on and attestation to its management's assessment of the effectiveness of 
+its internal control over financial reporting under Section 404(b) of the Sarbanes-Oxley Act (15 U.S.C. 7262(b)) by 
+the registered public accounting firm that prepared or issued its audit report.
+þ
+• if securities are registered pursuant to Section 12(b) of the Act, whether the financial statements of the registrant 
+included in the filing reflect the correction of an error to previously issued financial statements. 
+¨
+• whether any of those error corrections are restatements that required a recovery analysis of incentive-based 
+compensation received by any of the registrant's executive officers during the relevant recovery period pursuant to 
+§ 240.10D-1(b). 
+¨
+• whether the registrant is a shell company (as defined in Rule 12b-2 of the Act).
+☐
+þ
+As of November 30, 2022, the aggregate market values of the Registrant's Common Stock held by non-affiliates were:
+Class A
+$ 
+7,831,564,572 
+Class B
+136,467,702,472 
+$ 
+144,299,267,044 
+
+
+As of July 12, 2023, the number of shares of the Registrant's Common Stock outstanding were:
+Class A
+ 
+304,897,252 
+Class B
+ 
+1,225,074,356 
+ 
+1,529,971,608 
+DOCUMENTS INCORPORATED BY REFERENCE:
+Parts of Registrant's Proxy Statement for the Annual Meeting of Shareholders to be held on September 12, 2023, are incorporated by reference into Part III 
+of this report.
+
+
+NIKE, INC.
+ANNUAL REPORT ON FORM 10-K
+TABLE OF CONTENTS
+PAGE
+PART I
+1
+ITEM 1.
+Business
+1
+General
+1
+Products
+1
+Sales and Marketing
+2
+Our Markets
+2
+Significant Customer
+3
+Product Research, Design and Development
+3
+Manufacturing
+3
+International Operations and Trade
+4
+Competition
+5
+Trademarks and Patents
+5
+Human Capital Resources
+6
+Available Information and Websites
+7
+Information about our Executive Officers
+8
+ITEM 1A.
+Risk Factors
+9
+ITEM 1B.
+Unresolved Staff Comments
+24
+ITEM 2.
+Properties
+24
+ITEM 3.
+Legal Proceedings
+24
+ITEM 4.
+Mine Safety Disclosures
+24
+PART II
+25
+ITEM 5.
+Market for Registrant's Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities
+25
+ITEM 6.
+Reserved
+27
+ITEM 7.
+Management's Discussion and Analysis of Financial Condition and Results of Operations
+28
+ITEM 7A.
+Quantitative and Qualitative Disclosures about Market Risk
+49
+ITEM 8.
+Financial Statements and Supplementary Data
+51
+ITEM 9.
+Changes in and Disagreements with Accountants on Accounting and Financial Disclosure
+91
+ITEM 9A.
+Controls and Procedures
+91
+ITEM 9B.
+Other Information
+91
+ITEM 9C.
+Disclosure Regarding Foreign Jurisdictions that Prevent Inspections
+91
+PART III
+92
+(Except for the information set forth under “Information about our Executive Officers” in Item 1 above, Part III is 
+incorporated by reference from the Proxy Statement for the NIKE, Inc. 2023 Annual Meeting of Shareholders.)
+ITEM 10.
+Directors, Executive Officers and Corporate Governance
+92
+ITEM 11.
+Executive Compensation
+92
+ITEM 12.
+Security Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters
+92
+ITEM 13.
+Certain Relationships and Related Transactions and Director Independence
+92
+ITEM 14.
+Principal Accountant Fees and Services
+92
+PART IV
+93
+ITEM 15.
+Exhibits and Financial Statement Schedules
+93
+ITEM 16.
+Form 10-K Summary
+97
+Signatures
+99
+  
+
+
+PART I
+ITEM 1. BUSINESS
+GENERAL
+NIKE, Inc. was incorporated in 1967 under the laws of the State of Oregon. As used in this Annual Report on Form 10-K (this 
+"Annual Report"), the terms "we," "us," "our," "NIKE" and the "Company" refer to NIKE, Inc. and its predecessors, subsidiaries 
+and affiliates, collectively, unless the context indicates otherwise.
+Our principal business activity is the design, development and worldwide marketing and selling of athletic footwear, apparel, 
+equipment, accessories and services. NIKE is the largest seller of athletic footwear and apparel in the world. We sell our products 
+through NIKE Direct operations, which are comprised of both NIKE-owned retail stores and sales through our digital platforms 
+(also referred to as "NIKE Brand Digital"), to retail accounts and to a mix of independent distributors, licensees and sales 
+representatives in nearly all countries around the world. We also offer interactive consumer services and experiences through our 
+digital platforms. Nearly all of our products are manufactured by independent contractors. Nearly all footwear and apparel 
+products are manufactured outside the United States, while equipment products are manufactured both in the United States and 
+abroad.
+All references to fiscal 2023, 2022, 2021 and 2020 are to NIKE, Inc.'s fiscal years ended May 31, 2023, 2022, 2021 and 2020, 
+respectively. Any references to other fiscal years refer to a fiscal year ending on May 31 of that year.
+PRODUCTS
+Our NIKE Brand product offerings are aligned around our consumer construct focused on Men's, Women's and Kids'. We also 
+design products specifically for the Jordan Brand and Converse. We believe this approach allows us to create products that 
+better meet individual consumer needs while accelerating our largest growth opportunities.
+NIKE's athletic footwear products are designed primarily for specific athletic use, although a large percentage of the products are 
+worn for casual or leisure purposes. We place considerable emphasis on innovation and high-quality construction in the 
+development and manufacturing of our products. Our Men's, Women's and Jordan Brand footwear products currently lead in 
+footwear sales and we expect them to continue to do so.
+We also sell sports apparel, which features the same trademarks and are sold predominantly through the same marketing and 
+distribution channels as athletic footwear. Our sports apparel, similar to our athletic footwear products, is designed primarily for 
+athletic use, although many of the products are worn for casual or leisure purposes, and demonstrates our commitment to 
+innovation and high-quality construction. Our Men's and Women's apparel products currently lead in apparel sales and we expect 
+them to continue to do so. We often market footwear, apparel and accessories in "collections" of similar use or by category. We 
+also market apparel with licensed college and professional team and league logos.
+We sell a line of performance equipment and accessories under the NIKE Brand name, including bags, socks, sport balls, 
+eyewear, timepieces, digital devices, bats, gloves, protective equipment and other equipment designed for sports activities. We 
+also sell small amounts of various plastic products to other manufacturers through our wholly-owned subsidiary, NIKE IHM, Inc., 
+doing business as Air Manufacturing Innovation.
+Our Jordan Brand designs, distributes and licenses athletic and casual footwear, apparel and accessories predominantly focused 
+on basketball performance and culture using the Jumpman trademark. Sales and operating results for Jordan Brand products are 
+reported within the respective NIKE Brand geographic operating segments.
+Our wholly-owned subsidiary brand, Converse, headquartered in Boston, Massachusetts, designs, distributes and licenses 
+casual sneakers, apparel and accessories under the Converse, Chuck Taylor, All Star, One Star, Star Chevron and Jack Purcell 
+trademarks. Operating results of the Converse brand are reported on a stand-alone basis.
+In addition to the products we sell to our wholesale customers and directly to consumers through our NIKE Direct operations, we 
+have also entered into license agreements that permit unaffiliated parties to manufacture and sell, using NIKE-owned trademarks, 
+certain apparel, digital devices and applications and other equipment designed for sports activities.
+2023 FORM 10-K   1    
+
+
+We also offer interactive consumer services and experiences as well as digital products through our digital platforms, including 
+fitness and activity apps; sport, fitness and wellness content; and digital services and features in retail stores that enhance the 
+consumer experience.
+SALES AND MARKETING
+We experience moderate fluctuations in aggregate sales volume during the year. Historically, revenues in the first and fourth 
+fiscal quarters have slightly exceeded those in the second and third fiscal quarters. However, the mix of product sales may vary 
+considerably as a result of changes in seasonal and geographic demand for particular types of footwear, apparel and equipment, 
+as well as other macroeconomic, strategic, operating and logistics-related factors.
+Because NIKE is a consumer products company, the relative popularity and availability of various sports and fitness activities, as 
+well as changing design trends, affect the demand for our products. We must, therefore, respond to trends and shifts in consumer 
+preferences by adjusting the mix of existing product offerings, developing new products, styles and categories and influencing 
+sports and fitness preferences through extensive marketing. Failure to respond in a timely and adequate manner could have a 
+material adverse effect on our sales and profitability. This is a continuing risk. Refer to Item 1A. Risk Factors.
+OUR MARKETS
+We report our NIKE Brand operations based on our internal geographic organization. Each NIKE Brand geographic segment 
+operates predominantly in one industry: the design, development, marketing and selling of athletic footwear, apparel and 
+equipment. The Company's reportable operating segments for the NIKE Brand are: North America; Europe, Middle East & Africa 
+("EMEA"); Greater China; and Asia Pacific & Latin America ("APLA"), and include results for the NIKE and Jordan brands. Sales 
+through our NIKE Direct operations are managed within each geographic operating segment.
+Converse is also a reportable operating segment and operates predominately in one industry: the design, marketing, licensing 
+and selling of casual sneakers, apparel and accessories. Converse direct to consumer operations, including digital commerce, 
+are reported within the Converse operating segment results.
+UNITED STATES MARKET
+For fiscal 2023, NIKE Brand and Converse sales in the United States accounted for approximately 43% of total revenues, 
+compared to 40% and 39% for fiscal 2022 and fiscal 2021, respectively. We sell our products to thousands of retail accounts in 
+the United States, including a mix of footwear stores, sporting goods stores, athletic specialty stores, department stores, skate, 
+tennis and golf shops and other retail accounts. In the United States, we utilize NIKE sales offices to solicit such sales. During 
+fiscal 2023, our three largest United States customers accounted for approximately 22% of sales in the United States.
+Our NIKE Direct and Converse direct to consumer operations sell our products to consumers through various digital platforms. In 
+addition, our NIKE Direct and Converse direct to consumer operations sell products through the following number of retail stores 
+in the United States:
+U.S. RETAIL STORES
+NUMBER
+NIKE Brand factory stores
+ 
+213 
+NIKE Brand in-line stores (including employee-only stores)
+ 
+74 
+Converse stores (including factory stores)
+ 
+82 
+TOTAL
+ 
+369 
+In the United States, NIKE has eight significant distribution centers. Refer to Item 2. Properties for further information.
+NIKE, INC. 
+ 
+     
+2
+
+
+INTERNATIONAL MARKETS
+For fiscal 2023, non-U.S. NIKE Brand and Converse sales accounted for approximately 57% of total revenues, compared to 60% 
+and 61% for fiscal 2022 and fiscal 2021, respectively. We sell our products to retail accounts through our own NIKE Direct 
+operations and through a mix of independent distributors, licensees and sales representatives around the world. We sell to 
+thousands of retail accounts and ship products from 67 distribution centers outside of the United States. Refer to Item 2. 
+Properties for further information on distribution facilities outside of the United States. During fiscal 2023, NIKE's three largest 
+customers outside of the United States accounted for approximately 14% of total non-U.S. sales.
+In addition to NIKE-owned and Converse-owned digital commerce platforms in over 40 countries, our NIKE Direct and Converse 
+direct to consumer businesses operate the following number of retail stores outside the United States:
+NON-U.S. RETAIL STORES
+NUMBER
+NIKE Brand factory stores
+ 
+560 
+NIKE Brand in-line stores (including employee-only stores)
+ 
+49 
+Converse stores (including factory stores)
+ 
+54 
+TOTAL
+ 
+663 
+SIGNIFICANT CUSTOMER
+No customer accounted for 10% or more of our consolidated net Revenues during fiscal 2023.
+PRODUCT RESEARCH, DESIGN AND DEVELOPMENT
+We believe our research, design and development efforts are key factors in our success. Technical innovation in the design and 
+manufacturing process of footwear, apparel and athletic equipment receives continued emphasis as we strive to produce 
+products that help to enhance athletic performance, reduce injury and maximize comfort, while decreasing our environmental 
+impact.
+In addition to our own staff of specialists in the areas of biomechanics, chemistry, exercise physiology, engineering, digital 
+technologies, industrial design, sustainability and related fields, we also utilize research committees and advisory boards made 
+up of athletes, coaches, trainers, equipment managers, orthopedists, podiatrists, physicians and other experts who consult with 
+us and review certain designs, materials and concepts for product and manufacturing, design and other process improvements 
+and compliance with product safety regulations around the world. Employee athletes, athletes engaged under sports marketing 
+contracts and other athletes wear-test and evaluate products during the design and development process.
+As we continue to develop new technologies, we are simultaneously focused on the design of innovative products and 
+experiences incorporating such technologies throughout our product categories and consumer applications. Using market 
+intelligence and research, our various design teams identify opportunities to leverage new technologies in existing categories to 
+respond to consumer preferences. The proliferation of Nike Air, Zoom, Free, Dri-FIT, Flyknit, FlyEase, ZoomX, Air Max, React and 
+Forward technologies, among others, typifies our dedication to designing innovative products.
+MANUFACTURING
+Nearly all of our footwear and apparel products are manufactured outside the United States by independent manufacturers 
+("contract manufacturers"), many of which operate multiple factories. We are also supplied, primarily indirectly, by a number of 
+materials, or "Tier 2" suppliers, who provide the principal materials used in footwear and apparel finished goods products. As of 
+May 31, 2023, we had 146 strategic Tier 2 suppliers.
+As of May 31, 2023, our contract manufacturers operated 123 finished goods footwear factories located in 11 countries. For fiscal 
+2023, NIKE Brand footwear finished goods were manufactured by 15 contract manufacturers, many of which operate multiple 
+factories. The largest single finished goods footwear factory accounted for approximately 9% of total fiscal 2023 NIKE Brand 
+footwear production. For fiscal 2023, factories in Vietnam, Indonesia and China manufactured approximately 50%, 27% and 18% 
+of total NIKE Brand footwear, respectively. For fiscal 2023, four footwear contract manufacturers each accounted for greater than 
+10% of footwear production and in the aggregate accounted for approximately 58% of NIKE Brand footwear production.
+As of May 31, 2023, our contract manufacturers operated 291 finished goods apparel factories located in 31 countries. For fiscal 
+2023, NIKE Brand apparel finished goods were manufactured by 55 contract manufacturers, many of which operate multiple 
+factories. The largest single finished goods apparel factory accounted for approximately 8% of total fiscal 2023 NIKE Brand 
+apparel production. For fiscal 2023, factories in Vietnam, China and Cambodia manufactured approximately 29%, 18% and 16% 
+2023 FORM 10-K   3    
+
+
+of total NIKE Brand apparel, respectively. For fiscal 2023, one apparel contract manufacturer accounted for more than 10% of 
+apparel production, and the top five contract manufacturers in the aggregate accounted for approximately 52% of NIKE Brand 
+apparel production.
+NIKE's contract manufacturers buy raw materials for the manufacturing of our footwear, apparel and equipment products. Most 
+raw materials are available and purchased by those contract manufacturers in the countries where manufacturing takes place. 
+The principal materials used in our footwear products are natural and synthetic rubber, plastic compounds, foam cushioning 
+materials, natural and synthetic leather, nylon, polyester and natural fiber textiles, as well as polyurethane films used to make 
+NIKE Air-Sole cushioning components. During fiscal 2023, Air Manufacturing Innovation, a wholly-owned subsidiary, with facilities 
+near Beaverton, Oregon, in Dong Nai Province, Vietnam, and St. Charles, Missouri, as well as contract manufacturers in China 
+and Vietnam, were our suppliers of NIKE Air-Sole cushioning components used in footwear.
+The principal materials used in our apparel products are natural and synthetic fabrics, yarns and threads (both virgin and 
+recycled); specialized performance fabrics designed to efficiently wick moisture away from the body, retain heat and repel rain 
+and/or snow; and plastic and metal hardware. 
+In fiscal 2023, we experienced ongoing supply chain volatility during the first part of the year, which improved gradually during the 
+course of the year. We also experienced higher supply chain network costs primarily due to inflationary pressures during the year. 
+Despite competition for certain materials during fiscal 2023, contract manufacturers were able to source sufficient quantities of 
+raw materials for use in our footwear and apparel products. Refer to Item 1A. Risk Factors, for additional discussion of the impact 
+of sourcing risks on our business.
+Since 1972, Sojitz Corporation of America ("Sojitz America"), a large Japanese trading company and the sole owner of our 
+redeemable preferred stock, has performed import-export financing services for us.
+INTERNATIONAL OPERATIONS AND TRADE
+Our international operations and sources of supply are subject to the usual risks of doing business abroad, such as the 
+implementation of, or potential changes in, foreign and domestic trade policies, increases in import duties, anti-dumping 
+measures, quotas, safeguard measures, trade restrictions, restrictions on the transfer of funds and, in certain parts of the world, 
+political tensions, instability, conflicts, nationalism and terrorism, and resulting sanctions and other measures imposed in 
+response to such issues. We have not, to date, been materially affected by any such risk but cannot predict the likelihood of such 
+material effects occurring in the future.
+In recent years, uncertain global and regional economic and political conditions have affected international trade and increased 
+protectionist actions around the world. These trends are affecting many global manufacturing and service sectors, and the 
+footwear and apparel industries, as a whole, are not immune. Companies in our industry are facing trade protectionism in many 
+different regions, and, in nearly all cases, we are working together with industry groups to address trade issues and reduce the 
+impact to the industry, while observing applicable competition laws. Notwithstanding our efforts, protectionist measures have 
+resulted in increases in the cost of our products, and additional measures, if implemented, could adversely affect sales and/or 
+profitability for NIKE, as well as the imported footwear and apparel industry as a whole.
+We monitor protectionist trends and developments throughout the world that may materially impact our industry, and we engage 
+in administrative and judicial processes to mitigate trade restrictions. We are actively monitoring actions that may result in 
+additional anti-dumping measures and could affect our industry. We are also monitoring for and advocating against other 
+impediments that may limit or delay customs clearance for imports of footwear, apparel and equipment. NIKE also advocates for 
+trade liberalization for footwear and apparel in a number of bilateral and multilateral free trade agreements. Changes in, and 
+responses to, U.S. trade policies, including the imposition of tariffs or penalties on imported goods or retaliatory measures by 
+other countries, have negatively affected, and could in the future negatively affect, U.S. corporations, including NIKE, with 
+business operations and/or consumer markets in those countries, which could also make it necessary for us to change the way 
+we conduct business, either of which may have an adverse effect on our business, financial condition or our results of operations. 
+In addition, with respect to proposed trade restrictions, we work with a broad coalition of global businesses and trade 
+associations representing a wide variety of sectors to help ensure that any legislation enacted and implemented (i) addresses 
+legitimate and core concerns, (ii) is consistent with international trade rules and (iii) reflects and considers domestic economies 
+and the important role they may play in the global economic community.
+Where trade protection measures are implemented, we believe we have the ability to develop, over a period of time, adequate 
+alternative sources of supply for the products obtained from our present suppliers. If events prevented us from acquiring products 
+from our suppliers in a particular country, our operations could be temporarily disrupted and we could experience an adverse 
+financial impact. However, we believe we could abate any such disruption, and that much of the adverse impact on supply would, 
+therefore, be of a short-term nature, although alternate sources of supply might not be as cost-effective and could have an 
+ongoing adverse impact on profitability.
+NIKE, INC.       
+4
+
+
+Our international operations are also subject to compliance with the U.S. Foreign Corrupt Practices Act (the "FCPA"), and other 
+anti-bribery laws applicable to our operations. We source a significant portion of our products from, and have important consumer 
+markets, outside of the United States. We have an ethics and compliance program to address compliance with the FCPA and 
+similar laws by us, our employees, agents, suppliers and other partners. Refer to Item 1A. Risk Factors for additional information 
+on risks relating to our international operations.
+COMPETITION
+The athletic footwear, apparel and equipment industry is highly competitive on a worldwide basis. We compete internationally with 
+a significant number of athletic and leisure footwear companies, athletic and leisure apparel companies, sports equipment 
+companies and large companies having diversified lines of athletic and leisure footwear, apparel and equipment, including 
+adidas, Anta, ASICS, Li Ning, lululemon athletica, New Balance, Puma, Under Armour and V.F. Corporation, among others. The 
+intense competition and the rapid changes in technology and consumer preferences in the markets for athletic and leisure 
+footwear and apparel and athletic equipment constitute significant risk factors in our operations. Refer to Item 1A. Risk Factors 
+for additional information.
+NIKE is the largest seller of athletic footwear and apparel in the world. Important aspects of competition in this industry are:
+• Product attributes such as quality; performance and reliability; new product style, design, innovation and development; as 
+well as consumer price/value.
+• Consumer connection, engagement and affinity for brands and products, developed through marketing, promotion and 
+digital experiences; social media interaction; customer support and service; identification with prominent and influential 
+athletes, influencers, public figures, coaches, teams, colleges and sports leagues who endorse our brands and use our 
+products and active engagement through sponsored sporting events and clinics. 
+• Effective sourcing and distribution of products, with attractive merchandising and presentation at retail, both in-store and on 
+digital platforms.
+We believe that we are competitive in all of these areas.
+TRADEMARKS AND PATENTS
+We believe that our intellectual property rights are important to our brand, our success and our competitive position. We 
+strategically pursue available protections of these rights and vigorously protect them against third-party theft and infringement.
+We use trademarks on nearly all of our products and packaging, and in our marketing materials, and believe having distinctive 
+marks that are readily identifiable is an important factor in creating a market for our goods, in identifying our brands and the 
+Company, and in distinguishing our goods from the goods of others. We consider our NIKE and Swoosh Design trademarks to be 
+among our most valuable assets and we have registered these trademarks in over 190 jurisdictions worldwide. In addition, we 
+own many other trademarks that we use in marketing our products. We own common law rights in the trade dress of several 
+distinctive shoe designs and elements. For certain trade dress, we have sought and obtained trademark registrations.
+We have copyright protection in our designs, graphics, software applications, digital goods and other original works. When 
+appropriate, we also obtain registered copyrights.
+We file for, own and maintain many U.S. and foreign utility and design patents protecting components, technologies, materials, 
+manufacturing techniques, features, functionality, and industrial designs used in and for the manufacture of various athletic, 
+performance, and leisure footwear and apparel, including physical and digital versions thereof, athletic equipment, and digital 
+devices, and related software applications. These patents expire at various times.
+We believe our success depends upon our capabilities in areas such as design, research and development, production and 
+marketing and is supported and protected by our intellectual property rights, such as trademarks, utility and design patents, 
+copyrights, and trade secrets, among others. 
+We have followed a policy of applying for and registering intellectual property rights in the United States and select foreign 
+countries on trademarks, inventions, innovations and designs that we deem valuable. We also continue to vigorously protect our 
+intellectual property, including trademarks, patents and trade secrets against third-party infringement and misappropriation.
+2023 FORM 10-K   5    
+
+
+HUMAN CAPITAL RESOURCES
+At NIKE, we consider the strength and effective management of our workforce to be essential to the ongoing success of our 
+business. We believe that it is important to attract, develop and retain a diverse and engaged workforce at all levels of our 
+business and that such a workforce fosters creativity and accelerates innovation. We are focused on building an increasingly 
+diverse talent pipeline that reflects our consumers, athletes and the communities we serve.
+CULTURE 
+Each employee shapes NIKE's culture through behaviors and practices. This starts with our Maxims, which represent our core 
+values and, along with our Code of Conduct, feature the fundamental behaviors that help anchor, inform and guide us and apply 
+to all employees. Our mission is to bring inspiration and innovation to every athlete in the world, which includes the belief that if 
+you have a body, you are an athlete. We aim to do this by creating groundbreaking sport innovations, making our products more 
+sustainably, building a creative and diverse global team, supporting the well-being of our employees and making a positive impact 
+in communities where we live and work. Our mission is aligned with our deep commitment to maintaining an environment where 
+all NIKE employees have the opportunity to reach their full potential, to connect to our brands and to shape our workplace 
+culture. We believe providing for growth and retention of our employees is essential in fostering such a culture and are dedicated 
+to giving access to training programs and career development opportunities, including trainings on NIKE's values, history and 
+business, trainings on developing leadership skills at all levels, tools and resources for managers and qualified tuition 
+reimbursement opportunities. 
+As part of our commitment to empowering our employees to help shape our culture, we source employee feedback through our 
+Engagement Survey program, including several corporate pulse surveys. The program provides every employee throughout the 
+globe an opportunity to provide confidential feedback on key areas known to drive employee engagement, including their 
+satisfaction with their managers, their work and the Company generally. The program also measures our employees’ emotional 
+commitment to NIKE as well as NIKE's culture of diversity, equity and inclusion. NIKE also provides multiple points of contact for 
+employees to speak up if they experience something that does not align with our values or otherwise violates our workplace 
+policies, even if they are uncertain what they observed or heard is a violation of company policy.
+As part of our commitment to make a positive impact on our communities, we maintain a goal of investing 2% of our prior fiscal 
+year's pre-tax income into global communities. The focus of this investment continues to be inspiring kids to be active through 
+play and sport as well as uniting and inspiring communities to create a better and more equitable future for all. Our community 
+investments are an important part of our culture in that we also support employees in giving back to community organizations 
+through donations and volunteering, which are matched by the NIKE Foundation where eligible.
+EMPLOYEE BASE
+As of May 31, 2023, we had approximately 83,700 employees worldwide, including retail and part-time employees. We also 
+utilize independent contractors and temporary personnel to supplement our workforce.
+None of our employees are represented by a union, except certain employees in the EMEA and APLA geographies are members 
+of and/or represented by trade unions, as allowed or required by local law and/or collective bargaining agreements. Also, in some 
+countries outside of the United States, local laws require employee representation by works councils (which may be entitled to 
+information and consultation on certain subsidiary decisions) or by organizations similar to a union. In certain European countries, 
+we are required by local law to enter into, and/or comply with, industry-wide or national collective bargaining agreements. NIKE 
+has never experienced a material interruption of operations due to labor disagreements.
+DIVERSITY, EQUITY AND INCLUSION
+Diversity, equity and inclusion ("DE&I") is a strategic priority for NIKE and we are committed to having an increasingly diverse 
+team and culture. We aim to foster an inclusive and accessible workplace through recruitment, development and retention of 
+diverse talent with the goal of expanding representation across all dimensions of diversity over the long term. We remain 
+committed to the targets announced in fiscal 2021 for the Company to work toward by fiscal 2025, including increasing 
+representation of women in our global corporate workforce and leadership positions, as well as increasing representation of U.S. 
+racial and ethnic minorities in our U.S. corporate workforce and at the Director level and above. 
+We continue to enhance our efforts to recruit diverse talent through our traditional channels and through initiatives, such as 
+partnerships with athletes and sports-related organizations to create apprenticeship programs and new partnerships with 
+organizations, colleges and universities that serve diverse populations. Additionally, we are prioritizing DE&I education so that all 
+NIKE employees and leaders have the cultural awareness and understanding to lead inclusively and build diverse and inclusive 
+teams. We also have Employee Networks, collectively known as NikeUNITED, representing various employee groups.
+NIKE, INC.       
+6
+
+
+Our DE&I focus extends beyond our workforce and includes our communities, which we support in a number of ways. We have 
+committed to investments that aim to address racial inequality and improve diversity and representation in our communities. We 
+also are leveraging our global scale to accelerate business diversity, including investing in business training programs for women 
+and increasing the proportion of services supplied by minority-owned businesses.
+COMPENSATION AND BENEFITS 
+NIKE's total rewards are intended to be competitive and equitable, meet the diverse needs of our global teammates and reinforce 
+our values. We are committed to providing comprehensive, competitive and equitable pay and benefits to our employees, and we 
+have invested, and aim to continue to invest, in our employees through growth and development and holistic well-being 
+initiatives. Our initiatives in this area include: 
+• We are committed to competitive pay and to reviewing our pay and promotion practices annually. 
+• We have an annual company bonus plan and a retail-focused bonus plan applicable to all eligible employees. Both programs 
+are focused on rewarding employees for company performance, which we believe reinforces our culture and rewards 
+behaviors that support collaboration and teamwork.
+• We provide comprehensive family care benefits in the U.S. and globally where practicable, including family planning 
+coverage, backup care and child/elder care assistance as well as an income-based childcare subsidy for eligible employees. 
+• Our Military Leave benefit provides up to 12 weeks of paid time off every 12 months.
+• We offer free access to our Sport Centers at our world headquarters for our full-time employees and North America store 
+employees.
+• We provide employees free access to mindfulness and meditation resources, as well as live classes through our Sport 
+Centers.
+• We provide all employees and their families globally with free and confidential visits with a mental health counselor through a 
+third-party provider and our global Employee Assistance Program (EAP).
+• We provide support to our employees in a variety of ways during times of crisis, including pay continuity under certain 
+circumstances, our natural disaster assistance program, and ongoing support for challenges related to the COVID-19 
+pandemic.
+• We provide a hybrid work approach for the majority of employees, as well as a Four Week Flex, which provides employees 
+an opportunity to work from a location of their choice for up to four weeks per year.
+• We offer a Well-Being Week where we close our corporate offices for a full-week in the summer and Well-Being Days for our 
+teammates in our retail stores and distribution centers, and encourage our teammates to focus on their well-being.
+• We provide inclusive family planning benefits and transgender healthcare coverage for eligible employees covered on the 
+U.S. Health Plan, including access to both restorative services and personal care.
+• We provide all U.S. employees with unlimited free financial coaching through a third-party provider.
+Additional information related to our human capital strategy can be found in our FY22 NIKE, Inc. Impact Report, which is 
+available on the Impact section of about.nike.com. Information contained on or accessible through our websites is not 
+incorporated into, and does not form a part of, this Annual Report or any other report or document we file with the SEC, and any 
+references to our websites are intended to be inactive textual references only.
+AVAILABLE INFORMATION AND WEBSITES
+Our NIKE digital commerce website is located at www.nike.com. On our NIKE corporate website, located at investors.nike.com, 
+we post the following filings as soon as reasonably practicable after they are electronically filed with, or furnished to, the United 
+States Securities and Exchange Commission (the "SEC"): our annual report on Form 10-K, our quarterly reports on Form 10-Q, 
+our current reports on Form 8-K and any amendments to those reports filed or furnished pursuant to Section 13(a) or 15(d) of the 
+Securities and Exchange Act of 1934, as amended. Our proxy statements are also posted on our corporate website. All such 
+filings on our corporate website are available free of charge. Copies of these filings are also available on the SEC's website at 
+www.sec.gov. Also available on our corporate website are the charters of the committees of our Board of Directors, as well as our 
+corporate governance guidelines and code of ethics. Copies of any of these documents will be provided in print to any 
+shareholder who submits a request in writing to NIKE Investor Relations, One Bowerman Drive, Beaverton, Oregon 97005-6453. 
+Information contained on or accessible through our website is not incorporated into, and does not form a part of, this Annual 
+Report or any other report or document we file with the SEC, and any references to our website are intended to be inactive 
+textual references only.
+2023 FORM 10-K   7    
+
+
+INFORMATION ABOUT OUR EXECUTIVE OFFICERS
+The executive officers of NIKE, Inc. as of July 20, 2023, are as follows:
+Mark G. Parker, Executive Chairman — Mr. Parker, 67, is Executive Chairman of the Board of Directors 
+and served as President and Chief Executive Officer from 2006 - January 2020. He has been employed 
+by NIKE since 1979 with primary responsibilities in product research, design and development, 
+marketing and brand management. Mr. Parker was appointed divisional Vice President in charge of 
+product development in 1987, corporate Vice President in 1989, General Manager in 1993, Vice 
+President of Global Footwear in 1998 and President of the NIKE Brand in 2001.
+John J. Donahoe II, President and Chief Executive Officer — Mr. Donahoe, 63, was appointed 
+President and Chief Executive Officer in January 2020 and has been a director since 2014. He brings 
+expertise in digital commerce, technology and global strategy. He previously served as President and 
+Chief Executive Officer at ServiceNow, Inc. Prior to joining ServiceNow, Inc., he served as President and 
+Chief Executive Officer of eBay, Inc. He also held leadership roles at Bain & Company for two decades.
+Matthew Friend, Executive Vice President and Chief Financial Officer — Mr. Friend, 45, joined NIKE in 
+2009 and leads the Company's finance, demand & supply management, procurement and global places 
+& services organizations. He joined NIKE as Senior Director of Corporate Strategy and Development, 
+and was appointed Chief Financial Officer of Emerging Markets in 2011. In 2014, Mr. Friend was 
+appointed Chief Financial Officer of Global Categories, Product and Functions, and was subsequently 
+appointed Chief Financial Officer of the NIKE Brand in 2016. He was also appointed Vice President of 
+Investor Relations in 2019. Mr. Friend was appointed as Executive Vice President and Chief Financial 
+Officer of NIKE, Inc. in April 2020. Prior to joining NIKE, he worked in the financial industry including 
+roles as VP of investment banking and mergers and acquisitions at Goldman Sachs and Morgan 
+Stanley.
+Monique S. Matheson, Executive Vice President, Chief Human Resources Officer — Ms. Matheson, 
+56, joined NIKE in 1998, with primary responsibilities in the human resources function. She was 
+appointed as Vice President and Senior Business Partner in 2011 and Vice President, Chief Talent and 
+Diversity Officer in 2012. Ms. Matheson was appointed Executive Vice President, Global Human 
+Resources in 2017.
+Ann M. Miller, Executive Vice President, Chief Legal Officer — Ms. Miller, 49, joined NIKE in 2007 and 
+serves as EVP, Chief Legal Officer for NIKE, Inc. In her capacity as Chief Legal Officer, she oversees all 
+legal, compliance, government & public affairs, social community impact, security, resilience and 
+investigation matters of the Company. For the past six years, she served as Vice President, Corporate 
+Secretary and Chief Ethics & Compliance Officer. She previously served as Converse's General 
+Counsel, and brings more than 20 years of legal and business expertise to her role. Prior to joining 
+NIKE, Ms. Miller worked at the law firm Sullivan & Cromwell.
+Heidi O'Neill, President, Consumer, Brand & Product — Ms. O'Neill, 58, joined NIKE in 1998 and leads 
+the integration of global Men's, Women's & Kids' consumer teams, the entire global product engine and 
+global brand marketing and sports marketing to build deep storytelling, relationships and engagement 
+with the brand. Since joining NIKE, she has held a variety of key roles, including leading NIKE's 
+marketplace and four geographic operating regions, leading NIKE Direct and accelerating NIKE's retail 
+and digital-commerce business and creating and leading NIKE's Women’s business. Prior to NIKE, Ms. 
+O'Neill held roles at Levi Strauss & Company and Foote, Cone & Belding.
+Craig Williams, President, Geographies & Marketplace — Mr. Williams, 54, joined NIKE in 2019 and 
+leads NIKE's four geographies and marketplace across the NIKE Direct and wholesale business. In 
+addition, he leads the Supply Chain and Logistics organization. Mr. Williams joined NIKE as President of 
+Jordan Brand overseeing a team of designers, product developers, marketers and business leaders. 
+Prior to NIKE, he was Senior Vice President, The Coca-Cola Co., and President of The McDonald's 
+Division (TMD) Worldwide. Mr. Williams has also held roles at CIBA Vision and Kraft Foods Inc., and 
+served five years in the U.S. Navy as a Naval Nuclear Power Officer.
+NIKE, INC.       
+8
+
+
+ITEM 1A. RISK FACTORS
+Special Note Regarding Forward-Looking Statements and Analyst Reports
+Certain written and oral statements, other than purely historic information, including estimates, projections, statements relating to 
+NIKE's business plans, objectives and expected operating or financial results and the assumptions upon which those statements 
+are based, made or incorporated by reference from time to time by NIKE or its representatives in this Annual Report, other 
+reports, filings with the SEC, press releases, conferences or otherwise, are "forward-looking statements" within the meaning of 
+the Private Securities Litigation Reform Act of 1995 and Section 21E of the Securities Exchange Act of 1934, as amended. 
+Forward-looking statements include, without limitation, any statement that may predict, forecast, indicate or imply future results, 
+performance or achievements, and may contain the words "believe," "anticipate," "expect," "estimate," "project," "will be," "will 
+continue," "will likely result" or words or phrases of similar meaning. Forward-looking statements involve risks and uncertainties 
+which may cause actual results to differ materially from the forward-looking statements. The risks and uncertainties are detailed 
+from time to time in reports filed by NIKE with the SEC, including reports filed on Forms 8-K, 10-Q and 10-K, and include, among 
+others, the following: international, national and local political, civil, economic and market conditions, including high, and 
+increases in, inflation and interest rates; the size and growth of the overall athletic or leisure footwear, apparel and equipment 
+markets; intense competition among designers, marketers, distributors and sellers of athletic or leisure footwear, apparel and 
+equipment for consumers and endorsers; demographic changes; changes in consumer preferences; popularity of particular 
+designs, categories of products and sports; seasonal and geographic demand for NIKE products; difficulties in anticipating or 
+forecasting changes in consumer preferences, consumer demand for NIKE products and the various market factors described 
+above; our ability to execute on our sustainability strategy and achieve our sustainability-related goals and targets, including 
+sustainable product offerings; difficulties in implementing, operating and maintaining NIKE's increasingly complex information 
+technology systems and controls, including, without limitation, the systems related to demand and supply planning and inventory 
+control; interruptions in data and information technology systems; consumer data security; fluctuations and difficulty in forecasting 
+operating results, including, without limitation, the fact that advance orders may not be indicative of future revenues due to 
+changes in shipment timing, the changing mix of orders with shorter lead times, and discounts, order cancellations and returns; 
+the ability of NIKE to sustain, manage or forecast its growth and inventories; the size, timing and mix of purchases of NIKE's 
+products; increases in the cost of materials, labor and energy used to manufacture products; new product development and 
+introduction; the ability to secure and protect trademarks, patents and other intellectual property; product performance and 
+quality; customer service; adverse publicity and an inability to maintain NIKE's reputation and brand image, including without 
+limitation, through social media or in connection with brand damaging events; the loss of significant customers or suppliers; 
+dependence on distributors and licensees; business disruptions; increased costs of freight and transportation to meet delivery 
+deadlines; increases in borrowing costs due to any decline in NIKE's debt ratings; changes in business strategy or development 
+plans; general risks associated with doing business outside of the United States, including, without limitation, exchange rate 
+fluctuations, import duties, tariffs, quotas, sanctions, political and economic instability, conflicts and terrorism; the potential impact 
+of new and existing laws, regulations or policy, including, without limitation, tariffs, import/export, trade, wage and hour or labor 
+and immigration regulations or policies; changes in government regulations; the impact of, including business and legal 
+developments relating to, climate change, extreme weather conditions and natural disasters; litigation, regulatory proceedings, 
+sanctions or any other claims asserted against NIKE; the ability to attract and retain qualified employees, and any negative public 
+perception with respect to key personnel or our corporate culture, values or purpose; the effects of NIKE's decision to invest in or 
+divest of businesses or capabilities; health epidemics, pandemics and similar outbreaks, including the COVID-19 pandemic; and 
+other factors referenced or incorporated by reference in this Annual Report and other reports.
+Investors should also be aware that while NIKE does, from time to time, communicate with securities analysts, it is against NIKE's 
+policy to disclose to them any material non-public information or other confidential commercial information. Accordingly, 
+shareholders should not assume that NIKE agrees with any statement or report issued by any analyst irrespective of the content 
+of the statement or report. Furthermore, NIKE has a policy against confirming financial forecasts or projections issued by others. 
+Thus, to the extent that reports issued by securities analysts contain any projections, forecasts or opinions, such reports are not 
+the responsibility of NIKE.
+Risk Factors
+The risks included here are not exhaustive. Other sections of this Annual Report may include additional factors which could 
+adversely affect NIKE's business and financial performance. Moreover, NIKE operates in a very competitive and rapidly changing 
+environment. New risks emerge from time to time and it is not possible for management to predict all such risks, nor can it assess 
+the impact of all such risks on NIKE's business or the extent to which any risk, or combination of risks, may cause actual results 
+to differ materially from those contained in any forward-looking statements. Given these risks and uncertainties, investors should 
+not place undue reliance on forward-looking statements as a prediction of actual results.
+2023 FORM 10-K   9    
+
+
+Economic and Industry Risks
+Global economic conditions could have a material adverse effect on our business, operating results and financial 
+condition.
+The uncertain state of the global economy, including high and rising levels of inflation and interest rates and the risk of a 
+recession, continues to impact businesses around the world. If global economic and financial market conditions deteriorate, the 
+following factors, among others, could have a material adverse effect on our business, operating results and financial condition:
+• Our sales are impacted by discretionary spending by consumers. Declines in consumer spending have in the past resulted 
+in and may in the future result in reduced demand for our products, increased inventories, reduced orders from retailers for 
+our products, order cancellations, lower revenues, higher discounts and lower gross margins.
+• In the future, we may be unable to access financing in the credit and capital markets at reasonable rates in the event we find 
+it desirable to do so.
+• We conduct transactions in various currencies, which creates exposure to fluctuations in foreign currency exchange rates 
+relative to the U.S. Dollar. Continued volatility in the markets and exchange rates for foreign currencies and contracts in 
+foreign currencies has had and could continue to have a significant impact on our reported operating results and financial 
+condition.
+• Continued volatility in the availability and prices for commodities and raw materials we use in our products and in our supply 
+chain (such as cotton or petroleum derivatives) has had and could in the future have a material adverse effect on our costs, 
+gross margins and profitability. In addition, supply chain issues caused by factors including the COVID-19 pandemic and 
+geopolitical conflicts have impacted and may continue to impact the availability, pricing and timing for obtaining commodities 
+and raw materials. 
+• If retailers of our products experience declining revenues or experience difficulty obtaining financing in the capital and credit 
+markets to purchase our products, this could result in reduced orders for our products, order cancellations, late retailer 
+payments, extended payment terms, higher accounts receivable, reduced cash flows, greater expense associated with 
+collection efforts and increased bad debt expense.
+• In the past, certain retailers of our products have experienced severe financial difficulty, become insolvent and ceased 
+business operations, and this could occur in the future, which could negatively impact the sale of our products to consumers. 
+• If contract manufacturers of our products or other participants in our supply chain experience difficulty obtaining financing in 
+the capital and credit markets to purchase raw materials or to finance capital equipment and other general working capital 
+needs, it may result in delays or non-delivery of shipments of our products.
+Our products, services and experiences face intense competition.
+NIKE is a consumer products company and the relative popularity of various sports and fitness activities and changing design 
+trends affect the demand for our products, services and experiences. The athletic footwear, apparel and equipment industry is 
+highly competitive both in the United States and worldwide. We compete internationally with a significant number of athletic and 
+leisure footwear companies, athletic and leisure apparel companies, sports equipment companies, private labels and large 
+companies that have diversified lines of athletic and leisure footwear, apparel and equipment. We also compete with other 
+companies for the production capacity of contract manufacturers that produce our products. In addition, we and our contract 
+manufacturers compete with other companies and industries for raw materials used in our products. Our NIKE Direct operations, 
+both through our digital commerce operations and retail stores, also compete with multi-brand retailers, which sell our products 
+through their digital platforms and physical stores, and with digital commerce platforms. In addition, we compete with respect to 
+the digital services and experiences we are able to offer our consumers, including fitness and activity apps; sport, fitness and 
+wellness content and services; and digital services and features in retail stores that enhance the consumer experience.
+Product offerings, technologies, marketing expenditures (including expenditures for advertising and endorsements), pricing, costs 
+of production, customer service, digital commerce platforms, digital services and experiences and social media presence are 
+areas of intense competition. These, in addition to ongoing rapid changes in technology, a reduction in barriers to the creation of 
+new footwear and apparel companies and consumer preferences in the markets for athletic and leisure footwear, apparel, and 
+equipment, services and experiences, constitute significant risk factors in our operations. In addition, the competitive nature of 
+retail, including shifts in the ways in which consumers shop, and the continued proliferation of digital commerce, constitutes a risk 
+factor implicating our NIKE Direct and wholesale operations. If we do not adequately and timely anticipate and respond to our 
+competitors, our costs may increase, demand for our products may decline, possibly significantly, or we may need to reduce 
+wholesale or suggested retail prices for our products.
+NIKE, INC.      
+10
+
+
+Economic factors beyond our control, and changes in the global economic environment, including fluctuations in 
+inflation and currency exchange rates, could result in lower revenues, higher costs and decreased margins and 
+earnings.
+A majority of our products are manufactured and sold outside of the United States, and we conduct purchase and sale 
+transactions in various currencies, which creates exposure to the volatility of global economic conditions, including fluctuations in 
+inflation and foreign currency exchange rates. Central banks may deploy various strategies to combat inflation, including 
+increasing interest rates, which may impact our borrowing costs. Additionally, there has been, and may continue to be, volatility in 
+currency exchange rates that impact the U.S. Dollar value relative to other international currencies. Our international revenues 
+and expenses generally are derived from sales and operations in foreign currencies, and these revenues and expenses are 
+affected by currency fluctuations, specifically amounts recorded in foreign currencies and translated into U.S. Dollars for 
+consolidated financial reporting, as weakening of foreign currencies relative to the U.S. Dollar adversely affects the U.S. Dollar 
+value of the Company's foreign currency-denominated sales and earnings. Currency exchange rate fluctuations could also 
+disrupt the business of the independent manufacturers that produce our products by making their purchases of raw materials 
+more expensive and more difficult to finance. Foreign currency fluctuations have adversely affected and could continue to have 
+an adverse effect on our results of operations and financial condition.
+We hedge certain foreign currency exposures to lessen and delay, but not to completely eliminate, the effects of foreign currency 
+fluctuations on our financial results. Since the hedging activities are designed to lessen volatility, they not only reduce the 
+negative impact of a stronger U.S. Dollar or other trading currency, but they also reduce the positive impact of a weaker U.S. 
+Dollar or other trading currency. Our future financial results have in the past been and could in the future be significantly affected 
+by the value of the U.S. Dollar in relation to the foreign currencies in which we conduct business. The degree to which our 
+financial results are affected for any given time period will depend in part upon our hedging activities.
+We may be adversely affected by the financial health of our wholesale customers.
+We extend credit to our customers based on an assessment of a customer's financial condition, generally without requiring 
+collateral. To assist in the scheduling of production and the shipping of our products, we offer certain customers the opportunity to 
+place orders five to six months ahead of delivery under our futures ordering program. These advance orders may be canceled 
+under certain conditions, and the risk of cancellation increases when dealing with financially unstable retailers or retailers 
+struggling with economic uncertainty. In the past, some customers have experienced financial difficulties up to and including 
+bankruptcies, which have had an adverse effect on our sales, our ability to collect on receivables and our financial condition. 
+When the retail economy weakens or as consumer behavior shifts, retailers tend to be more cautious with orders. A slowing or 
+changing economy in our key markets, including a recession, could adversely affect the financial health of our customers, which 
+in turn could have an adverse effect on our results of operations and financial condition. In addition, product sales are dependent 
+in part on high quality merchandising and an appealing retail environment to attract consumers, which requires continuing 
+investments by retailers. Retailers that experience financial difficulties may fail to make such investments or delay them, resulting 
+in lower sales and orders for our products.
+Climate change and other sustainability-related matters, or legal, regulatory or market responses thereto, may have an 
+adverse impact on our business and results of operations. 
+There are concerns that increased levels of carbon dioxide and other greenhouse gases in the atmosphere have caused, and 
+may continue to cause, potentially at a growing rate, increases in global temperatures, changes in weather patterns and 
+increasingly frequent and/or prolonged extreme weather and climate events. Climate change may also exacerbate challenges 
+relating to the availability and quality of water and raw materials, including those used in the production of our products, and may 
+result in changes in regulations or consumer preferences, which could in turn affect our business, operating results and financial 
+condition. For example, there has been increased focus by governmental and non-governmental organizations, consumers, 
+customers, employees and other stakeholders on products that are sustainably made and other sustainability matters, including 
+responsible sourcing and deforestation, the use of plastic, energy and water, the recyclability or recoverability of packaging and 
+materials transparency, any of which may require us to incur increased costs for additional transparency, due diligence and 
+reporting. In addition, federal, state or local governmental authorities in various countries have proposed, and are likely to 
+continue to propose, legislative and regulatory initiatives to reduce or mitigate the impacts of climate change on the environment. 
+Various countries and regions are following different approaches to the regulation of climate change, which could increase the 
+complexity of, and potential cost related to complying with, such regulations. Any of the foregoing may require us to make 
+additional investments in facilities and equipment, may impact the availability and cost of key raw materials used in the 
+production of our products or the demand for our products, and, in turn, may adversely impact our business, operating results 
+and financial condition.
+Although we have announced sustainability-related goals and targets, there can be no assurance that our stakeholders will agree 
+with our strategies, and any perception, whether or not valid, that we have failed to achieve, or to act responsibly with respect to, 
+such matters or to effectively respond to new or additional legal or regulatory requirements regarding climate change, could result 
+in adverse publicity and adversely affect our business and reputation. Execution of these strategies and achievement of our goals 
+is subject to risks and uncertainties, many of which are outside of our control. These risks and uncertainties include, but are not 
+2023 FORM 10-K   11    
+
+
+limited to, our ability to execute our strategies and achieve our goals within the currently projected costs and the expected 
+timeframes; the availability and cost of raw materials and renewable energy; unforeseen production, design, operational and 
+technological difficulties; the outcome of research efforts and future technology developments, including the ability to scale 
+projects and technologies on a commercially competitive basis such as carbon sequestration and/or other related processes; 
+compliance with, and changes or additions to, global and regional regulations, taxes, charges, mandates or requirements relating 
+to greenhouse gas emissions, carbon costs or climate-related goals; adapting products to customer preferences and customer 
+acceptance of sustainable supply chain solutions; and the actions of competitors and competitive pressures. As a result, there is 
+no assurance that we will be able to successfully execute our strategies and achieve our sustainability-related goals, which could 
+damage our reputation and customer and other stakeholder relationships and have an adverse effect on our business, results of 
+operations and financial condition.
+Extreme weather conditions and natural disasters could negatively impact our operating results and financial condition.
+Given the broad and global scope of our operations, we are particularly vulnerable to the physical risks of climate change, such 
+as shifts in weather patterns. Extreme weather conditions in the areas in which our retail stores, suppliers, manufacturers, 
+customers, distribution centers, offices, headquarters and vendors are located could adversely affect our operating results and 
+financial condition. Moreover, natural disasters such as earthquakes, hurricanes, wildfires, tsunamis, floods or droughts, whether 
+occurring in the United States or abroad, and their related consequences and effects, including energy shortages and public 
+health issues, have in the past temporarily disrupted, and could in the future disrupt, our operations, the operations of our 
+vendors, manufacturers and other suppliers or have in the past resulted in, and in the future could result in, economic instability 
+that may negatively impact our operating results and financial condition. In particular, if a natural disaster or severe weather event 
+were to occur in an area in which we or our suppliers, manufacturers, employees, customers, distribution centers or vendors are 
+located, our continued success would depend, in part, on the safety and availability of the relevant personnel and facilities and 
+proper functioning of our or third parties' computer, network, telecommunication and other systems and operations. In addition, a 
+natural disaster or severe weather event could negatively impact retail traffic to our stores or stores that carry our products and 
+could have an adverse impact on consumer spending, any of which could in turn result in negative point-of-sale trends for our 
+merchandise. Further, climate change may increase both the frequency and severity of extreme weather conditions and natural 
+disasters, which may affect our business operations, either in a particular region or globally, as well as the activities of our third-
+party vendors and other suppliers, manufacturers and customers. We believe the diversity of locations in which we operate, our 
+operational size, disaster recovery and business continuity planning and our information technology systems and networks, 
+including the Internet and third-party services ("Information Technology Systems"), position us well, but may not be sufficient for 
+all or for concurrent eventualities. If we were to experience a local or regional disaster or other business continuity event or 
+concurrent events, we could experience operational challenges, in particular depending upon how a local or regional event may 
+affect our human capital across our operations or with regard to particular aspects of our operations, such as key executive 
+officers or personnel. For example, our world headquarters is located in an active seismic zone, which is at a higher risk for 
+earthquakes and the related consequences or effects. Further, if we are unable to find alternative suppliers, replace capacity at 
+key manufacturing or distribution locations or quickly repair damage to our Information Technology Systems or supply systems, 
+we could be late in delivering, or be unable to deliver, products to our customers. These events could result in reputational 
+damage, lost sales, cancellation charges or markdowns, all of which could have an adverse effect on our business, results of 
+operations and financial condition.
+Our financial condition and results of operations have been, and could in the future be, adversely affected by a 
+pandemic, epidemic or other public health emergency.
+Pandemics, including the COVID-19 pandemic, and other public health emergencies, and preventative measures taken to 
+contain or mitigate such crises have caused, and may in the future cause, business slowdown or shutdown in affected areas and 
+significant disruption in the financial markets, both globally and in the United States. These events have led to and could again 
+lead to adverse impacts to our global supply chain, factory cancellation costs, store closures, and a decline in retail traffic and 
+discretionary spending by consumers and, in turn, materially impact our business, sales, financial condition and results of 
+operations as well as cause a volatile effective tax rate driven by changes in the mix of earnings across our jurisdictions. We 
+cannot predict whether, and to what degree, our sales, operations and financial results could in the future be affected by the 
+pandemic and preventative measures. Risks presented by pandemics and other public health emergencies include, but are not 
+limited to:
+• Deterioration in economic conditions in the United States and globally, including the effect of prolonged periods of inflation 
+on our consumers and vendors;
+• Disruption to our distribution centers, contract manufacturers, finished goods factories and other vendors, through the effects 
+of facility closures, increased operating costs, reductions in operating hours, labor shortages, and real time changes in 
+operating procedures, such as additional cleaning and disinfection procedures, which have had, and could in the future 
+again have, a significant impact on our planned inventory production and distribution, including higher inventory levels or 
+inventory shortages in various markets;
+NIKE, INC.      
+12
+
+
+• Impacts to our distribution and logistics providers' ability to operate, including labor and container shortages, and increases 
+in their operating costs. These supply chain effects have had, and could in the future have, an adverse effect on our ability to 
+meet consumer demand, including digital demand, and have in the past resulted in and could in the future result in extended 
+inventory transit times and an increase in our costs of production and distribution, including increased freight and logistics 
+costs and other expenses;
+• Decreased retail traffic as a result of store closures, reduced operating hours, social distancing restrictions and/or changes in 
+consumer behavior;
+• Reduced consumer demand for our products, including as a result of a rise in unemployment rates, higher costs of 
+borrowing, inflation and diminished consumer confidence;
+• Cancellation or postponement of sports seasons and sporting events in multiple countries, and bans on large public 
+gatherings, which have reduced and in the future could reduce consumer spending on our products and could impact the 
+effectiveness of our arrangements with key endorsers;
+• The risk that any safety protocols in NIKE-owned or affiliated facilities, including our offices, will not be effective or not be 
+perceived as effective, or that any virus-related illnesses will be linked or alleged to be linked to such facilities, whether 
+accurate or not;
+• Incremental costs resulting from the adoption of preventative measures and compliance with regulatory requirements, 
+including providing facial coverings and hand sanitizer, rearranging operations to follow social distancing protocols, 
+conducting temperature checks, testing and undertaking regular and thorough disinfecting of surfaces;
+• Bankruptcies or other financial difficulties facing our wholesale customers, which could cause them to be unable to make or 
+delay making payments to us, or result in revised payment terms, cancellation or reduction of their orders; and
+• Significant disruption of and volatility in global financial markets, which could have a negative impact on our ability to access 
+capital in the future.
+We cannot reasonably predict the ultimate impact of any pandemic or public health emergency, including the extent of any 
+adverse impact on our business, results of operations and financial condition, which will depend on, among other things, the 
+duration and spread of the pandemic or public health emergency, the impact of governmental regulations that have been, and 
+may continue to be, imposed in response, the effectiveness of actions taken to contain or mitigate the outbreak, the availability, 
+safety and efficacy of vaccines, including against emerging variants of the infectious disease, and global economic conditions. 
+Additionally, disruptions have in the past made it more challenging to compare our performance, including our revenue growth 
+and overall profitability, across quarters and fiscal years, and could have this effect in the future. Any pandemic or public health 
+emergency may also affect our business, results of operations or financial condition in a manner that is not presently known to us 
+or that we currently do not consider to present significant risks and may also exacerbate, or occur concurrently with, other risks 
+discussed in this Item 1A. Risk Factors, any of which could have a material effect on us.
+Business and Operational Risks
+Failure to maintain our reputation, brand image and culture could negatively impact our business.
+Our iconic brands have worldwide recognition, and our success depends on our ability to maintain and enhance our brand image 
+and reputation. Maintaining, promoting and growing our brands will depend on our design and marketing efforts, including 
+advertising and consumer campaigns, product innovation and product quality. Our commitment to product innovation, quality and 
+sustainability, and our continuing investment in design (including materials), marketing and sustainability measures may not have 
+the desired impact on our brand image and reputation. In addition, our success in maintaining, extending and expanding our 
+brand image depends on our ability to adapt to a rapidly changing media and digital environment, including our reliance on social 
+media and other digital advertising networks, and digital dissemination of advertising campaigns on our digital platforms and 
+through our digital experiences and products. We could be adversely impacted if we fail to achieve any of these objectives.
+Our brand value also depends on our ability to maintain a positive consumer perception of our corporate integrity, purpose and 
+brand culture. Negative claims or publicity involving us, our culture and values, our products, services and experiences, 
+consumer data, or any of our key employees, endorsers, sponsors, suppliers or partners could seriously damage our reputation 
+and brand image, regardless of whether such claims are accurate. For example, while we require our suppliers of our products to 
+operate their business in compliance with applicable laws and regulations, we do not control their practices. Negative publicity 
+relating to a violation or an alleged violation of policies or laws by such suppliers could damage our brand image and diminish 
+consumer trust in our brand. Further, our reputation and brand image could be damaged as a result of our support of, association 
+with or lack of support or disapproval of certain social causes, as well as any decisions we make to continue to conduct, or 
+change, certain of our activities in response to such considerations. Social media, which accelerates and potentially amplifies the 
+scope of negative publicity, can increase the challenges of responding to negative claims. Adverse publicity about regulatory or 
+legal action against us, or by us, could also damage our reputation and brand image, undermine consumer confidence in us and 
+reduce long-term demand for our products, even if the regulatory or legal action is unfounded or not material to our operations. If 
+2023 FORM 10-K   13    
+
+
+the reputation, culture or image of any of our brands is tarnished or if we receive negative publicity, then our sales, financial 
+condition and results of operations could be materially and adversely affected.
+Our business is affected by seasonality, which could result in fluctuations in our operating results.
+We experience moderate fluctuations in aggregate sales volume during the year. Historically, revenues in the first and fourth 
+fiscal quarters have slightly exceeded those in the second and third fiscal quarters. However, the mix of product sales may vary 
+considerably from time to time or in the future as a result of strategic shifts in our business and seasonal or geographic demand 
+for particular types of footwear, apparel and equipment and in connection with the timing of significant sporting events, such as 
+the NBA Finals, Olympics or the World Cup, among others. In addition, our customers may cancel orders, change delivery 
+schedules or change the mix of products ordered with minimal notice. As a result, we may not be able to accurately predict our 
+quarterly sales. Accordingly, our results of operations are likely to fluctuate significantly from period to period. This seasonality, 
+along with other factors that are beyond our control, including economic conditions, changes in consumer preferences, weather 
+conditions, outbreaks of disease, social or political unrest, availability of import quotas, transportation disruptions and currency 
+exchange rate fluctuations, has in the past adversely affected and could in the future adversely affect our business and cause our 
+results of operations to fluctuate. Our operating margins are also sensitive to a number of additional factors that are beyond our 
+control, including manufacturing and transportation costs, shifts in product sales mix and geographic sales trends, all of which we 
+expect to continue. Results of operations in any period should not be considered indicative of the results to be expected for any 
+future period.
+If we are unable to anticipate consumer preferences and develop new products, we may not be able to maintain or 
+increase our revenues and profits.
+Our success depends on our ability to identify, originate and define product trends as well as to anticipate, gauge and react to 
+changing consumer demands in a timely manner. However, lead times for many of our products may make it more difficult for us 
+to respond rapidly to new or changing product trends or consumer preferences. All of our products are subject to changing 
+consumer preferences that cannot be predicted with certainty. Our new products may not receive consumer acceptance as 
+consumer preferences could shift rapidly to different types of performance products or away from these types of products 
+altogether, and our future success depends in part on our ability to anticipate and respond to these changes. If we fail to 
+anticipate accurately and respond to trends and shifts in consumer preferences by adjusting the mix of existing product offerings, 
+developing new products, designs, styles and categories, and influencing sports and fitness preferences through extensive 
+marketing, we could experience lower sales, excess inventories or lower profit margins, any of which could have an adverse 
+effect on our results of operations and financial condition. In addition, we market our products globally through a diverse spectrum 
+of advertising and promotional programs and campaigns, including social media and other digital advertising networks. If we do 
+not successfully market our products or if advertising and promotional costs increase, these factors could have an adverse effect 
+on our business, financial condition and results of operations.
+We rely on technical innovation and high-quality products to compete in the market for our products.
+Technical innovation and quality control in the design and manufacturing processes of footwear, apparel, equipment and other 
+products and services are essential to the commercial success of our products and development of new products. Research and 
+development play a key role in technical innovation. We rely upon specialists in the fields of biomechanics, chemistry, exercise 
+physiology, engineering, digital technologies, industrial design, sustainability and related fields, as well as research committees 
+and advisory boards made up of athletes, coaches, trainers, equipment managers, orthopedists, podiatrists and other experts to 
+develop and test cutting-edge performance products. While we strive to produce products that help to enhance athletic 
+performance and reduce injury and maximize comfort, if we fail to introduce technical innovation in our products, consumer 
+demand for our products could decline, and if we experience problems with the quality of our products, we may incur substantial 
+expense to remedy the problems and loss of consumer confidence.
+Failure to continue to obtain or maintain high-quality endorsers of our products could harm our business.
+We establish relationships with professional athletes, sports teams and leagues, as well as other public figures, including artists, 
+designers and influencers, to develop, evaluate and promote our products, as well as establish product authenticity with 
+consumers. However, as competition in our industry 
+
+Question:
+Compared to 2023, how has the percentage of finished goods apparel factories from countries other than Vietnam, China, and Cambodia changed in 2024?
+
+A. 2%
+B. 1%
+C. 3%
+D. 4%
+
+Select the correct answer.

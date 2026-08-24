@@ -1,0 +1,209 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+psutil
+sentencepiece  # Required for LLaMA tokenizer.
+numpy < 2.0.0
+requests >= 2.26.0
+tqdm
+py-cpuinfo
+transformers >= 4.45.0  # Required for Llama 3.2.
+tokenizers >= 0.19.1  # Required for Llama 3.
+protobuf # Required by LlamaTokenizer.
+fastapi >= 0.107.0, < 0.113.0; python_version < '3.9'
+fastapi >= 0.107.0, != 0.113.*, != 0.114.0; python_version >= '3.9'
+aiohttp
+openai >= 1.40.0 # Ensure modern openai package (ensure types module present)
+uvicorn[standard]
+pydantic >= 2.9  # Required for fastapi >= 0.113.0
+pillow  # Required for image processing
+prometheus_client >= 0.18.0
+prometheus-fastapi-instrumentator >= 7.0.0
+tiktoken >= 0.6.0  # Required for DBRX tokenizer
+lm-format-enforcer == 0.10.6
+outlines >= 0.0.43, < 0.1
+typing_extensions >= 4.10
+filelock >= 3.10.4 # filelock starts to support `mode` argument from 3.10.4
+partial-json-parser # used for parsing partial JSON outputs
+pyzmq
+msgspec
+gguf == 0.10.0
+importlib_metadata
+mistral_common[opencv] >= 1.4.4
+pyyaml
+six>=1.16.0; python_version > '3.11' # transitive dependency of pandas that needs to be the latest version for python 3.12
+setuptools>=74.1.1; python_version > '3.11' # Setuptools is used by triton, we need to ensure a modern version is installed for 3.12+ so that it does not try to import distutils, which was removed in 3.12
+einops # Required for Qwen2-VL.
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# Dependencies for AMD GPUs
+awscli
+boto3
+botocore
+ray >= 2.10.0
+peft
+pytest-asyncio
+tensorizer>=2.9.0
+
+cmake_minimum_required(VERSION 3.26)
+
+# When building directly using CMake, make sure you run the install step
+# (it places the .so files in the correct location).
+#
+# Example:
+# mkdir build && cd build
+# cmake -G Ninja -DVLLM_PYTHON_EXECUTABLE=`which python3` -DCMAKE_INSTALL_PREFIX=.. ..
+# cmake --build . --target install
+#
+# If you want to only build one target, make sure to install it manually:
+# cmake --build . --target _C
+# cmake --install . --component _C
+project(vllm_extensions LANGUAGES CXX)
+
+# CUDA by default, can be overridden by using -DVLLM_TARGET_DEVICE=... (used by setup.py)
+set(VLLM_TARGET_DEVICE "cuda" CACHE STRING "Target device backend for vLLM")
+
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Target device: ${VLLM_TARGET_DEVICE}")
+
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/utils.cmake)
+
+# Suppress potential warnings about unused manually-specified variables
+set(ignoreMe "${VLLM_PYTHON_PATH}")
+
+# Prevent installation of dependencies (cutlass) by default.
+install(CODE "set(CMAKE_INSTALL_LOCAL_ONLY TRUE)" ALL_COMPONENTS)
+
+#
+# Supported python versions.  These versions will be searched in order, the
+# first match will be selected.  These should be kept in sync with setup.py.
+#
+set(PYTHON_SUPPORTED_VERSIONS "3.8" "3.9" "3.10" "3.11" "3.12")
+
+# Supported NVIDIA architectures.
+set(CUDA_SUPPORTED_ARCHS "7.0;7.5;8.0;8.6;8.9;9.0")
+
+# Supported AMD GPU architectures.
+set(HIP_SUPPORTED_ARCHS "gfx906;gfx908;gfx90a;gfx940;gfx941;gfx942;gfx1030;gfx1100")
+
+#
+# Supported/expected torch versions for CUDA/ROCm.
+#
+# Currently, having an incorrect pytorch version results in a warning
+# rather than an error.
+#
+# Note: the CUDA torch version is derived from pyproject.toml and various
+# requirements.txt files and should be kept consistent.  The ROCm torch
+# versions are derived from Dockerfile.rocm
+#
+set(TORCH_SUPPORTED_VERSION_CUDA "2.4.0")
+set(TORCH_SUPPORTED_VERSION_ROCM "2.5.0")
+
+#
+# Try to find python package with an executable that exactly matches
+# `VLLM_PYTHON_EXECUTABLE` and is one of the supported versions.
+#
+if (VLLM_PYTHON_EXECUTABLE)
+  find_python_from_executable(${VLLM_PYTHON_EXECUTABLE} "${PYTHON_SUPPORTED_VERSIONS}")
+else()
+  message(FATAL_ERROR
+    "Please set VLLM_PYTHON_EXECUTABLE to the path of the desired python version"
+    " before running cmake configure.")
+endif()
+
+#
+# Update cmake's `CMAKE_PREFIX_PATH` with torch location.
+#
+append_cmake_prefix_path("torch" "torch.utils.cmake_prefix_path")
+
+# Ensure the 'nvcc' command is in the PATH
+find_program(NVCC_EXECUTABLE nvcc)
+if (CUDA_FOUND AND NOT NVCC_EXECUTABLE)
+    message(FATAL_ERROR "nvcc not found")
+endif()
+
+#
+# Import torch cmake configuration.
+# Torch also imports CUDA (and partially HIP) languages with some customizations,
+# so there is no need to do this explicitly with check_language/enable_language,
+# etc.
+#
+find_package(Torch REQUIRED)
+
+#
+message(STATUS "Enabling core extension.")
+
+# Define _core_C extension
+#  built for (almost) every target platform, (excludes TPU and Neuron)
+
+set(VLLM_EXT_SRC
+  "csrc/core/torch_bindings.cpp")
+
+define_gpu_extension_target(
+  _core_C
+  DESTINATION vllm
+  LANGUAGE CXX
+  SOURCES ${VLLM_EXT_SRC}
+  COMPILE_FLAGS ${CXX_COMPILE_FLAGS}
+  USE_SABI 3
+  WITH_SOABI)
+
+#
+# Forward the non-CUDA device extensions to external CMake scripts.
+#
+if (NOT VLLM_TARGET_DEVICE STREQUAL "cuda" AND
+    NOT VLLM_TARGET_DEVICE STREQUAL "rocm")
+    if (VLLM_TARGET_DEVICE STREQUAL "cpu")
+        include(${CMAKE_CURRENT_LIST_DIR}/cmake/cpu_extension.cmake)
+    else()
+        return()
+    endif()
+    return()
+endif()
+
+#
+# Set up GPU language and check the torch version and warn if it isn't
+# what is expected.
+#
+if (NOT HIP_FOUND AND CUDA_FOUND)
+  set(VLLM_GPU_LANG "CUDA")
+
+  if (NOT Torch_VERSION VERSION_EQUAL ${TORCH_SUPPORTED_VERSION_CUDA})
+    message(WARNING "Pytorch version ${TORCH_SUPPORTED_VERSION_CUDA} "
+      "expected for CUDA build, saw ${Torch_VERSION} instead.")
+  endif()
+elseif(HIP_FOUND)
+  set(VLLM_GPU_LANG "HIP")
+
+  # Importing torch recognizes and sets up some HIP/ROCm configuration but does
+  # not let cmake recognize .hip files. In order to get cmake to understand the
+  # .hip extension automatically, HIP must be enabled explicitly.
+  enable_language(HIP)
+
+  # ROCm 5.X and 6.X
+  if (ROCM_VERSION_DEV_MAJOR GREATER_EQUAL 5 AND
+      NOT Torch_VERSION VERSION_EQUAL ${TORCH_SUPPORTED_VERSION_ROCM})
+    message(WARNING "Pytorch version >= ${TORCH_SUPPORTED_VERSION_ROCM} "
+      "expected for ROCm build, saw ${Torch_VERSION} instead.")
+  endif()
+else()
+  message(FATAL_ERROR "Can't find CUDA or HIP installation.")
+endif()
+
+
+#
+# For cuda we want to be able to control which architectures we compile for on 
+# a per-file basis in order to cut down on compile time
+
+Question:
+What is the difference between chunked-prefill scheduling and default scheduling in the code?
+
+A. Chunked-prefill scheduling prioritize decoding requests when updating waiting requests.
+B. Chunked-prefill scheduling prioritize prefill requests when updating waiting requests.
+C. Chunked-prefill scheduling prioritize prefill requests when updating running requests.
+D. Chunked-prefill scheduling split prefill requests according to remaining budget.
+
+Select the correct answer.

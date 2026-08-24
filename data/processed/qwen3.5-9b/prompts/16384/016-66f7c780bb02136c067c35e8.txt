@@ -1,0 +1,1762 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+1
+2020 JD.com Environmental, Social and Governance Report
+
+
+Contents
+Overview
+Special Topic: Combating COVID-19
+Corporate Governance
+Environmental Protection
+Working Environment
+Product Responsibility
+Community Responsibility
+Appendix
+About JD.com
+01
+Report Profile
+Letter from the Chairman
+Statement from the Board
+ESG Governance System
+Strategic Position, Mission, Vision, and Values
+Corporate Social Responsibility Strategic 
+Framework
+Materiality Assessment and Stakeholder 
+Engagement
+02
+03
+05
+05
+06
+07
+09
+Emergency Assistance
+Science and Technology
+Protecting Public Health
+Comprehensive Assistance to Recovery
+Internal Control and Compliance 
+Management
+Information Security
+Anti-corruption
+11
+11
+12
+12
+14
+15
+17
+Green Operation
+Low-carbon and Green Supply Chain
+Green Lifestyle Advocacy
+19
+20
+23
+Human Resource Compliance Management
+Ensuring High-quality Employment
+Supplier Admittance and Compliance 
+Management
+Supplier Environmental and Social Risk 
+Identification Management
+Supplier Digital Management 
+Platform Management
+Quality Management
+Intellectual Property Protection
+Content Governance
+Customer Service
+Organizations and Corporate Clients Growth
+36
+36
+37
+38
+39
+40
+Appendix 1: Key Performance
+Appendix 2: Content Index
+Appendix 3: GRI Standards Content Index
+Appendix 4: External Verification Certificate
+47
+49
+51
+53
+Corporate Philanthropy and Social 
+Responsibility
+Focus Areas and Practices
+44
+45
+27
+28
+33
+33
+34
+Supplier Management
+
+
+01
+2020 JD.com Environmental, Social and Governance Report
+About JD.com 
+JD.com is a leading technology driven e-commerce company transforming to become the leading supply chain-based technology and 
+service provider. The company’s cutting-edge retail infrastructure seeks to enable consumers to buy whatever they want, whenever and 
+wherever they want it. The company has opened its technology and infrastructure to partners, brands and other sectors, as part of its 
+Retail as a Service oﬀering to help drive productivity and innovation across a range of industries. JD.com is the largest retailer in China, 
+a member of the NASDAQ100 and a Fortune Global 500 company.
+
+
+02
+2020 JD.com Environmental, Social and Governance Report
+Overview
+Report Proﬁle
+Release Form of the Report
+Reference and Principles
+Reporting Scope
+Source of Information 
+Currency
+Referential Description
+Contact Us
+This Environmental, Social and Governance (hereinafter referred to as “ESG”) report is distributed electronically in Chinese and English.
+This report references the United Nations Sustainable Development Goals (UN SDGs), the GRI Standards issued by the Global 
+Sustainability Standards Board (GSSB), the ESG Reporting Guide from the Nasdaq Stock Market, industrial standards prepared by the 
+Sustainability Accounting Standards Board (SASB), and the ESG Reporting Guide from the Hong Kong Stock Exchange (HKEX). The 
+report also considers the four disclosure principles of Materiality, Quantitative, Balance, and Consistency.
+The report aims to provide information on the ESG-related performance of the Group from January 1 to December 31 of 2020, and on 
+material issues and boundaries identiﬁed by materiality analysis.
+The information and data in this report are mainly from the Group’s database, internal statistical reports, and public information， 
+including prospectuses, annual reports, and media releases.
+Unless speciﬁed, the monetary amounts shown in this report are all presented in RMB.
+For ease of presentation, “JD,” “the Group,” and “we” all refer to “JD.com.”
+We value your feedback and opinions, and appreciate you emailing us at ir@jd.com, or mailing a letter to JD.com, No. 18 Kechuang 11 
+Street, Building A, Floor 20, Beijing Economic-Technological Development Area, Beijing, 100176, People’s Republic of China.
+For more information, please visit our oﬃcial website at https://ir.jd.com/.
+
+
+03
+2020 JD.com Environmental, Social and Governance Report
+Powered by Technology for a More Productive and Sustainable World
+Letter from the Chairman
+2020 was an extraordinary year for 
+JD and the world. We witnessed the 
+systematic inﬂuence of public health 
+risks applied to the global economy, 
+environment, and society. According 
+to the “Global Risks Report 2021” issued 
+by the World Economic Forum, the 
+pandemic has exacerbated the global 
+economic recession, social inequalities, 
+and societal divisiveness, while 
+introducing increased uncertainty for 
+the world’s development prospects.
+In terms of risk likelihood and impact 
+for the next decade, extreme weather, 
+climate action failure, human-led 
+environmental damage, public health 
+crises, and biodiversity loss constitute 
+the ﬁve most signiﬁcant risks globally. 
+Actively seeking solutions to these risks 
+will bring new growth opportunities to 
+the post-pandemic world.
+More people recognize the importance 
+of building a community with a shared 
+future for humankind and promoting 
+sustainable development. Currently, 
+more than 20 countries and regions 
+around the world—including China—
+have committed to “zero-carbon” 
+ambitions, and major economies have 
+devoted themselves to a green recovery. 
+ESG investment that incorporates 
+environmental and social factors 
+into the overall risk assessment of 
+enterprises, and pays more attention to 
+long-term value creation, is becoming a 
+mainstream trend of the global capital 
+markets. In this context, the world’s 
+leading companies have updated 
+their sustainable development goals 
+and strengthened their mission and 
+commitment to the future. JD is one 
+of these leading companies—in 2020, 
+we released a new group mission—
+Powered by Technology for a More 
+Productive and Sustainable World.
+Digital and intelligent technologies have 
+become drivers for JD to accelerate 
+innovation during this pandemic. At 
+diﬀerent stages of the crisis, by relying 
+on the Digitally Intelligent Social Supply 
+Chain, JD has created social value in 
+ﬁghting COVID-19, through protecting 
+people’s livelihoods, supporting the 
+economy, and stabilizing employment 
+with a strong social responsibility 
+mission and technological means. 
+With technology, we respond to 
+urgent anti-epidemic needs, stabilize 
+prices, and ensure supplies. With 
+“new infrastructure,” we support the 
+full recovery of China’s economy 
+and all eﬀorts to decisively eliminate 
+poverty, and safeguard everyone’s 
+health. This has also allowed us to gain 
+widespread social recognition and 
+trust from consumers. Encountering 
+the downward pressure of the global 
+economy, JD has shown strong 
+
+
+04
+2020 JD.com Environmental, Social and Governance Report
+resilience. In 2020, JD achieved a total net revenue of RMB 745.8 
+billion yuan, a year-on-year increase of 29.3%; at the same time, 
+our annual net number of active customer accounts increased by 
+nearly 110 million. More importantly, with employment a priority 
+for individuals and families, JD functioned as an “employment 
+stabilizer.” In 2020, the number of full-time employees in JD’s 
+system reached 314,000, a year-on-year increase of 38.3%.
+Digital intelligent transformation is becoming a key driving force 
+for the global post-pandemic economic recovery. According to 
+the latest “Future of Jobs Report 2020” released by the World 
+Economic Forum, digital transformation will create nearly 100 
+million new job opportunities worldwide by 2025. In China’s 
+Outline of the 14th Five-Year Plan (2021-2025) for National 
+Economic and Social Development and the Long-Range 
+Objectives Through the Year 2035, “accelerating digitalization 
+and constructing Digital China” is brought up as a key strategy. 
+In 2020, JD announced its new position as a “supply chain-based 
+technology and service provider.” Through artiﬁcial intelligence 
+(AI), big data, cloud computing, the Internet of things (IoT), 
+blockchain, and other digital intelligence technologies, JD 
+provides new development momentum for the whole society. 
+We established the Customer-to-Manufacturer (C2M) initiative to 
+help over 1,000 brand enterprises achieve “smart” manufacturing 
+upgrades. We launched integrated supply chain and logistics 
+technology solutions to reduce the overall cost and increase 
+eﬃciency of the logistics industry. We provided over 20,000 
+service companies with an online trade fair that lasts 365 days. 
+We help small and medium-sized enterprises (SMEs) embrace 
+the era of digital intelligence and gain motivation for new 
+development. We actively participate in constructing digital cities 
+and villages. JD’s new position has generated social value while 
+gaining substantial growth momentum. In the fourth quarter of 
+2020, JD’s net service revenue has reached RMB 32.1 billion yuan, 
+a year-on-year increase of 53.2%, and its share of net revenue 
+reached a record 14.3%. 
+Our health and sustainable development are closely related to 
+the health of the entire planet, which is gradually threatened by 
+climate change and environmental degradation. Studies have 
+shown that by the middle of this century, climate change may 
+cause direct losses of US$7.9 trillion to the world economy. China 
+is playing an increasingly important role in global climate and 
+environmental governance, and recently announced national 
+targets for peaking carbon emissions by 2030 and achieving 
+carbon neutrality by 2060. JD is accelerating its own low-
+carbon development through technological means, promoting 
+the green transformation of the industry, and leading society 
+toward green consumption. Our annual average power usage 
+eﬀectiveness (PUE) of our green data centers has been declining 
+year by year and is currently below 1.3. JD Logistics (JDL) has 
+become the ﬁrst logistics company in China to join the Science 
+Based Targets initiative (SBTi) and announce its greenhouse 
+gas (GHG) emissions reduction goal. Furthermore, the types of 
+green products on our retail platform have exceeded 100 million. 
+We hope to seize the historical opportunities of this new round 
+of technological revolution and industrial transformation, 
+exert the ecosystem inﬂuence through our Digitally Intelligent 
+Social Supply Chain, and provide more innovative solutions for 
+the global response to climate and environmental risks with 
+innovative technology. At present, JD’s AI technology has shown 
+great advantages in terms of energy savings and emissions 
+reduction for thermal power generation companies. 
+It is our ﬁrst time issuing an ESG report. We hope to fully respond 
+to investors’ concerns. We will continue improving our ESG 
+governance structure and system, enhancing regulatory and 
+legal compliance, information security, and operational safety, 
+therefore responding better to external stakeholder expectations 
+while realizing internal growth. As we gradually improve our 
+ESG governance, we will manage social and environmental 
+risks more systematically. In the new era, we will continue 
+enhancing our resilience and ability to develop sustainably. 
+Looking forward, we will explore and share the social beneﬁts of 
+the Digitally Intelligent Social Supply Chain with our employees, 
+business and ecosystem partners, and consumers. We believe it 
+is our responsibility to create shared value, and view technology 
+as the means to jointly create a more productive and sustainable 
+world!
+Richard Qiangdong Liu  
+Chairman of the Board, JD.com
+
+
+05
+2020 JD.com Environmental, Social and Governance Report
+Statement from the Board
+ESG Governance System
+The company’s Board of Directors 
+continues to pay close attention to 
+ESG. In 2020, the Board of Directors 
+participated in the supervision of ESG 
+reporting, carefully reviewed the results 
+of the Group’s important ESG issues, 
+and provided references for corporate 
+governance and risk management.
+The ESG governance system of JD.com 
+covers the principles of ESG, and 
+lays a solid foundation for ESG plan 
+formulation, regular assessment, and 
+management of related risks. JD’s 
+ESG governance system can help the 
+Decision-making
+Implementation
+Resources
+ESG Governance Structure
+As a “supply chain-based technology 
+and service provider,” JD will continue 
+to devote more eﬀorts to building a 
+more sustainable world with its supply 
+chain capabilities. In the future, the 
+Group will continue promoting the 
+integration of ESG into the company’s 
+company establish an eﬀective risk 
+management system, maintain a good 
+relationship with stakeholders, and 
+enhance corporate governance. After 
+implementing an ESG governance 
+strategy and a sustainable development 
+business operations and long-term 
+strategic development, fulﬁlling its 
+corporate mission of being “Powered 
+by Technology for a More Productive 
+and Sustainable World,” and striving to 
+become the most trusted enterprise in 
+the world.
+management system, the Group will 
+achieve the sustainable development 
+of its own robust operations and 
+contribute to building a more 
+productive and sustainable world.
+Collaborates
+General Office
+Working Group 
+Members
+Information 
+Collection 
+Network Group
+Supports
+Empowers
+Coordinates
+Board of Directors
+Strategy Execution Committee (SEC)
+ESG Working Expert 
+Group
+JD Foundation
+Collaborative 
+Partners
+ESG Leadership 
+Group
+Supervises
+Reports to
+
+
+06
+2020 JD.com Environmental, Social and Governance Report
+The SEC is responsible for making decisions on the strategic 
+goals, directions, and key scope of work in the core areas of 
+the Group’s sustainable development, in addition to clarifying 
+the internal organizational structure of ESG management, and 
+supervising and guiding the overall implementation of work. 
+SEC reports ESG-related ﬁndings to the Board of Directors to 
+ensure that ESG governance is integrated into the company’s 
+overall strategic development.
+The ESG Working Group is composed of the General Oﬃce, 
+Working Group Members, and the Information Collection 
+Network Group. The ESG Working Group is responsible for 
+formulating ESG work strategies, identifying ESG risks and 
+opportunities, disclosing the progress of ESG work, and regularly 
+reporting ESG-related work to the SEC. The ESG Working Group 
+also promotes and follows up with the implementation of Group-
+level goals in various business units and functional systems 
+through the ESG data management system, and gradually 
+normalizes ESG governance.
+Composed of high-level external experts, and the ESG Working 
+Expert Group aims at providing professional advice to the SEC 
+and supporting committee participation and decision-making. 
+The ESG Working Expert Group provides professional capacity 
+building and training, and regularly shares global ESG best 
+practices and trends.
+The ESG Working Group cooperates with JD Foundation to work 
+with JD’s ecosystem partners and leverages more internal and 
+external resources to support the implementation of JD’s ESG 
+work, and ultimately provides value to society.
+Strategic Position, Mission, Vision, and Values
+Strategic Position
+Supply Chain-based 
+Technology and 
+Service Provider
+Mission
+Powered by Technology 
+for a More Productive 
+and Sustainable World
+Vision
+Become the Most 
+Trusted Company 
+in the World
+Values
+Customer First
+Integrity
+Collaboration
+Gratitude
+All in
+Ownership
+Strategy Execution Committee (SEC)
+ESG Working Expert Group
+Resources
+ESG Working Group
+
+
+07
+2020 JD.com Environmental, Social and Governance Report
+Corporate Social Responsibility Strategic Framework
+“Powered by Technology for a More 
+Productive and Sustainable World” is 
+our corporate mission and core social 
+responsibility strategy. Based on JD’s 
+Digitally Intelligent Social Supply Chain as 
+a technological driver and organizational 
+drivers enabled by eﬃcient corporate 
+governance as well as the full engagement 
+JD’s Digitally 
+Intelligent Social 
+Supply Chain
+JD’s Digitally Intelligent Social Supply Chain
+With the advancement of technology 
+and digital intelligence, social 
+development has reached a new form of 
+integrated development of information, 
+knowledge, science, and technology. 
+As a new generation of infrastructure, 
+JD’s Digitally Intelligent Social Supply 
+Chain will help connect and optimize all 
+aspects of social production, circulation, 
+of employees and business partners, 
+we continue to create value for 
+economic development,  environmental 
+friendliness, and a harmonious society. 
+We help establish a more productive 
+and sustainable future in terms of 
+promoting employment, enhancing 
+rural revitalization, improving 
+social eﬃciency, driving high-quality 
+consumption, facilitating the digitalization 
+of the real economy, and supporting 
+supply-side structural reforms, thereby 
+proactively being accountable for social 
+responsibility. 
+and service, thus reducing social costs 
+and improving social eﬃciency. In early 
+2020, the Group’s strategic positioning 
+was oﬃcially upgraded to a “supply 
+chain-based technology and service 
+provider.” In the next decade, JD will 
+establish Digital Intelligent Social 
+Supply Chain infrastructure, and fully 
+utilize the value of the Digital Intelligent 
+Social Supply Chain to continuously 
+promote three long-term goals: 
+boosting the real economy; improving 
+social eﬃciency; and enhancing 
+environmental friendliness, to create 
+greater social value and work towards 
+an eﬃcient, fair, and harmonious social 
+environment.
+Organizational 
+Driver
+Technological 
+Driver
+Corporate 
+Governance
+Employees and 
+business partners
+Powered by 
+Technology 
+for a More 
+Productive and 
+Sustainable 
+World 
+B
+o
+o
+s
+t
+i
+n
+g
+ t
+h
+e
+ 
+R
+e
+a
+l 
+E
+c
+o
+n
+o
+m
+y
+ 
+I
+m
+p
+r
+o
+v
+i
+n
+g
+ 
+S
+o
+c
+i
+a
+l 
+E
+f
+fi
+c
+i
+e
+n
+c
+y
+ 
+E
+n
+h
+a
+n
+c
+i
+n
+g 
+E
+n
+vi
+ro
+n
+m
+e
+n
+t
+a
+l 
+Fr
+ie
+n
+dl
+in
+es
+s 
+
+
+08
+2020 JD.com Environmental, Social and Governance Report
+JD and SDGs
+SDGs
+Our Actions
+The UN SDGs describe a much-
+anticipated bright future that can only be 
+realized by joint eﬀorts of all mankind. 
+In September 2016, China pledged at the 
+G20 summit to fully implement the 2030 
+Agenda for Sustainable Development 
+and promote inclusive development. 
+Through e-commerce, ﬁnance, corporate philanthropy, and other platforms, we provide 
+education and employment opportunities, business resources and channels for poorer 
+regions, utilizing our own strength and value in eliminating absolute poverty and 
+facilitating rural revitalization.
+Responding to the COVID-19 pandemic, we devoted ourselves to ﬁghting the virus as 
+soon as possible by donating resources and providing technology solutions. We utilize 
+the JD Health (JDH) platform and supply chain to ensure the provision of medical 
+resources and daily necessities to safeguard public health, thus to better respond to 
+emergency public health crises. In addition, we ensure the physical and mental health of 
+our employees through health, welfare, and social security policies.
+We provide employees with an equal, safe, and decent work environment, and 
+support them to obtain a fair income, a better workplace, better welfare guarantees, 
+and a promising career path. Moreover, our platform enables SMEs to obtain fairer 
+development opportunities, helps disadvantaged and vulnerable groups gain more 
+employment opportunities, and promotes the development of the real economy.
+Through the construction of Digitally Intelligent Social Supply Chain infrastructure, we 
+oﬀer innovative solutions for the digitalization of various industries, help these sectors 
+reduce costs, increase eﬃciency, and achieve low-carbon transformation with an 
+eﬃcient model.
+We use big data, AI, cloud computing and other technologies to provide intelligent 
+solutions for urban planning, transportation, environment, energy, commercial, and 
+security issues.
+With the business operations, supply chain management, and platform eﬀect, we strive 
+to achieve a more environmentally friendly and low-carbon business model, promote 
+sustainable and responsible consumption, and advocate the importance of biodiversity.
+We value the opinions of stakeholders and maintain regular dialogue with them. By 
+oﬀering technology solutions, we assist business partners and suppliers to achieve 
+sustainable production and operations.
+Subsequently, the Chinese government 
+launched China’s National Plan on 
+Implementation of the 2030 Agenda for 
+Sustainable Development. The realization 
+of the 2030 Agenda for Sustainable 
+Development and the 17 SDGs requires 
+collective actions from the public sector, 
+business enterprises, and civil society. 
+As a supply chain-based technology 
+and service provider, JD leverages its 
+advantages in Digitally Intelligent Social 
+Supply Chain and its platform impact 
+to exert its commercial inﬂuence and 
+actively implement the SDGs.
+
+
+09
+2020 JD.com Environmental, Social and Governance Report
+Materiality Assessment and Stakeholder Engagement
+Through benchmarking analysis and stakeholder surveys, the Group has identiﬁed 28 strategic issues that facilitate the creation of 
+shared values, and has created a materiality matrix. Among them, the high and moderate priority material issues are regarded as the 
+most important topics to disclose in this report. The scope and boundary of the report are determined by data availability. 
+Benchmarking 
+analysis
+Stakeholder 
+survey
+Materiality 
+matrix
+Identification 
+of issues 
+creating a 
+shared value
+High priority material 
+issues 
+Moderate priority material 
+issues
+Low priority material 
+issues
+Signiﬁcance to economic, 
+environmental, and 
+social impact
+Signiﬁcance to 
+stakeholders
+Signiﬁcance to JD
+Questionnaire/survey
+Interviews
+Macro-economic policies, 
+industry policies, and 
+regulatory requirements 
+International standards, 
+ESG rating agencies and 
+HKEX requirements
+Peers’ best practices, and 
+JD business positioning 
+and strategy
+Materiality Matrix 
+Materiality Assessment Flow
+Importance to JD
+High
+High
+Impact of JD 
+Establishment 
+of corporate 
+governance system
+Inclusive workplace 
+culture
+Green investment and 
+responsible investment
+The Board’s support and participation 
+in sustainable development
+Anti-corruption
+Talent development
+Energy savings, emissions reductions, 
+and green operations
+Business leadership 
+and partner 
+ecosystem
+Rural revitalization and rural development
+Create a fair business 
+environment
+Sustainable revenue and growth
+Anti-epidemic practices
+Promoting “dual circulation” 
+with high quality domestic 
+demand growth
+Win-win cooperation with partners
+High quality 
+development of the 
+real economy
+Sustainable consumption 
+and circular economy
+Digitalization and 
+intelligentization of industry
+Data safety and user privacy
+Consumer rights and interests
+Integrity of operations
+High quality products 
+and services
+Efficient 
+and 
+intelligent 
+supply 
+chain
+Risk and compliance 
+management
+Technological innovation
+Employment and 
+entrepreneurship
+Occupational health 
+and welfare
+Moderate
+JD Foundation’s support for 
+disadvantaged and vulnerable 
+groups and communities
+Inclusive digital 
+technology
+
+
+10
+2020 JD.com Environmental, Social and Governance Report
+The Group fully considers the impact of its own operations on stakeholders, and maintains regular communication and diversiﬁed 
+relationships with six types of stakeholders, including consumers, employees, shareholders and investors, governments and regulatory 
+agencies, partners on the value chain, and communities and the environment. The expectations of various stakeholders provide a key 
+reference for the Group to identify important sustainable development issues, enhance related work, and carry out relevant information 
+disclosure.
+Stakeholder Engagement 
+Stakeholders
+Material Issues
+Communication
+Governments and 
+Regulatory Agencies
+Employees
+Partners on the 
+Value Chain
+Consumers
+Communities and 
+Environment
+Eﬃcient and intelligent supply chain
+Digitalization and intelligentization of industry
+Win-win cooperation with partners
+Business leadership and partner ecosystem
+Create a fair business environment
+Green investment and responsible investment
+Consumer rights and interests
+Integrity of operations
+High quality products and services
+Data safety and user privacy
+Talent development
+Occupational health and welfare
+Inclusive workplace culture
+Risk and compliance management
+Sustainable revenue and growth
+Anti-corruption
+The Board’s support and participation in 
+sustainable development
+Establishment of corporate governance system
+Daily procurement, training, and evaluation
+Industry forums
+Supplier Conferences
+High quality development of the real 
+economy
+Promoting “dual circulation” with high 
+quality domestic demand growth
+Technological innovation
+Sustainable consumption and circular economy
+Anti-epidemic practices
+Energy savings, emissions reductions, and 
+green operations
+Employment and entrepreneurship
+Rural revitalization and rural development
+Inclusive digital technology
+JD Foundation’s support for disadvantaged and 
+vulnerable groups and communities
+Long-term public welfare projects
+Daily media communication
+Social media communication
+Charity industry forums and activities
+Volunteer activities 
+Phone calls, meetings, and company visits
+Corporate annual reports, quarterly reports, and announcements
+Roadshow
+Daily reports and communication on sustainable development and 
+ESG related issues 
+Continuous online and oﬄine 
+communication (apps/
+websites/stores)
+24/7 customer service hotline
+Daily media communication
+Social media communication
+Consumer research 
+All-staﬀ emails, communication 
+meetings, forums, the staﬀ 
+and workers’ representative 
+congress, training activities and 
+feedback mechanisms
+Online and oﬄine research activities
+Email address for employee 
+complaints 
+“Voice of Logistics Employees” 
+platform 
+Daily reports and 
+communication, and issuing 
+policy recommendations
+Industry forums and 
+conferences
+Field investigation
+Sign cooperation 
+agreements and establish 
+strategic cooperation
+Responding to inquiries 
+for listed companies from 
+regulatory agencies
+Shareholders and 
+Investors
+
+
+11
+2020 JD.com Environmental, Social and Governance Report
+Special Topic: Combating COVID-19
+Since the outbreak of the COVID-19 pandemic, JD has spared no eﬀort in ﬁghting the virus. JD leverages its leading advantages in 
+supply chain and logistics through a series of eﬃcient, reliable, and innovative anti-epidemic measures to meet social needs with 
+medical resources and daily necessities. JD helps solve challenges generated by COVID-19, promote economic recovery with “new 
+infrastructure,” and protect public health and safety with care and love.
+After the outbreak, JD responded quickly and set up a steering committee to make critical decisions and overall deployment. JD also 
+immediately established a special team for epidemic prevention and control. The emergency working groups of each sub-group and 
+department implement speciﬁc tasks to ensure a quick response mechanism that is live 24/7. JD continues delivering social value in 
+anti-epidemic measures, boosting the economy, ensuring people’s livelihoods, and stabilizing employment. The Group has invested 
+more than RMB 1 billion yuan in donating of protective and medical supplies, guaranteeing the transportation capacity of special lines 
+in Hubei and people’s livelihoods in key areas, and empowering the platform partners’ businesses.
+JD donated 1.08 million facial masks and tens of thousands of medical supplies to Hubei Charity 
+Federation and Wuhan Hospital at the start of the pandemic. From January 21 to March 31, JDL 
+transported more than 70 million medical emergency supplies for free, with a total weight of more than 
+30,000 tons, and delivered more than 10,000 tons of medical emergency supplies and daily necessities 
+from all over the world to Hubei Province. In addition, JDL sent nearly 30,000 pieces of luggage from the 
+medical assistance teams in Hubei to more than 30 provinces across the country for free.
+JD Technology (JDT) has launched epidemic inquiry robots to provide the public with emergency 
+services such as online consultation, epidemic knowledge sharing, epidemic monitoring, and 
+medicine delivery. JDT developed a platform releasing emergency resource information that can 
+conduct intelligent searches and match supply-and-demand from governments, enterprises, and 
+philanthropic organizations. In addition, JD has built an “outbreak situation awareness system for high-
+risk populations” to provide technical support for epidemic prevention and control. JDT independently 
+researches and develops AI robots for indoor delivery of medical supplies during the pandemic. 
+Moreover, JDL has launched a “no-contact” delivery model for smart vehicles in multiple cities to 
+reduce pandemic exposure risks in the express transportation industry.
+Emergency 
+Assistance
+Science and 
+Technology
+
+
+12
+2020 JD.com Environmental, Social and Governance Report
+JDL provides a healthy environment for front-line service personnel and has provided more than 
+10 million facial masks and other anti-epidemic materials and insurance to front-line employees to 
+ensure a safe working environment to the greatest extent. JDT provides free “COVID-19” insurance 
+for front-line medical personnel, JD’s front-line employees and their families in the ﬁght against the 
+pandemic. The insurance value is RMB 300,000 yuan per person, and a maximum of RMB 1 million 
+yuan for family members who pass away or become disabled due to the COVID-19. So far, 105,000 
+eligible employees have received insurance for free. In addition, JDH provides free online services for 
+medical consultation and psychological counseling. During the period from January 26 to April 30, 
+2020, the platform served more than 11 million users. Moreover, JDH launched “Patients with Chronic 
+Diseases Medicine Help Platform,” which assists patients with chronic diseases.
+On February 2, JD launched multiple subsidy projects for platform merchants, which include fee 
+reductions, ﬁnancial and logistics support, traﬃc support, technical support, and health coverage, 
+and more. On February 8, JD announced an additional RMB 100 million yuan subsidy for merchants 
+using JDL warehouses. On March 4, JD announced that it would provide RMB 1.5 billion yuan 
+resources to launch the Spring Rain Plan, which integrates all platform marketing capabilities to 
+support key categories’ promotion. The Plan provides desired traﬃc to brands and merchants, 
+and facilitates the oﬄine stores to resume their businesses through JD’s omni-channel coverage. 
+Furthermore, the special policies that lower the entry requirements for merchants to operate on JD 
+platforms restarted stagnant industry chain. Through multiple policies, JD provides more low price 
+and high quality products to consumers, fully satisfying explosive post-pandemic demand, thereby 
+boosting consumer conﬁdence, and helping the entire industry chain return to the fast lane.
+Protecting 
+Public Health
+Comprehensive 
+Assistance to 
+Recovery
+
+
+13
+2020 JD.com Environmental, Social and Governance Report
+Corporate Governance
+01
+Internal Control and Compliance Management
+Information Security
+Anti-corruption
+
+
+14
+2020 JD.com Environmental, Social and Governance Report
+Internal Control and Compliance Management
+Guided by the concept of “achieving 
+success the right way,” the Group 
+complies with laws and regulations, 
+builds a culture of honesty and anti-
+Based on the three “defensive lines,” 
+the compliance system consists of ﬁve 
+perspectives to fully guarantee internal 
+control and compliance, including 
+laws and regulations compliance, anti-
+corruption compliance, information 
+security compliance, auditing 
+compliance, and transaction risk 
+control. The ﬁrst perspective is laws 
+and regulations compliance: JD strictly 
+abides by relevant laws, regulations, 
+and rules; the second perspective is 
+anti-corruption compliance: JD always 
+has zero tolerance for corruption; 
+the third perspective is information 
+security compliance: JD is committed 
+to ensuring the security of personal and 
+customer information and ensuring the 
+conﬁdentiality of JD’s information and 
+data; the fourth perspective is auditing 
+compliance: JD’s independent audit 
+and supervisory teams establish and 
+ All employees
+Risk management teams
+Independent audit and 
+supervisory teams
+The ﬁrst 
+defensive 
+line
+The second 
+defensive 
+line
+ The third 
+defensive 
+line
+Transaction 
+risk control
+Auditing 
+compliance
+ Information 
+security 
+compliance
+Anti-
+corruption 
+compliance
+Laws and 
+regulations 
+compliance
+corruption, realizes technology and data-
+driven compliance management, and 
+establishes a forward-looking, ﬂexible, 
+and eﬃcient compliance system. All 
+employees, risk management teams, 
+and independent audit and supervisory 
+teams constitute the “defensive lines” of 
+the compliance system.
+implement internal control systems 
+for the Group and its subsidiaries, and 
+conduct supervision and evaluation; 
+the ﬁfth perspective is transaction 
+risk control: each JD business unit 
+accurately identiﬁes and intelligently 
+confronts business transaction risk 
+behaviors. Through employee training, 
+accountability mechanisms, and 
+incentives, the Group ensures the 
+eﬀectiveness of the overall compliance 
+system.
+Externally, the Group is supervised by 
+the Public Security Organ, the Ministry 
+of Industry and Information Technology 
+of the People’s Republic of China, the 
+Cyberspace Administration of China, 
+the State Administration for Market 
+Regulation of the People’s Republic 
+of China, consumer associations, the 
+State Post Bureau of the People’s 
+Republic of China, and more. The 
+Group has been rigorously complying 
+with a series of Chinese laws and 
+regulations, including E-commerce 
+Law, Cybersecurity Law, the Provisions 
+on Ecological Governance of Network 
+Information Content, Advertising Law, 
+Product Quality Law, Food Safety Law, 
+Law of the People’s Republic of China 
+on the Protection of the Rights and 
+Interests of Consumers, Postal Law, and 
+Interim Regulation on Express Delivery, 
+and more. At the same time, in the 
+development of international business, 
+the Group strictly adheres to local laws 
+and regulations in the countries in 
+which it operates, establishes a legal 
+compliance system for international 
+business, and gradually improves 
+the system with the development of 
+international business.
+
+
+15
+2020 JD.com Environmental, Social and Governance Report
+Information Security
+The Group attaches great importance to information security. In 2020, the Group established its 
+Safety and Risk Control Committee, which is in charge of overall planning and decision-making 
+related to data safety and user privacy. The Information Security Department, established 
+for the Group’s cybersecurity, is responsible for executing decisions from the Safety and Risk 
+Control Committee and defending the Group’s network and system through data encryption 
+and decryption, data leakage prevention, and other technical control methods. Moreover, 
+the Information Security Department conducts comprehensive monitoring and protection of 
+system security and guards against external attacks. Information security training courses are 
+required for new employee enrollment with 100% participation.
+JD obtained the ISO27001 information security management system certiﬁcation in 2018, and 
+the ISO27701 privacy information management system certiﬁcation in 2020. With reference 
+to ISO27001 and ISO27701, JD has established a complete and mature information security 
+and privacy security management system, which constitutes 63 safety management system 
+requirements covering all related departments and suppliers, including “JD.com Data Security 
+Management Speciﬁcation,” “JD.com Supplier Security Management Practice,” “JD.com User 
+Personal Information and Important Data Security Regulation,” and more.
+JD has set up a data monitoring and auditing mechanism to implement comprehensive data 
+security control. JD strictly abides by a series of laws and regulations such as the E-Commerce 
+Law of the People’s Republic of China and Network Security Law of the People’s Republic of 
+China, and actively responds to domestic and international policy requirements. According to 
+Article 37 of the Cybersecurity Law of the People’s Republic of China, JD has formulated the “JD.
+com Data Cross-border Protection Security Management Standard,” which clariﬁes the cross-
+border data evaluation process and controls the security of data exiting the country.
+In terms of data ecosystem security, JD has formulated the “Basic Security Requirements and 
+Guidelines for JD’s Business and Data Openness,” which requires the security team to evaluate 
+the data security capabilities of businesses and partners involved in data openness. At the 
+same time, the “Regulations for the Security Development of Third-Party Services,” “Access 
+Rules and Security Speciﬁcation,” and other policies and regulations set safety requirements 
+on partners in terms of account numbers, databases, and permissions.
+Data Safety
+new employment participation 
+in information security training 
+courses
+100%
+
+
+16
+2020 JD.com Environmental, Social and Governance Report
+JD attaches great importance to user privacy and security. JD has obtained the Level 
+Three Trusted Cloud Services (TRUCS) Certiﬁcation issued by the Data Center Alliance and 
+China Academy of Information and Communications Technology (CAICT), the Ministry of 
+Industry and Information Technology (MIIT) of the People’s Republic of China, and Security 
+Information System Security Protection Level Three accreditation issued by the Ministry 
+of Public Security of the People’s Republic of China. In 2020, JD has obtained the ISO27701 
+privacy information security management system certiﬁcation.
+JD has established and improved its privacy and security management system with 
+reference to the Cybersecurity Law of the People’s Republic of China, Personal Information 
+Protection Law (Draft) of the People’s Republic of China, GB/T 35273 Information Security 
+Technology Personal Information Security Speciﬁcation of the People’s Republic of China, 
+the European Union’s General Data Protection Regulation (GDPR), ISO27701 and other 
+domestic and international standards.
+JD’s privacy and security management system includes 12 system requirements, such as the 
+“JD.com Information Security and Privacy Policy” and “JD.com Privacy Impact Assessment.” 
+JD has established a conﬁdentiality agreement for information disclosure, a privacy 
+compliance system for customer service work, customer information veriﬁcation standards, 
+and other procedures and systems, which require that employees must not copy, leak, 
+embezzle or misappropriate any customer information. To promote the implementation of 
+privacy and security requirements, the Group organized 4 enterprise-wide trainings in 2020.
+JD also respects and values the privacy protection of international users, and has 
+established a compliance mechanism to protect users’ privacy rights in accordance with 
+the requirements of local laws. For instance, in response to the EU’s GDPR requirements, 
+JD International (JDI) has carried out compliance risk assessment and rectiﬁcation work 
+on related businesses. In addition, JD has established the “JD.com User Subject Rights 
+Response Process” to identify 10 privacy rights of users in accordance with EU’s GDPR 
+requirements, clarify the speciﬁc procedures for user rights exercise, and ensure that users 
+can successfully complete complaints and applications for privacy rights.
+User Privacy
+enterprise-wide privacy security 
+trainings organized by the Group 
+in 2020
+4
+
+
+17
+2020 JD.com Environmental, Social and Governance Report
+Anti-corruption
+JD strictly adheres to Chinese laws and regulations and other applicable normative 
+documents. At the same time, as an overseas listed and internationally operated 
+company, JD also strictly abides by local national anti-corruption and anti-bribery laws 
+and other relevant regulations in other countries. JD has always upheld a “zero tolerance” 
+attitude towards corruption and has continuously improved the construction of its anti-
+corruption system. The anti-corruption system and regulations include the “JD.com 
+Business Conduct and Ethics Code,” “JD.com Anti-Corruption Regulations,” “JD.com 
+Whistleblower Protection and Reward System,” “JD.com Integrity Reward Policy (for 
+Trial Implementation),” “JD.com Active Filing Reward Policy (for Trial Implementation),” 
+“JD.com Gifts Management Regulations,” “Vendor Paid Travel and Business Dinner 
+Regulations,” “Anti-Commercial Bribery Agreement,” and more.
+For internal anti-corruption management, JD has set up a corruption reporting center 
+to comprehensively collect various types of corruption information in various ﬁelds. 
+JD will keep all information providers and all materials provided strictly conﬁdential. 
+Reporters can contact JD via phone and email (Tel: 400-601-3618; Email: jiancha@jd.com). 
+Moreover, to improve the integrity and self-discipline of employees and create a positive 
+work environment, the Group releases internal anti-corruption announcements through 
+the company’s intranet, and collectively announces multiple ongoing corruption 
+investigations and the names of employees who have engaged in misconduct. JD 
+conducts anti-corruption trainings across the entire Group, covering 225,071 employees, 
+which accounts for 96.19% of full-time employees. New employees must complete 
+the online anti-corruption training course and assessment in order to complete their 
+probation period. Everyone working in the Group receives anti-corruption trainings and 
+conducts an assessment every year. Management personnel above the director level 
+need to receive special anti-corruption trainings. In addition, JD analyzes and categorizes 
+business risks through case review, establishes an early warning and communication 
+mechanism for corruption risks, and helps business departments take the initiative in 
+prevention and internal control. Furthermore, JD’s application of big data and cloud 
+computing in anti-corruption work has achieved good results in case management, data 
+anomaly monitoring systems, and corruption case investigation.
+As for industrywide joint anti-corruption eﬀorts, JD continues to build the Sunshine 
+Integrity Alliance® (hereinafter referred to as “the Alliance”) 
+1, which initially started with 
+13 member organizations but has now exceeded 500. The Alliance initiated “Sunshine 
+Academy” on its oﬃcial website to share resources such as anti-corruption resources, 
+training courses and policies. The Alliance and the Criminal Law Research Center of 
+Renmin University of China jointly established the “Corruption Control Training Center 
+for Enterprises,” which provides free corruption control trainings to member companies. 
+The “Corruption Control Training Camp” organized by the Alliance attracted more than 40 
+representatives from 30 companies to participate.
+In terms of international anti-corruption, JD is establishing a compliance system with the 
+Foreign Corruption Practices Act (FCPA), which includes relevant systems and trainings. 
+The trainings will cover all international business staﬀ and group management personnel. 
+1 In 2017, JD initiated and established the Alliance with 13 industry leaders and the Criminal Law Research Center of Renmin University of China to jointly create a sunny and 
+transparent business environment.
+full-time employees participated 
+in anti-corruption trainings
+new employees completed online 
+anti-corruption training and 
+assessment in order to complete 
+probation
+96.19%
+100%
+
+
+18
+2020 JD.com Environmental, Social and Governance Report
+Environmental Protection
+02
+Green Operation
+Low-carbon and Green Supply Chain
+Green Lifestyle Advocacy
+
+
+19
+2020 JD.com Environmental, Social and Governance Report
+Based on its operating and business advantages, JD builds a green and low-carbon business model covering three dimensions: 
+Corporate Operations, Supply Chain, and Sustainable Consumption, to achieve green economic development and jointly build a green 
+community.
+In September 2020, China announced its goal of peaking carbon emissions in 2030 and achieving carbon neutrality in 2060. Responding 
+to China’s climate goal is JD’s responsibility and where its future opportunities lie. We will work hard to build a greener supply chain 
+with a lower carbon footprint, strive to become a leading carbon-neutral corporation, and use our inﬂuence in the supply chain to 
+radiate participation by wider range of business partners in promoting China’s goal of achieving carbon neutrality.
+Green Operation
+JD aims to lead by example through the company’s own green operations with a lower carbon footprint and greening our business 
+world.
+Through low-carbon design, green 
+procurement, energy management, 
+eﬃcient resources use and waste 
+management, as well as daily green 
+operations, JD has achieved greener 
+data center practices with a lower carbon 
+footprint. The data centers’ annual 
+average PUE is decreasing each year, 
+reaching below 1.3 by utilizing energy-
+saving technologies such as frequency 
+conversion and indirect evaporative 
+cooling, as well as reﬁned operations and 
+maintenance management. In the future, 
+the data centers will use new technology 
+that recycles residual heat derived from 
+data center operations, to provide a 
+green and clean heat source for urban 
+integrated heat supply networks. 
+Green and Low-carbon 
+Data Center
+Green and Low-carbon Targets
+JD’s Environmental Protection Strategy
+Upholding China’s 2060 Carbon Neutrality Target
+Corporate Operations
+Sustainable Consumption
+Supply Chain
+Green Low-carbon 
+Data Center
+Green 
+Procurement
+Zero Waste 
+City
+Low-carbon 
+Storage
+Sustainable 
+Lifestyle
+Trend Insights and
+ Research
+Low-carbon 
+Logistics
+Green Office
+Circular Packaging
+Green Travel
+Eco-partners
+JD actively implements the concept of 
+green procurement, comprehensively 
+considering the energy-saving and 
+environmental protection beneﬁts 
+of product design, procurement, 
+production, packaging, logistics, sales, 
+service, recycling, and reuse. The Group 
+prioritizes the procurement of raw 
+materials, products and services which 
+are environmentally friendly, energy 
+eﬀective, and can be fully utilized. We 
+ensure the eﬀective implementation of 
+the green procurement system through 
+the “Green Procurement Management 
+Regulations” and the negative list 
+system.
+Our administrative department also 
+values environmental protection and 
+energy conservation. We remind our 
+employees to save electricity, make 
+good use of paper and resources, and 
+reduce waste. We promote paperless 
+oﬃces within the company to reduce 
+paper consumption. Some of our oﬃce 
+areas have installed inductive lighting 
+to achieve smart energy conservation. 
+We take environmental factors into 
+consideration when purchasing daily 
+oﬃce supplies. For example, we 
+prioritize sourcing toilet paper products 
+from Forest Stewardship Council (FSC)-
+certiﬁed suppliers to reduce the Group’s 
+environmental impact.
+Green Procurement
+Green Oﬃce
+
+
+20
+2020 JD.com Environmental, Social and Governance Report
+We have strategically cooperated with DiDi and reduced our employees’ 
+carbon footprint through carpooling. Since 2016, there have been 196,131 
+electric vehicle rides and an accumulative mileage of 3,437,911 km from 
+employees’ daily commute according to DiDi, reducing our carbon 
+emissions by 275,032.88 kg carbon dioxide equivalent (kgCO2e).
+Green Commute
+Low-carbon and Green Supply 
+Chain
+As a supply chain-based technology and service provider, JD contributes 
+to China’s carbon neutrality goal and global climate action by building a 
+cleaner supply chain system with a lower carbon footprint.
+In October 2019, JDL announced that it would join the Science Based 
+Targets initiative (SBTi), becoming the ﬁrst Chinese logistics company 
+to commit to a science-based emissions reduction target. JDL commits 
+to reduce GHG emissions 50% by 2030 compared with 2019. On July 6, 
+2020, JDL’s Green Stream Initiative
+2 launched the ﬁrst Environmental 
+Protection Day in the logistics industry, further promoting and 
+implementing the concept of the entire green supply chain. As of 
+December 2020, the Green Stream Initiative has inﬂuenced more than 
+200,000 merchants and hundreds of millions of consumers.
+Climate Goals
+JD replaces traditional fuel-combustion trucks with new energy vehicles, 
+leading to the development of green transportation. From 2017 to 2020, 
+JDL launched new energy vehicles in more than 50 cities in seven regions 
+across China, reducing at least 120,000 tons of CO2 emissions per year. In 
+addition, JD has built and introduced more than 1,600 charging stations 
+nationwide to better support the new energy vehicles. We use big data to 
+carry out real-time optimal route planning and storage network planning 
+to reduce the number of vehicles in transit, increase the full load rate of 
+return vehicles, and optimize the eﬃciency of logistics transportation.
+Transportation
+Speciﬁc Measures
+2 The Green Stream Initiative was launched on June 5, 2017. JDL joined hands with upstream 
+and downstream partners in the supply chain (including brand owners to retailers, and retailers 
+to users)  to promote the greening of the end-to-end supply chain. On May 25, 2018, the Green 
+Stream Initiative was comprehensively upgraded, from focusing on the ﬁeld of green logistics and 
+ecological environment to the sustainable development strategy of the entire Group that includes 
+comprehensive content regarding “Environment,” “Society,” and “Economy.”
+
+
+21
+2020 JD.com Environmental, Social and Governance Report
+We realized the application of warehouse 
+rooftop solar photovoltaic (PV) systems 
+through installation in Shanghai “Asia 
+No.1” Intelligent Logistics Park, and have 
+explored more low-carbon innovative 
+solutions for warehousing. Since 2020, to 
+promote renewable and clean energy, we 
+have worked with our new energy business 
+partners to promote the construction of 
+solar PV power plants in smart industrial 
+parks nationwide.
+In 2017, JDL took the lead in deploying 
+a rooftop distributed solar PV system in 
+Shanghai “Asia No.1” Intelligent Logistics 
+Park, and it was oﬃcially connected to 
+the grid in 2018. At present, solar power 
+generation has covered the energy 
+demands of the park including warehouse 
+lighting, automatic sorting, packaging, 
+Storage
+picking and other multi-scenario 
+operations. In 2020, the power generation 
+has reached 2.538 million kWh, equivalent to 
+approximately 2,000 tons of CO2 emissions 
+reductions and saving approximately 800 
+tons of standard coal.
+In addition, JD’s automatic warehouses 
+and industrial parks nationwide are 
+expected to install a total of more than 200 
+megawatts of solar PV power plants by the 
+end of 2021, to achieve an annual power 
+generation of more than 160 million kWh 
+after completion. With JD’s Xi’an “Asia No.1” 
+Intelligent Logistics Park as a pilot site, JD 
+plans to create a rooftop solar PV power 
+generation area of more than 1.5 million 
+m
+2 in Tianjin, Hefei, and other places in the 
+future.
+As the ﬁrst logistics company in China 
+to fully implement green packaging, 
+JDL has always committed to green and 
+sustainable principles in package design 
+and use, striving to promote innovation 
+in the packaging, transportation, 
+Packaging
+and storage processes, and using 
+our inﬂuence to drive upstream and 
+downstream partners and consumers to 
+jointly promote the achievement of the 
+UN SDG 12‒Sustainable Production and 
+Consumption.
+We realized that the express and 
+delivery industry uses signiﬁcant natural 
+and social resources. Therefore, we 
+introduced multiple measures to make 
+JD’s logistics more circular and less 
+carbon-intensive: 
+ We use reusable delivery boxes to reduce the volume of 
+disposable cardboard and tape
+For fresh products, we use foldable thermal insulation 
+boxes, which reduce the amount of single-use ice bags whilst 
+replacing disposable foam boxes
+We replace disposable woven bags with reusable transfer 
+bags, and replace stretch wrap with recycled winding nets to 
+reduce the use of plastic products
+We provide circular and shared logistics solutions for the 
+industry
+Based on big data and collaboration with brand enterprises, 
+we explore new green models at the source to solve the 
+problems of disposable packaging waste by reducing 
+commodity packaging, using minimal packaging, shipping 
+in original packaging, and implementing B2B circular 
+packaging, and paperless operations
+01
+02
+03
+04
+05
+kWh of solar power generated by solar 
+PV systems in JD’s Shanghai “Asia No.1” 
+ 
+Intelligent Logistics Park in 2020
+tons of CO2 emissions reduced by 
+applying solar PV systems in JD’s 
+Shanghai “Asia No.1” Intelligent 
+Logistics Park in 2020
+2.538 million 
+2,000
+
+
+22
+2020 JD.com Environmental, Social and Governance Report
+A total reduction of
+180 million 
+disposable foam boxes
+4 
+and 600 million 
+disposable ice packs
+4
+The average utilization rate of reusable 
+transfer bags has exceeded
+98%
+which saves nearly 80 million
+ disposable plastic woven bags annually
+5
+As of the end of 2020
+3 The time scope of the data: From December 2017 to December 31, 2020.
+4 The time scope of the data: From 2015 to December 31, 2020.
+5 According to the data retrieved on December 31, 2020.
+6 The time scope of the data: From 2014 to December 31, 2020.
+7 The time scope of the data: From January 1, 2020 to December 31, 2020.
+Industry Empowerment
+accumulated uses of 
+reusable boxes
+3
+16 million
+fewer pieces of disposable 
+packaging used industry-wide
+6
+10 billion
+ fewer meters of tape used per 
+year by promoting thinner tape 
+and reusable boxes
+7
+400 million
+fewer tons of paper consumed 
+per year due to electronic 
+express sheet usage
+7
+13,219
+Industry Empowerment
+To make electricity greener, JDT researched and developed an AI-based optimized control system for thermal power 
+plants based on deep reinforcement learning technology. The system can dynamically optimize multiple core variables, 
+including dampers and valve control for coal feeding and steam systems. This system has solved the worldwide challenge 
+of optimizing the complex systems that continuously control high-dimensional variables. Moreover, the project has been 
+approved by many domestic power plants and authoritative institutions in the cities of Nanning and Langfang, creating a 
+precedent in the application of AI deep reinforcement learning technology in the ﬁeld of power station boilers.
+In December 2019, the AI-based Thermal Power Generation project was selected as an outstanding case in China Business 
+Climate Action, released during the 25th United Nations Climate Change Conference, also known as COP 25.
+In June 2020, JDT launched a smart vision network based on AI, 5G, big data, and cloud computing, which plays an 
+important role in wildﬁre identiﬁcation as well as agricultural and forest ﬁre prevention. At present, the straw burning 
+monitoring system based on the smart vision network has been piloted in the Jinan Prior Zone for Replacing Old 
+Growth Drivers with New Ones. The system oﬀers straw burning real-time monitoring, which can help prevent ﬁres. By 
+implementing 24-hour monitoring, the phenomenon of burning straw has declined in the Prior Zone.
+AI + Thermal Power Generation
+Straw Burning Cloud Monitoring System
+
+
+23
+2020 JD.com Environmental, Social and Governance Report
+Green Lifestyle Advocacy
+Consumer preferences for more sustainable lifestyles and 
+consumption are leading to changes in market demand. This is 
+driving industries to transition towards greener development 
+models, which can lead sustainable lifestyles, and to participate in 
+and promote sustainable development. In 2019, JD joined hands with 
+the World Wide Fund for Nature (WWF) to launch the Giant Panda-
+Friendly Enterprise Alliance. With the help of JD’s platform, we drive 
+upstream business partners to develop sustainable products with 
+agricultural products from panda habitats, while using trustworthy 
+products. The Internet platform provides consumers with rich, high-
+quality, and responsible consumption choices.
+As an industry leader in this new era of consumption, we strive 
+to provide more sustainable options through our own supply 
+chain, ecosystem, and brand inﬂuence, by promoting sustainable 
+consumption and a lifestyle that recycles resources, thus facilitating 
+the transition to a green and high-quality value chain. 
+JD has held more than 100 green promotional and education events, calling on hundreds of millions of consumers to participate in 
+environmental protection and public welfare. Activities include Earth Hour, Azure Earth Sustainability Week, Green Packaging Design 
+Competition, Green Packaging Forum, Waste Classiﬁcation Awareness Campaign, and the use of recycled packaging during marathons.
+Through JD Giving Platform, JD Foundation has cooperated with JDL to implement the Pre-loved Objects Donation Plan. With the 
+Green Stream Initiative and a nationwide logistics network, JDL has worked with partners to collect 10 million boxes in more than 100 
+cities. We reduced 17,500 tons of carbon emissions through box recycling. At the same time, 4 million pre-loved objects (including 
+clothes, toys, and books) are reused through JD Foundation’s Collecting Objects with Love platform.
+Consumer Advocacy
+Sustainable Consumption
+Pre-loved Objects Donation Plan
+used boxes collected in total
+10 million
+pre-loved objects (including 
+clothes, toys, and books)
+4 million
+tons of carbon emissions reductions 
+through box recycling
+17,500
+
+
+24
+2020 JD.com Environmental, Social and Governance Report
+JDL launched its box recycling project in 2016, and extended the package recycling to all categories, which includes plastic bags, plastic 
+tapes and bubble wrap, as well as boxes. In 2019 and 2020, JDL jointly initiated plastic packaging recycling with brand enterprises like 
+P&G and Coca-Cola.  
+To protect wildlife, JD has helped assert stronger regulatory pressure to eliminate the traﬃcking of endangered wildlife. With the scale 
+of our platform, JD takes actions such as regular checking, shelf cleaning, intercepting sensitive words in transit, and search blocking 
+to cut oﬀ illegal transactions of wildlife on the platform. In 2020, JD set up a task force to regulate wildlife trade and established a list 
+of more than 100 types of wildlife-related commodities. In addition, JD has produced posters to protect endangered ﬂora and fauna, 
+raising consumer awareness of wildlife protection.
+Zero Waste City
+Safeguarding Biodiversity through Sustainable Consumption
+Community Resource Recycling
+8 The time scope of the data: From 2014 to December 31, 2020.
+9 The time scope of the data: From 2019 to December 31, 2020.
+boxes have been recycled by post-
+delivery recycling since 2016
+ new boxes were saved by 
+cooperating with brand enterprises 
+to recycle and reuse box resources
+8
+plastic bottles from brand enterprises 
+were recycled
+9
+10 million
+2 billion
+100,000
+
+
+25
+2020 JD.com Environmental, Social and Governance Report
+In April 2019, the Ronghua Subdistrict Oﬃce of Beijing Economic-Technological Development Area, in cooperation with JD’s household 
+waste classiﬁcation station, launched an innovative waste classiﬁcation pilot project.
+Achievements:
+Innovative Models for Waste Classiﬁcation
+Leveraging the scale of the platform and our industry inﬂuence, JD has cooperated with tens of thousands of enterprises to establish 
+various green stream ecological alliances, jointly exploring the green packaging ecosystem and promoting sustainable consumption.
+Green Alliance
+New Energy Industry 
+Symbiotic Alliance
+JD Cloud Box Global Alliance
+Green Packaging Alliance
+China E-commerce Logistics Industry 
+Packaging Standards Alliance
+E-commerce Logistics Joint Packaging 
+Innovation Center
+households set up green credit accounts 
+in the area
+17,414
+participation rate in 19 residential 
+complexes
+94%
+cases of credits exchange
+13,804
+of food waste sorted and ﬁltered out
+26%
+self-service recycling stations
+16
+
+
+26
+2020 JD.com Environmental, Social and Governance Report
+Working Environment
+03
+Human Resource Compliance Management
+Ensuring High-quality Employment
+
+
+27
+2020 JD.com Environmental, Social and Governance Report
+JD has always been committed to providing a favorable environment for talent development. JD not only provides employees 
+with decent work while ensuring their health, rights, wages and welfare, but also creates an equal, inclusive, and diverse working 
+environment with a broader range of opportunities, thus ensuring that all JD people can work decently and happily, as well as helping 
+them achieve more fulﬁlling lives.
+Human Resource Compliance Management
+Employee Proﬁle
+Employment and Labor Standards
+In 2020, JD actively played its role as an “employment stabilizer.” According to JD’s 
+Fourth Quarter and Full Year 2020 Results, there are over 360,000 employees in both 
+listed and non-listed companies under the JD system, and the number of employees 
+(excluding part-time and interns) in the listed companies is approximately 310,000. 
+In 2020, JD hired nearly 100 thousand new employees. In addition, JD has indirectly 
+created job opportunities for 18 million people. Currently, JD’s diversiﬁed business 
+sectors have incubated more than 2,000 positions, including the front-line staﬀ that 
+provide superior services to customers, industrial elites in research and development 
+(R&D), experts in supply chain management, and procurement and salespersons 
+delivering essential supplies to the public. JD’s staﬀ structure is diversiﬁed, covering 
+employees with diﬀerent ﬁelds of expertise. 
+JD embodies the principles of fairness, impartiality, openness and selection of the best. 
+The “JD.com Employee Handbook” has clearly stipulated that JD does not treat people 
+diﬀerently under the protection of laws and regulations, regardless of ethnicity, race, 
+color, age, gender, nationality, marital status, association, as well as religion, sexual 
+orientation, sexual identity and expression, disabilities, pregnancy and political stance. 
+In our talent recruitment and retention process, we strive to encourage employees to 
+make the best use of their talents.
+JD strives to introduce people with disabilities into its overall workforce, with a 
+minimum threshold of 1.5%. The customer service center in JD Retail set up a “Sunshine 
+Angel and General Department,” speciﬁcally to recruit employees with disabilities. In 
+2020, the number of people with disabilities employed in the cities of Suqian, Chengdu 
+and Yangzhou, was 108.
+To prohibit the use of child labor and forced labor, the “JD.com Employee Handbook” 
+has strict employee admission regulations that prohibits the hiring of individuals under 
+16 years old. JD respects and safeguards the legitimate rights and interests of every 
+employee, and the “JD.com Employee Handbook” has clearly regulated the reporting 
+process and employee treatment during vacations and paid leave.
+JD organizes regular employee satisfaction surveys. The 2020 employee satisfaction 
+survey for employees in the Beijing headquarters and each subsidiary shows that 
+the employee satisfaction has reached 4.08 out of 5. The survey was mainly based on 
+questionnaires and supplemented by interviews. The main focus is feedback on related 
+services provided to employees in the workplace, such as canteen and catering, shuttle 
+buses, supporting amenities (supermarkets, gyms, etc.), security, basic facilities (air 
+conditioners, elevators, lighting), oﬃce hardware (desks and chairs), and functional 
+areas (meeting rooms, lounges, maternity rooms, etc.).
+employees in both listed and non-listed 
+companies under the JD system
+ job opportunities were indirectly 
+created by JD
+of JD’s workforce consists of 
+people with disabilities
+employees with disabilities in 
+the cities of Suqian, Yangzhou, 
+and Chengdu
+360,000+
+18 million
+1.5%
+108
+
+
+28
+2020 JD.com Environmental, Social and Governance Report
+Training and Development
+JD emphasizes the importance of nurturing diversiﬁed talents, and has established systematic training programs for employees, 
+providing a variety of talent development plans and resources.
+JD keeps improving its talent training 
+and management mechanism, which 
+now includes the “Employee Training 
+and Management System,” “Internal 
+Trainer Management System,” “Course 
+Management System,” “Training 
+Suppliers Management System,” among 
+others.
+JD established an internal exclusive 
+Software as a Service (SaaS) online 
+learning platform, which was put into 
+use from April 2019. Its training programs 
+have cumulatively been viewed more 
+than 27 million times. From 2019 to 2020, 
+JD organized more than 22,000 training 
+sessions for JD’s supporting systems 
+and business units.
+JD values the recruitment and nurturing 
+of diversiﬁed talents, providing 
+internship and management trainee 
+programs, international management 
+trainee programs for overseas senior 
+MBA candidates and holders, high-
+potential talent programs for the 
+core management groups, and senior 
+executive study tour plans. JD also 
+provides continuing education programs 
+for employees to pursue bachelor’s and 
+master’s degrees, including MBA degrees. 
+Furthermore, JD oﬀers ample learning 
+resources, including a systematic training 
+curriculum on management, leadership 
+and professional competence. 
+Employees can also participate in 
+training programs across industries, and 
+experience job rotation mechanisms and 
+benchmark studies.
+Training Programs
+Training Platforms
+Training Plans and Resources
+Ensuring High-quality Employment
+Occupational Health and Safety
+JD creates a safe working environment 
+for all employees and ensures 
+employees’ occupational health and 
+safety. At JDL, relevant management 
+regulations and monitoring systems 
+include “Quality, Environment, 
+Occupational Health and Safety 
+Monitoring and Measurement Control 
+To create a convenient and eﬀective 
+communication platform, JD has set 
+up multiple ways to receive feedback 
+from employees, including a hotline, 
+forums, email box, and oﬃcial mobile 
+app. Employees can help supervise 
+the Group’s business operations and 
+management procedures through 
+10 Signiﬁcant investment agreements: JD holds 50% or more majority control.
+feedback, reports, complaints, etc., with 
+related issues being delivered to people 
+in charge to handle. A closed loop 
+is formed by timely linking received 
+feedback to solutions, which helps us 
+hear employee concerns. As such, we 
+can protect their rights and beneﬁts, 
+and improve their satisfaction.
+At the same time, JD pays close 
+attention to human rights protection 
+within the companies that it has invested 
+in. 100% of JD’s signiﬁcant investment 
+agreements
+10 include human rights 
+clauses or underwent human rights 
+screening.
+System,” “Environment, Occupational 
+Health and Safety Operational Control 
+System,” etc. In addition, JD received 
+the Occupational Health and Safety 
+Management System certiﬁcation issued 
+by the China National Accreditation Service 
+(CNAS). 
+cumulative uses of JD’s online 
+learning platform
+27 million
+
+
+29
+2020 JD.com Environmental, Social and Governance Report
+JD has set up a comprehensive remuneration and welfare management system, including “JD.com Salary Management Regulations,” 
+“JD.com Daily Salary Increase and Employee Stock Options Management Regulations,” “JD.com Salary Adjustment Management 
+Regulations,” “JD.com Domestic and Overseas Relocation Management System,” “JD.com Attendance and Leave Management 
+System,” “JD.com Bonus Pool Management System,” “JD.com Subsidy Management Regulations,” “JD.com Retreat Fee Management 
+Regulations,” “JD.com Love Relief Fund Management System,” “JD.com Settlement Plan,” and more.
+JD respects and rewards every employee’s contributions, providing employees with a competitive remuneration system within the 
+industry and guaranteeing decent salaries. In addition to a monthly base salary, employees’ remuneration consists of performance 
+bonuses, year-end bonuses, welfare subsidies, long-term incentives, and more. JD signs labor contracts with oﬃcial employees and 
+pays ﬁve social insurance funds
+11 and one housing fund for employees in accordance with laws and regulations. In 2020, the ﬁve types 
+of social insurance and one housing fund paid by JD exceeded RMB 5 billion yuan.
+JD provides open opportunities for employees. 
+Employees can openly switch to other positions 
+within the organization by application. They can 
+also be recommended to try new opportunities. 
+JD promotes and appoints employees with good values 
+who meet 70% of qualiﬁcation requirements, especially 
+for young employees. When management positions are 
+available, the company aims to ﬁll 80% of them through 
+internal nomination of qualiﬁed employees, which 
+provides more platforms, opportunities, and resources 
+to cultivate the core management team.
+Managers attach great importance to nurturing 
+their backups from the perspectives of values, 
+competency, and potential; and inspiring employees 
+to explore their full potential. 
+For front-line employees working in sectors like 
+warehouses, express delivery and customer services, 
+JD has established a comprehensive training and 
+development system that includes the “mentor and 
+mentee” program, helping new employees to quickly ﬁt 
+in and grow.
+JD has set the principle goals of openness, and providing abundant talent programs to enable employees to accelerate career 
+development.
+Management System
+Remuneration System
+Open Opportunities
+“70% and 80%” Principle
+“Backup” Principle
+“Mentor and Mentee” Mechanism
+Talent Development Plan
+Employee Welfare
+JD believes that happiness and enthusiasm for work are the driving forces of a great company. JD provides competitive remuneration, 
+and establishes a rich, demand-responsive and experience-ﬁrst welfare system, striving to create a decent living and working 
+environment while improving employees’ well-being at work.
+11 A pension contribution plan; a medical insurance plan; an unemployment insurance plan; a work-related injury insurance plan, and a maternity insurance plan.
+
+
+30
+2020 JD.com Environmental, Social and Governance Report
+Through the comprehensive basic welfare guarantee system, Love Relief Fund and multiple health services, JD weaves a “Safety Net” 
+for all employees, eﬀectively helping them cope with the risk of diseases, emergencies and more.
+In addition to the ﬁve types of social insurance and one housing fund, JD provides delivery personnel 
+with accidental injury commercial insurance, special environmental subsidies, and abundant holiday and 
+bereavement leave. During the pandemic, JD purchased COVID-19 insurance for all front-line employees.
+JD provides regular medical check-ups and examination services for employees working in diﬀerent positions.
+JD set up the Love Relief Fund in 2010, and since then has provided ﬁnancial aid for thousands of employees 
+and their families in need. The scope of the aid covers employees or their family members suﬀering from 
+serious diseases, employees’ death or disability, educational expenses of their children, and employee 
+property protection insurance and more. From 2018 to 2020, JD provided 955 aid payments worth RMB 38.4 
+million yuan in total.
+In 2017, JD launched the Medical Insurance Fund for long-time employees of over 5 years. If existing social and 
+
+
+Question:
+What changes have taken place in JD's ESG initiatives over the past four years?
+
+A. In terms of supplier management, JD has continuously improved the standards and systems related to green procurement by establishing a negative list mechanism for green procurement suppliers. In 2022, JD initiated a questionnaire survey to evaluate suppliers' ESG (Environmental, Social, and Governance) performance. In 2023, JD issued questionnaires to suppliers with higher ESG scores, receiving 461 valid responses. From 2024 onwards, JD has incorporated ESG clauses into supplier contracts, requiring suppliers to make commitments regarding ESG-related requirements and strictly abide by the "JD Group Supplier Code of Conduct."
+B. JD strives to ensure a diverse employee demographic structure. In 2020, the total number of employees within the JD system reached 360,000, with a proportion of 1.5% being employees with disabilities. In 2021, the total number of employees surpassed 420,000, among which over 80% hailed from rural areas. By 2022, the number declined to 370,000, but the rural population proportion remained at 80%. In 2023, the cumulative number of employees exceeded 360,000, with a female employee ratio of 21%.
+C. JD has made efforts in green operations, including promoting green commuting among employees and other initiatives. Since 2016, JD has established a strategic partnership with Didi, and in 2021, it forged a cooperation with CaoCao online car-hailing platform to provide carpooling services for employees. In 2021, the company's self-operated new energy shuttle buses at its headquarters have reached 80, with an additional 37 vehicles added in 2022. In response to the pandemic, JD has provided remote work systems for its employees, with the number of online meetings surpassing 1.6 million in 2021 and soaring to nearly 3.8 million in 2022. Notably, in 2023 alone, the number of online meetings conducted through Joymeeting exceeded 18 million.
+D. In terms of social welfare, JD is dedicated to giving back to society, making contributions in various fields such as targeted poverty alleviation, green environmental protection, inclusive healthcare, caring for vulnerable groups, emergency rescue and disaster relief. In 2021, JD initiated a series of projects and established funds in the healthcare sector; in 2022, JD played a vital role in ensuring the supply of essential goods during the pandemic; and in 2023, JD donated nearly 70,000 books to over one hundred primary schools.
+
+Select the correct answer.

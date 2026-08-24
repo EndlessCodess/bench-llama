@@ -1,0 +1,137 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+The Impact of Large Language Models on Scientific Discovery:
+a Preliminary Study using GPT-4
+Microsoft Research AI4Science
+Microsoft Azure Quantum
+llm4sciencediscovery@microsoft.com
+November, 2023
+Abstract
+In recent years, groundbreaking advancements in natural language processing have culminated in the
+emergence of powerful large language models (LLMs), which have showcased remarkable capabilities across a
+vast array of domains, including the understanding, generation, and translation of natural language, and even
+tasks that extend beyond language processing. In this report, we delve into the performance of LLMs within
+the context of scientific discovery/research, focusing on GPT-4, the state-of-the-art language model. Our
+investigation spans a diverse range of scientific areas encompassing drug discovery, biology, computational
+chemistry (density functional theory (DFT) and molecular dynamics (MD)), materials design, and partial
+differential equations (PDE).
+Evaluating GPT-4 on scientific tasks is crucial for uncovering its potential across various research domains,
+validating its domain-specific expertise, accelerating scientific progress, optimizing resource allocation, guiding
+future model development, and fostering interdisciplinary research. Our exploration methodology primarily
+consists of expert-driven case assessments, which offer qualitative insights into the model’s comprehension
+of intricate scientific concepts and relationships, and occasionally benchmark testing, which quantitatively
+evaluates the model’s capacity to solve well-defined domain-specific problems.
+Our preliminary exploration indicates that GPT-4 exhibits promising potential for a variety of scientific
+applications, demonstrating its aptitude for handling complex problem-solving and knowledge integration
+tasks. We present an analysis of GPT-4’s performance in the aforementioned domains (e.g., drug discovery,
+biology, computational chemistry, materials design, etc.), emphasizing its strengths and limitations. Broadly
+speaking, we evaluate GPT-4’s knowledge base, scientific understanding, scientific numerical calculation abil-
+ities, and various scientific prediction capabilities.
+In biology and materials design, GPT-4 possesses extensive domain knowledge that can help address
+specific requirements. In other fields, like drug discovery, GPT-4 displays a strong ability to predict properties.
+However, in research areas like computational chemistry and PDE, while GPT-4 shows promise for aiding
+researchers with predictions and calculations, further efforts are required to enhance its accuracy. Despite its
+impressive capabilities, GPT-4 can be improved for quantitative calculation tasks, e.g., fine-tuning is needed
+to achieve better accuracy.1
+We hope this report serves as a valuable resource for researchers and practitioners seeking to harness the
+power of LLMs for scientific research and applications, as well as for those interested in advancing natural
+language processing for domain-specific scientific tasks. It’s important to emphasize that the field of LLMs
+and large-scale machine learning is progressing rapidly, and future generations of this technology may possess
+additional capabilities beyond those highlighted in this report. Notably, the integration of LLMs with spe-
+cialized scientific tools and models, along with the development of foundational scientific models, represent
+two promising avenues for exploration.
+1Please note that GPT-4’s capabilities can be greatly enhanced by integrating with specialized scientific tools and models, as
+demonstrated in AutoGPT and ChemCrow. However, the focus of this paper is to study the intrinsic capabilities of LLMs in
+tackling scientific tasks, and the integration of LLMs with other tools/models is largely out of our scope. We only had some brief
+discussions on this topic in the last chapter.
+1
+arXiv:2311.07361v2  [cs.CL]  8 Dec 2023
+
+
+Contents
+1
+Introduction
+4
+1.1
+Scientific areas
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.2
+Capabilities to evaluate
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.3
+Our methodologies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.4
+Our observations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.5
+Limitations of this study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2
+Drug Discovery
+9
+2.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+2.2
+Understanding key concepts in drug discovery . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.2.1
+Entity translation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.2.2
+Knowledge/information memorization . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+2.2.3
+Molecule manipulation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.4
+Macroscopic questions about drug discovery . . . . . . . . . . . . . . . . . . . . . . . .
+18
+2.3
+Drug-target binding
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.3.1
+Drug-target affinity prediction
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.3.2
+Drug-target interaction prediction
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+26
+2.4
+Molecular property prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+29
+2.5
+Retrosynthesis
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+2.5.1
+Understanding chemical reactions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+2.5.2
+Predicting retrosynthesis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+32
+2.6
+Novel molecule generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+37
+2.7
+Coding assistance for data processing . . . . . . . . . . 
+
+Question:
+According to the two articles above, which of the following statements is incorrect?
+
+A. Using the following prompt to generate a specific molecular will get a better performance on molT5 than asking GPT-4:
+"The molecule is a sulfonated xanthene dye of absorption wavelength 573 nm and emission wavelength 591 nm. It has a role as a fluorochrome."
+B. Using the following prompt to predict protein-molecule affinity will get a better performance on GPT-4 than asking molT5:
+"SMILES: COC1=NC=C(C=C1)COC2=C(C=C(C=C2)CN3C=NC4=C3N=CC(=C4)C5=NN=C(O5)C6CCNCC6)OC, FASTA: MSSWIRWHGPAMARLWGFCWLVVGFWRAAFACPTSCKCSA...TLLQNLAKASPVYLDILG. You need to calculate the binding affinity score."
+C. When given few-shot examples, GPT-4 can produce results almost comparable to existing deep learning models on the Drug-Target Affinity (DTA) task.
+D. GPT-4 demonstrates a solid understanding of key information in evolutionary biology.
+
+Select the correct answer.

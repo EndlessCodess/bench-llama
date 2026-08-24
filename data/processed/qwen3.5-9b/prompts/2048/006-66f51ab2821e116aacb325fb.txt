@@ -1,0 +1,283 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+cmake_minimum_required(VERSION 2.8)
+project(METIS)
+
+set(GKLIB_PATH "GKlib" CACHE PATH "path to GKlib")
+set(SHARED FALSE CACHE BOOL "build a shared library")
+
+if(MSVC)
+  set(METIS_INSTALL FALSE)
+else()
+  set(METIS_INSTALL TRUE)
+endif()
+
+# Configure libmetis library.
+if(SHARED)
+  set(METIS_LIBRARY_TYPE SHARED)
+else()
+  set(METIS_LIBRARY_TYPE STATIC)
+endif(SHARED)
+
+include(${GKLIB_PATH}/GKlibSystem.cmake)
+# Add include directories.
+include_directories(${GKLIB_PATH})
+include_directories(include)
+# Recursively look for CMakeLists.txt in subdirs.
+add_subdirectory("include")
+add_subdirectory("libmetis")
+add_subdirectory("programs")
+
+
+
+These are some preliminary instructions for the 5.0 release of METIS.
+
+1. You need to have a C compiler that supports the C99 standard. 
+   Gcc works just fine, but I have not tested it on many other architectures
+   (any feedback/patches for different architectures are welcomed)
+   
+2. You need to have GNU make and CMake 2.8 (http://www.cmake.org/) installed.
+
+3. Edit the file include/metis.h and specify the width (32 or 64 bits) of the
+   elementary data type used in METIS. This is controled by the IDXTYPEWIDTH
+   constant.
+
+   For now, on a 32 bit architecture you can only specify a width of 32, 
+   whereas for a 64 bit architecture you can specify a width of either 
+   32 or 64 bits.
+
+
+4. At the top of Metis' directory execute 'make' and follow the instructions.
+   
+      make
+
+5. To build on windows using Visual Studio follow the instructions in the
+   file BUILD-Windows.txt.
+
+
+
+Building METIS requires CMake 2.8, found at
+http://www.cmake.org/. CMake generates Visual Studio project files,
+which then can be built using Visual Studio. There are two ways to
+generate visual studio files: using the command line and using the
+CMake GUI.
+
+Using the command line
+----------------------
+
+Open the command prompt and cd to the METIS source directory. Run
+
+    > cmake --help
+
+and look at the list of generators for the Visual Studio studio you
+want to build for. For example, the generator for Visual Studio 2010
+is called "Visual Studio 10".
+
+After you have found the appropriate generator, run
+
+    > .\vsgen -G "<GENERATOR>"
+
+to generate the project files. The project files will be placed
+build\windows.
+
+
+Using the CMake GUI
+-------------------
+
+It is also possible to use the CMake GUI, distributed with CMake. To
+do this, open the CMake GUI, and browse to the location of METIS'
+source with the "Browse Source" button. You can also change the binary
+directory. This is where the Visual Studio project files will be
+placed. Click "Generate" to select the correct visual studio version
+and build the project files.
+
+Using the VS project files
+--------------------------
+
+The Visual Studio project will be called METIS.sln. Open it in Visual
+Studio. If the configuration is not already "Release", set it to
+"Release". Type F7 to build. The METIS library will be in
+<BINARY_DIR>\libmetis\Release and the executable programs will be in
+<BINARY_DIR>\programs\Release. (<BINARY_DIR> will be build\windows if
+you used the command line or whatever you choose if using the CMake
+GUI.)
+
+
+
+Copyright & License Notice
+---------------------------
+
+Copyright 1995-2013, Regents of the University of Minnesota
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+implied. See the License for the specific language governing 
+permissions and limitations under the License.
+
+
+
+------------------------------------------------------------------------------
+Building METIS requires CMake 2.8, found at http://www.cmake.org/, as
+well as GNU make. Assumming CMake and GNU make are installed, two
+commands should suffice to build metis:
+
+     $ make config
+     $ make
+
+
+Configuration
+-------------
+METIS is primarily configured by passing options to make config. For
+example:
+
+     $ make config shared=1 cc=gcc-4.2
+
+would configure metis to be built as a shared library using GCC 4.2.
+
+Common configuration options are:
+  cc=[compiler]   - The C compiler to use [default is determined by CMake]
+  shared=1        - Build a shared library instead of a static one 
+                    [off by default]
+  prefix=[PATH]   - Set the installation prefix [/usr/local/ by default]
+
+Advanced debugging related options:
+  gdb=1       - Build with support for GDB [off by default]
+  debug=1     - Enable debugging support [off by default]
+  assert=1    - Enable asserts [off by default]
+  assert2=1   - Enable very expensive asserts [off by default]
+
+METIS' index and real data type size can be configured by editing
+include/metis.h.
+
+
+Installation
+------------
+To install METIS, run
+
+    $ make install
+
+The default installation prefix is /usr/local. To pick an installation 
+prefix for METIS pass prefix=[path] to make config. For example,
+
+    $ make config prefix=~/myroot/
+
+will cause METIS to be installed in ~/myroot/ when make install is run.
+
+
+Other make commands
+-------------------
+   $ make uninstall 
+          Removes all files installed by 'make install'.
+   
+   $ make clean 
+          Removes all object files but retains the configuration options.
+   
+   $ make distclean 
+          Performs clean and completely removes the build directory.
+
+------------------------------------------------------------------------------
+
+
+if(METIS_INSTALL)
+  install(FILES metis.h DESTINATION include)
+endif()
+
+
+/*!
+ * \file 
+ *
+ * \brief Various routines with dealing with sparse graphs 
+ *
+ * \author George Karypis
+ * \version\verbatim $Id: graph.c 13328 2012-12-31 14:57:40Z karypis $ \endverbatim
+ */
+
+#include <GKlib.h>
+
+#define OMPMINOPS       50000
+
+/*************************************************************************/
+/*! Allocate memory for a graph and initializes it 
+    \returns the allocated graph. The various fields are set to NULL.
+*/
+/**************************************************************************/
+gk_graph_t *gk_graph_Create()
+{
+  gk_graph_t *graph;
+
+  graph = (gk_graph_t *)gk_malloc(sizeof(gk_graph_t), "gk_graph_Create: graph");
+
+  gk_graph_Init(graph);
+
+  return graph;
+}
+
+
+/*************************************************************************/
+/*! Initializes the graph.
+    \param graph is the graph to be initialized.
+*/
+/*************************************************************************/
+void gk_graph_Init(gk_graph_t *graph)
+{
+  memset(graph, 0, sizeof(gk_graph_t));
+  graph->nvtxs = -1;
+}
+
+
+/*************************************************************************/
+/*! Frees all the memory allocated for a graph.
+    \param graph is the graph to be freed.
+*/
+/*************************************************************************/
+void gk_graph_Free(gk_graph_t **graph)
+{
+  if (*graph == NULL)
+    return;
+  gk_graph_FreeContents(*graph);
+  gk_free((void **)graph, LTERM);
+}
+
+
+/*************************************************************************/
+/*! Frees only the memory allocated for the graph's different fields and
+    sets them to NULL.
+    \param graph is the graph whose contents will be freed.
+*/    
+/*************************************************************************/
+void gk_graph_FreeContents(gk_graph_t *graph)
+{
+  gk_free((void *)&graph->xadj, &graph->adjncy, 
+          &graph->iadjwgt, &graph->fadjwgt,
+          &graph->ivwgts, &graph->fvwgts,
+          &graph->ivsizes, &graph->fvsizes,
+          &graph->vlabels, 
+          LTERM);
+}
+
+
+/**************************************************************************/
+/*! Reads a sparse graph from the supplied file 
+    \param filename is the file that stores the data.
+    \param format is the graph format. The supported values are:
+           GK_GRAPH_FMT_METIS.
+    \param isfewgts is 1 if the edge-weights should be read as floats
+    \param is
+
+Question:
+In the METIS library, which function is responsible for performing the initial partitioning of a graph?
+
+A. metis_InitPartition
+B. kwayfm_PartGraph
+C. pmetis
+D. fm_RefineGraph
+
+Select the correct answer.

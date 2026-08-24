@@ -1,0 +1,175 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+artist,album,rating
+Janelle Monae,Dirty Computer,86
+Post Malone,Beerbongs & Bentleys,53
+Grouper,Grid of Points,79
+Speedy Ortiz,Twerp Verse,76
+Anne-Marie,Speak Your Mind,55
+Half Waif,Lavender,78
+Okkervil River,In The Rainbow Rain,68
+Wiley,Godfather II,60
+Forth Wanderers,Forth Wanderers,78
+Twin Shadow,Caer,65
+Dr. Dog,Critical Equation,70
+Blossoms,Cool Like You,68
+IZA,Dona de Mim,74
+DMA's,For Now,63
+Buzzy Lee,Facepaint,85
+Dylan Carlson,Conquistador,79
+ELOHIM,Elohim,67
+Sigur Ros,Route One,74
+Launder,Pink Cloud,78
+Ingested,The Level Above Human,61
+Saara Aalto,Wild Wild Wonderland,59
+Willie Nelson,Last Man Standing,77
+We Are Scientists,Megaplex,64
+Youngboy Never Broke Again,Until Death Call My Name,65
+Anemone,Baby Only You & I,90
+Stimulator Jones,Exotic Worlds and Masterful Treasures,61
+Lucinate,Big Noise,90
+Eomac,Reconnect,80
+Giraffes? Giraffes!,Memory Lame,75
+Elysia Crampton,Elysia Crampton,80
+Power Trip,Opening Fire: 2008 - 2014,86
+Acquasumarte,Vivere non si puo,80
+Shiba San,Off To Funk,76
+Steve Angello,Human,80
+Foreigner,With the 21st Century Symphony Orchestra & Chorus,50
+Sugai Ken,tele-n-tech-da,70
+Axel Boy,Hypnotism EP,77
+Florian Pellissier Quintet,Bijou Voyou Caillou,82
+Alice Glass,Alice Glass (Remixes),51
+Blitzkrieg,Judge Not!,40
+Sibille Attar,Paloma's Hand,70
+Kat Edmonson,Old Fashioned Gal,60
+Riot V,Armor of Light,68
+Poo Bear,Poo Bear Presents: Bearthday Music,58
+The Erised,One Hundred,80
+My Brightest Diamond,Champagne,66
+Homewrecker,Hell Is Here Now,70
+Godsmack,When Legends Rise,70
+Kid Koala,Floor Kids (Original Video Game Soundtrack),65
+Deadbeat,Wax Poetic For This Our Great Resolve,80
+Luton,Black Box Animals,80
+Steven Julien,Bloodline,76
+Quiet As A Mouse,Is it Funny When it Hurts?,80
+KAZKA,KARMA,75
+Adam Stafford,Fire Behind The Curtain,90
+Nick Cave & Warren Ellis,Kings OST,0
+Through & Through,Homebody,0
+The Parkinsons,The Shape Of Nothing To Come,0
+Liz Brasher,Outcast,0
+Myth Syzer,Bisous,0
+Totalselfhatred,Solitude,80
+VARSITY,Parallel Person,85
+LLNN,Deads,0
+Spielbergs,Distant Star,90
+PBSR,...and Dusky Doors,0
+Dark Sarah,The Golden Moth,0
+Kell Smith,Girassol,0
+The Beat Escape,Life Is Short The Answer's Long,80
+Javiera Mena,Espejo,0
+Clara Luzia,When I Take Your Hand,0
+Keith Urban,Graffiti U,55
+Tony Njoku,H.P.A.C.,60
+Emily Ritz,Pattern Recess,60
+Sing Leaf,Shu Ra,60
+Elena Temnikova,TEMNIKOVA III: Ne modnye,0
+Ilan Bluestone,Scars,0
+God Is An Astronaut,Epitaph,70
+Van Morrison & Joey DeFrancesco,You're Driving Me Crazy,77
+Boosie Badazz,Boonk Gang,0
+Paul White,Rejuvenate,70
+Mefjus,Manifest,0
+Midas Fall,Evaporate,70
+Nadia Struiwigh,WHRRu,70
+Zhu,Ringos Desert Pt. 1,66
+Autechre,NTS Session 4,84
+Autechre,NTS Sessions 1-4,92
+Vansire,Angel Youth,0
+Alexandra Stan,Mami,62
+Persiano,Pessoas Reais Disponiveis para Conversar,74
+Ugly God,Just A Lil Something Before The Album...,28
+Donato Dozzy,Mindless Fullness,84
+DJ Bone,A Piece of Beyond,71
+TACONAFIDE,025 mg,0
+Punnany Massif,PMXV,0
+Delroy Edwards,Aftershock,0
+Ulrika Spacek,Suggestive Listening,75
+AIGEL,Muzyka,73
+Jamie Stewart,An Aggressive Chain Smoking Alcoholic,70
+Girls Names,Primitive Desire,50
+Neil Young,Roxy: Tonight's the Night Live,83
+Robert Gorl,The Paris Tapes,70
+Spacemen 3,Taking Drugs To Make Music To Take Drugs To,0
+Jah Wobble & MoMo Project,Maghrebi Jazz,70
+Say Sue Me,It's Just A Short Walk!,0
+Peach Kelli Pop,Which Witch,80
+Mac DeMarco,Old Dog Demos,0
+David Bowie,Welcome to the Blackout (Live London '78),0
+The National,Boxer (Live in Brussels),60
+J. Cole,KOD,70
+Kimbra,Primal Heart,73
+Sleep,The Sciences,84
+A Perfect Circle,Eat the Elephant,62
+Bishop Briggs,Church of Scars,77
+Lord Huron,Vide Noir,72
+Drinks,Hippo Lite,67
+Post Animal,When I Think of You In a Castle,79
+The Chainsmokers,Sick Boy,48
+Sting & Shaggy,44/876,50
+Foliage,III,71
+Alexis Taylor,Beautiful Thing,69
+Del the Funky Homosapien & Amp Live,Gate 13,78
+Exitmusic,The Recognitions,75
+Tess Roby,Beacon,70
+Hearts Hearts,Goods / Gods,80
+The Longshot,Love Is for Losers,80
+Ricky Eat Acid,Am I Happy Singing,79
+John Moods,The Essential John Moods,78
+Thievery Corporation,Treasures from the Temple,73
+Smoke DZA,Not for Sale,76
+Sweet Valley,Eternal Champ II,36
+C. Tangana,Avida Dollars,29
+Ashley Monroe,Sparrow,83
+Cloud Castle Lake,Malingerer,65
+Ivar Bjornson & Einar Selvik,Hugsja,84
+October,Ultra Red,64
+LE1F,Blue Dream,66
+Jaala,Joonya Spirit,68
+Perel,Hermetica,75
+Zoe,Aztlan,83
+Charmer,Charmer,65
+Melvins,Pinkus Abortion Technician,64
+Bones & Cat Soup,Augmented,43
+Die Nerven,Fake,79
+Denmark Vessey,Sun Go Nova,64
+Old Crow Medicine Show,Volunteer,76
+Samantha Jade,Best of My Love,67
+The New Tigers,Do Xao,73
+Bessie Turner,22:22,72
+Wiegedood,De Doden Hebben Het Goed III,82
+Gabriel Flag,Murder Class,88
+My Indigo,My Indigo,58
+Gang of Four,Complicit,57
+TesseracT,Sonder,58
+Mark Peters,Innerland,70
+Ras G & The Afrikan Space Program,Stargate Music,73
+Lume,Wrung Out,58
+Small Talk,Aquarium,64
+Faces on TV,Night Funeral,64
+Mallory Run,Spin,60
+Flirtini,Heartbreaks & Promises Vol. 4,75
+Limboski,Poli
+
+Question:
+Which album has the lowest rating among all the albums released by its artist, and the artist has at least one other album with a rating higher than 80?
+
+A. Money Changes Everything
+B. Back in the Jazz Coffin
+C. Road Trips Vol. 4 No. 5: Boston Music Hall June 9 1976
+D. He Chuang
+
+Select the correct answer.

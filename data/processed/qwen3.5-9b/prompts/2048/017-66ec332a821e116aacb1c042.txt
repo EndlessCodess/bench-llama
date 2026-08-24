@@ -1,0 +1,186 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+DERIVATIVE SECURITIES, OR 
+ more  
+simply 
+derivatives, play a large and increasingly 
+important role in financial markets. These are 
+securities whose prices are determined by, 
+or “derive from,” the prices of other securi-
+ties. These assets are also called  
+contingent 
+claims because their payoffs are contingent 
+on the prices of other securities. Options and 
+futures contracts are both derivative securi-
+ties. We will see that their payoffs depend on 
+the value of other securities. Swaps, which we 
+will discuss in Chapter 23, also are derivatives. 
+Because the value of derivatives depends 
+on the value of other securities, they can be 
+powerful tools for both hedging and specula-
+tion. We will investigate these applications in 
+the next four chapters, starting in this chapter 
+with options. 
+ 
+Trading of standardized options contracts 
+on a national exchange started in 1973 when 
+the Chicago Board Options Exchange (CBOE) 
+began listing call options. These contracts 
+were almost immediately a great success, 
+crowding out the previously existing over-the-
+counter trading in stock options. Option con-
+tracts are traded now on several exchanges. 
+They are written on common stock, stock 
+indexes, foreign exchange, agricultural com-
+modities, precious metals, and interest rate 
+futures. In addition, the over-the-counter 
+market has enjoyed a tremendous resurgence 
+in recent years as trading in custom-tailored 
+options has exploded. Popular and potent 
+tools in modifying portfolio characteristics, 
+options have become essential tools a portfo-
+lio manager must understand. 
+ 
+This chapter is an introduction to options 
+markets. It explains how puts and calls work 
+and examines their investment characteris-
+tics. Popular option strategies are considered 
+next. Finally, we examine a range of securities 
+with embedded options such as callable or 
+convertible bonds, and we take a quick look 
+at some so-called exotic options. 
+ 
+ 
+20
+ 
+Options Markets: 
+Introduction 0
+ 
+PART VI 
+ 
+CHAPTER TWENTY 
+
+
+668 
+P A R T  V I  Options, Futures, and Other Derivatives
+ 20.1 The Option Contract 
+ 
+Example 20.1 
+ 
+ 
+Profits and Losses on a Call Option 
+ 
+Consider the January 2010 expiration call option on a share of IBM with an exercise price 
+of $130 that was selling on December 2, 2009, for $2.18. Exchange-traded options expire 
+on the third Friday of the expiration month, which for this option was January 15, 2010. 
+Until the expiration date, the purchaser of the calls may buy shares of IBM for $130. On 
+December 2, IBM sells for $127.21. Because the stock price is currently less than $130 a 
+share, exercising the option to buy at $130 clearly would make no sense at that moment. 
+Indeed, if IBM remains below $130 by the expiration date, the call will be left to expire 
+worthless. On the other hand, if IBM is selling above $130 at expiration, the call holder 
+will find it optimal to exercise. For example, if IBM sells for $132 on January 15, the 
+option will be exercised, as it will give its holder the right to pay $130 for a stock worth 
+$132. The value of the option on the expiration date would then be
+ 
+Value at expiration 5 Stock price 2 Exercise price 5 $132 2 $130 5 $2 
+Despite the $2 payoff at expiration, the call holder still realizes a loss of $.18 on the invest-
+ment because the initial purchase price was $2.18:
+ 
+Profit 5 Final value 2 Original investment 5 $2.00 2 $2.18 5 2$.18 
+ 
+A  
+call option 
+ gives its holder the right to purchase an asset for a specified price, called 
+the  
+exercise, 
+ or  
+ 
+strike, price, 
+ on or before some specified expiration date. For example, a 
+January call option on IBM stock with exercise price $130 entitles its owner to purchase 
+IBM stock for a price of $130 at any time up to and including the expiration date in January. 
+The holder of the call is not required to exercise the option. The holder will choose to exer-
+cise only if the market value of the underlying asset exceeds the exercise price. In that case, 
+the option holder may “call away” the asset for the exercise price. Otherwise, the option 
+may be left unexercised. If it is not exercised before the expiration date of the contract, a 
+call option simply expires and no longer has value. Therefore, if the stock price is greater 
+than the exercise price on the expiration date, the value of the call option equals the differ-
+ence between the stock price and the exercise price; but if the stock price is less than the 
+exercise price at expiration, the call will be worthless. The  
+net profit on the call is the value 
+of the option minus the price originally paid to purchase it. 
+ 
+The purchase price of the option is called the  
+ 
+premium. 
+ It represents the compensation 
+the purchaser of the call must pay for the right to exercise the option if exercise becomes 
+profitable. 
+ 
+Sellers of call options, who are said to  
+write calls, receive premium income now as pay-
+ment against the possibility they will be required at some later date to deliver the asset in 
+return for an exercise price less than the market value of the asset. If the option is left to 
+expire worthless, however, then the writer of the call clears a profit equal to the premium 
+income derived from the initial sale of the option. But if the call is exercised, the profit to 
+the option writer is the premium income derived when the option was initially sold minus 
+the difference between the value of the stock that must be delivered and the exercise price 
+that is paid for those shares. If that difference is larger than the initial premium, the writer 
+will incur a loss. 
+
+
+ 
+C H A P T E R  2 0  Options Markets: Introduction 
+669
+Nevertheless, exercise of the call is optimal at expiration if the stock price exceeds the 
+exercise price because the exercise proceeds will offset at least part of the cost of the 
+option. The investor in the call will clear a profit if IBM is selling above $132.18 at 
+the expiration date. At that stock price, the proceeds from exercise will just cover the origi-
+nal cost of the call. 
+ 
+Example 20.2 
+ 
+ 
+Profits and Losses on a Put Option 
+ 
+Now consider the January 2010 expiration put option on IBM with an exercise price of 
+$130, selling on December 2, 2009, for $4.79. It entitled its owner to sell a share of IBM for 
+$130 at any time until January 15. If the holder of the put buys a share of IBM and imme-
+diately exercises the right to sell at $130, net proceeds will be $130  
+2 $127.21  
+5 $2.79. 
+Obviously, an investor who pays $4.79 for the put has no intention of exercising it imme-
+diately. If, on the other hand, IBM sells for $123 at expiration, the put turns out to be a 
+profitable investment. Its value at expiration would be
+ 
+Value at expiration 5 Exercise price 2 Stock price 5 $130 2 $123 5 $7 
+and the investor’s profit would be $7.00  
+2 $4.79  
+5 $2.21. This is a holding period return 
+of $2.21/$4.79  
+5 .461, or 46.1%—over only 44 days! Apparently, put option sellers on 
+December 2 (who were on the other side of the transaction) did not consider this outcome 
+very likely. 
+ 
+A  
+put option 
+ gives its holder the right to  
+sell an asset for a specified exercise or strike 
+price on or before some expiration date. A January expiration put on IBM with exercise 
+price $130 entitles its owner to sell IBM stock to the put writer at a price of $130 at any 
+time before expiration in January even if the market price of IBM is less than $130. While 
+profits on call options increase when the asset  
+increases in value, profits on put options 
+increase when the asset value  
+falls. A put 
+
+Question:
+XYZ Corp. will pay a $2 per share dividend in two months. Its stock price currently is $90 per share. A call option on XYZ has an exercise price of $85 and 3-month time to expiration. The risk-free interest rate is 0.6% per month, and the stock’s volatility (standard deviation) = 24% per month. Find the Black-Scholes value of the option (Round your answer to 2 decimal places).
+
+A. 5.47
+B. 6.76
+C. 8.62
+D. 9.20
+
+Select the correct answer.
