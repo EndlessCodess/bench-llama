@@ -6,25 +6,70 @@
         "CUDA_VISIBLE_DEVICES": "{device_index}"
       },
       "backend_device": "CUDA0",
-      "memory_monitor": "nvml"
+      "memory_monitor": "nvml",
+      "graph_execution": {
+        "supported": true,
+        "build_option": "GGML_CUDA_GRAPHS=ON",
+        "default": "on",
+        "disable_environment": "GGML_CUDA_DISABLE_GRAPHS=1"
+      }
     },
     "cann": {
       "environment": {
         "ASCEND_RT_VISIBLE_DEVICES": "{device_index}"
       },
       "backend_device": "CANN0",
-      "memory_monitor": "none"
+      "memory_monitor": "none",
+      "graph_execution": {
+        "supported": "soc-dependent",
+        "build_option": "USE_ACL_GRAPH=ON",
+        "default": "on-if-compiled",
+        "disable_environment": "GGML_CANN_ACL_GRAPH=off"
+      }
+    },
+    "cann_910b": {
+      "environment": {
+        "ASCEND_RT_VISIBLE_DEVICES": "{device_index}"
+      },
+      "backend_device": "CANN0",
+      "memory_monitor": "none",
+      "graph_execution": {
+        "supported": true,
+        "build_option": "USE_ACL_GRAPH=ON",
+        "default": "on",
+        "disable_environment": "GGML_CANN_ACL_GRAPH=off"
+      }
+    },
+    "cann_310p": {
+      "environment": {
+        "ASCEND_RT_VISIBLE_DEVICES": "{device_index}"
+      },
+      "backend_device": "CANN0",
+      "memory_monitor": "none",
+      "graph_execution": {
+        "supported": false,
+        "build_option": "USE_ACL_GRAPH=OFF",
+        "default": "unsupported"
+      }
     },
     "metal": {
       "environment": {},
       "backend_device": "Metal",
-      "memory_monitor": "none"
+      "memory_monitor": "none",
+      "graph_execution": {
+        "supported": false,
+        "default": "unsupported"
+      }
     },
     "cpu": {
       "environment": {},
       "backend_device": "CPU",
       "n_gpu_layers": 0,
-      "memory_monitor": "none"
+      "memory_monitor": "none",
+      "graph_execution": {
+        "supported": false,
+        "default": "unsupported"
+      }
     }
   }
 }

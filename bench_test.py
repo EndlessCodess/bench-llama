@@ -105,6 +105,8 @@ RUN_FIELDS = [
     "device_memory_baseline_mib_measured",
     "peak_device_memory_mib_measured",
     "device_memory_delta_mib_measured",
+    "peak_gpu_utilization_pct_measured",
+    "average_gpu_utilization_pct_measured",
     "returncode",
     "timed_out",
     "monitor_error",
@@ -133,6 +135,8 @@ SUMMARY_FIELDS = [
     "端到端耗时(s)/E2E(s)",
     "吞吐率(token/s)/Throughput(token/s)",
     "峰值显存(GB)/Peak Memory(GB)",
+    "GPU计算单元峰值利用率(%)/Peak GPU Compute Utilization(%)",
+    "GPU计算单元平均利用率(%)/Average GPU Compute Utilization(%)",
 ]
 
 
@@ -165,6 +169,12 @@ class NvmlMemoryReader:
             ("used", ctypes.c_ulonglong),
         ]
 
+    class Utilization(ctypes.Structure):
+        _fields_ = [
+            ("gpu", ctypes.c_uint),
+            ("memory", ctypes.c_uint),
+        ]
+
     def __init__(self, device_index):
         lib_name = ctypes.util.find_library("nvidia-ml") or "libnvidia-ml.so.1"
         self.lib = ctypes.CDLL(lib_name)
@@ -173,6 +183,8 @@ class NvmlMemoryReader:
         self.lib.nvmlDeviceGetHandleByIndex_v2.restype = ctypes.c_int
         self.lib.nvmlDeviceGetMemoryInfo.argtypes = [ctypes.c_void_p, ctypes.POINTER(self.Memory)]
         self.lib.nvmlDeviceGetMemoryInfo.restype = ctypes.c_int
+        self.lib.nvmlDeviceGetUtilizationRates.argtypes = [ctypes.c_void_p, ctypes.POINTER(self.Utilization)]
+        self.lib.nvmlDeviceGetUtilizationRates.restype = ctypes.c_int
         self.lib.nvmlShutdown.restype = ctypes.c_int
 
         self._check(self.lib.nvmlInit_v2(), "nvmlInit_v2")
@@ -191,6 +203,14 @@ class NvmlMemoryReader:
         memory = self.Memory()
         self._check(self.lib.nvmlDeviceGetMemoryInfo(self.handle, ctypes.byref(memory)), "nvmlDeviceGetMemoryInfo")
         return memory.used / (1024.0 * 1024.0)
+
+    def read_gpu_utilization_pct(self):
+        utilization = self.Utilization()
+        self._check(
+            self.lib.nvmlDeviceGetUtilizationRates(self.handle, ctypes.byref(utilization)),
+            "nvmlDeviceGetUtilizationRates",
+        )
+        return float(utilization.gpu)
 
     def close(self):
         self.lib.nvmlShutdown()
@@ -212,6 +232,9 @@ class ProcessMonitor:
         self.device_index = device_index
         self.peak_rss_mib = 0.0
         self.peak_device_mib = 0.0
+        self.peak_gpu_utilization_pct = None
+        self.gpu_utilization_sum_pct = 0.0
+        self.gpu_utilization_samples = 0
         self.error = ""
         self._stop = threading.Event()
         self._thread = threading.Thread(target=self._run, daemon=True)
@@ -229,6 +252,9 @@ class ProcessMonitor:
         main thread right after this, before the run starts decoding)."""
         self.peak_rss_mib = 0.0
         self.peak_device_mib = 0.0
+        self.peak_gpu_utilization_pct = None
+        self.gpu_utilization_sum_pct = 0.0
+        self.gpu_utilization_samples = 0
 
     def _read_rss_mib(self):
         status_path = Path("/proc") / str(self.proc.pid) / "status"
@@ -255,6 +281,11 @@ class ProcessMonitor:
             return read_memory_command(self.memory_command, self.device_index)
         return 0.0
 
+    def _read_gpu_utilization_pct(self):
+        if self.memory_reader is not None and hasattr(self.memory_reader, "read_gpu_utilization_pct"):
+            return self.memory_reader.read_gpu_utilization_pct()
+        return None
+
     def read_device_mib_now(self):
         """Baseline read from the main thread (used at run_start)."""
         return self._read_device_mib()
@@ -262,6 +293,19 @@ class ProcessMonitor:
     def _sample(self):
         self.peak_rss_mib = max(self.peak_rss_mib, self._read_rss_mib())
         self.peak_device_mib = max(self.peak_device_mib, self._read_device_mib())
+        utilization = self._read_gpu_utilization_pct()
+        if utilization is not None:
+            if self.peak_gpu_utilization_pct is None:
+                self.peak_gpu_utilization_pct = utilization
+            else:
+                self.peak_gpu_utilization_pct = max(self.peak_gpu_utilization_pct, utilization)
+            self.gpu_utilization_sum_pct += utilization
+            self.gpu_utilization_samples += 1
+
+    def average_gpu_utilization_pct(self):
+        if self.gpu_utilization_samples == 0:
+            return None
+        return self.gpu_utilization_sum_pct / self.gpu_utilization_samples
 
     def _run(self):
         try:
@@ -744,6 +788,8 @@ def new_run_record(args, case_id, case, phase, phase_run, round_num, selection, 
         "device_memory_baseline_mib_measured": None,
         "peak_device_memory_mib_measured": None,
         "device_memory_delta_mib_measured": None,
+        "peak_gpu_utilization_pct_measured": None,
+        "average_gpu_utilization_pct_measured": None,
         "returncode": None,
         "timed_out": False,
         "monitor_error": "",
@@ -936,6 +982,12 @@ def run_session(
                     max(0.0, monitor.peak_device_mib - baseline_mib)
                     if device_monitor_enabled and baseline_mib is not None else None
                 )
+                record["peak_gpu_utilization_pct_measured"] = (
+                    monitor.peak_gpu_utilization_pct if device_monitor_enabled else None
+                )
+                record["average_gpu_utilization_pct_measured"] = (
+                    monitor.average_gpu_utilization_pct() if device_monitor_enabled else None
+                )
                 record["monitor_error"] = monitor.error
                 records.append(record)
 
@@ -1014,6 +1066,8 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
         "peak_process_rss_mib_measured",
         "peak_device_memory_mib_measured",
         "device_memory_delta_mib_measured",
+        "peak_gpu_utilization_pct_measured",
+        "average_gpu_utilization_pct_measured",
     ):
         metrics[field] = metric_summary(ok_records, field)
 
@@ -1045,6 +1099,13 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
     summary["吞吐率(token/s)/Throughput(token/s)"] = rounded(metrics.get("throughput_tok_s_est"))
     summary["峰值显存(GB)/Peak Memory(GB)"] = (
         None if not peak else round(peak["max"] / 1024.0, 2)
+    )
+    peak_gpu_utilization = metrics.get("peak_gpu_utilization_pct_measured")
+    summary["GPU计算单元峰值利用率(%)/Peak GPU Compute Utilization(%)"] = (
+        None if not peak_gpu_utilization else round(peak_gpu_utilization["max"], 2)
+    )
+    summary["GPU计算单元平均利用率(%)/Average GPU Compute Utilization(%)"] = rounded(
+        metrics.get("average_gpu_utilization_pct_measured")
     )
     return summary
 
@@ -1238,6 +1299,8 @@ def main():
             "throughput_tok_s_est": "end-to-end throughput estimate: output tokens requested divided by Python wall time; differs from generation_tps_measured which covers the generation phase only",
             "peak_device_memory_mib_measured": "whole physical device usage sampled per run window (peaks reset at each run_start), not process-specific; reported as 峰值显存(GB)/Peak Memory(GB) using the maximum",
             "device_memory_delta_mib_measured": "per-run window peak minus the baseline read at run_start (after the KV clear), so it reflects one run's KV plus compute buffers",
+            "peak_gpu_utilization_pct_measured": "maximum NVML GPU compute utilization sample in each run window; the summary reports the maximum across formal runs",
+            "average_gpu_utilization_pct_measured": "arithmetic mean of NVML GPU compute utilization samples in each run window; the summary reports the mean across formal runs",
             "prompt_tps_measured": "prompt tokens per second during prefill, measured inside bench_run",
             "generation_tps_measured": "generated tokens per second during the generation phase, measured inside bench_run",
             "derived_fields": "fields ending in _est are estimates derived from measured values",

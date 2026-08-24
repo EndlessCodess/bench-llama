@@ -111,7 +111,7 @@ results/<时间戳>-lc-001-028-v1-cuda-device4/
 6. 失败排查顺序：`session.stdout.log` 里 error/warn 事件 → `session.stderr.log` → `session.command.txt` 核对参数。
 7. 结果目录想固定名字：`--output-dir <路径>`（默认按时间戳自动建）。
 
-## 5. 测试矩阵速览（28 case）
+## 5. 测试矩阵速览（32 case）
 
 | 组  | 变量           | case                                 | 模型          | 关键参数                                            |
 | --- | -------------- | ------------------------------------ | ------------- | --------------------------------------------------- |
@@ -120,3 +120,48 @@ results/<时间戳>-lc-001-028-v1-cuda-device4/
 | 2   | KV 精度        | LC-013..016 q8_0、LC-017..020 q4_0   | f16           | type-k/v 覆盖                                       |
 | 3   | FlashAttention | LC-021..024 关 FA                    | q8_0          | `--flash-attn off`（FA-off 的 KQ 矩阵固定 ~8.6GiB） |
 | 4   | polling        | LC-025..028 poll=0                   | f16           | `--poll 0`                                          |
+| 5   | Graph execution | LC-029..032 graph off               | f16           | 关闭平台图执行，其他参数同 LC-001..004               |
+
+只补测 CUDA Graph 关闭组：
+
+```bash
+CUDA_VISIBLE_DEVICES=6 python3 run_suite.py --bench-run build/bench_run \
+  --model f16=/data1/xuyang/models/Qwen3.5-9B-GGUF/Qwen3.5-9B-F16.gguf \
+  --suite configs/lc-001-032-suite.json --job graph-off \
+  --platform cuda --device-index 6
+```
+
+图执行平台口径：
+
+| 平台 | 基线构建 | 默认运行 | LC-029..032 |
+| --- | --- | --- | --- |
+| CUDA | `-DGGML_CUDA_GRAPHS=ON` | 开启 | `GGML_CUDA_DISABLE_GRAPHS=1` |
+| 910B | `-DUSE_ACL_GRAPH=ON` | 开启 | `GGML_CANN_ACL_GRAPH=off` |
+| 310P | `-DUSE_ACL_GRAPH=OFF` | 不支持 | 不适用，不运行 |
+
+910B 补测时使用 `--platform cann_910b`。310P 使用 `--platform cann_310p` 和通用的 `lc-001-028-suite.json`，不包含 LC-029..032。
+
+910B 机器上先构建开启 ACL Graph 的 llama.cpp 和对应的 `bench_run`：
+
+```bash
+cmake -S /path/to/llama.cpp -B /path/to/llama.cpp/build-cann-910b \
+  -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON \
+  -DGGML_CANN=ON -DUSE_ACL_GRAPH=ON
+cmake --build /path/to/llama.cpp/build-cann-910b -j
+
+cmake -S . -B build-cann-910b -DCMAKE_BUILD_TYPE=Release \
+  -DLLAMA_CPP_ROOT=/path/to/llama.cpp \
+  -DLLAMA_CPP_BUILD=/path/to/llama.cpp/build-cann-910b
+cmake --build build-cann-910b -j
+```
+
+先使用一个 case 冒烟验证：
+
+```bash
+python3 run_suite.py --bench-run build-cann-910b/bench_run \
+  --model f16=/path/to/Qwen3.5-9B-F16.gguf \
+  --suite configs/lc-001-032-suite.json --job fair-baseline \
+  --platform cann_910b --device-index 0 --smoke
+```
+
+冒烟通过后去掉 `--smoke` 即可按套件配置正式测试。

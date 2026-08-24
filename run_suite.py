@@ -3,8 +3,7 @@
 #
 # run_suite.py —— 套件调度器（benchmark 三层结构的顶层）
 # =============================================================================
-# 职责：把一份"套件配置"（configs/lc-001-028-suite.json）翻译成一组
-#       bench_test.py 子任务，串行执行，最后汇总为一份 28 行的总表。
+# 职责：把一份套件配置翻译成一组 bench_test.py 子任务，串行执行并汇总。
 #
 # 三层调用链（自上而下）：
 #   run_suite.py  ──每个 job（如 fair-baseline）调用一次──▶  bench_test.py
@@ -55,7 +54,7 @@ def parse_args():
     parser.add_argument("--model", action="append", default=[], metavar="KEY=PATH")  # 模型映射，如 f16=/path/F16.gguf；KEY 必须覆盖套件用到的全部 model_key
     parser.add_argument("--job", action="append", default=[], help="job id or comma-separated job ids")  # 只跑指定 job（可重复/逗号分隔）
     parser.add_argument("--group", action="append", default=[], metavar="N",
-                        help="worksheet category: 0=fair baseline, 1=weight quantization, 2=KV cache precision, 3=attention backend, 4=polling; repeatable or comma-separated")  # 只跑指定实验类别（工作表分组：0=公平基线 1=权重量化 2=KV 精度 3=注意力后端 4=轮询）
+                        help="worksheet category: 0=fair baseline, 1=weight quantization, 2=KV cache precision, 3=attention backend, 4=polling, 5=backend graph execution; repeatable or comma-separated")  # 只跑指定实验类别
     parser.add_argument("--platform", default="auto")  # 平台档案名（cuda/cann/metal/cpu），auto 自动检测
     parser.add_argument("--platform-config", default=str(PROJECT_ROOT / "configs" / "platforms.json"))  # 平台档案文件
     parser.add_argument("--processed-dir", default=str(PROJECT_ROOT / "data" / "processed" / "qwen3.5-9b"))  # 预处理数据目录（prompts、manifest 等）
@@ -156,6 +155,19 @@ def load_suite(path, selected_ids, selected_groups):
         config = json.loads(config_path.read_text(encoding="utf-8"))
         if config.get("schema_version") != 1 or not config.get("cases"):
             raise ValueError("invalid benchmark config: {}".format(config_path))
+        for field in ("environment",):
+            if not isinstance(item.get(field, {}), dict):
+                raise ValueError("job {} {} must be an object".format(job_id, field))
+        if not isinstance(item.get("environment_by_platform", {}), dict):
+            raise ValueError("job {} environment_by_platform must be an object".format(job_id))
+        for environment in [item.get("environment", {}), *item.get("environment_by_platform", {}).values()]:
+            if not isinstance(environment, dict):
+                raise ValueError("job {} platform environment must be an object".format(job_id))
+            for key, value in environment.items():
+                if not key or not isinstance(value, str):
+                    raise ValueError("job {} environment must contain non-empty string values".format(job_id))
+        if not isinstance(item.get("unsupported_platforms", []), list):
+            raise ValueError("job {} unsupported_platforms must be an array".format(job_id))
         declared_model_key = config.get("experiment", {}).get("model_key")
         if declared_model_key and declared_model_key != item.get("model_key"):
             raise ValueError("model key mismatch between suite and {}".format(config_path))
@@ -180,6 +192,20 @@ def job_label(job):
     """job 的展示名，如 'g0/fair-baseline'（组号/作业名）。"""
     group = job.get("group")
     return "g{}/{}".format(group, job["id"]) if group is not None else job["id"]
+
+
+def resolve_job_environment(job, platform):
+    if platform in job.get("unsupported_platforms", []):
+        raise ValueError("job {} is not supported on platform {}".format(job["id"], platform))
+    environment = dict(job.get("environment", {}))
+    by_platform = job.get("environment_by_platform", {})
+    if by_platform:
+        if platform == "auto":
+            raise ValueError("job {} requires an explicit --platform".format(job["id"]))
+        if platform not in by_platform:
+            raise ValueError("job {} has no environment mapping for platform {}".format(job["id"], platform))
+        environment.update(by_platform[platform])
+    return environment
 
 
 def append_common_args(command, args):
@@ -252,6 +278,7 @@ def main():
     bench_script = PROJECT_ROOT / "bench_test.py"
     base_commands = []
     for job in jobs:
+        job = {**job, "resolved_environment": resolve_job_environment(job, args.platform)}
         command = [
             sys.executable,
             str(bench_script),
@@ -260,6 +287,8 @@ def main():
             "--config", str(job["config_path"]),
         ]
         append_common_args(command, args)
+        for key, value in job["resolved_environment"].items():
+            command.extend(["--env", "{}={}".format(key, value)])
         base_commands.append((job, command))
 
     # ④ --dry-run：每个 job 只校验一条代表性命令（0 预热 + 1 正式），不启动推理
@@ -321,6 +350,7 @@ def main():
             "returncode": result.returncode,
             "config": str(job["config_path"]),
             "model_key": job["model_key"],
+            "environment": job["resolved_environment"],
             "output_dir": str(job_output),
             "command": shlex.join(command),
         })
