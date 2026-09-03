@@ -1,0 +1,4 @@
+Paraphrase the given sentence in some creative way.
+
+Input:
+The cat was playing with its toys.

@@ -1,0 +1,3076 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+# OpenLRM: Open-Source Large Reconstruction Models
+
+[![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-yellow.svg)](LICENSE)
+[![Weight License](https://img.shields.io/badge/Weight%20License-CC%20By%20NC%204.0-red)](LICENSE_WEIGHT)
+[![LRM](https://img.shields.io/badge/LRM-Arxiv%20Link-green)](https://arxiv.org/abs/2311.04400)
+
+[![HF Models](https://img.shields.io/badge/Models-Huggingface%20Models-bron)](https://huggingface.co/zxhezexin)
+[![HF Demo](https://img.shields.io/badge/Demo-Huggingface%20Demo-blue)](https://huggingface.co/spaces/zxhezexin/OpenLRM)
+
+<img src="assets/rendered_video/teaser.gif" width="75%" height="auto"/>
+
+<div style="text-align: left">
+    <img src="assets/mesh_snapshot/crop.owl.ply00.png" width="12%" height="auto"/>
+    <img src="assets/mesh_snapshot/crop.owl.ply01.png" width="12%" height="auto"/>
+    <img src="assets/mesh_snapshot/crop.building.ply00.png" width="12%" height="auto"/>
+    <img src="assets/mesh_snapshot/crop.building.ply01.png" width="12%" height="auto"/>
+    <img src="assets/mesh_snapshot/crop.rose.ply00.png" width="12%" height="auto"/>
+    <img src="assets/mesh_snapshot/crop.rose.ply01.png" width="12%" height="auto"/>
+</div>
+
+## News
+
+- [2024.03.13] Update [training code](openlrm/runners/train) and release [OpenLRM v1.1.1](https://github.com/3DTopia/OpenLRM/releases/tag/v1.1.1).
+- [2024.03.08] We have released the core [blender script](scripts/data/objaverse/blender_script.py) used to render Objaverse images.
+- [2024.03.05] The [Huggingface demo](https://huggingface.co/spaces/zxhezexin/OpenLRM) now uses `openlrm-mix-base-1.1` model by default. Please refer to the [model card](model_card.md) for details on the updated model architecture and training settings.
+- [2024.03.04] Version update v1.1. Release model weights trained on both Objaverse and MVImgNet. Codebase is majorly refactored for better usability and extensibility. Please refer to [v1.1.0](https://github.com/3DTopia/OpenLRM/releases/tag/v1.1.0) for details.
+- [2024.01.09] Updated all v1.0 models trained on Objaverse. Please refer to [HF Models](https://huggingface.co/zxhezexin) and overwrite previous model weights.
+- [2023.12.21] [Hugging Face Demo](https://huggingface.co/spaces/zxhezexin/OpenLRM) is online. Have a try!
+- [2023.12.20] Release weights of the base and large models trained on Objaverse.
+- [2023.12.20] We release this project OpenLRM, which is an open-source implementation of the paper [LRM](https://arxiv.org/abs/2311.04400).
+
+## Setup
+
+### Installation
+```
+git clone https://github.com/3DTopia/OpenLRM.git
+cd OpenLRM
+```
+
+### Environment
+- Install requirements for OpenLRM first.
+  ```
+  pip install -r requirements.txt
+  ```
+- Please then follow the [xFormers installation guide](https://github.com/facebookresearch/xformers?tab=readme-ov-file#installing-xformers) to enable memory efficient attention inside [DINOv2 encoder](openlrm/models/encoders/dinov2/layers/attention.py).
+
+## Quick Start
+
+### Pretrained Models
+
+- Model weights are released on [Hugging Face](https://huggingface.co/zxhezexin).
+- Weights will be downloaded automatically when you run the inference script for the first time.
+- Please be aware of the [license](LICENSE_WEIGHT) before using the weights.
+
+| Model | Training Data | Layers | Feat. Dim | Trip. Dim. | In. Res. | Link |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| openlrm-obj-small-1.1 | Objaverse | 12 | 512 | 32 | 224 | [HF](https://huggingface.co/zxhezexin/openlrm-obj-small-1.1) |
+| openlrm-obj-base-1.1 | Objaverse | 12 | 768 | 48 | 336 | [HF](https://huggingface.co/zxhezexin/openlrm-obj-base-1.1) |
+| openlrm-obj-large-1.1 | Objaverse | 16 | 1024 | 80 | 448 | [HF](https://huggingface.co/zxhezexin/openlrm-obj-large-1.1) |
+| openlrm-mix-small-1.1 | Objaverse + MVImgNet | 12 | 512 | 32 | 224 | [HF](https://huggingface.co/zxhezexin/openlrm-mix-small-1.1) |
+| openlrm-mix-base-1.1 | Objaverse + MVImgNet | 12 | 768 | 48 | 336 | [HF](https://huggingface.co/zxhezexin/openlrm-mix-base-1.1) |
+| openlrm-mix-large-1.1 | Objaverse + MVImgNet | 16 | 1024 | 80 | 448 | [HF](https://huggingface.co/zxhezexin/openlrm-mix-large-1.1) |
+
+Model cards with additional details can be found in [model_card.md](model_card.md).
+
+### Prepare Images
+- We put some sample inputs under `assets/sample_input`, and you can quickly try them.
+- Prepare RGBA images or RGB images with white background (with some background removal tools, e.g., [Rembg](https://github.com/danielgatis/rembg), [Clipdrop](https://clipdrop.co)).
+
+### Inference
+- Run the inference script to get 3D assets.
+- You may specify which form of output to generate by setting the flags `EXPORT_VIDEO=true` and `EXPORT_MESH=true`.
+- Please set default `INFER_CONFIG` according to the model you want to use. E.g., `infer-b.yaml` for base models and `infer-s.yaml` for small models.
+- An example usage is as follows:
+
+  ```
+  # Example usage
+  EXPORT_VIDEO=true
+  EXPORT_MESH=true
+  INFER_CONFIG="./configs/infer-b.yaml"
+  MODEL_NAME="zxhezexin/openlrm-mix-base-1.1"
+  IMAGE_INPUT="./assets/sample_input/owl.png"
+
+  python -m openlrm.launch infer.lrm --infer $INFER_CONFIG model_name=$MODEL_NAME image_input=$IMAGE_INPUT export_video=$EXPORT_VIDEO export_mesh=$EXPORT_MESH
+  ```
+
+### Tips
+- The recommended PyTorch version is `>=2.1`. Code is developed and tested under PyTorch `2.1.2`.
+- If you encounter CUDA OOM issues, please try to reduce the `frame_size` in the inference configs.
+- You should be able to see `UserWarning: xFormers is available` if `xFormers` is actually working.
+
+## Training
+
+### Configuration
+- We provide a sample accelerate config file under `configs/accelerate-train.yaml`, which defaults to use 8 GPUs with `bf16` mixed precision.
+- You may modify the configuration file to fit your own environment.
+
+### Data Preparation
+- We provide the core [Blender script](scripts/data/objaverse/blender_script.py) used to render Objaverse images.
+- Please refer to [Objaverse Rendering](https://github.com/allenai/objaverse-rendering) for other scripts including distributed rendering.
+
+### Run Training
+- A sample training config file is provided under `configs/train-sample.yaml`.
+- Please replace data related paths in the config file with your own paths and customize the training settings.
+- An example training usage is as follows:
+
+  ```
+  # Example usage
+  ACC_CONFIG="./configs/accelerate-train.yaml"
+  TRAIN_CONFIG="./configs/train-sample.yaml"
+
+  accelerate launch --config_file $ACC_CONFIG -m openlrm.launch train.lrm --config $TRAIN_CONFIG
+  ```
+
+### Inference on Trained Models
+- The inference pipeline is compatible with huggingface utilities for better convenience.
+- You need to convert the training checkpoint to inference models by running the following script.
+
+  ```
+  python scripts/convert_hf.py --config <YOUR_EXACT_TRAINING_CONFIG> convert.global_step=null
+  ```
+
+- The converted model will be saved under `exps/releases` by default and can be used for inference following the [inference guide](https://github.com/3DTopia/OpenLRM?tab=readme-ov-file#inference).
+
+## Acknowledgement
+
+- We thank the authors of the [original paper](https://arxiv.org/abs/2311.04400) for their great work! Special thanks to Kai Zhang and Yicong Hong for assistance during the reproduction.
+- This project is supported by Shanghai AI Lab by providing the computing resources.
+- This project is advised by Ziwei Liu and Jiaya Jia.
+
+## Citation
+
+If you find this work useful for your research, please consider citing:
+```
+@article{hong2023lrm,
+  title={Lrm: Large reconstruction model for single image to 3d},
+  author={Hong, Yicong and Zhang, Kai and Gu, Jiuxiang and Bi, Sai and Zhou, Yang and Liu, Difan and Liu, Feng and Sunkavalli, Kalyan and Bui, Trung and Tan, Hao},
+  journal={arXiv preprint arXiv:2311.04400},
+  year={2023}
+}
+```
+
+```
+@misc{openlrm,
+  title = {OpenLRM: Open-Source Large Reconstruction Models},
+  author = {Zexin He and Tengfei Wang},
+  year = {2023},
+  howpublished = {\url{https://github.com/3DTopia/OpenLRM}},
+}
+```
+
+## License
+
+- OpenLRM as a whole is licensed under the [Apache License, Version 2.0](LICENSE), while certain components are covered by [NVIDIA's proprietary license](LICENSE_NVIDIA). Users are responsible for complying with the respective licensing terms of each component.
+- Model weights are licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](LICENSE_WEIGHT). They are provided for research purposes only, and CANNOT be used commercially.
+
+
+# Model Card for OpenLRM V1.1
+
+## Overview
+
+- This model card is for the [OpenLRM](https://github.com/3DTopia/OpenLRM) project, which is an open-source implementation of the paper [LRM](https://arxiv.org/abs/2311.04400).
+- Information contained in this model card corresponds to [Version 1.1](https://github.com/3DTopia/OpenLRM/releases).
+
+## Model Details
+
+- Training data
+
+    | Model | Training Data |
+    | :---: | :---: |
+    | [openlrm-obj-small-1.1](https://huggingface.co/zxhezexin/openlrm-obj-small-1.1) | Objaverse |
+    | [openlrm-obj-base-1.1](https://huggingface.co/zxhezexin/openlrm-obj-base-1.1) | Objaverse |
+    | [openlrm-obj-large-1.1](https://huggingface.co/zxhezexin/openlrm-obj-large-1.1) | Objaverse |
+    | [openlrm-mix-small-1.1](https://huggingface.co/zxhezexin/openlrm-mix-small-1.1) | Objaverse + MVImgNet |
+    | [openlrm-mix-base-1.1](https://huggingface.co/zxhezexin/openlrm-mix-base-1.1) | Objaverse + MVImgNet |
+    | [openlrm-mix-large-1.1](https://huggingface.co/zxhezexin/openlrm-mix-large-1.1) | Objaverse + MVImgNet |
+
+- Model architecture (version==1.1)
+
+    | Type  | Layers | Feat. Dim | Attn. Heads | Triplane Dim. | Input Res. | Image Encoder     | Encoder Dim. | Size  |
+    | :---: | :----: | :-------: | :---------: | :-----------: | :--------: | :---------------: | :----------: | :---: |
+    | small |   12   |    512    |      8      |      32       |    224     | dinov2_vits14_reg |      384     | 446M  |
+    | base  |   12   |    768    |     12      |      48       |    336     | dinov2_vitb14_reg |      768     | 1.04G |
+    | large |   16   |   1024    |     16      |      80       |    448     | dinov2_vitb14_reg |      768     | 1.81G |
+
+- Training settings
+
+    | Type  | Rend. Res. | Rend. Patch | Ray Samples |
+    | :---: | :--------: | :---------: | :---------: |
+    | small |    192     |     64      |     96      |
+    | base  |    288     |     96      |     96      |
+    | large |    384     |    128      |    128      |
+
+## Notable Differences from the Original Paper
+
+- We do not use the deferred back-propagation technique in the original paper.
+- We used random background colors during training.
+- The image encoder is based on the [DINOv2](https://github.com/facebookresearch/dinov2) model with register tokens.
+- The triplane decoder contains 4 layers in our implementation.
+
+## License
+
+- The model weights are released under the [Creative Commons Attribution-NonCommercial 4.0 International License](LICENSE_WEIGHT).
+- They are provided for research purposes only, and CANNOT be used commercially.
+
+## Disclaimer
+
+This model is an open-source implementation and is NOT the official release of the original research paper. While it aims to reproduce the original results as faithfully as possible, there may be variations due to model implementation, training data, and other factors.
+
+### Ethical Considerations
+
+- This model should be used responsibly and ethically, and should not be used for malicious purposes.
+- Users should be aware of potential biases in the training data.
+- The model should not be used under the circumstances that could lead to harm or unfair treatment of individuals or groups.
+
+### Usage Considerations
+
+- The model is provided "as is" without warranty of any kind.
+- Users are responsible for ensuring that their use complies with all relevant laws and regulations.
+- The developers and contributors of this model are not liable for any damages or losses arising from the use of this model.
+
+---
+
+*This model card is subject to updates and modifications. Users are advised to check for the latest version regularly.*
+
+
+torch>=2.1.2
+lpips
+omegaconf
+transformers
+safetensors
+accelerate
+imageio[ffmpeg]
+PyMCubes
+trimesh
+megfile
+opencv-python
+optimum[onnxruntime-gpu]
+rembg[gpu,cli]
+httpx[socks]
+tensorboard
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import os
+from PIL import Image
+import numpy as np
+import gradio as gr
+
+
+def assert_input_image(input_image):
+    if input_image is None:
+        raise gr.Error("No image selected or uploaded!")
+
+def prepare_working_dir():
+    import tempfile
+    working_dir = tempfile.TemporaryDirectory()
+    return working_dir
+
+def init_preprocessor():
+    from openlrm.utils.preprocess import Preprocessor
+    global preprocessor
+    preprocessor = Preprocessor()
+
+def preprocess_fn(image_in: np.ndarray, remove_bg: bool, recenter: bool, working_dir):
+    image_raw = os.path.join(working_dir.name, "raw.png")
+    with Image.fromarray(image_in) as img:
+        img.save(image_raw)
+    image_out = os.path.join(working_dir.name, "rembg.png")
+    success = preprocessor.preprocess(image_path=image_raw, save_path=image_out, rmbg=remove_bg, recenter=recenter)
+    assert success, f"Failed under preprocess_fn!"
+    return image_out
+
+
+def demo_openlrm(infer_impl):
+
+    def core_fn(image: str, source_cam_dist: float, working_dir):
+        dump_video_path = os.path.join(working_dir.name, "output.mp4")
+        dump_mesh_path = os.path.join(working_dir.name, "output.ply")
+        infer_impl(
+            image_path=image,
+            source_cam_dist=source_cam_dist,
+            export_video=True,
+            export_mesh=False,
+            dump_video_path=dump_video_path,
+            dump_mesh_path=dump_mesh_path,
+        )
+        return dump_video_path
+
+    def example_fn(image: np.ndarray):
+        from gradio.utils import get_cache_folder
+        working_dir = get_cache_folder()
+        image = preprocess_fn(
+            image_in=image,
+            remove_bg=True,
+            recenter=True,
+            working_dir=working_dir,
+        )
+        video = core_fn(
+            image=image,
+            source_cam_dist=2.0,
+            working_dir=working_dir,
+        )
+        return image, video
+
+
+    _TITLE = '''OpenLRM: Open-Source Large Reconstruction Models'''
+
+    _DESCRIPTION = '''
+        <div>
+            <a style="display:inline-block" href='https://github.com/3DTopia/OpenLRM'><img src='https://img.shields.io/github/stars/3DTopia/OpenLRM?style=social'/></a>
+            <a style="display:inline-block; margin-left: .5em" href="https://huggingface.co/zxhezexin"><img src='https://img.shields.io/badge/Model-Weights-blue'/></a>
+        </div>
+        OpenLRM is an open-source implementation of Large Reconstruction Models.
+
+        <strong>Image-to-3D in 10 seconds with A100!</strong>
+
+        <strong>Disclaimer:</strong> This demo uses `openlrm-mix-base-1.1` model with 288x288 rendering resolution here for a quick demonstration.
+    '''
+
+    with gr.Blocks(analytics_enabled=False) as demo:
+
+        # HEADERS
+        with gr.Row():
+            with gr.Column(scale=1):
+                gr.Markdown('# ' + _TITLE)
+        with gr.Row():
+            gr.Markdown(_DESCRIPTION)
+
+        # DISPLAY
+        with gr.Row():
+
+            with gr.Column(variant='panel', scale=1):
+                with gr.Tabs(elem_id="openlrm_input_image"):
+                    with gr.TabItem('Input Image'):
+                        with gr.Row():
+                            input_image = gr.Image(label="Input Image", image_mode="RGBA", width="auto", sources="upload", type="numpy", elem_id="content_image")
+
+            with gr.Column(variant='panel', scale=1):
+                with gr.Tabs(elem_id="openlrm_processed_image"):
+                    with gr.TabItem('Processed Image'):
+                        with gr.Row():
+                            processed_image = gr.Image(label="Processed Image", image_mode="RGBA", type="filepath", elem_id="processed_image", width="auto", interactive=False)
+
+            with gr.Column(variant='panel', scale=1):
+                with gr.Tabs(elem_id="openlrm_render_video"):
+                    with gr.TabItem('Rendered Video'):
+                        with gr.Row():
+                            output_video = gr.Video(label="Rendered Video", format="mp4", width="auto", autoplay=True)
+
+        # SETTING
+        with gr.Row():
+            with gr.Column(variant='panel', scale=1):
+                with gr.Tabs(elem_id="openlrm_attrs"):
+                    with gr.TabItem('Settings'):
+                        with gr.Column(variant='panel'):
+                            gr.Markdown(
+                                """
+                                <strong>Best Practice</strong>:
+                                    Centered objects in reasonable sizes. Try adjusting source camera distances.
+                                """
+                            )
+                            checkbox_rembg = gr.Checkbox(True, label='Remove background')
+                            checkbox_recenter = gr.Checkbox(True, label='Recenter the object')
+                            slider_cam_dist = gr.Slider(1.0, 3.5, value=2.0, step=0.1, label="Source Camera Distance")
+                            submit = gr.Button('Generate', elem_id="openlrm_generate", variant='primary')
+
+        # EXAMPLES
+        with gr.Row():
+            examples = [
+                ['assets/sample_input/owl.png'],
+                ['assets/sample_input/building.png'],
+                ['assets/sample_input/mailbox.png'],
+                ['assets/sample_input/fire.png'],
+                ['assets/sample_input/girl.png'],
+                ['assets/sample_input/lamp.png'],
+                ['assets/sample_input/hydrant.png'],
+                ['assets/sample_input/hotdogs.png'],
+                ['assets/sample_input/traffic.png'],
+                ['assets/sample_input/ceramic.png'],
+            ]
+            gr.Examples(
+                examples=examples,
+                inputs=[input_image], 
+                outputs=[processed_image, output_video],
+                fn=example_fn,
+                cache_examples=bool(os.getenv('SPACE_ID')),
+                examples_per_page=20,
+            )
+
+        working_dir = gr.State()
+        submit.click(
+            fn=assert_input_image,
+            inputs=[input_image],
+            queue=False,
+        ).success(
+            fn=prepare_working_dir,
+            outputs=[working_dir],
+            queue=False,
+        ).success(
+            fn=preprocess_fn,
+            inputs=[input_image, checkbox_rembg, checkbox_recenter, working_dir],
+            outputs=[processed_image],
+        ).success(
+            fn=core_fn,
+            inputs=[processed_image, slider_cam_dist, working_dir],
+            outputs=[output_video],
+        )
+
+        demo.queue()
+        demo.launch()
+
+
+def launch_gradio_app():
+
+    os.environ.update({
+        "APP_ENABLED": "1",
+        "APP_MODEL_NAME": "zxhezexin/openlrm-mix-base-1.1",
+        "APP_INFER": "./configs/infer-gradio.yaml",
+        "APP_TYPE": "infer.lrm",
+        "NUMBA_THREADING_LAYER": 'omp',
+    })
+
+    from openlrm.runners import REGISTRY_RUNNERS
+    from openlrm.runners.infer.base_inferrer import Inferrer
+    InferrerClass : Inferrer = REGISTRY_RUNNERS[os.getenv("APP_TYPE")]
+    with InferrerClass() as inferrer:
+        init_preprocessor()
+        if not bool(os.getenv('SPACE_ID')):
+            from openlrm.utils.proxy import no_proxy
+            demo = no_proxy(demo_openlrm)
+        else:
+            demo = demo_openlrm
+        demo(infer_impl=inferrer.infer_single)
+
+
+if __name__ == '__main__':
+
+    launch_gradio_app()
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import argparse
+
+from openlrm.runners import REGISTRY_RUNNERS
+
+
+def main():
+
+    parser = argparse.ArgumentParser(description='OpenLRM launcher')
+    parser.add_argument('runner', type=str, help='Runner to launch')
+    args, unknown = parser.parse_known_args()
+
+    if args.runner not in REGISTRY_RUNNERS:
+        raise ValueError('Runner {} not found'.format(args.runner))
+
+    RunnerClass = REGISTRY_RUNNERS[args.runner]
+    with RunnerClass() as runner:
+        runner.run()
+
+
+if __name__ == '__main__':
+    main()
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Empty
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from abc import ABC, abstractmethod
+
+
+class Runner(ABC):
+    """Abstract runner class"""
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def run(self):
+        pass
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from openlrm.utils.registry import Registry
+
+REGISTRY_RUNNERS = Registry()
+
+from .train import *
+from .infer import *
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import os
+import math
+from tqdm.auto import tqdm
+import torch
+import torch.nn as nn
+from torchvision.utils import make_grid
+from accelerate.logging import get_logger
+
+from .base_trainer import Trainer
+from openlrm.utils.profiler import DummyProfiler
+from openlrm.runners import REGISTRY_RUNNERS
+
+
+logger = get_logger(__name__)
+
+
+@REGISTRY_RUNNERS.register('train.lrm')
+class LRMTrainer(Trainer):
+    def __init__(self):
+        super().__init__()
+
+        self.model = self._build_model(self.cfg)
+        self.optimizer = self._build_optimizer(self.model, self.cfg)
+        self.train_loader, self.val_loader = self._build_dataloader(self.cfg)
+        self.scheduler = self._build_scheduler(self.optimizer, self.cfg)
+        self.pixel_loss_fn, self.perceptual_loss_fn, self.tv_loss_fn = self._build_loss_fn(self.cfg)
+
+    def _build_model(self, cfg):
+        assert cfg.experiment.type == 'lrm', \
+            f"Config type {cfg.experiment.type} does not match with runner {self.__class__.__name__}"
+        from openlrm.models import ModelLRM
+        model = ModelLRM(**cfg.model)
+        return model
+
+    def _build_optimizer(self, model: nn.Module, cfg):
+        decay_params, no_decay_params = [], []
+
+        # add all bias and LayerNorm params to no_decay_params
+        for name, module in model.named_modules():
+            if isinstance(module, nn.LayerNorm):
+                no_decay_params.extend([p for p in module.parameters()])
+            elif hasattr(module, 'bias') and module.bias is not None:
+                no_decay_params.append(module.bias)
+
+        # add remaining parameters to decay_params
+        _no_decay_ids = set(map(id, no_decay_params))
+        decay_params = [p for p in model.parameters() if id(p) not in _no_decay_ids]
+
+        # filter out parameters with no grad
+        decay_params = list(filter(lambda p: p.requires_grad, decay_params))
+        no_decay_params = list(filter(lambda p: p.requires_grad, no_decay_params))
+
+        # monitor this to make sure we don't miss any parameters
+        logger.info("======== Weight Decay Parameters ========")
+        logger.info(f"Total: {len(decay_params)}")
+        logger.info("======== No Weight Decay Parameters ========")
+        logger.info(f"Total: {len(no_decay_params)}")
+
+        # Optimizer
+        opt_groups = [
+            {'params': decay_params, 'weight_decay': cfg.train.optim.weight_decay},
+            {'params': no_decay_params, 'weight_decay': 0.0},
+        ]
+        optimizer = torch.optim.AdamW(
+            opt_groups,
+            lr=cfg.train.optim.lr,
+            betas=(cfg.train.optim.beta1, cfg.train.optim.beta2),
+        )
+
+        return optimizer
+
+    def _build_scheduler(self, optimizer, cfg):
+        local_batches_per_epoch = math.floor(len(self.train_loader) / self.accelerator.num_processes)
+        total_global_batches = cfg.train.epochs * math.ceil(local_batches_per_epoch / self.cfg.train.accum_steps)
+        effective_warmup_iters = cfg.train.scheduler.warmup_real_iters
+        logger.debug(f"======== Scheduler effective max iters: {total_global_batches} ========")
+        logger.debug(f"======== Scheduler effective warmup iters: {effective_warmup_iters} ========")
+        if cfg.train.scheduler.type == 'cosine':
+            from openlrm.utils.scheduler import CosineWarmupScheduler
+            scheduler = CosineWarmupScheduler(
+                optimizer=optimizer,
+                warmup_iters=effective_warmup_iters,
+                max_iters=total_global_batches,
+            )
+        else:
+            raise NotImplementedError(f"Scheduler type {cfg.train.scheduler.type} not implemented")
+        return scheduler
+
+    def _build_dataloader(self, cfg):
+        # dataset class
+        from openlrm.datasets import MixerDataset
+
+        # build dataset
+        train_dataset = MixerDataset(
+            split="train",
+            subsets=cfg.dataset.subsets,
+            sample_side_views=cfg.dataset.sample_side_views,
+            render_image_res_low=cfg.dataset.render_image.low,
+            render_image_res_high=cfg.dataset.render_image.high,
+            render_region_size=cfg.dataset.render_image.region,
+            source_image_res=cfg.dataset.source_image_res,
+            normalize_camera=cfg.dataset.normalize_camera,
+            normed_dist_to_center=cfg.dataset.normed_dist_to_center,
+        )
+        val_dataset = MixerDataset(
+            split="val",
+            subsets=cfg.dataset.subsets,
+            sample_side_views=cfg.dataset.sample_side_views,
+            render_image_res_low=cfg.dataset.render_image.low,
+            render_image_res_high=cfg.dataset.render_image.high,
+            render_region_size=cfg.dataset.render_image.region,
+            source_image_res=cfg.dataset.source_image_res,
+            normalize_camera=cfg.dataset.normalize_camera,
+            normed_dist_to_center=cfg.dataset.normed_dist_to_center,
+        )
+
+        # build data loader
+        train_loader = torch.utils.data.DataLoader(
+            train_dataset,
+            batch_size=cfg.train.batch_size,
+            shuffle=True,
+            drop_last=True,
+            num_workers=cfg.dataset.num_train_workers,
+            pin_memory=cfg.dataset.pin_mem,
+            persistent_workers=True,
+        )
+        val_loader = torch.utils.data.DataLoader(
+            val_dataset,
+            batch_size=cfg.val.batch_size,
+            shuffle=False,
+            drop_last=False,
+            num_workers=cfg.dataset.num_val_workers,
+            pin_memory=cfg.dataset.pin_mem,
+            persistent_workers=False,
+        )
+
+        return train_loader, val_loader
+
+    def _build_loss_fn(self, cfg):
+        from openlrm.losses import PixelLoss, LPIPSLoss, TVLoss
+        pixel_loss_fn = PixelLoss()
+        with self.accelerator.main_process_first():
+            perceptual_loss_fn = LPIPSLoss(device=self.device, prefech=True)
+        tv_loss_fn = TVLoss()
+        return pixel_loss_fn, perceptual_loss_fn, tv_loss_fn
+
+    def register_hooks(self):
+        pass
+
+    def forward_loss_local_step(self, data):
+
+        source_camera = data['source_camera']
+        render_camera = data['render_camera']
+        source_image = data['source_image']
+        render_image = data['render_image']
+        render_anchors = data['render_anchors']
+        render_full_resolutions = data['render_full_resolutions']
+        render_bg_colors = data['render_bg_colors']
+
+        N, M, C, H, W = render_image.shape
+
+        # forward
+        outputs = self.model(
+            image=source_image,
+            source_camera=source_camera,
+            render_cameras=render_camera,
+            render_anchors=render_anchors,
+            render_resolutions=render_full_resolutions,
+            render_bg_colors=render_bg_colors,
+            render_region_size=self.cfg.dataset.render_image.region,
+        )
+
+        # loss calculation
+        loss = 0.
+        loss_pixel = None
+        loss_perceptual = None
+        loss_tv = None
+
+        if self.cfg.train.loss.pixel_weight > 0.:
+            loss_pixel = self.pixel_loss_fn(outputs['images_rgb'], render_image)
+            loss += loss_pixel * self.cfg.train.loss.pixel_weight
+        if self.cfg.train.loss.perceptual_weight > 0.:
+            loss_perceptual = self.perceptual_loss_fn(outputs['images_rgb'], render_image)
+            loss += loss_perceptual * self.cfg.train.loss.perceptual_weight
+        if self.cfg.train.loss.tv_weight > 0.: 
+            loss_tv = self.tv_loss_fn(outputs['planes'])
+            loss += loss_tv * self.cfg.train.loss.tv_weight
+
+        return outputs, loss, loss_pixel, loss_perceptual, loss_tv
+
+    def train_epoch(self, pbar: tqdm, loader: torch.utils.data.DataLoader, profiler: torch.profiler.profile):
+        self.model.train()
+
+        local_step_losses = []
+        global_step_losses = []
+
+        logger.debug(f"======== Starting epoch {self.current_epoch} ========")
+        for data in loader:
+
+            logger.debug(f"======== Starting global step {self.global_step} ========")
+            with self.accelerator.accumulate(self.model):
+
+                # forward to loss
+                outs, loss, loss_pixel, loss_perceptual, loss_tv = self.forward_loss_local_step(data)
+                
+                # backward
+                self.accelerator.backward(loss)
+                if self.accelerator.sync_gradients and self.cfg.train.optim.clip_grad_norm > 0.:
+                    self.accelerator.clip_grad_norm_(self.model.parameters(), self.cfg.train.optim.clip_grad_norm)
+                self.optimizer.step()
+                self.optimizer.zero_grad()
+
+                # track local losses
+                local_step_losses.append(torch.stack([
+                    _loss.detach() if _loss is not None else torch.tensor(float('nan'), device=self.device)
+                    for _loss in [loss, loss_pixel, loss_perceptual, loss_tv]
+                ]))
+
+            # track global step
+            if self.accelerator.sync_gradients:
+                profiler.step()
+                self.scheduler.step()
+                logger.debug(f"======== Scheduler step ========")
+                self.global_step += 1
+                global_step_loss = self.accelerator.gather(torch.stack(local_step_losses)).mean(dim=0).cpu()
+                loss, loss_pixel, loss_perceptual, loss_tv = global_step_loss.unbind()
+                loss_kwargs = {
+                    'loss': loss.item(),
+                    'loss_pixel': loss_pixel.item(),
+                    'loss_perceptual': loss_perceptual.item(),
+                    'loss_tv': loss_tv.item(),
+                }
+                self.log_scalar_kwargs(
+                    step=self.global_step, split='train',
+                    **loss_kwargs
+                )
+                self.log_optimizer(step=self.global_step, attrs=['lr'], group_ids=[0, 1])
+                local_step_losses = []
+                global_step_losses.append(global_step_loss)
+
+                # manage display
+                pbar.update(1)
+                description = {
+                    **loss_kwargs,
+                    'lr': self.optimizer.param_groups[0]['lr'],
+                }
+                description = '[TRAIN STEP]' + \
+                    ', '.join(f'{k}={tqdm.format_num(v)}' for k, v in description.items() if not math.isnan(v))
+                pbar.set_description(description)
+
+                # periodic actions
+                if self.global_step % self.cfg.saver.checkpoint_global_steps == 0:
+                    self.save_checkpoint()
+                if self.global_step % self.cfg.val.global_step_period == 0:
+                    self.evaluate()
+                    self.model.train()
+                if self.global_step % self.cfg.logger.image_monitor.train_global_steps == 0:
+                    self.log_image_monitor(
+                        step=self.global_step, split='train',
+                        renders=outs['images_rgb'].detach()[:self.cfg.logger.image_monitor.samples_per_log].cpu(),
+                        gts=data['render_image'][:self.cfg.logger.image_monitor.samples_per_log].cpu(),
+                    )
+
+                # progress control
+                if self.global_step >= self.N_max_global_steps:
+                    self.accelerator.set_trigger()
+                    break
+
+        # track epoch
+        self.current_epoch += 1
+        epoch_losses = torch.stack(global_step_losses).mean(dim=0)
+        epoch_loss, epoch_loss_pixel, epoch_loss_perceptual, epoch_loss_tv = epoch_losses.unbind()
+        epoch_loss_dict = {
+            'loss': epoch_loss.item(),
+            'loss_pixel': epoch_loss_pixel.item(),
+            'loss_perceptual': epoch_loss_perceptual.item(),
+            'loss_tv': epoch_loss_tv.item(),
+        }
+        self.log_scalar_kwargs(
+            epoch=self.current_epoch, split='train',
+            **epoch_loss_dict,
+        )
+        logger.info(
+            f'[TRAIN EPOCH] {self.current_epoch}/{self.cfg.train.epochs}: ' + \
+                ', '.join(f'{k}={tqdm.format_num(v)}' for k, v in epoch_loss_dict.items() if not math.isnan(v))
+        )
+
+    def train(self):
+        
+        starting_local_step_in_epoch = self.global_step_in_epoch * self.cfg.train.accum_steps
+        skipped_loader = self.accelerator.skip_first_batches(self.train_loader, starting_local_step_in_epoch)
+        logger.info(f"======== Skipped {starting_local_step_in_epoch} local batches ========")
+
+        with tqdm(
+            range(0, self.N_max_global_steps),
+            initial=self.global_step,
+            disable=(not self.accelerator.is_main_process),
+        ) as pbar:
+
+            profiler = torch.profiler.profile(
+                activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA],
+                schedule=torch.profiler.schedule(
+                    wait=10, warmup=10, active=100,
+                ),
+                on_trace_ready=torch.profiler.tensorboard_trace_handler(os.path.join(
+                    self.cfg.logger.tracker_root,
+                    self.cfg.experiment.parent, self.cfg.experiment.child,
+                )),
+                record_shapes=True,
+                profile_memory=True,
+                with_stack=True,
+            ) if self.cfg.logger.enable_profiler else DummyProfiler()
+            
+            with profiler:
+
+                self.optimizer.zero_grad()
+                for _ in range(self.current_epoch, self.cfg.train.epochs):
+
+                    loader = skipped_loader or self.train_loader
+                    skipped_loader = None
+                    self.train_epoch(pbar=pbar, loader=loader, profiler=profiler)
+                    if self.accelerator.check_trigger():
+                        break
+
+            logger.info(f"======== Training finished at global step {self.global_step} ========")
+
+            # final checkpoint and evaluation
+            self.save_checkpoint()
+            self.evaluate()
+
+    @torch.no_grad()
+    @torch.compiler.disable
+    def evaluate(self, epoch: int = None):
+        self.model.eval()
+
+        max_val_batches = self.cfg.val.debug_batches or len(self.val_loader)
+        running_losses = []
+        sample_data, sample_outs = None, None
+
+        for data in tqdm(self.val_loader, disable=(not self.accelerator.is_main_process), total=max_val_batches):
+
+            if len(running_losses) >= max_val_batches:
+                logger.info(f"======== Early stop validation at {len(running_losses)} batches ========")
+                break
+
+            outs, loss, loss_pixel, loss_perceptual, loss_tv = self.forward_loss_local_step(data)
+            sample_data, sample_outs = data, outs
+
+            running_losses.append(torch.stack([
+                _loss if _loss is not None else torch.tensor(float('nan'), device=self.device)
+                for _loss in [loss, loss_pixel, loss_perceptual, loss_tv]
+            ]))
+
+        total_losses = self.accelerator.gather(torch.stack(running_losses)).mean(dim=0).cpu()
+        total_loss, total_loss_pixel, total_loss_perceptual, total_loss_tv = total_losses.unbind()
+        total_loss_dict = {
+            'loss': total_loss.item(),
+            'loss_pixel': total_loss_pixel.item(),
+            'loss_perceptual': total_loss_perceptual.item(),
+            'loss_tv': total_loss_tv.item(),
+        }
+
+        if epoch is not None:
+            self.log_scalar_kwargs(
+                epoch=epoch, split='val',
+                **total_loss_dict,
+            )
+            logger.info(
+                f'[VAL EPOCH] {epoch}/{self.cfg.train.epochs}: ' + \
+                    ', '.join(f'{k}={tqdm.format_num(v)}' for k, v in total_loss_dict.items() if not math.isnan(v))
+            )
+            self.log_image_monitor(
+                epoch=epoch, split='val',
+                renders=sample_outs['images_rgb'][:self.cfg.logger.image_monitor.samples_per_log].cpu(),
+                gts=sample_data['render_image'][:self.cfg.logger.image_monitor.samples_per_log].cpu(),
+            )
+        else:
+            self.log_scalar_kwargs(
+                step=self.global_step, split='val',
+                **total_loss_dict,
+            )
+            logger.info(
+                f'[VAL STEP] {self.global_step}/{self.N_max_global_steps}: ' + \
+                    ', '.join(f'{k}={tqdm.format_num(v)}' for k, v in total_loss_dict.items() if not math.isnan(v))
+            )
+            self.log_image_monitor(
+                step=self.global_step, split='val',
+                renders=sample_outs['images_rgb'][:self.cfg.logger.image_monitor.samples_per_log].cpu(),
+                gts=sample_data['render_image'][:self.cfg.logger.image_monitor.samples_per_log].cpu(),
+            )
+
+    @Trainer.control('on_main_process')
+    def log_image_monitor(
+        self, epoch: int = None, step: int = None, split: str = None,
+        renders: torch.Tensor = None, gts: torch.Tensor = None,
+        ):
+        M = renders.shape[1]
+        merged = torch.stack([renders, gts], dim=1)[0].view(-1, *renders.shape[2:])
+        renders, gts = renders.view(-1, *renders.shape[2:]), gts.view(-1, *gts.shape[2:])
+        renders, gts, merged = make_grid(renders, nrow=M), make_grid(gts, nrow=M), make_grid(merged, nrow=M)
+        log_type, log_progress = self._get_str_progress(epoch, step)
+        split = f'/{split}' if split else ''
+        self.log_images({
+            f'Images_split{split}/rendered': renders.unsqueeze(0),
+            f'Images_split{split}/gt': gts.unsqueeze(0),
+            f'Images_merged{split}': merged.unsqueeze(0),
+        }, log_progress)
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import os
+import time
+import math
+import argparse
+import shutil
+import torch
+import safetensors
+from omegaconf import OmegaConf
+from abc import abstractmethod
+from contextlib import contextmanager
+from accelerate import Accelerator
+from accelerate.logging import get_logger
+from accelerate.utils import DistributedDataParallelKwargs, ProjectConfiguration, set_seed
+
+from openlrm.utils.logging import configure_logger
+from openlrm.utils.compile import configure_dynamo
+from openlrm.runners.abstract import Runner
+
+
+logger = get_logger(__name__)
+
+
+def parse_configs():
+    # Define argparse arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='./assets/config.yaml')
+    args, unknown = parser.parse_known_args()
+
+    # Load configuration file
+    cfg = OmegaConf.load(args.config)
+
+    # Override with command-line arguments
+    cli_cfg = OmegaConf.from_cli(unknown)
+    cfg = OmegaConf.merge(cfg, cli_cfg)
+
+    return cfg
+
+
+class Trainer(Runner):
+
+    def __init__(self):
+        super().__init__()
+
+        self.cfg = parse_configs()
+        self.timestamp = time.strftime("%Y%m%d-%H%M%S")
+
+        self.accelerator = Accelerator(
+            mixed_precision=self.cfg.train.mixed_precision,
+            gradient_accumulation_steps=self.cfg.train.accum_steps,
+            log_with=tuple(self.cfg.logger.trackers),
+            project_config=ProjectConfiguration(
+                logging_dir=self.cfg.logger.tracker_root,
+            ),
+            use_seedable_sampler=True,
+            kwargs_handlers=[
+                DistributedDataParallelKwargs(
+                    find_unused_parameters=self.cfg.train.find_unused_parameters,
+                ),
+            ],
+        )
+        set_seed(self.cfg.experiment.seed, device_specific=True)
+        with self.accelerator.main_process_first():
+            configure_logger(
+                stream_level=self.cfg.logger.stream_level,
+                log_level=self.cfg.logger.log_level,
+                file_path=os.path.join(
+                    self.cfg.logger.log_root,
+                    self.cfg.experiment.parent, self.cfg.experiment.child,
+                    f"{self.timestamp}.log",
+                ) if self.accelerator.is_main_process else None,
+            )
+        logger.info(self.accelerator.state, main_process_only=False, in_order=True)
+        configure_dynamo(dict(self.cfg.compile))
+
+        # attributes with defaults
+        self.model : torch.nn.Module = None
+        self.optimizer: torch.optim.Optimizer = None
+        self.scheduler: torch.optim.lr_scheduler.LRScheduler = None
+        self.train_loader: torch.utils.data.DataLoader = None
+        self.val_loader: torch.utils.data.DataLoader = None
+        self.N_max_global_steps: int = None
+        self.N_global_steps_per_epoch: int = None
+        self.global_step: int = 0
+        self.current_epoch: int = 0
+
+    def __enter__(self):
+        self.accelerator.init_trackers(
+            project_name=f"{self.cfg.experiment.parent}/{self.cfg.experiment.child}",
+        )
+        self.prepare_everything()
+        self.log_inital_info()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.accelerator.end_training()
+
+    @staticmethod
+    def control(option: str = None, synchronized: bool = False):
+        def decorator(func):
+            def wrapper(self, *args, **kwargs):
+                if option is None or hasattr(self.accelerator, option):
+                    accelerated_func = getattr(self.accelerator, option)(func) if option is not None else func
+                    result = accelerated_func(self, *args, **kwargs)
+                    if synchronized:
+                        self.accelerator.wait_for_everyone()
+                    return result
+                else:
+                    raise AttributeError(f"Accelerator has no attribute {option}")
+            return wrapper
+        return decorator
+
+    @contextmanager
+    def exec_in_order(self):
+        for rank in range(self.accelerator.num_processes):
+            try:
+                if self.accelerator.process_index == rank:
+                    yield
+            finally:
+                self.accelerator.wait_for_everyone()
+
+    @property
+    def device(self):
+        return self.accelerator.device
+
+    @property
+    def is_distributed(self) -> bool:
+        return self.accelerator.num_processes > 1
+
+    def prepare_everything(self, is_dist_validation: bool = True):
+        # prepare with accelerator
+        if is_dist_validation:
+            self.model, self.optimizer, self.train_loader, self.val_loader = \
+                self.accelerator.prepare(
+                    self.model, self.optimizer, self.train_loader, self.val_loader,
+                )
+        else:
+            self.model, self.optimizer, self.train_loader = \
+                self.accelerator.prepare(
+                    self.model, self.optimizer, self.train_loader,
+                )
+        self.accelerator.register_for_checkpointing(self.scheduler)
+        # prepare stats
+        N_total_batch_size = self.cfg.train.batch_size * self.accelerator.num_processes * self.cfg.train.accum_steps
+        self.N_global_steps_per_epoch = math.ceil(len(self.train_loader) / self.cfg.train.accum_steps)
+        self.N_max_global_steps = self.N_global_steps_per_epoch * self.cfg.train.epochs
+        if self.cfg.train.debug_global_steps is not None:
+            logger.warning(f"Overriding max global steps from {self.N_max_global_steps} to {self.cfg.train.debug_global_steps}")
+            self.N_max_global_steps = self.cfg.train.debug_global_steps
+        logger.info(f"======== Statistics ========")
+        logger.info(f"** N_max_global_steps: {self.N_max_global_steps}")
+        logger.info(f"** N_total_batch_size: {N_total_batch_size}")
+        logger.info(f"** N_epochs: {self.cfg.train.epochs}")
+        logger.info(f"** N_global_steps_per_epoch: {self.N_global_steps_per_epoch}")
+        logger.debug(f"** Prepared loader length: {len(self.train_loader)}")
+        logger.info(f"** Distributed validation: {is_dist_validation}")
+        logger.info(f"============================")
+        logger.info(f"======== Trainable parameters ========")
+        logger.info(f"** Total: {sum(p.numel() for p in self.model.parameters() if p.requires_grad)}")
+        for sub_name, sub_module in self.accelerator.unwrap_model(self.model).named_children():
+            logger.info(f"** {sub_name}: {sum(p.numel() for p in sub_module.parameters() if p.requires_grad)}")
+        logger.info(f"=====================================")
+        self.accelerator.wait_for_everyone()
+        # load checkpoint or model
+        self.load_ckpt_or_auto_resume_(self.cfg)
+        # register hooks
+        self.register_hooks()
+
+    @abstractmethod
+    def register_hooks(self):
+        pass
+
+    def auto_resume_(self, cfg) -> bool:
+        ckpt_root = os.path.join(
+            cfg.saver.checkpoint_root,
+            cfg.experiment.parent, cfg.experiment.child,
+        )
+        if not os.path.exists(ckpt_root):
+            return False
+        ckpt_dirs = os.listdir(ckpt_root)
+        if len(ckpt_dirs) == 0:
+            return False
+        ckpt_dirs.sort()
+        latest_ckpt = ckpt_dirs[-1]
+        latest_ckpt_dir = os.path.join(ckpt_root, latest_ckpt)
+        logger.info(f"======== Auto-resume from {latest_ckpt_dir} ========")
+        self.accelerator.load_state(latest_ckpt_dir)
+        self.global_step = int(latest_ckpt)
+        self.current_epoch = self.global_step // self.N_global_steps_per_epoch
+        return True
+
+    def load_model_(self, cfg):
+        logger.info(f"======== Loading model from {cfg.saver.load_model} ========")
+        safetensors.torch.load_model(
+            self.accelerator.unwrap_model(self.model),
+            cfg.saver.load_model,
+            strict=True,
+        )
+        logger.info(f"======== Model loaded ========")
+
+    @control(synchronized=True)
+    def load_ckpt_or_auto_resume_(self, cfg):
+        # auto resume has higher priority, load model from path if auto resume is not available
+        # cfg.saver.auto_resume and cfg.saver.load_model
+        if cfg.saver.auto_resume:
+            successful_resume = self.auto_resume_(cfg)
+            if successful_resume:
+                return
+        if cfg.saver.load_model:
+            successful_load = self.load_model_(cfg)
+            if successful_load:
+                return
+        logger.debug(f"======== No checkpoint or model is loaded ========")
+
+    @control('on_main_process', synchronized=True)
+    def save_checkpoint(self):
+        ckpt_dir = os.path.join(
+            self.cfg.saver.checkpoint_root,
+            self.cfg.experiment.parent, self.cfg.experiment.child,
+            f"{self.global_step:06d}",
+        )
+        self.accelerator.save_state(output_dir=ckpt_dir, safe_serialization=True)
+        logger.info(f"======== Saved checkpoint at global step {self.global_step} ========")
+        # manage stratified checkpoints
+        ckpt_dirs = os.listdir(os.path.dirname(ckpt_dir))
+        ckpt_dirs.sort()
+        max_ckpt = int(ckpt_dirs[-1])
+        ckpt_base = int(self.cfg.saver.checkpoint_keep_level)
+        ckpt_period = self.cfg.saver.checkpoint_global_steps
+        logger.debug(f"Checkpoint base: {ckpt_base}")
+        logger.debug(f"Checkpoint period: {ckpt_period}")
+        cur_order = ckpt_base ** math.floor(math.log(max_ckpt // ckpt_period, ckpt_base))
+        cur_idx = 0
+        while cur_order > 0:
+            cur_digit = max_ckpt // ckpt_period // cur_order % ckpt_base
+            while cur_idx < len(ckpt_dirs) and int(ckpt_dirs[cur_idx]) // ckpt_period // cur_order % ckpt_base < cur_digit:
+                if int(ckpt_dirs[cur_idx]) // ckpt_period % cur_order != 0:
+                    shutil.rmtree(os.path.join(os.path.dirname(ckpt_dir), ckpt_dirs[cur_idx]))
+                    logger.info(f"Removed checkpoint {ckpt_dirs[cur_idx]}")
+                cur_idx += 1
+            cur_order //= ckpt_base
+
+    @property
+    def global_step_in_epoch(self):
+        return self.global_step % self.N_global_steps_per_epoch
+
+    @abstractmethod
+    def _build_model(self):
+        pass
+
+    @abstractmethod
+    def _build_optimizer(self):
+        pass
+
+    @abstractmethod
+    def _build_scheduler(self):
+        pass
+
+    @abstractmethod
+    def _build_dataloader(self):
+        pass
+
+    @abstractmethod
+    def _build_loss_fn(self):
+        pass
+
+    @abstractmethod
+    def train(self):
+        pass
+
+    @abstractmethod
+    def evaluate(self):
+        pass
+
+    @staticmethod
+    def _get_str_progress(epoch: int = None, step: int = None):
+        if epoch is not None:
+            log_type = 'epoch'
+            log_progress = epoch
+        elif step is not None:
+            log_type = 'step'
+            log_progress = step
+        else:
+            raise ValueError('Either epoch or step must be provided')
+        return log_type, log_progress
+
+    @control('on_main_process')
+    def log_scalar_kwargs(self, epoch: int = None, step: int = None, split: str = None, **scalar_kwargs):
+        log_type, log_progress = self._get_str_progress(epoch, step)
+        split = f'/{split}' if split else ''
+        for key, value in scalar_kwargs.items():
+            self.accelerator.log({f'{key}{split}/{log_type}': value}, log_progress)
+
+    @control('on_main_process')
+    def log_images(self, values: dict, step: int | None = None, log_kwargs: dict | None = {}):
+        for tracker in self.accelerator.trackers:
+            if hasattr(tracker, 'log_images'):
+                tracker.log_images(values, step=step, **log_kwargs.get(tracker.name, {}))
+
+    @control('on_main_process')
+    def log_optimizer(self, epoch: int = None, step: int = None, attrs: list[str] = [], group_ids: list[int] = []):
+        log_type, log_progress = self._get_str_progress(epoch, step)
+        assert self.optimizer is not None, 'Optimizer is not initialized'
+        if not attrs:
+            logger.warning('No optimizer attributes are provided, nothing will be logged')
+        if not group_ids:
+            logger.warning('No optimizer group ids are provided, nothing will be logged')
+        for attr in attrs:
+            assert attr in ['lr', 'momentum', 'weight_decay'], f'Invalid optimizer attribute {attr}'
+            for group_id in group_ids:
+                self.accelerator.log({f'opt/{attr}/{group_id}': self.optimizer.param_groups[group_id][attr]}, log_progress)
+
+    @control('on_main_process')
+    def log_inital_info(self):
+        assert self.model is not None, 'Model is not initialized'
+        assert self.optimizer is not None, 'Optimizer is not initialized'
+        assert self.scheduler is not None, 'Scheduler is not initialized'
+        self.accelerator.log({'Config': "```\n" + OmegaConf.to_yaml(self.cfg) + "\n```"})
+        self.accelerator.log({'Model': "```\n" + str(self.model) + "\n```"})
+        self.accelerator.log({'Optimizer': "```\n" + str(self.optimizer) + "\n```"})
+        self.accelerator.log({'Scheduler': "```\n" + str(self.scheduler) + "\n```"})
+
+    def run(self):
+        self.train()
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from .lrm import LRMTrainer
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+from abc import abstractmethod
+from accelerate import Accelerator
+from accelerate.logging import get_logger
+
+from openlrm.runners.abstract import Runner
+
+
+logger = get_logger(__name__)
+
+
+class Inferrer(Runner):
+
+    EXP_TYPE: str = None
+
+    def __init__(self):
+        super().__init__()
+
+        torch._dynamo.config.disable = True
+        self.accelerator = Accelerator()
+
+        self.model : torch.nn.Module = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+    @property
+    def device(self):
+        return self.accelerator.device
+
+    @abstractmethod
+    def _build_model(self, cfg):
+        pass
+
+    @abstractmethod
+    def infer_single(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def infer(self):
+        pass
+
+    def run(self):
+        self.infer()
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import os
+import argparse
+import mcubes
+import trimesh
+import numpy as np
+from PIL import Image
+from omegaconf import OmegaConf
+from tqdm.auto import tqdm
+from accelerate.logging import get_logger
+
+from .base_inferrer import Inferrer
+from openlrm.datasets.cam_utils import build_camera_principle, build_camera_standard, surrounding_views_linspace, create_intrinsics
+from openlrm.utils.logging import configure_logger
+from openlrm.runners import REGISTRY_RUNNERS
+from openlrm.utils.video import images_to_video
+from openlrm.utils.hf_hub import wrap_model_hub
+
+
+logger = get_logger(__name__)
+
+
+def parse_configs():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str)
+    parser.add_argument('--infer', type=str)
+    args, unknown = parser.parse_known_args()
+
+    cfg = OmegaConf.create()
+    cli_cfg = OmegaConf.from_cli(unknown)
+
+    # parse from ENV
+    if os.environ.get('APP_INFER') is not None:
+        args.infer = os.environ.get('APP_INFER')
+    if os.environ.get('APP_MODEL_NAME') is not None:
+        cli_cfg.model_name = os.environ.get('APP_MODEL_NAME')
+
+    if args.config is not None:
+        cfg_train = OmegaConf.load(args.config)
+        cfg.source_size = cfg_train.dataset.source_image_res
+        cfg.render_size = cfg_train.dataset.render_image.high
+        _relative_path = os.path.join(cfg_train.experiment.parent, cfg_train.experiment.child, os.path.basename(cli_cfg.model_name).split('_')[-1])
+        cfg.video_dump = os.path.join("exps", 'videos', _relative_path)
+        cfg.mesh_dump = os.path.join("exps", 'meshes', _relative_path)
+
+    if args.infer is not None:
+        cfg_infer = OmegaConf.load(args.infer)
+        cfg.merge_with(cfg_infer)
+        cfg.setdefault('video_dump', os.path.join("dumps", cli_cfg.model_name, 'videos'))
+        cfg.setdefault('mesh_dump', os.path.join("dumps", cli_cfg.model_name, 'meshes'))
+
+    cfg.merge_with(cli_cfg)
+
+    """
+    [required]
+    model_name: str
+    image_input: str
+    export_video: bool
+    export_mesh: bool
+
+    [special]
+    source_size: int
+    render_size: int
+    video_dump: str
+    mesh_dump: str
+
+    [default]
+    render_views: int
+    render_fps: int
+    mesh_size: int
+    mesh_thres: float
+    frame_size: int
+    logger: str
+    """
+
+    cfg.setdefault('logger', 'INFO')
+
+    # assert not (args.config is not None and args.infer is not None), "Only one of config and infer should be provided"
+    assert cfg.model_name is not None, "model_name is required"
+    if not os.environ.get('APP_ENABLED', None):
+        assert cfg.image_input is not None, "image_input is required"
+        assert cfg.export_video or cfg.export_mesh, \
+            "At least one of export_video or export_mesh should be True"
+        cfg.app_enabled = False
+    else:
+        cfg.app_enabled = True
+
+    return cfg
+
+
+@REGISTRY_RUNNERS.register('infer.lrm')
+class LRMInferrer(Inferrer):
+
+    EXP_TYPE: str = 'lrm'
+
+    def __init__(self):
+        super().__init__()
+
+        self.cfg = parse_configs()
+        configure_logger(
+            stream_level=self.cfg.logger,
+            log_level=self.cfg.logger,
+        )
+
+        self.model = self._build_model(self.cfg).to(self.device)
+
+    def _build_model(self, cfg):
+        from openlrm.models import model_dict
+        hf_model_cls = wrap_model_hub(model_dict[self.EXP_TYPE])
+        model = hf_model_cls.from_pretrained(cfg.model_name)
+        return model
+
+    def _default_source_camera(self, dist_to_center: float = 2.0, batch_size: int = 1, device: torch.device = torch.device('cpu')):
+        # return: (N, D_cam_raw)
+        canonical_camera_extrinsics = torch.tensor([[
+            [1, 0, 0, 0],
+            [0, 0, -1, -dist_to_center],
+            [0, 1, 0, 0],
+        ]], dtype=torch.float32, device=device)
+        canonical_camera_intrinsics = create_intrinsics(
+            f=0.75,
+            c=0.5,
+            device=device,
+        ).unsqueeze(0)
+        source_camera = build_camera_principle(canonical_camera_extrinsics, canonical_camera_intrinsics)
+        return source_camera.repeat(batch_size, 1)
+
+    def _default_render_cameras(self, n_views: int, batch_size: int = 1, device: torch.device = torch.device('cpu')):
+        # return: (N, M, D_cam_render)
+        render_camera_extrinsics = surrounding_views_linspace(n_views=n_views, device=device)
+        render_camera_intrinsics = create_intrinsics(
+            f=0.75,
+            c=0.5,
+            device=device,
+        ).unsqueeze(0).repeat(render_camera_extrinsics.shape[0], 1, 1)
+        render_cameras = build_camera_standard(render_camera_extrinsics, render_camera_intrinsics)
+        return render_cameras.unsqueeze(0).repeat(batch_size, 1, 1)
+
+    def infer_planes(self, image: torch.Tensor, source_cam_dist: float):
+        N = image.shape[0]
+        source_camera = self._default_source_camera(dist_to_center=source_cam_dist, batch_size=N, device=self.device)
+        planes = self.model.forward_planes(image, source_camera)
+        assert N == planes.shape[0]
+        return planes
+
+    def infer_video(self, planes: torch.Tensor, frame_size: int, render_size: int, render_views: int, render_fps: int, dump_video_path: str):
+        N = planes.shape[0]
+        render_cameras = self._default_render_cameras(n_views=render_views, batch_size=N, device=self.device)
+        render_anchors = torch.zeros(N, render_cameras.shape[1], 2, device=self.device)
+        render_resolutions = torch.ones(N, render_cameras.shape[1], 1, device=self.device) * render_size
+        render_bg_colors = torch.ones(N, render_cameras.shape[1], 1, device=self.device, dtype=torch.float32) * 1.
+
+        frames = []
+        for i in range(0, render_cameras.shape[1], frame_size):
+            frames.append(
+                self.model.synthesizer(
+                    planes=planes,
+                    cameras=render_cameras[:, i:i+frame_size],
+                    anchors=render_anchors[:, i:i+frame_size],
+                    resolutions=render_resolutions[:, i:i+frame_size],
+                    bg_colors=render_bg_colors[:, i:i+frame_size],
+                    region_size=render_size,
+                )
+            )
+        # merge frames
+        frames = {
+            k: torch.cat([r[k] for r in frames], dim=1)
+            for k in frames[0].keys()
+        }
+        # dump
+        os.makedirs(os.path.dirname(dump_video_path), exist_ok=True)
+        for k, v in frames.items():
+            if k == 'images_rgb':
+                images_to_video(
+                    images=v[0],
+                    output_path=dump_video_path,
+                    fps=render_fps,
+                    gradio_codec=self.cfg.app_enabled,
+                )
+
+    def infer_mesh(self, planes: torch.Tensor, mesh_size: int, mesh_thres: float, dump_mesh_path: str):
+        grid_out = self.model.synthesizer.forward_grid(
+            planes=planes,
+            grid_size=mesh_size,
+        )
+        
+        vtx, faces = mcubes.marching_cubes(grid_out['sigma'].squeeze(0).squeeze(-1).cpu().numpy(), mesh_thres)
+        vtx = vtx / (mesh_size - 1) * 2 - 1
+
+        vtx_tensor = torch.tensor(vtx, dtype=torch.float32, device=self.device).unsqueeze(0)
+        vtx_colors = self.model.synthesizer.forward_points(planes, vtx_tensor)['rgb'].squeeze(0).cpu().numpy()  # (0, 1)
+        vtx_colors = (vtx_colors * 255).astype(np.uint8)
+        
+        mesh = trimesh.Trimesh(vertices=vtx, faces=faces, vertex_colors=vtx_colors)
+
+        # dump
+        os.makedirs(os.path.dirname(dump_mesh_path), exist_ok=True)
+        mesh.export(dump_mesh_path)
+
+    def infer_single(self, image_path: str, source_cam_dist: float, export_video: bool, export_mesh: bool, dump_video_path: str, dump_mesh_path: str):
+        source_size = self.cfg.source_size
+        render_size = self.cfg.render_size
+        render_views = self.cfg.render_views
+        render_fps = self.cfg.render_fps
+        mesh_size = self.cfg.mesh_size
+        mesh_thres = self.cfg.mesh_thres
+        frame_size = self.cfg.frame_size
+        source_cam_dist = self.cfg.source_cam_dist if source_cam_dist is None else source_cam_dist
+
+        # prepare image: [1, C_img, H_img, W_img], 0-1 scale
+        image = torch.from_numpy(np.array(Image.open(image_path))).to(self.device)
+        image = image.permute(2, 0, 1).unsqueeze(0) / 255.0
+        if image.shape[1] == 4:  # RGBA
+            image = image[:, :3, ...] * image[:, 3:, ...] + (1 - image[:, 3:, ...])
+        image = torch.nn.functional.interpolate(image, size=(source_size, source_size), mode='bicubic', align_corners=True)
+        image = torch.clamp(image, 0, 1)
+
+        with torch.no_grad():
+            planes = self.infer_planes(image, source_cam_dist=source_cam_dist)
+
+            results = {}
+            if export_video:
+                frames = self.infer_video(planes, frame_size=frame_size, render_size=render_size, render_views=render_views, render_fps=render_fps, dump_video_path=dump_video_path)
+                results.update({
+                    'frames': frames,
+                })
+            if export_mesh:
+                mesh = self.infer_mesh(planes, mesh_size=mesh_size, mesh_thres=mesh_thres, dump_mesh_path=dump_mesh_path)
+                results.update({
+                    'mesh': mesh,
+                })
+
+    def infer(self):
+
+        image_paths = []
+        if os.path.isfile(self.cfg.image_input):
+            omit_prefix = os.path.dirname(self.cfg.image_input)
+            image_paths.append(self.cfg.image_input)
+        else:
+            omit_prefix = self.cfg.image_input
+            for root, dirs, files in os.walk(self.cfg.image_input):
+                for file in files:
+                    if file.endswith('.png'):
+                        image_paths.append(os.path.join(root, file))
+            image_paths.sort()
+
+        # alloc to each DDP worker
+        image_paths = image_paths[self.accelerator.process_index::self.accelerator.num_processes]
+
+        for image_path in tqdm(image_paths, disable=not self.accelerator.is_local_main_process):
+
+            # prepare dump paths
+            image_name = os.path.basename(image_path)
+            uid = image_name.split('.')[0]
+            subdir_path = os.path.dirname(image_path).replace(omit_prefix, '')
+            subdir_path = subdir_path[1:] if subdir_path.startswith('/') else subdir_path
+            dump_video_path = os.path.join(
+                self.cfg.video_dump,
+                subdir_path,
+                f'{uid}.mov',
+            )
+            dump_mesh_path = os.path.join(
+                self.cfg.mesh_dump,
+                subdir_path,
+                f'{uid}.ply',
+            )
+
+            self.infer_single(
+                image_path,
+                source_cam_dist=None,
+                export_video=self.cfg.export_video,
+                export_mesh=self.cfg.export_mesh,
+                dump_video_path=dump_video_path,
+                dump_mesh_path=dump_mesh_path,
+            )
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from .lrm import LRMInferrer
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+
+__all__ = ['TVLoss']
+
+
+class TVLoss(nn.Module):
+    """
+    Total variance loss.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+    def numel_excluding_first_dim(self, x):
+        return x.numel() // x.shape[0]
+
+    @torch.compile
+    def forward(self, x):
+        """
+        Assume batched and channel first with inner sizes.
+
+        Args:
+            x: [N, M, C, H, W]
+
+        Returns:
+            Mean-reduced TV loss with element-level scaling.
+        """
+        N, M, C, H, W = x.shape
+        x = x.reshape(N*M, C, H, W)
+        diff_i = x[..., 1:, :] - x[..., :-1, :]
+        diff_j = x[..., :, 1:] - x[..., :, :-1]
+        div_i = self.numel_excluding_first_dim(diff_i)
+        div_j = self.numel_excluding_first_dim(diff_j)
+        tv_i = diff_i.pow(2).sum(dim=[1,2,3]) / div_i
+        tv_j = diff_j.pow(2).sum(dim=[1,2,3]) / div_j
+        tv = tv_i + tv_j
+        batch_tv = tv.reshape(N, M).mean(dim=1)
+        all_tv = batch_tv.mean()
+        return all_tv
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+
+__all__ = ['LPIPSLoss']
+
+
+class LPIPSLoss(nn.Module):
+    """
+    Compute LPIPS loss between two images.
+    """
+
+    def __init__(self, device, prefech: bool = False):
+        super().__init__()
+        self.device = device
+        self.cached_models = {}
+        if prefech:
+            self.prefetch_models()
+
+    def _get_model(self, model_name: str):
+        if model_name not in self.cached_models:
+            import warnings
+            with warnings.catch_warnings():
+                warnings.filterwarnings('ignore', category=UserWarning)
+                import lpips
+                _model = lpips.LPIPS(net=model_name, eval_mode=True, verbose=False).to(self.device)
+            _model = torch.compile(_model)
+            self.cached_models[model_name] = _model
+        return self.cached_models[model_name]
+
+    def prefetch_models(self):
+        _model_names = ['alex', 'vgg']
+        for model_name in _model_names:
+            self._get_model(model_name)
+
+    def forward(self, x, y, is_training: bool = True):
+        """
+        Assume images are 0-1 scaled and channel first.
+        
+        Args:
+            x: [N, M, C, H, W]
+            y: [N, M, C, H, W]
+            is_training: whether to use VGG or AlexNet.
+        
+        Returns:
+            Mean-reduced LPIPS loss across batch.
+        """
+        model_name = 'vgg' if is_training else 'alex'
+        loss_fn = self._get_model(model_name)
+        N, M, C, H, W = x.shape
+        x = x.reshape(N*M, C, H, W)
+        y = y.reshape(N*M, C, H, W)
+        image_loss = loss_fn(x, y, normalize=True).mean(dim=[1, 2, 3])
+        batch_loss = image_loss.reshape(N, M).mean(dim=1)
+        all_loss = batch_loss.mean()
+        return all_loss
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+
+__all__ = ['PixelLoss']
+
+
+class PixelLoss(nn.Module):
+    """
+    Pixel-wise loss between two images.
+    """
+
+    def __init__(self, option: str = 'mse'):
+        super().__init__()
+        self.loss_fn = self._build_from_option(option)
+
+    @staticmethod
+    def _build_from_option(option: str, reduction: str = 'none'):
+        if option == 'mse':
+            return nn.MSELoss(reduction=reduction)
+        elif option == 'l1':
+            return nn.L1Loss(reduction=reduction)
+        else:
+            raise NotImplementedError(f'Unknown pixel loss option: {option}')
+
+    @torch.compile
+    def forward(self, x, y):
+        """
+        Assume images are channel first.
+        
+        Args:
+            x: [N, M, C, H, W]
+            y: [N, M, C, H, W]
+        
+        Returns:
+            Mean-reduced pixel loss across batch.
+        """
+        N, M, C, H, W = x.shape
+        x = x.reshape(N*M, C, H, W)
+        y = y.reshape(N*M, C, H, W)
+        image_loss = self.loss_fn(x, y).mean(dim=[1, 2, 3])
+        batch_loss = image_loss.reshape(N, M).mean(dim=1)
+        all_loss = batch_loss.mean()
+        return all_loss
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from .pixelwise import *
+from .perceptual import *
+from .tvloss import *
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+from accelerate.logging import get_logger
+
+from .embedder import CameraEmbedder
+from .transformer import TransformerDecoder
+from .rendering.synthesizer import TriplaneSynthesizer
+
+
+logger = get_logger(__name__)
+
+
+class ModelLRM(nn.Module):
+    """
+    Full model of the basic single-view large reconstruction model.
+    """
+    def __init__(self, camera_embed_dim: int, rendering_samples_per_ray: int,
+                 transformer_dim: int, transformer_layers: int, transformer_heads: int,
+                 triplane_low_res: int, triplane_high_res: int, triplane_dim: int,
+                 encoder_freeze: bool = True, encoder_type: str = 'dino',
+                 encoder_model_name: str = 'facebook/dino-vitb16', encoder_feat_dim: int = 768):
+        super().__init__()
+        
+        # attributes
+        self.encoder_feat_dim = encoder_feat_dim
+        self.camera_embed_dim = camera_embed_dim
+        self.triplane_low_res = triplane_low_res
+        self.triplane_high_res = triplane_high_res
+        self.triplane_dim = triplane_dim
+
+        # modules
+        self.encoder = self._encoder_fn(encoder_type)(
+            model_name=encoder_model_name,
+            freeze=encoder_freeze,
+        )
+        self.camera_embedder = CameraEmbedder(
+            raw_dim=12+4, embed_dim=camera_embed_dim,
+        )
+        # initialize pos_embed with 1/sqrt(dim) * N(0, 1)
+        self.pos_embed = nn.Parameter(torch.randn(1, 3*triplane_low_res**2, transformer_dim) * (1. / transformer_dim) ** 0.5)
+        self.transformer = TransformerDecoder(
+            block_type='cond_mod',
+            num_layers=transformer_layers, num_heads=transformer_heads,
+            inner_dim=transformer_dim, cond_dim=encoder_feat_dim, mod_dim=camera_embed_dim,
+        )
+        self.upsampler = nn.ConvTranspose2d(transformer_dim, triplane_dim, kernel_size=2, stride=2, padding=0)
+        self.synthesizer = TriplaneSynthesizer(
+            triplane_dim=triplane_dim, samples_per_ray=rendering_samples_per_ray,
+        )
+
+    @staticmethod
+    def _encoder_fn(encoder_type: str):
+        encoder_type = encoder_type.lower()
+        assert encoder_type in ['dino', 'dinov2'], "Unsupported encoder type"
+        if encoder_type == 'dino':
+            from .encoders.dino_wrapper import DinoWrapper
+            logger.info("Using DINO as the encoder")
+            return DinoWrapper
+        elif encoder_type == 'dinov2':
+            from .encoders.dinov2_wrapper import Dinov2Wrapper
+            logger.info("Using DINOv2 as the encoder")
+            return Dinov2Wrapper
+
+    def forward_transformer(self, image_feats, camera_embeddings):
+        assert image_feats.shape[0] == camera_embeddings.shape[0], \
+            "Batch size mismatch for image_feats and camera_embeddings!"
+        N = image_feats.shape[0]
+        x = self.pos_embed.repeat(N, 1, 1)  # [N, L, D]
+        x = self.transformer(
+            x,
+            cond=image_feats,
+            mod=camera_embeddings,
+        )
+        return x
+
+    def reshape_upsample(self, tokens):
+        N = tokens.shape[0]
+        H = W = self.triplane_low_res
+        x = tokens.view(N, 3, H, W, -1)
+        x = torch.einsum('nihwd->indhw', x)  # [3, N, D, H, W]
+        x = x.contiguous().view(3*N, -1, H, W)  # [3*N, D, H, W]
+        x = self.upsampler(x)  # [3*N, D', H', W']
+        x = x.view(3, N, *x.shape[-3:])  # [3, N, D', H', W']
+        x = torch.einsum('indhw->nidhw', x)  # [N, 3, D', H', W']
+        x = x.contiguous()
+        return x
+
+    @torch.compile
+    def forward_planes(self, image, camera):
+        # image: [N, C_img, H_img, W_img]
+        # camera: [N, D_cam_raw]
+        N = image.shape[0]
+
+        # encode image
+        image_feats = self.encoder(image)
+        assert image_feats.shape[-1] == self.encoder_feat_dim, \
+            f"Feature dimension mismatch: {image_feats.shape[-1]} vs {self.encoder_feat_dim}"
+
+        # embed camera
+        camera_embeddings = self.camera_embedder(camera)
+        assert camera_embeddings.shape[-1] == self.camera_embed_dim, \
+            f"Feature dimension mismatch: {camera_embeddings.shape[-1]} vs {self.camera_embed_dim}"
+
+        # transformer generating planes
+        tokens = self.forward_transformer(image_feats, camera_embeddings)
+        planes = self.reshape_upsample(tokens)
+        assert planes.shape[0] == N, "Batch size mismatch for planes"
+        assert planes.shape[1] == 3, "Planes should have 3 channels"
+
+        return planes
+
+    def forward(self, image, source_camera, render_cameras, render_anchors, render_resolutions, render_bg_colors, render_region_size: int):
+        # image: [N, C_img, H_img, W_img]
+        # source_camera: [N, D_cam_raw]
+        # render_cameras: [N, M, D_cam_render]
+        # render_anchors: [N, M, 2]
+        # render_resolutions: [N, M, 1]
+        # render_bg_colors: [N, M, 1]
+        # render_region_size: int
+        assert image.shape[0] == source_camera.shape[0], "Batch size mismatch for image and source_camera"
+        assert image.shape[0] == render_cameras.shape[0], "Batch size mismatch for image and render_cameras"
+        assert image.shape[0] == render_anchors.shape[0], "Batch size mismatch for image and render_anchors"
+        assert image.shape[0] == render_bg_colors.shape[0], "Batch size mismatch for image and render_bg_colors"
+        N, M = render_cameras.shape[:2]
+
+        planes = self.forward_planes(image, source_camera)
+
+        # render target views
+        render_results = self.synthesizer(planes, render_cameras, render_anchors, render_resolutions, render_bg_colors, render_region_size)
+        assert render_results['images_rgb'].shape[0] == N, "Batch size mismatch for render_results"
+        assert render_results['images_rgb'].shape[1] == M, "Number of rendered views should be consistent with render_cameras"
+
+        return {
+            'planes': planes,
+            **render_results,
+        }
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+
+
+class CameraEmbedder(nn.Module):
+    """
+    Embed camera features to a high-dimensional vector.
+    
+    Reference:
+    DiT: https://github.com/facebookresearch/DiT/blob/main/models.py#L27
+    """
+    def __init__(self, raw_dim: int, embed_dim: int):
+        super().__init__()
+        self.mlp = nn.Sequential(
+            nn.Linear(raw_dim, embed_dim),
+            nn.SiLU(),
+            nn.Linear(embed_dim, embed_dim),
+        )
+
+    @torch.compile
+    def forward(self, x):
+        return self.mlp(x)
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from functools import partial
+import torch
+import torch.nn as nn
+from accelerate.logging import get_logger
+
+
+logger = get_logger(__name__)
+
+
+class TransformerDecoder(nn.Module):
+
+    """
+    Transformer blocks that process the input and optionally use condition and modulation.
+    """
+
+    def __init__(self, block_type: str,
+                 num_layers: int, num_heads: int,
+                 inner_dim: int, cond_dim: int = None, mod_dim: int = None,
+                 eps: float = 1e-6):
+        super().__init__()
+        self.block_type = block_type
+        self.layers = nn.ModuleList([
+            self._block_fn(inner_dim, cond_dim, mod_dim)(
+                num_heads=num_heads,
+                eps=eps,
+            )
+            for _ in range(num_layers)
+        ])
+        self.norm = nn.LayerNorm(inner_dim, eps=eps)
+
+    @property
+    def block_type(self):
+        return self._block_type
+
+    @block_type.setter
+    def block_type(self, block_type):
+        assert block_type in ['basic', 'cond', 'mod', 'cond_mod'], \
+            f"Unsupported block type: {block_type}"
+        self._block_type = block_type
+
+    def _block_fn(self, inner_dim, cond_dim, mod_dim):
+        assert inner_dim is not None, f"inner_dim must always be specified"
+        if self.block_type == 'basic':
+            assert cond_dim is None and mod_dim is None, \
+                f"Condition and modulation are not supported for BasicBlock"
+            from .block import BasicBlock
+            logger.debug(f"Using BasicBlock")
+            return partial(BasicBlock, inner_dim=inner_dim)
+        elif self.block_type == 'cond':
+            assert cond_dim is not None, f"Condition dimension must be specified for ConditionBlock"
+            assert mod_dim is None, f"Modulation dimension is not supported for ConditionBlock"
+            from .block import ConditionBlock
+            logger.debug(f"Using ConditionBlock")
+            return partial(ConditionBlock, inner_dim=inner_dim, cond_dim=cond_dim)
+        elif self.block_type == 'mod':
+            logger.error(f"modulation without condition is not implemented")
+            raise NotImplementedError(f"modulation without condition is not implemented")
+        elif self.block_type == 'cond_mod':
+            assert cond_dim is not None and mod_dim is not None, \
+                f"Condition and modulation dimensions must be specified for ConditionModulationBlock"
+            from .block import ConditionModulationBlock
+            logger.debug(f"Using ConditionModulationBlock")
+            return partial(ConditionModulationBlock, inner_dim=inner_dim, cond_dim=cond_dim, mod_dim=mod_dim)
+        else:
+            raise ValueError(f"Unsupported block type during runtime: {self.block_type}")
+
+    def assert_runtime_integrity(self, x: torch.Tensor, cond: torch.Tensor, mod: torch.Tensor):
+        assert x is not None, f"Input tensor must be specified"
+        if self.block_type == 'basic':
+            assert cond is None and mod is None, \
+                f"Condition and modulation are not supported for BasicBlock"
+        elif self.block_type == 'cond':
+            assert cond is not None and mod is None, \
+                f"Condition must be specified and modulation is not supported for ConditionBlock"
+        elif self.block_type == 'mod':
+            raise NotImplementedError(f"modulation without condition is not implemented")
+        else:
+            assert cond is not None and mod is not None, \
+                f"Condition and modulation must be specified for ConditionModulationBlock"
+
+    def forward_layer(self, layer: nn.Module, x: torch.Tensor, cond: torch.Tensor, mod: torch.Tensor):
+        if self.block_type == 'basic':
+            return layer(x)
+        elif self.block_type == 'cond':
+            return layer(x, cond)
+        elif self.block_type == 'mod':
+            return layer(x, mod)
+        else:
+            return layer(x, cond, mod)
+
+    def forward(self, x: torch.Tensor, cond: torch.Tensor = None, mod: torch.Tensor = None):
+        # x: [N, L, D]
+        # cond: [N, L_cond, D_cond] or None
+        # mod: [N, D_mod] or None
+        self.assert_runtime_integrity(x, cond, mod)
+        for layer in self.layers:
+            x = self.forward_layer(layer, x, cond, mod)
+        x = self.norm(x)
+        return x
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch.nn as nn
+
+from .modulate import ModLN
+
+
+class BasicBlock(nn.Module):
+    """
+    Transformer block that is in its simplest form.
+    Designed for PF-LRM architecture.
+    """
+    # Block contains a self-attention layer and an MLP
+    def __init__(self, inner_dim: int, num_heads: int, eps: float,
+                 attn_drop: float = 0., attn_bias: bool = False,
+                 mlp_ratio: float = 4., mlp_drop: float = 0.):
+        super().__init__()
+        self.norm1 = nn.LayerNorm(inner_dim, eps=eps)
+        self.self_attn = nn.MultiheadAttention(
+            embed_dim=inner_dim, num_heads=num_heads,
+            dropout=attn_drop, bias=attn_bias, batch_first=True)
+        self.norm2 = nn.LayerNorm(inner_dim, eps=eps)
+        self.mlp = nn.Sequential(
+            nn.Linear(inner_dim, int(inner_dim * mlp_ratio)),
+            nn.GELU(),
+            nn.Dropout(mlp_drop),
+            nn.Linear(int(inner_dim * mlp_ratio), inner_dim),
+            nn.Dropout(mlp_drop),
+        )
+
+    def forward(self, x):
+        # x: [N, L, D]
+        before_sa = self.norm1(x)
+        x = x + self.self_attn(before_sa, before_sa, before_sa, need_weights=False)[0]
+        x = x + self.mlp(self.norm2(x))
+        return x
+
+
+class ConditionBlock(nn.Module):
+    """
+    Transformer block that takes in a cross-attention condition.
+    Designed for SparseLRM architecture.
+    """
+    # Block contains a cross-attention layer, a self-attention layer, and an MLP
+    def __init__(self, inner_dim: int, cond_dim: int, num_heads: int, eps: float,
+                 attn_drop: float = 0., attn_bias: bool = False,
+                 mlp_ratio: float = 4., mlp_drop: float = 0.):
+        super().__init__()
+        self.norm1 = nn.LayerNorm(inner_dim, eps=eps)
+        self.cross_attn = nn.MultiheadAttention(
+            embed_dim=inner_dim, num_heads=num_heads, kdim=cond_dim, vdim=cond_dim,
+            dropout=attn_drop, bias=attn_bias, batch_first=True)
+        self.norm2 = nn.LayerNorm(inner_dim, eps=eps)
+        self.self_attn = nn.MultiheadAttention(
+            embed_dim=inner_dim, num_heads=num_heads,
+            dropout=attn_drop, bias=attn_bias, batch_first=True)
+        self.norm3 = nn.LayerNorm(inner_dim, eps=eps)
+        self.mlp = nn.Sequential(
+            nn.Linear(inner_dim, int(inner_dim * mlp_ratio)),
+            nn.GELU(),
+            nn.Dropout(mlp_drop),
+            nn.Linear(int(inner_dim * mlp_ratio), inner_dim),
+            nn.Dropout(mlp_drop),
+        )
+
+    def forward(self, x, cond):
+        # x: [N, L, D]
+        # cond: [N, L_cond, D_cond]
+        x = x + self.cross_attn(self.norm1(x), cond, cond, need_weights=False)[0]
+        before_sa = self.norm2(x)
+        x = x + self.self_attn(before_sa, before_sa, before_sa, need_weights=False)[0]
+        x = x + self.mlp(self.norm3(x))
+        return x
+
+
+class ConditionModulationBlock(nn.Module):
+    """
+    Transformer block that takes in a cross-attention condition and another modulation vector applied to sub-blocks.
+    Designed for raw LRM architecture.
+    """
+    # Block contains a cross-attention layer, a self-attention layer, and an MLP
+    def __init__(self, inner_dim: int, cond_dim: int, mod_dim: int, num_heads: int, eps: float,
+                 attn_drop: float = 0., attn_bias: bool = False,
+                 mlp_ratio: float = 4., mlp_drop: float = 0.):
+        super().__init__()
+        self.norm1 = ModLN(inner_dim, mod_dim, eps)
+        self.cross_attn = nn.MultiheadAttention(
+            embed_dim=inner_dim, num_heads=num_heads, kdim=cond_dim, vdim=cond_dim,
+            dropout=attn_drop, bias=attn_bias, batch_first=True)
+        self.norm2 = ModLN(inner_dim, mod_dim, eps)
+        self.self_attn = nn.MultiheadAttention(
+            embed_dim=inner_dim, num_heads=num_heads,
+            dropout=attn_drop, bias=attn_bias, batch_first=True)
+        self.norm3 = ModLN(inner_dim, mod_dim, eps)
+        self.mlp = nn.Sequential(
+            nn.Linear(inner_dim, int(inner_dim * mlp_ratio)),
+            nn.GELU(),
+            nn.Dropout(mlp_drop),
+            nn.Linear(int(inner_dim * mlp_ratio), inner_dim),
+            nn.Dropout(mlp_drop),
+        )
+
+    def forward(self, x, cond, mod):
+        # x: [N, L, D]
+        # cond: [N, L_cond, D_cond]
+        # mod: [N, D_mod]
+        x = x + self.cross_attn(self.norm1(x, mod), cond, cond, need_weights=False)[0]
+        before_sa = self.norm2(x, mod)
+        x = x + self.self_attn(before_sa, before_sa, before_sa, need_weights=False)[0]
+        x = x + self.mlp(self.norm3(x, mod))
+        return x
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+
+
+class ModLN(nn.Module):
+    """
+    Modulation with adaLN.
+    
+    References:
+    DiT: https://github.com/facebookresearch/DiT/blob/main/models.py#L101
+    """
+    def __init__(self, inner_dim: int, mod_dim: int, eps: float):
+        super().__init__()
+        self.norm = nn.LayerNorm(inner_dim, eps=eps)
+        self.mlp = nn.Sequential(
+            nn.SiLU(),
+            nn.Linear(mod_dim, inner_dim * 2),
+        )
+
+    @staticmethod
+    def modulate(x, shift, scale):
+        # x: [N, L, D]
+        # shift, scale: [N, D]
+        return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
+
+    def forward(self, x: torch.Tensor, mod: torch.Tensor) -> torch.Tensor:
+        shift, scale = self.mlp(mod).chunk(2, dim=-1)  # [N, D]
+        return self.modulate(self.norm(x), shift, scale)  # [N, L, D]
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+from .modeling_lrm import ModelLRM
+
+
+model_dict = {
+    'lrm': ModelLRM,
+}
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+from accelerate.logging import get_logger
+
+
+logger = get_logger(__name__)
+
+
+class Dinov2Wrapper(nn.Module):
+    """
+    Dino v2 wrapper using original implementation, hacked with modulation.
+    """
+    def __init__(self, model_name: str, modulation_dim: int = None, freeze: bool = True):
+        super().__init__()
+        self.modulation_dim = modulation_dim
+        self.model = self._build_dinov2(model_name, modulation_dim=modulation_dim)
+        if freeze:
+            if modulation_dim is not None:
+                raise ValueError("Modulated Dinov2 requires training, freezing is not allowed.")
+            self._freeze()
+
+    def _freeze(self):
+        logger.warning(f"======== Freezing Dinov2Wrapper ========")
+        self.model.eval()
+        for name, param in self.model.named_parameters():
+            param.requires_grad = False
+
+    @staticmethod
+    def _build_dinov2(model_name: str, modulation_dim: int = None, pretrained: bool = True):
+        from importlib import import_module
+        dinov2_hub = import_module(".dinov2.hub.backbones", package=__package__)
+        model_fn = getattr(dinov2_hub, model_name)
+        logger.debug(f"Modulation dim for Dinov2 is {modulation_dim}.")
+        model = model_fn(modulation_dim=modulation_dim, pretrained=pretrained)
+        return model
+
+    @torch.compile
+    def forward(self, image: torch.Tensor, mod: torch.Tensor = None):
+        # image: [N, C, H, W]
+        # mod: [N, D] or None
+        # RGB image with [0,1] scale and properly sized
+        if self.modulation_dim is None:
+            assert mod is None, "Unexpected modulation input in dinov2 forward."
+            outs = self.model(image, is_training=True)
+        else:
+            assert mod is not None, "Modulation input is required in modulated dinov2 forward."
+            outs = self.model(image, mod=mod, is_training=True)
+        ret = torch.cat([
+            outs["x_norm_clstoken"].unsqueeze(dim=1),
+            outs["x_norm_patchtokens"],
+        ], dim=1)
+        return ret
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Empty
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+import torch
+import torch.nn as nn
+from transformers import ViTImageProcessor, ViTModel
+from accelerate.logging import get_logger
+
+
+logger = get_logger(__name__)
+
+
+class DinoWrapper(nn.Module):
+    """
+    Dino v1 wrapper using huggingface transformer implementation.
+    """
+    def __init__(self, model_name: str, freeze: bool = True):
+        super().__init__()
+        self.model, self.processor = self._build_dino(model_name)
+        if freeze:
+            self._freeze()
+
+    @torch.compile
+    def forward_model(self, inputs):
+        return self.model(**inputs, interpolate_pos_encoding=True)
+
+    def forward(self, image):
+        # image: [N, C, H, W], on cpu
+        # RGB image with [0,1] scale and properly sized
+        inputs = self.processor(images=image, return_tensors="pt", do_rescale=False, do_resize=False).to(self.model.device)
+        # This resampling of positional embedding uses bicubic interpolation
+        outputs = self.forward_model(inputs)
+        last_hidden_states = outputs.last_hidden_state
+        return last_hidden_states
+
+    def _freeze(self):
+        logger.warning(f"======== Freezing DinoWrapper ========")
+        self.model.eval()
+        for name, param in self.model.named_parameters():
+            param.requires_grad = False
+
+    @staticmethod
+    def _build_dino(model_name: str, proxy_error_retries: int = 3, proxy_error_cooldown: int = 5):
+        import requests
+        try:
+            model = ViTModel.from_pretrained(model_name, add_pooling_layer=False)
+            processor = ViTImageProcessor.from_pretrained(model_name)
+            return model, processor
+        except requests.exceptions.ProxyError as err:
+            if proxy_error_retries > 0:
+                print(f"Huggingface ProxyError: Retrying ({proxy_error_retries}) in {proxy_error_cooldown} seconds...")
+                import time
+                time.sleep(proxy_error_cooldown)
+                return DinoWrapper._build_dino(model_name, proxy_error_retries - 1, proxy_error_cooldown)
+            else:
+                raise err
+
+
+# Copyright (c) 2023-2024, Zexin He
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Empty
+
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
+
+# References:
+#   https://github.com/facebookresearch/dino/blob/main/vision_transformer.py
+#   https://github.com/rwightman/pytorch-image-models/tree/master/timm/models/vision_transformer.py
+
+# ******************************************************************************
+#   Code modified by Zexin He in 2023-2024.
+#   Modifications are marked with clearly visible comments
+#   licensed under the Apache License, Version 2.0.
+# ******************************************************************************
+
+from functools import partial
+import math
+import logging
+from typing import Sequence, Tuple, Union, Callable
+
+import torch
+import torch.nn as nn
+import torch.utils.checkpoint
+from torch.nn.init import trunc_normal_
+
+# ********** Modified by Zexin He in 2023-2024 **********
+# Avoid using nested tensor for now, deprecating usage of NestedTensorBlock
+from ..layers import Mlp, PatchEmbed, SwiGLUFFNFused, MemEffAttention, Block, BlockWithModulation
+# ********************************************************
+
+
+logger = logging.getLogger("dinov2")
+
+
+def named_apply(fn: Callable, module: nn.Module, name="", depth_first=True, include_root=False) -> nn.Module:
+    if not depth_first and include_root:
+        fn(module=module, name=name)
+    for child_name, child_module in module.named_children():
+        child_name = ".".join((name, child_name)) if name else child_name
+        named_apply(fn=fn, module=child_module, name=child_name, depth_first=depth_first, include_root=True)
+    if depth_first and include_root:
+        fn(module=module, name=name)
+    return module
+
+
+class BlockChunk(nn.ModuleList):
+    def forward(self, x):
+        for b in self:
+            x = b(x)
+        return x
+
+
+class DinoVisionTransformer(nn.Module):
+    def __init__(
+        self,
+        img_size=224,
+        patch_size=16,
+        in_chans=3,
+        embed_dim=768,
+        depth=12,
+        num_heads=12,
+        mlp_ratio=4.0,
+        qkv_bias=True,
+        ffn_bias=True,
+        proj_bias=True,
+        drop_path_rate=0.0,
+        drop_path_uniform=False,
+        init_values=None,  # for layerscale: None or 0 => no layerscale
+        embed_layer=PatchEmbed,
+        act_layer=nn.GELU,
+        block_fn=Block,
+        # ********** Modified by Zexin He in 2023-2024 **********
+        modulation_dim: int = None,
+        # ********************************************************
+        ffn_layer="mlp",
+        block_chunks=1,
+        num_register_tokens=0,
+        interpolate_antialias=False,
+        interpolate_offset=0.1,
+    ):
+        """
+        Args:
+            img_size (int, tuple): input image size
+            patch_size (int, tuple): patch size
+            in_chans (int): number of input channels
+            embed_dim (int): embedding dimension
+            depth (int): depth of transformer
+            num_heads (int): number of attention heads
+            mlp_ratio (int): ratio of mlp hidden dim to embedding dim
+            qkv_bias (bool): enable bias for qkv if True
+            proj_bias (bool): enable bias for proj in attn if True
+            ffn_bias (bool): enable bias for ffn if True
+            drop_path_rate (float): stochastic depth rate
+            drop_path_uniform (bool): apply uniform drop rate across blocks
+            weight_init (str): weight init scheme
+            init_values (float): layer-scale init values
+            embed_layer (nn.Module): patch embedding layer
+            act_layer (nn.Module): MLP activation layer
+            block_fn (nn.Module): transformer block class
+            ffn_layer (str): "mlp", "swiglu", "swiglufused" or "identity"
+            block_chunks: (int) split block sequence into block_chunks units for FSDP wrap
+            num_register_tokens: (int) number of extra cls tokens (so-called "registers")
+            interpolate_antialias: (str) flag to apply anti-aliasing when interpolating positional embeddings
+            interpolate_offset: (float) work-around offset to apply when interpolating positional embeddings
+        """
+        super().__init__()
+
+        # ********** Modified by Zexin He in 2023-2024 **********
+        block_norm_layer = None
+        if modulation_dim is not None:
+            from ....modulate import ModLN
+            block_norm_layer = partial(ModLN, mod_dim=modulation_dim)
+        else:
+            block_norm_layer = nn.LayerNorm
+        block_norm_layer = partial(block_norm_layer, eps=1e-6)
+        # ********************************************************
+        norm_layer = partial(nn.LayerNorm, eps=1e-6)
+
+        self.num_features = self.embed_dim = embed_dim  # num_features for consistency with other models
+        self.num_tokens = 1
+        self.n_blocks = depth
+        self.num_heads = num_heads
+        self.patch_size = patch_size
+        self.num_register_tokens = num_register_tokens
+        self.interpolate_antialias = interpolate_antialias
+        self.interpolate_offset = interpolate_offset
+
+        self.patch_embed = embed_layer(img_size=img_size, patch_size=patch_size, in_chans=in_chans, embed_dim=embed_dim)
+        num_patches = self.patch_embed.num_patches
+
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + self.num_tokens, embed_dim))
+        assert num_register_tokens >= 0
+        self.register_tokens = (
+            nn.Parameter(torch.zeros(1, num_register_tokens, embed_dim)) if num_register_tokens else None
+        )
+
+        if drop_path_uniform is True:
+            dpr = [drop_path_rate] * depth
+        else:
+            dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
+
+        if ffn_layer == "mlp":
+            logger.info("using MLP layer as FFN")
+            ffn_layer = Mlp
+        elif ffn_layer == "swiglufused" or ffn_layer == "swiglu":
+            logger.info("using SwiGLU layer as FFN")
+            ffn_layer = SwiGLUFFNFused
+        elif ffn_layer == "identity":
+            logger.info("using Identity layer as FFN")
+
+            def f(*args, **kwargs):
+                return nn.Identity()
+
+            ffn_layer = f
+        else:
+            raise NotImplementedError
+
+        blocks_list = [
+            block_fn(
+                dim=embed_dim,
+                num_heads=num_heads,
+                mlp_ratio=mlp_ratio,
+                qkv_bias=qkv_bias,
+                proj_bias=proj_bias,
+                ffn_bias=ffn_bias,
+                drop_path=dpr[i],
+                # ********** Modified by Zexin He in 2023-2024 **********
+                norm_layer=block_norm_layer,
+                # ********************************************************
+                act_layer=act_layer,
+                ffn_layer=ffn_layer,
+                init_values=init_values,
+            )
+            for i in range(depth)
+        ]
+        if block_chunks > 0:
+            self.chunked_blocks = True
+            chunked_blocks = []
+            chunksize = depth // block_chunks
+            for i in range(0, depth, chunksize):
+                # this is to keep the block index consistent if we chunk the block list
+                chunked_blocks.append([nn.Identity()] * i + blocks_list[i : i + chunksize])
+            self.blocks = nn.ModuleList([BlockChunk(p) for p in chunked_blocks])
+        else:
+            self.chunked_blocks = False
+            self.blocks = nn.ModuleList(blocks_list)
+
+        self.norm = norm_layer(embed_dim)
+        self.head = nn.Identity()
+
+        # ********** Modified by Zexin He in 2023-2024 **********
+        # hacking unused mask_token for better DDP
+        # self.mask_token = nn.Parameter(torch.zeros(1, embed_dim))
+        # ********************************************************
+
+        self.init_weights()
+
+    def init_weights(self):
+        trunc_normal_(self.pos_embed, std=0.02)
+        nn.init.normal_(self.cls_token, std=1e-6)
+        if self.register_tokens is not None:
+            nn.init.normal_(self.register_tokens, std=1e-6)
+        named_apply(init_weights_vit_timm, self)
+
+    def interpolate_pos_encoding(self, x, w, h):
+        previous_dtype = x.dtype
+        npatch = x.shape[1] - 1
+        N = self.pos_embed.shape[1] - 1
+        if npatch == N and w == h:
+            return self.pos_embed
+        pos_embed = self.pos_embed.float()
+        class_pos_embed = pos_embed[:, 0]
+        patch_pos_embed = pos_embed[:, 1:]
+        dim = x.shape[-1]
+        w0 = w // self.patch_size
+        h0 = h // self.patch_size
+        # we add a small number to avoid floating point error in the interpolation
+        # see discussion at https://github.com/facebookresearch/dino/issues/8
+        w0, h0 = w0 + self.interpolate_offset, h0 + self.interpolate_offset
+
+        sqrt_N = math.sqrt(N)
+        sx, sy = float(w0) / sqrt_N, float(h0) / sqrt_N
+        patch_pos_embed = nn.functional.interpolate(
+            patch_pos_embed.reshape(1, int(sqrt_N), int(sqrt_N), dim).permute(0, 3, 1, 2),
+            scale_factor=(sx, sy),
+            mode="bicubic",
+            antialias=self.interpolate_antialias,
+        )
+
+        assert int(w0) == patch_pos_embed.shape[-2]
+        assert int(h0) == patch_pos_embed.shape[-1]
+        patch_pos_embed = patch_pos_embed.permute(0, 2, 3, 1).view(1, -1, dim)
+        return torch.cat((class_pos_embed.unsqueeze(0), patch_pos_embed), dim=1).to(previous_dtype)
+
+    def prepare_tokens_with_masks(self, x, masks=None):
+        B, nc, w, h = x.shape
+        x = self.patch_embed(x)
+        if masks is not None:
+            # ********** Modified by Zexin He in 2023-2024 **********
+            raise NotImplementedError("Masking is not supported in hacked DINOv2")
+            # x = torch.where(masks.unsqueeze(-1), self.mask_token.to(x.dtype).unsqueeze(0), x)
+            # ********************************************************
+
+        x = torch.cat((self.cls_token.expand(x.shape[0], -1, -1), x), dim=1)
+        x = x + self.interpolate_pos_encoding(x, w, h)
+
+        if self.register_tokens is not None:
+            x = torch.cat(
+                (
+                    x[:, :1],
+                    self.register_tokens.expand(x.shape[0], -1, -1),
+                    x[:, 1:],
+                ),
+                dim=1,
+            )
+
+        return x
+
+    def forward_features_list(self, x_list, masks_list):
+        x = [self.prepare_tokens_with_masks(x, masks) for x, masks in zip(x_list, masks_list)]
+        for blk in self.blocks:
+            x = blk(x)
+
+        all_x = x
+        output = []
+        for x, masks in zip(all_x, masks_list):
+            x_norm = self.norm(x)
+            output.append(
+                {
+                    "x_norm_clstoken": x_norm[:, 0],
+                    "x_norm_regtokens": x_norm[:, 1 : self.num_register_tokens + 1],
+                    "x_norm_patchtokens": x_norm[:, self.num_register_tokens + 1 :],
+                    "x_prenorm": x,
+                    "masks": masks,
+                }
+            )
+        return output
+
+    # ********** Modified by Zexin He in 2023-2024 **********
+    def forward_features(self, x, masks=None, mod=None):
+        if isinstance(x, list):
+            raise DeprecationWarning("forward_features_list is deprecated, use forward_features")
+            return self.forward_features_list(x, masks)
+
+        x = self.prepare_tokens_with_masks(x, masks)
+
+        if mod is None:
+            for blk in self.blocks:
+                x = blk(x)
+        else:
+            for blk in self.blocks:
+                x = blk(x, mod)
+
+        x_norm = self.norm(x)
+        return {
+            "x_norm_clstoken": x_norm[:, 0],
+            "x_norm_regtokens": x_norm[:, 1 : self.num_register_tokens + 1],
+            "x_norm_patchtokens": x_norm[:, self.num_register_tokens + 1 :],
+            "x_prenorm": x,
+            "masks": masks,
+        }
+    # ********************************************************
+
+    def _get_intermediate_layers_not_chunked(self, x, n=1):
+        x = self.prepare_tokens_with_masks(x)
+        # If n is an int, take the n last blocks. If it's a list, take them
+        output, total_block_len = [], len(self.blocks)
+        blocks_to_take = range(total_block_len - n, total_block_len) if isinstance(n, int) else n
+        for i, blk in enumerate(self.blocks):
+            x = blk(x)
+            if i in blocks_to_take:
+                output.append(x)
+        assert len(output) == len(blocks_to_take), f"only {len(output)} / {len(blocks_to_take)} blocks found"
+        return output
+
+    def _get_intermediate_layers_chunked(self, x, n=1):
+        x = self.prepare_tokens_with_masks(x)
+        output, i, total_block_len = [], 0, len(self.blocks[-1])
+        # If n is an int, take the n last blocks. If it's a list, take them
+        blocks_to_take = range(total_block_len - n, total_block_len) if isinstance(n, int) else n
+        for block_chunk in self.blocks:
+            for blk in block_chunk[i:]:  # Passing the nn.Identity()
+                x = blk(x)
+                if i in blocks_to_take:
+                    output.append(x)
+                i += 1
+        assert len(output) == len(blocks_to_take), f"only {len(output)} / {len(blocks_to_take)} blocks found"
+        return output
+
+    def get_intermediate_layers(
+        self,
+        x: torch.Tensor,
+        n: Union[int, Sequence] = 1,  # Layers or n last layers to take
+        reshape: bool = False,
+        return_class_token: bool = False,
+        norm=True,
+    ) -> Tuple[Union[torch.Tensor, Tuple[torch.Tensor]]]:
+        if self.chunked_blocks:
+            outputs = self._get_intermediate_layers_chunked(x, n)
+        else:
+            outputs = self._get_intermediate_layers_not_chunked(x, n)
+        if norm:
+            outputs = [self.norm(out) for out in outputs]
+        class_tokens = [out[:, 0] for out in outputs]
+        outputs = [out[:, 1 + self.num_register_tokens:] for out in outputs]
+        if reshape:
+            B, _, w, h = x.shape
+            outputs = [
+                out.reshape(B, w // self.patch_size, h // self.patch_size, -1).permute(0, 3, 1, 2).contiguous()
+                for out in outputs
+            ]
+        if return_class_token:
+            return tuple(zip(outputs, class_tokens))
+        return tuple(outputs)
+
+    def forward(self, *args, is_training=False, **kwargs):
+        ret = self.forward_features(*args, **kwargs)
+        if is_training:
+            return ret
+        else:
+            return self.head(ret["x_norm_clstoken"])
+
+
+def init_weights_vit_timm(module: nn.Module, name: str = ""):
+    """ViT weight initialization, original timm impl (for reproducibility)"""
+    if isinstance(module, nn.Linear):
+        trunc_normal_(module.weight, std=0.02)
+        if module.bias is not None:
+            nn.init.zeros_(module.bias)
+
+
+# ********** Modified by Zexin He in 2023-2024 **********
+# block class selected from Block and BlockWithModulation
+
+def _block_cls(**kwargs):
+    modulation_dim = kwargs.get("modulation_dim", None)
+    if modulation_dim is None:
+        block_cls = Block
+    else:
+        block_cls = BlockWithModulation
+    return block_cls
+
+
+def vit_small(patch_size=16, num_register_tokens=0, **kwargs):
+    model = DinoVisionTransformer(
+        patch_size=patch_size,
+        embed_dim=384,
+        depth=12,
+        num_heads=6,
+        mlp_ratio=4,
+        block_fn=partial(_block_cls(**kwargs), attn_class=MemEffAttention),
+        num_register_tokens=num_register_tokens,
+        **kwargs,
+    )
+    return model
+
+
+def vit_base(patch_size=16, num_register_tokens=0, **kwargs):
+    model = DinoVisionTransformer(
+        patch_size=patch_size,
+        embed_dim=768,
+        depth=12,
+        num_heads=12,
+        mlp_ratio=4,
+        block_fn=partial(_block_cls(**kwargs), attn_class=MemEffAttention),
+        num_register_tokens=num_register_tokens,
+        **kwargs,
+    )
+    return model
+
+
+def vit_large(patch_size=16, num_register_tokens=0, **kwargs):
+    model = DinoVisionTransformer(
+        patch_size=patch_size,
+        embed_dim=1024,
+        depth=24,
+        num_heads=16,
+        mlp_ratio=4,
+        block_fn=partial(_block_cls(**kwargs), attn_class=MemEffAttention),
+        num_register_tokens=num_register_tokens,
+        **kwargs,
+    )
+    return model
+
+
+def vit_giant2(patch_size=16, num_register_tokens=0, **kwargs):
+    """
+    Close to ViT-giant, with embed-dim 1536 and 24 heads => embed-dim per head 64
+    """
+    model = DinoVisionTransformer(
+        patch_size=patch_size,
+        embed_dim=1536,
+        depth=40,
+        num_heads=24,
+        mlp_ratio=4,
+        block_fn=partial(_block_cls(**kwargs), attn_class=MemEffAttention),
+        num_register_tokens=num_register_tokens,
+        **kwargs,
+    )
+    return model
+
+# ********************************************************
+
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# This source code is licensed under the Apache License, Version 2.0
+# found in the LICENSE file in the root directory of this source tree.
+
+import logging
+
+from . import vision_transformer as vits
+
+
+logger = logging.getLogger("dinov2")
+
+
+def build_model(args, only_teacher=False, img_size=224):
+    args.arch = args.arch.remove
+
+Question:
+The Instant3D paper introduced significant innovations in accelerating 3D object generation by reducing the computational complexity typically seen in traditional 3D modeling methods. In contrast, OpenLRM adopts a large-scale reconstruction approach that leverages hybrid datasets like Objaverse and MVImgNet. Considering these two frameworks, how might OpenLRM’s use of hybrid datasets and a large reconstruction model introduce new challenges that were less emphasized in the Instant3D approach, especially in terms of real-time object generation and scaling?
+
+A. In the repo, OpenLRM’s reliance on large datasets like Objaverse and MVImgNet introduces challenges in balancing reconstruction fidelity with computational efficiency, particularly when scaling to more complex scenes compared to the more efficient architecture of Instant3D, which is optimized for real-time applications and lower-latency tasks, but this leads to a tradeoff in latency and scalability.
+B. From the python files, we can see that  while Instant3D focuses heavily on computational efficiency for rapid object generation in real-time, OpenLRM’s large-scale reconstruction model prioritizes generalization across various 3D environments. However, the hybrid datasets, Objaverse and MVImgNet,  introduce issues with model overfitting to certain object types, leading to difficulties in scaling and maintaining real-time generation accuracy, unlike Instant3D’s streamlined approach.
+C. In the core openlrm package, we see that OpenLRM’s approach focuses on generating high-fidelity 3D reconstructions using hybrid datasets, which can be computationally demanding. However, unlike Instant3D’s optimization for speed and lower resource usage, OpenLRM faces challenges in optimizing its memory consumption and real-time performance when scaling to larger datasets or more detailed reconstructions.
+D. We can note from the codebase that the architectural difference between OpenLRM and Instant3D lies in their treatment of real-time constraints and scalability. OpenLRM is designed to reconstruct larger scenes and complex objects, which Instant3D resolves by focusing more narrowly on specific object categories and reducing the training dataset size to improve real-time performance.
+
+Select the correct answer.

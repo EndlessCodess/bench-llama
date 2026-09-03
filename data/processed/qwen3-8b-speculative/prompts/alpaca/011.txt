@@ -1,0 +1,6 @@
+Design a new homepage for the company website.
+
+Input:
+Company Name: ABC Industries
+Company Tagline: Delivering Excellence in Technology
+Company Logo: Attached

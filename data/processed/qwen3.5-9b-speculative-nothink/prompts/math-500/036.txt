@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+A steel sphere with a 3-inch radius is made by removing metal from the corners of a cube that has the shortest possible side lengths. How many cubic inches are in the volume of the cube?

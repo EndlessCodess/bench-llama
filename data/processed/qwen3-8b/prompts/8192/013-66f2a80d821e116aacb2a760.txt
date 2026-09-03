@@ -1,0 +1,395 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+[
+    {
+        "zhuang": "Gak boux daiqbiuj：",
+        "zh": "各位代表：",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Seizneix, gou daiqbiuj Gozvuyen, yiengq daihhoih baugau gij hong cwngfuj, cingj saemjlwnh, caemhcaiq cingj Daengx Guek Cwnghez gak boux veijyenz daezok yigen.",
+        "zh": "现在，我代表国务院，向大会报告政府工作，请予审议，并请全国政协各位委员提出意见。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "It、Dauqyawj Gij Hong 2016 Nienz",
+        "zh": "一、2016年工作回顾",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Bi gvaqbae neix, guek raeuz fazcanj bungzdaengz diuhcan yiemzhaenq, ndaw guek rog guek haujlai mauzdun doxdab doxgya、fungyiemj huxndumj doxca doxgyoeb.",
+        "zh": "过去一年，我国发展面临国内外诸多矛盾叠加、风险隐患交汇的严峻挑战。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Miz aen Dangjcunghyangh aeu Siz Ginbingz dungzci guh haedsim haenx giengiengz lingjdauj, daengx guek gak cuz yinzminz soemh hojnanz buekguh, haenqheiq byaij baenaj, doidoengh ginghci sevei lienzdaemh cangqheiq fazcanj.",
+        "zh": "在以习近平同志为核心的党中央坚强领导下，全国各族人民迎难而上，砥砺前行，推动经济社会持续健康发展。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Baez Cibbet Gaiq Roek Cungh Cienzhoih aen Dangj cingqsik mingzbeg doekdingh aen diegvih haedsim Siz Ginbingz cungjsuhgi, daejyienh le gij gaenbonj leih'ik aen Dangj caeuq yinzminz, doiq baujcwng aen Dangj caeuq guekgya hoenghvuengh fatdad、ciengzgeiz onjdingh, miz yiyi cibfaen hungnaek youh gyaelaeg.",
+        "zh": "党的十八届六中全会正式明确习近平总书记的核心地位，体现了党和人民的根本利益，对保证党和国家兴旺发达、长治久安，具有十分重大而深远的意义。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gak digih、gak bouhmonz mboujduenh demgiengz cwngci eiqsik、daihbuenz eiqsik、haedsim eiqsik、gaenhwnj eiqsik, doidoengh cienzmienh hwnqbaenz aen biengz siujgangh caiq ndaej fazcanj baenaj youqgaenj, cienzmienh gyalaeg gaijgwz yamq ok yamqdin hungnaek, cienzmienh ciuqfap ceihleix guekgya ndaej haeujlaeg saedhengz, cienzmienh coengzyiemz ceihleix aen Dangj ndaej coh laeg doicaenh, daengx bi ginghci sevei fazcanj cujyau muzbiuh yinvu guh baenz caezcup, \"Cibsam Haj\" saedyienh le haibuenz ndei.",
+        "zh": "各地区、各部门不断增强政治意识、大局意识、核心意识、看齐意识，推动全面建成小康社会取得新的重要进展，全面深化改革迈出重大步伐，全面依法治国深入实施，全面从严治党纵深推进，全年经济社会发展主要目标任务圆满完成，“十三五”实现了良好开局。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ginghci yinhhengz youq ndaw gemj menh yiengq onjmaenh、youq ndaw onjmaenh yiengq ndei.",
+        "zh": "经济运行缓中趋稳、稳中向好。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ndaw guek swnghcanj cungjciz dabdaengz 74.4 fanh ik maenz, demmaj 6.7％, baizmingz youq gaxgonq seiqgyaiq gak guek, doiq cienz seiqgyaiq ginghci demmaj gunghawj beijlwd mauhgvaq 30％.",
+        "zh": "国内生产总值达到74.4万亿元，增长6.7%，名列世界前茅，对全球经济增长的贡献率超过30%。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gihminz siufeiq gyaqcienz lai hwnj 2％.",
+        "zh": "居民消费价格上涨2%。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gunghyez giyez leihyinh daj bigonq doek bae 2.3％ cienj baenz demmaj 8.5％, danhvei ndaw guek swnghcanj cungjciz siuhauq nwngzyenz roengzdaemq 5％, ginghci fazcanj caetliengh caeuq yauqik yienhda raen daezsang.",
+        "zh": "工业企业利润由上年下降2.3%转为增长8.5%，单位国内生产总值能耗下降5%，经济发展的质量和效益明显提高。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Couhnieb demmaj mauhgvaq yawhgeiz.",
+        "zh": "就业增长超出预期。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Daengx bi hawsingz lai gya couhnieb 1314 fanh vunz.",
+        "zh": "全年城镇新增就业1314万人。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gauhyau bizyezswngh couhnieb cauhnieb vunzsoq caiq ndaej gya lai.",
+        "zh": "高校毕业生就业创业人数再创新高。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Nienzdaej hawsingz daenghgeiq saetnieb beijlwd 4.02％, dwg lai bi daeuj bi ceiq daemq.",
+        "zh": "年末城镇登记失业率4.02%，为多年来最低。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Aen guek hung cingqcaih fazcanj miz 13 ik vunz baenzneix, couhnieb ndaej haemq cungfaen, gig mbouj yungzheih.",
+        "zh": "13亿多人口的发展中大国，就业比较充分，十分不易。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gaijgwz hailangh ndaej doicaenh haeujlaeg.",
+        "zh": "改革开放深入推进。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij gaijgwz ndaw lingjyiz youqgaenj caeuq hothoh gvanhgen ndaej cungbyoengq fazcanj baenaj, gaijgwz gij gezgou mbiengj gunghawj codaeuz raen miz cingzyauq.",
+        "zh": "重要领域和关键环节改革取得突破性进展，供给侧结构性改革初见成效。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Doiq rog hailangh doiok guhfap moq, \"it rangh it loh\" hwnqguh ndaej vaiq, buek gunghcwngz hungnaek caeuq hanghmoeg gozci canjnaengz gapguh ndeu gaenq doekdingh saedhengz.",
+        "zh": "对外开放推出新举措，“一带一路”建设进展快速，一批重大工程和国际产能合作项目落地。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ginghci gezgou ndaej gyavaiq diuzcingj.",
+        "zh": "经济结构加快调整。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Siufeiq gaenq baenz gij rengz youqgaenj ragdoengh ginghci demmaj.",
+        "zh": "消费在经济增长中发挥主要拉动作用。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij cwnghgyahciz hangznieb fugsaeh ciemq ndaw guek swnghcanj cungjciz beijlaeh swnghwnj daengz 51.6％.",
+        "zh": "服务业增加值占国内生产总值比重上升到51.6%。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Aen canjnieb gisuz sang、aen hangznieb ceiqcauh cangboiq demmaj haemq vaiq.",
+        "zh": "高技术产业、装备制造业较快增长。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Nungzyez youq ndaw onjmaenh diuzcingj ndei, haeuxgwn caiq ndaej fungsou.",
+        "zh": "农业稳中调优，粮食再获丰收。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij rengz nyoengxdoengh moq fazcanj ndaej mboujduenh demgiengz.",
+        "zh": "发展新动能不断增强。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Aen canloz doenggvaq cauhmoq bae doidoengh fazcanj ndaej haeujlaeg saedhengz.",
+        "zh": "创新驱动发展战略深入实施。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gohgi lingjyiz aeu ndaej buek cwngzgoj hungnaek byaij youq seiqgyaiq baihnaj ndeu.",
+        "zh": "科技领域取得一批国际领先的重大成果。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij canjnieb saenhwng hwnghwnj foedfoed, gij canjnieb cienzdoengj ndaej gyavaiq cienjhingz swnggaep.",
+        "zh": "新兴产业蓬勃兴起，传统产业加快转型升级。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Vunzlai cauhnieb、vunzlai cauhmoq gvangqlangh guh hwnjdaeuj, daengx bi gij giyez saen daenghgeiq de demmaj 24.5％, bingzyaenz moix ngoenz lai gya 1.5 fanh hoh.Caiq gya godij gunghsanghhu daengj, gak loih hawciengz cawjdaej moix ngoenz saen demgya 4.5 fanh hoh.",
+        "zh": "大众创业、万众创新广泛开展，全年新登记企业增长24.5%，平均每天新增1.5万户，加上个体工商户等，各类市场主体每天新增4.5万户。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij rengz nyoengxdoengh moq cingqcaih cengj hwnj aen diendeih fazcanj moq.",
+        "zh": "新动能正在撑起发展新天地。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Giekdaej sezsih daemxcengj naengzlig lienzdaemh daezswng.",
+        "zh": "基础设施支撑能力持续提升。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Saenhwnq gauhsuz dietloh douzcanj lijcwngz mauhgvaq 1900 goengleix, saenhwnq gaijhwnq gauhsuz goengloh 6700 lai goengleix、gij goengloh lajmbanj 29 fanh goengleix.",
+        "zh": "新建高速铁路投产里程超过1900公里，新建改建高速公路6700多公里、农村公路29万公里。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Hwnqguh hawsingz gveijdau gyaudoeng、gvanjlangz gyoebhab lajdoem ndaej gyavaiq.",
+        "zh": "城市轨道交通、地下综合管廊建设加快。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Saen haigoeng suijli gunghcwngz hungnaek 21 hangh.",
+        "zh": "新开工重大水利工程21项。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Saen demgya daihseiq daih yizdung doengsaenq yunghhoh 3.4 ik hoh、gvanghlanj sienqloh 550 lai fanh goengleix.",
+        "zh": "新增第四代移动通信用户3.4亿、光缆线路550多万公里。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Yinzminz saedceij ndaej laebdaeb gaijndei.",
+        "zh": "人民生活继续改善。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Daengx guek gihminz moix vunz bingzyaenz gij souhaeuj ndaej ceiboiq de saedsaeh demmaj 6.3％.",
+        "zh": "全国居民人均可支配收入实际增长6.3%。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gemjnoix gij vunz gungzhoj lajmbanj 1240 fanh, vuenh dieg banggungz buensenj vunz mauhgvaq 240 fanh vunz.",
+        "zh": "农村贫困人口减少1240万，易地扶贫搬迁人口超过240万。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gaijcauh gij ranzyouq dieg ranzdiengz 600 lai fanh dauq, gaijcauh ranzvaih lajmbanj 380 lai fanh hoh.",
+        "zh": "棚户区住房改造600多万套，农村危房改造380多万户。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ndaw guek lijyouz demmaj riengjvaiq, ok guek bae youz mauhgvaq 1.2 ik vunzbaez, hawsingz lajmbanj gihminz gwndaenj suijbingz caiq ndaej daezsang.",
+        "zh": "国内旅游快速增长，出境旅游超过1.2亿人次，城乡居民生活水平有新的提高。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Guek raeuz cawjbanh Ngeihcib Guek Cizdonz Lingjdaujyinz Hangzcouh Funghvei ndaej baenz, doidoengh aeu ndaej baenz buek cwngzgoj youqgaenj daiqmiz haicauh、dazyinx、gihci singqcaet, youq cienz seiqgyaiq ginghci ceihleix ndawde louz roengz le aen yaenqgeiq Cungguek gig laeg.",
+        "zh": "我国成功主办二十国集团领导人杭州峰会，推动取得一系列开创性、引领性、机制性重要成果，在全球经济治理中留下深刻的中国印记。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Dauqyawj bi gvaqbae neix, gij roen byaij gvaqdaeuj gig mbouj bingzciengz.",
+        "zh": "回顾过去一年，走过的路很不寻常。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Raeuz mienhdoiq yiengh vanzging baihrog seiqgyaiq ginghci caeuq mouyiz demmaj 7 bi daeuj ceiq daemq、gozci ginhyungz hawciengz fubfab hwnjroengz gyahaenq、digih caeuq cenzgiuzsing diuhcan boekbienq fat lai, mienhdoiq yiengh hojnanz lai caengz lumjbaenz ndaw guek gezgousing vwndiz doedyienh、fungyiemj huxndumj yienhloh okdaeuj、ginghci byaij daemq atlig gyadaih daengj, mienhdoiq yiengh hingzseiq fukcab gaijgwz yamq haeuj mwh haeb ndokgenq、cingqcaih gyalaeg diuzcingj leih'ik gvanhaeh、gij yinhsu yingjyangj aen biengz onjdingh de demlai.",
+        "zh": "我们面对的是世界经济和贸易增速7年来最低、国际金融市场波动加剧、地区和全球性挑战突发多发的外部环境，面对的是国内结构性问题突出、风险隐患显现、经济下行压力加大的多重困难，面对的是改革进入攻坚期、利益关系深刻调整、影响社会稳定因素增多的复杂局面。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Roeb cungj cingzgvang neix, ginghci ndaej cap onj gig mbouj yungzheih, miz haujlai bienqvaq yiengq ndei engqgya nanz ndaej.",
+        "zh": "在这种情况下，经济能够稳住很不容易，出现诸多向好变化更为难得。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Neix caiq baez ndeu biujmingz, gyoengq yinzminz Cungguek miz damjliengh、miz dungxcaiz、miz naengzlig hoenxhingz sojmiz gannanz yungyiemj, gij ginghci Cungguek miz rengzndumj、gig nyangqnywt、miz youhsi, diuz roen fazcanj baenaj Cungguek itdingh ndaej engq ndei.",
+        "zh": "这再次表明，中国人民有勇气、有智慧、有能力战胜任何艰难险阻，中国经济有潜力、有韧性、有优势，中国的发展前景一定会更好。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Bi ndeu daeuj, dou cujyau guh le gij hong lajneix.",
+        "zh": "一年来，我们主要做了以下工作。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "It dwg laebdaeb cauhmoq caeuq gyagiengz hungzgvanh diuzgung, ginghci yinhhengz baujciz youq duenh hableix.",
+        "zh": "一是继续创新和加强宏观调控，经济运行保持在合理区间。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Bi'gvaq hungzgvanh diuzgung roeb daengz lai cungj gannanz genjdingh, dou genhciz mbouj guh cungj gikcoi giengzhaenq lumj \"raemx hoengh dwk naz\", dauq dwg baengh gaijgwz cauhmoq coicaenh demmaj bingzonj、diuzcingj gezgou、fuengzre fungyiemj, sien bae diuzgung mboengq ginghci yinhhengz gonq, yienzhaeuh bae gyagiengz dinghyiengq diuzgung、yawj seizgei diuzgung.",
+        "zh": "去年宏观调控面临多难抉择，我们坚持不搞“大水漫灌”式强刺激，而是依靠改革创新来稳增长、调结构、防风险，在区间调控基础上，加强定向调控、相机调控。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyarengz bae saedhengz gij caizcwng cwngcwz gaenxmaenx de, gyalai caizcwng gij ceiok lai gvaq souhaeuj de cujyau yungh bae gemj suiq gyangq feiq.",
+        "zh": "积极的财政政策力度加大，增加的财政赤字主要用于减税降费。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Cienzmienh doihai yingzyezsui gaij cwnghcizsui sawqdiemj, daengx bi gemjnoix giyez nab suiq 5700 lai ik maenz, sojmiz hangznieb saedyienh nab suiq caenh gemj mbouj gya.",
+        "zh": "全面推开营改增试点，全年降低企业税负5700多亿元，所有行业实现税负只减不增。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ceiqdingh saedhengz aen fueng'anq gvaqdoh vehfaen cunghyangh caeuq deihfueng cwnghcizsui souhaeuj, saedbauj deihfueng gij caizlig gaenq miz de mbouj bienq.",
+        "zh": "制定实施中央与地方增值税收入划分过渡方案，确保地方既有财力不变。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyahung aen gveihmoz deihfueng cwngfuj ciq caiq moq ngamj gaeuq vuenh caiq gaeuq, gyangqdaemq diuzrap leihsik daih'iek 4000 ik maenz.",
+        "zh": "扩大地方政府存量债务置换规模，降低利息负担约4000亿元。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij hobi cwngcwz onjmaenh haenx lingzvued habdoh, gvangjyi hobi Ｍ2 demmaj 11.3％, daemq gvaq aen yawhgeiz muzbiuh 13％ baedauq de.",
+        "zh": "稳健的货币政策灵活适度，广义货币M2增长11.3%，低于13%左右的预期目标。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyoebhab yinhyungh lai cungj hobi cwngcwz gunghgi, haeujcoengh saeddaej ginghci fazcanj.",
+        "zh": "综合运用多种货币政策工具，支持实体经济发展。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Saedhengz gij guhfap coicaenh siufeiq swnggaep.",
+        "zh": "实施促进消费升级措施。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Goengbouh saedhengz gij cwngcwz gikcoi ndawbiengz douzswh daengj, douzswh gaenq miz yienghceij bienq onj.",
+        "zh": "出台鼓励民间投资等政策，投资出现企稳态势。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Faenloih diuzgung fangzdicanj hawciengz.",
+        "zh": "分类调控房地产市场。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyagiengz fuengzre gaemhanh ginhyungz fungyiemj, aen gihci cauxbaenz yinzminzbi veiliz caenh'itbouh laeb caezcienz, baujciz daihdaej onjdingh youq gwnz suijbingz hableix bingzyaenx, henhoh le guekgya ginghci ginhyungz ancienz.",
+        "zh": "加强金融风险防控，人民币汇率形成机制进一步完善，保持了在合理均衡水平上的基本稳定，维护了国家经济金融安全。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ngeih dwg haenqrengz ca ndei \"sam gemj it roengz it bouj\", gunghawj gezgou miz di gaijndei.",
+        "zh": "二是着力抓好“三去一降一补”，供给结构有所改善。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Aeu gangdiet、meizdan hangznieb guh cungdenj bae gemj gij swnghcanj naengzlig lai yawz de, daengx bi doiqok gangdiet swnghcanj naengzlig mauhgvaq 6500 fanh dunh、meizdan swnghcanj naengzlig mauhgvaq 2.9 ik dunh, mauhgvaq dinghngeg guhbaenz nienzdoh muzbiuh yinvu, gij cizgungh faenriuz de ndaej daengz anceiq haemq ndei.",
+        "zh": "以钢铁、煤炭行业为重点去产能，全年退出钢铁产能超过6500万吨、煤炭产能超过2.9亿吨，超额完成年度目标任务，分流职工得到较好安置。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Haeujcoengh nungzminzgungh daengj youq hawsingz cawx ranz, daezsang aen beijlaeh gaijcauh ranzdiengz yungh cienz anceiq, fangzdicanj gemj daenzcang aeu ndaej cingzyauq ndei.",
+        "zh": "支持农民工在城镇购房，提高棚改货币化安置比例，房地产去库存取得积极成效。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Doidoengh giyez gyan'gyoeb dauqcungz cujhab, fazcanj cigciep yungzswh, saedhengz hawciengzvaq fazciva caiq cienj guj, gunghyez giyez swhcanj dawzcaiq beijlwd miz di roengzdaemq.",
+        "zh": "推动企业兼并重组，发展直接融资，实施市场化法治化债转股，工业企业资产负债率有所下降。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Vihliux coicaenh giyez gemjnoix cingzbonj, fatbouh saedhengz guhfap wngqdoiq lumjbaenz gemj suiq gyangq feiq、roengzdaemq \"haj yiemj it gim\" gyaucienz beijlaeh、roengzdaemq yungh dienh gyaqcienz daengj.",
+        "zh": "着眼促进企业降成本，出台减税降费、降低“五险一金”缴费比例、下调用电价格等举措。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyarengz bouj giz mbangnyieg, banh le buek daihsaeh dangqnaj gip aeu banh youh ik gyaeraez ndeu.",
+        "zh": "加大补短板力度，办了一批当前急需又利长远的大事。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Sam dwg haenqrengz gyalaeg gaijgwz hailangh, fazcanj rengzhoengh ndaej caenh'itbouh gyagiengz.",
+        "zh": "三是大力深化改革开放，发展活力进一步增强。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Cienzmienh gyalaeg gaijgwz, doi ok buek gaijgwz guhfap miz biugeiq singqcaet、cengjdingj singqcaet ndeu.",
+        "zh": "全面深化改革，推出一批标志性、支柱性改革举措。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Hopheux cawqleix ndei cwngfuj caeuq hawciengz gvanhaeh aen haedsim vwndiz ginghci dijci gaijgwz neix, laebdaeb doicaenh gij gaijgwz gemjnoix cwngfuj gihgou cuengq roengz gienzlig、cuengq guenj giethab、gaijndei fugsaeh.",
+        "zh": "围绕处理好政府和市场关系这一经济体制改革的核心问题，持续推进简政放权、放管结合、优化服务改革。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Youq gwnz giekdaej daezgonq guhbaenz aen muzbiuh gaiq cwngfuj neix gemjnoix hingzcwng saemjbae saehhangh sam faenh cih it neix, bi'gvaq youh siubae 165 hangh saemjbae saehhangh Gozvuyen bouhmonz caeuq de ceijdingh deihfueng saedhengz haenx, cingleix gveihfan 192 hangh saemjbae cunghgai fugsaeh saehhangh、220 hangh cizyez swhgwz hijgoj nyinhdingh saehhangh.",
+        "zh": "在提前完成本届政府减少行政审批事项三分之一目标的基础上，去年又取消165项国务院部门及其指定地方实施的审批事项，清理规范192项审批中介服务事项、220项职业资格许可认定事项。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyalaeg gaijgwz sanghsw cidu.",
+        "zh": "深化商事制度改革。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Cienzmienh doihengz \"song seizbienh、it goenghai\", demgiengz mwh guhsaeh sat saeh le gamguenj ndaej mizyauq, doicaenh \"vangjdoxlienz + cwngvu fugsaeh\".",
+        "zh": "全面推行“双随机、一公开”，增强事中事后监管的有效性，推进“互联网+政务服务”。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Doidoengh guekmiz giyez diuzcingj dauqcungz cujhab caeuq gaijgwz baenz miz lai cungj sojyoujci doxgyaux bae.",
+        "zh": "推动国有企业调整重组和混合所有制改革。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Laebhwnj goengbingz gingcwngh saemjcaz cidu.",
+        "zh": "建立公平竞争审查制度。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gyalaeg gaijgwz swhyenzsui.",
+        "zh": "深化资源税改革。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Laeb caezcienz gij guhfap lajmbanj diegdeih \"sam gienz faen nda\", laebhwnj gungzhoj doiqok gihci.",
+        "zh": "完善农村土地“三权分置”办法，建立贫困退出机制。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Doicaenh gaijgwz gohgi guenjleix dijci, gyadaih gij gienz gag guhcawj gauhyau caeuq gohyenz yensoj, fatbouh saedhengz gij faenboiq cwngcwz aeu demgya cihsiz gyaciz bae dazyinx fuengyiengq.",
+        "zh": "推进科技管理体制改革，扩大高校和科研院所自主权，出台以增加知识价值为导向的分配政策。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Hailangh aen hawciengz ciengxlaux fugsaeh.",
+        "zh": "放开养老服务市场。",
+        "source": "government_work_report"
+    },
+    
+
+Question:
+You are given a translation parallel corpus from Zhuang to Chinese, now translate the following words in Chinese into Zhuang: "勤俭", "金钱", "银行"
+
+A. gaenxgiemh, cienzngaenz, ngaenzhangz
+B. gaenxgiemh, cienzngaenz, ginhyungz
+C. gaenxgiemh, swhyenz, ginhyungz
+D. nwngzyenz, cienzngaenz, ginhyungz
+
+Select the correct answer.

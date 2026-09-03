@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+It's a well-known physics formula that force equals mass times acceleration.  Jen wants to throw a softball with the same force as Jack throws a baseball.  If the softball has a mass of $200$ g and the baseball has a mass of $150$ g, what is the ratio of acceleration of Jen's ball to Jack's?  Answer as a fraction in lowest terms.

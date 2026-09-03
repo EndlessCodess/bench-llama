@@ -1,0 +1,219 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+1
+Overview
+2
+Getting Started
+3
+Applications for Short Range Radio
+Communications
+4
+Applications for Mobile Communication
+5
+Commissioning
+6
+Operation
+7
+Time Synchronization
+8
+Communication Protocols
+9
+Technical Data
+10
+Device Maintenance, Storage, Transport 11
+Failures and LED Indications
+12
+Operational Indications
+13
+Operational Parameters
+14
+SICAM FCG and SICAM FSI Firmware
+Compatibility
+A
+Literature
+Glossary
+Index
+
+
+i
+i
+NOTE
+For your own safety, observe the warnings and safety instructions contained in this document, if available.
+Disclaimer of Liability
+Subject to changes and errors. The information given in
+this document only contains general descriptions and/or
+performance features which may not always specifically
+reflect those described, or which may undergo modifica-
+tion in the course of further development of the products.
+The requested performance features are binding only when
+they are expressly agreed upon in the concluded contract.
+Document version: E50417-H1040-C584-B7.00
+Edition: 04.2024
+Version of the product described: V04.21
+Copyright
+Copyright © Siemens 2024. All rights reserved.
+The disclosure, duplication, distribution and editing of this
+document, or utilization and communication of the content
+are not permitted, unless authorized in writing. All rights,
+including rights created by patent grant or registration of a
+utility model or a design, are reserved.
+Trademarks
+SIPROTEC, DIGSI, SIGRA, SIGUARD, SIMEAS, SAFIR, SICAM,
+and MindSphere are trademarks of Siemens. Any unauthor-
+ized use is prohibited.
+
+
+Preface
+Purpose of the Manual
+This manual describes the application, functions, installation, commissioning, and operation of the Fault
+Collector Gateway 6MD2340.
+Target Audience
+This manual is intended for project engineers, commissioning engineers, and operating personnel in electrical
+systems and substations.
+Scope
+This manual is valid for the Fault Collector Gateway 6MD2340.
+Indication of Conformity
+This product complies with the directive of the Council of the European Communities
+on the harmonization of the laws of the Member States relating to electromagnetic
+compatibility (EMC Directive 2014/30/EU) and concerning electrical equipment for use
+within specified voltage limits (Low Voltage Directive 2014/35/EU) as well as restriction
+on usage of hazardous substances in electrical and electronic equipment (RoHS Direc-
+tive 2011/65/EU).
+This conformity has been proved by tests conducted by Siemens AG in accordance of
+the Council Directive in accordance with the product standard IEC/EN 61326-1 for the
+EMC directives, and with the standard IEC/EN 61010-1 for the low-voltage directive.
+Standards for short-range radio and mobile communication acc. to RED directive
+2014/53/EU:
+•
+EMC testing acc. to EN 301 489
+•
+Radio testing acc. to EN 301 511
+•
+Short-range radio acc. to EN 300 328
+RoHS directive 2011/65/EU is met using the standard IEC/EN 63000.
+The device has been designed and produced for industrial use.
+FCC Conformity Information
+This device complies with part 15 of the FCC rules. Operation is subject to the following 2 conditions:
+•
+This device may not cause harmful interference.
+•
+This device must accept any interference received, including interference that may cause undesired
+operation.
+This equipment has been tested and found to comply with the limits for a Class A digital device, pursuant
+to part 15 of the FCC rules. These limits are designed to provide reasonable protection against harmful
+interference when the equipment is operated in a commercial environment. This equipment generates, uses,
+and can radiate radio frequency energy and, if not installed and used in accordance with the instructions, may
+cause harmful interference to radio communications. Operation of this equipment in a residential area is likely
+SICAM, Fault Collector Gateway, Manual
+3
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+to cause harmful interference in which case the user will be required to correct the interference at their own
+expense.
+i
+i
+NOTE
+Any changes or modifications not expressly approved by the party responsible for compliance could void
+the users’ authority to operate this equipment.
+!
+CAUTION
+Radiation RF exposure
+This equipment complies with FCC radiation exposure limits set forth for an uncontrolled environ-
+ment.
+²
+This equipment should be installed and operated with minimum distance 20 cm between the radiator
+and your body.
+ISED Compliance Statement
+This device complies with ISED's license-exempt RSSs. Operation is subject to the following 2 conditions:
+•
+This device may not cause harmful interference.
+•
+This device must accept any interference received, including interference that may cause undesired
+operation.
+Cet appareil est conforme aux RSS exemptés de licence de l’ISED. L’opération est soumise aux 2 conditions
+suivantes :
+•
+Cet appareil ne peut pas causer d’interférences nocives.
+•
+Cet appareil doit accepter toute interférence, y compris les interférences qui peuvent provoquer un
+fonctionnement non désiré de l’appareil.
+!
+CAUTION
+Radiation RF exposure
+This equipment complies with ISED radiation exposure limits set forth for an uncontrolled environ-
+ment.
+²
+This equipment should be installed and operated with minimum distance 20 cm between the radiator
+and your body.
+!
+CAUTION
+Déclaration sur l’exposition aux rayonnements
+Cet équipement est conforme aux limites d’exposition aux rayonnements. ISED établies pour un
+environnement non contrôlé.
+²
+Cet équipement doit être installé et actionné avec la distance minimale 20 cm entre le radiateur et
+votre corps.
+Preface
+4
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Detachable Antenna Usage
+This radio transmitter (IC: 5123A-GM210P and IC: 5131A-GE910) has been approved by ISED to operate with
+the antenna type listed below with maximum permissible gain indicated. Antenna types not included in this
+list, having a gain greater than the maximum gain indicated for that type, are strictly prohibited for use with
+this device.
+Antenna Name
+Antenna Type
+Antenna
+Gain (dBi)
+Transmitting Power
+Level
+Antenna Part No.
+Planar Mobile Commu-
+nications Antenna-Reel
+Make-WLAN 2400 MHz
+M70XCR Roof Mount
+0 dBi
+20 dBm
+6MD2318-0CA20
+Planar Mobile Commu-
+nications Antenna-Reel
+Make GSM Quadband
++ UMTS
+M70ZXR Roof Mount
+0 dBi
+850 MHz: 33 dBm
+(Power Class 5)
+1900 MHz: 30 dBm
+(Power Class 0)
+6MD2318-0CA10
+i
+i
+NOTE
+•
+The device integrates a ZigBee transmitter having FCC ID: QOQGM210P, IC ID: 5123A-GM210P and 2G
+module transmitter having FCC ID: R17GE910, IC ID: 5131A-GE910 for radio communication. The RF
+modules are integrated to this host product as per module integration guidelines defined in module
+grants and FCC KDB 996369. Co-location/simultaneous transmission requirements are addressed in
+this host test report as per guidelines defined in KDB 447498.
+•
+RF exposure evaluation for co-locating and simultaneous operation of ZigBee and 2G protocol have
+been addressed and results are compliant to FCC and IC RF exposure evaluation limits.
+Module Name
+FCC ID
+IC ID
+Operating 
+
+Question:
+Which of the following is incorrect according to the equipment manual?
+
+A. A dynamic IP address is assigned to the SICAM FCG when it is connected to Electrification X Cloud or MindSphere Cloud via GPRS.
+B. FQDN such as "myfcg.example.com" which is resolvable via DNS can be a legal value for  "Indentifier (Local ID)" when entering an Internet Key Exchange address.
+C. IP Address of "192.168.0.55" is used after I press the IP-Addr. push-button for > 3 seconds. The LED on the terminal side will indicate "Default IP address is applied".
+D. When I establish the communication between SICAM FCG and FSI, I need to scan or manually copy the QR code on the FSI to the FCG.
+
+Select the correct answer.

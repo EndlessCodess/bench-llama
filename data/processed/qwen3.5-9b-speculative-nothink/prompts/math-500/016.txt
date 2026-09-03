@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+Simplify $\frac{1+\sqrt{2}}{2+\sqrt{3}}$. Your solution can be converted to the form $A(1+\sqrt{B})-(\sqrt{C}+\sqrt{D})$, where $A$, $B$, $C$, and $D$ are positive integers. What is $A+B+C+D$?

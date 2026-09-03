@@ -1,0 +1,160 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+U NI T E D NAT I O NS CO NFE R E N C E  ON  T R A D E  A N D  D E VE L OP M E N T
+Investment facilitation 
+and digital government
+2024
+World  
+investment 
+report
+
+
+2024
+World  
+investment 
+report
+U NI T E D NAT I O NS CO NFE R E N C E  ON  T R A D E  A N D  D E VE L OP M E N T
+Investment facilitation
+and digital government
+Geneva, 2024
+
+
+
+ 
+Mention of any firm or licensed process does not imply the endorsement of the United Nations.
+ 
+This publication has been edited externally.
+United Nations publication issued by UN Trade and Development.
+UNCTAD/WIR/2024
+ISBN 978-92-1-003134-9
+PDF ISBN 978-92-1-358973-1
+   EPUB ISBN 978-92-1-358974-8
+Print ISSN 1020-2218
+Online ISSN 2225-1677 
+Sales no. E.24.II.D.11
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+iii
+Preface
+Investment is the fuel for sustainable development. Closing the SDG and climate financing 
+gap will require an estimated $500 billion of international public finance and $500 billion of 
+international private finance per year, much of which would be in the form of foreign direct 
+investment.
+But many developing countries are running on empty. Global and regional crises, trade tensions 
+and tighter financing conditions have had a chilling effect on foreign direct investment, which 
+remained subdued in 2023 for a second year in succession. Global flows of foreign direct 
+investment stagnated at $1.3 trillion. Notably, foreign direct investment in new industrial and 
+infrastructure projects in developing countries declined, while new investment in sectors relevant 
+to the Sustainable Development Goals fell by more than 10 per cent.
+Stagnant SDG investment and insufficient funding is severely hindering implementation of the 
+2030 Agenda and the SDGs, particularly in least developed countries. We need urgent action 
+to remove obstacles and provide a transparent, streamlined investment climate for sustainable 
+development.
+This World Investment Report shows that the lacklustre financial flows to developing countries 
+are not due to a lack of investment policy efforts. Investment facilitation has become a prominent 
+feature of national policies and international agreements. Digital government solutions are 
+proliferating, aiding investors and strengthening governance and institutions.
+But despite these efforts, finance is not flowing at sufficient scale, due to high interest rates and 
+geopolitical conditions. That means we must redouble our efforts.
+I urge all decision makers to prioritize the mobilization of sustainable finance at scale. The SDG 
+Stimulus we have proposed is a practical and achievable means of delivering this. Our call for 
+reform and scaling up of multilateral development banks is intended to significantly increase the 
+crowding in of private investment.
+I also encourage policymakers to prioritize strengthening investment governance in developing 
+countries, to ensure financial flows are directed towards the SDGs. UNCTAD’s recommendations 
+for the use of business facilitation and digital government to ease sustainable investment can 
+play an important part in achieving these goals.
+António Guterres  
+Secretary-General of the United Nations
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+iv
+Foreword
+In a world grappling with global and regional crises, the delicate balance of foreign direct 
+investment (FDI) hangs precariously. This World Investment Report (WIR) serves as a stark 
+reminder that investment, the lifeblood of sustainable development, is not merely a statistic 
+but a lifeline for developing nations. It is the fuel that powers progress towards the 
+Sustainable Development Goals (SDGs) and the  2030 Agenda for Sustainable Development.     
+The challenges we face are multifaceted and interconnected. Geoeconomic fragmentation 
+is reshaping the landscape of global investment. Trade networks are fragmenting, regulatory 
+environments are diverging and international supply chains are being reconfigured. These 
+shifts create both obstacles and isolated opportunities, with some countries benefiting from 
+investments in global value chain-intensive manufacturing while others struggle to participate 
+in the global economy.
+Overall, however, these trends are leading to a further deterioration of the international investment 
+landscape as seen from the developing world. Last year, FDI fell by more than 10 per cent 
+globally, and by 7 per cent in the developing world. International project finance, crucial for 
+infrastructure development, was particularly hard hit, falling by 26 per cent. Prospects for 2024 
+remain challenging, with weakening growth prospects and continuing trade and geopolitical 
+tensions.
+Furthermore, the WIR reveals a crisis in SDG investment, with a more than 10 per cent decrease 
+in 2023. Two sectors, agrifood systems and water and sanitation, registered fewer internationally 
+financed projects in 2023 than in 2015, when the SDGs were adopted. This decline, driven by 
+tighter financing conditions and a slowdown in sustainable finance markets, underscores the 
+need for concerted action to steer investments towards projects that genuinely contribute to a 
+sustainable future.
+Meanwhile, the mobilization of funds for SDG investment through sustainable finance products 
+in global capital markets is still growing but slowing down. Sustainable bonds showed marginal 
+growth in 2023, and new inflows in sustainable investment funds dropped by 60 per cent. 
+Greenwashing concerns are increasingly affecting investor demand. More broadly, policy action 
+is needed to mitigate the risk of a widening backlash against sustainable investment strategies. 
+The world needs a robust and credible sustainable finance industry, and no effort must be spared 
+to fortify it before it is too late.
+But the way we do that must be carefully considered. Policymakers should be mindful of the 
+spillover effects of international sustainability reporting standards, particularly on small and 
+medium-sized enterprises (SMEs) in developing countries. These SMEs, the engines of inclusive 
+growth and job creation, are precisely the ones that need sustainable finance flows the most. 
+However they may struggle to meet increased disclosure requirements, potentially affecting their 
+market access and participation in global supply chains. Striking a balance between promoting 
+transparency and avoiding undue burdens on businesses will be crucial for a sustainable and 
+inclusive investment landscape.
+Against this complex backdrop, the WIR underscores the importance of investment facilitation 
+and digital government as tools to attract and retain investment. By streamlining procedures, 
+enhancing transparency and leveraging digital tools such as online single windows, we can 
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+v
+foster a more conducive investment climate, particularly in developing countries. Furthermore, 
+the report emphasizes that digital business and investment facilitation is not merely a technical 
+solution; it is a stepping stone towards wider digital government implementation, which can 
+address underlying weaknesses in governance and institutions that often hinder investment and 
+impede progress towards sustainable development. 
+Investment facilitation, while essential, is not a panacea for the challenges facing global 
+investment flows. However, it is an undeniable prerequisite for fostering an environment conducive 
+to sustainable investment. The proliferation of digital solutions for investment facilitation, as 
+highlighted in this report, exemplifies the WIR’s commitment to providing tangible and actionable 
+policy recommendations even in the most challenging of times.
+As we navigate the complexities of the 21st century, the WIR reminds us that investment is 
+not just about capital flows; it is about human potential, environmental stewardship and the 
+enduring pursuit of a more equitable and sustainable world. Let us embrace this vision with 
+renewed determination, recognizing that the choices we make today will shape the world we 
+leave behind for generations to come.
+Rebeca Grynspan
+Secretary General of UN Trade and Development
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+vi
+Acknowledgements
+The World Investment Report 2024 was prepared by a team at UNCTAD led by Richard Bolwijn. 
+UNCTAD team members included Dafina Atanasova, Vincent Beyer, Stephania Bonilla, Julien 
+Bornon, Bruno Casella, Joseph Clements, Mathilde Closset, Tiffany Grabski, Frank Grozel, 
+Nat
+
+Question:
+Considering the complex interplay of foreign direct investment (FDI) trends, geopolitical factors, and sustainable development goals (SDGs) as highlighted in the 2024 World Investment Report, which of the following scenarios presents the most intricate challenge to achieving the SDGs in developing economies?
+
+A. The simultaneous rise in interest rates across multiple major economies, leading to capital flight from developing markets while inflating costs for sustainable projects due to increased financing conditions.
+B. The proliferation of international investment agreements (IIAs) that prioritize investor rights over regulatory sovereignty, potentially leading to a race to the bottom in environmental and social standards among developing nations.
+C. The integration of digital governance mechanisms that, while enhancing transparency, inadvertently expose developing economies to increased volatility from global financial markets and speculative investments.
+D. The shift in global supply chains due to heightened geopolitical tensions, resulting in the reallocation of FDI away from developing countries toward more stable and developed economies, thereby diminishing local capacities to meet SDGs.
+
+Select the correct answer.

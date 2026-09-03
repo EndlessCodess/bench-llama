@@ -1,0 +1,4 @@
+Review the following sentence and make corrections as needed:
+
+Input:
+The professor checked their emails from the teacher desk.

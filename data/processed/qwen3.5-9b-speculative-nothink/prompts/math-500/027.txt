@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+What is the sum of the values of $a$ that satisfy the equation $$(3)5^2-4(5-a)^2 \div 3=63?$$

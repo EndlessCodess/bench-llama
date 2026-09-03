@@ -1,0 +1,4 @@
+Transform the following sentences from 3rd person to 2nd person.
+
+Input:
+The car should be parked in the garage.

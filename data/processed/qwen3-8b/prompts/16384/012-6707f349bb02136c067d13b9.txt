@@ -1,0 +1,1974 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+import argparse
+import os
+
+from Cython import Tempita
+
+
+def process_tempita(pxifile, outfile) -> None:
+    with open(pxifile, encoding="utf-8") as f:
+        tmpl = f.read()
+    pyxcontent = Tempita.sub(tmpl)
+
+    with open(outfile, "w", encoding="utf-8") as f:
+        f.write(pyxcontent)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("infile", type=str, help="Path to the input file")
+    parser.add_argument("-o", "--outdir", type=str, help="Path to the output directory")
+    args = parser.parse_args()
+
+    if not args.infile.endswith(".in"):
+        raise ValueError(f"Unexpected extension: {args.infile}")
+
+    outdir_abs = os.path.join(os.getcwd(), args.outdir)
+    outfile = os.path.join(
+        outdir_abs, os.path.splitext(os.path.split(args.infile)[1])[0]
+    )
+
+    process_tempita(args.infile, outfile)
+
+
+main()
+
+
+<picture align="center">
+  <source media="(prefers-color-scheme: dark)" srcset="https://pandas.pydata.org/static/img/pandas_white.svg">
+  <img alt="Pandas Logo" src="https://pandas.pydata.org/static/img/pandas.svg">
+</picture>
+
+-----------------
+
+# pandas: powerful Python data analysis toolkit
+
+| | |
+| --- | --- |
+| Testing | [![CI - Test](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml) [![Coverage](https://codecov.io/github/pandas-dev/pandas/coverage.svg?branch=main)](https://codecov.io/gh/pandas-dev/pandas) |
+| Package | [![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/pandas/) [![PyPI Downloads](https://img.shields.io/pypi/dm/pandas.svg?label=PyPI%20downloads)](https://pypi.org/project/pandas/) [![Conda Latest Release](https://anaconda.org/conda-forge/pandas/badges/version.svg)](https://anaconda.org/conda-forge/pandas) [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pandas.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/pandas) |
+| Meta | [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](https://numfocus.org) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3509134.svg)](https://doi.org/10.5281/zenodo.3509134) [![License - BSD 3-Clause](https://img.shields.io/pypi/l/pandas.svg)](https://github.com/pandas-dev/pandas/blob/main/LICENSE) [![Slack](https://img.shields.io/badge/join_Slack-information-brightgreen.svg?logo=slack)](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) |
+
+
+## What is it?
+
+**pandas** is a Python package that provides fast, flexible, and expressive data
+structures designed to make working with "relational" or "labeled" data both
+easy and intuitive. It aims to be the fundamental high-level building block for
+doing practical, **real world** data analysis in Python. Additionally, it has
+the broader goal of becoming **the most powerful and flexible open source data
+analysis / manipulation tool available in any language**. It is already well on
+its way towards this goal.
+
+## Table of Contents
+
+- [Main Features](#main-features)
+- [Where to get it](#where-to-get-it)
+- [Dependencies](#dependencies)
+- [Installation from sources](#installation-from-sources)
+- [License](#license)
+- [Documentation](#documentation)
+- [Background](#background)
+- [Getting Help](#getting-help)
+- [Discussion and Development](#discussion-and-development)
+- [Contributing to pandas](#contributing-to-pandas)
+
+## Main Features
+Here are just a few of the things that pandas does well:
+
+  - Easy handling of [**missing data**][missing-data] (represented as
+    `NaN`, `NA`, or `NaT`) in floating point as well as non-floating point data
+  - Size mutability: columns can be [**inserted and
+    deleted**][insertion-deletion] from DataFrame and higher dimensional
+    objects
+  - Automatic and explicit [**data alignment**][alignment]: objects can
+    be explicitly aligned to a set of labels, or the user can simply
+    ignore the labels and let `Series`, `DataFrame`, etc. automatically
+    align the data for you in computations
+  - Powerful, flexible [**group by**][groupby] functionality to perform
+    split-apply-combine operations on data sets, for both aggregating
+    and transforming data
+  - Make it [**easy to convert**][conversion] ragged,
+    differently-indexed data in other Python and NumPy data structures
+    into DataFrame objects
+  - Intelligent label-based [**slicing**][slicing], [**fancy
+    indexing**][fancy-indexing], and [**subsetting**][subsetting] of
+    large data sets
+  - Intuitive [**merging**][merging] and [**joining**][joining] data
+    sets
+  - Flexible [**reshaping**][reshape] and [**pivoting**][pivot-table] of
+    data sets
+  - [**Hierarchical**][mi] labeling of axes (possible to have multiple
+    labels per tick)
+  - Robust IO tools for loading data from [**flat files**][flat-files]
+    (CSV and delimited), [**Excel files**][excel], [**databases**][db],
+    and saving/loading data from the ultrafast [**HDF5 format**][hdfstore]
+  - [**Time series**][timeseries]-specific functionality: date range
+    generation and frequency conversion, moving window statistics,
+    date shifting and lagging
+
+
+   [missing-data]: https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html
+   [insertion-deletion]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#column-selection-addition-deletion
+   [alignment]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html?highlight=alignment#intro-to-data-structures
+   [groupby]: https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#group-by-split-apply-combine
+   [conversion]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#dataframe
+   [slicing]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#slicing-ranges
+   [fancy-indexing]: https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced
+   [subsetting]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#boolean-indexing
+   [merging]: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#database-style-dataframe-or-named-series-joining-merging
+   [joining]: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#joining-on-index
+   [reshape]: https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html
+   [pivot-table]: https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html
+   [mi]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#hierarchical-indexing-multiindex
+   [flat-files]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#csv-text-files
+   [excel]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#excel-files
+   [db]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#sql-queries
+   [hdfstore]: https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#hdf5-pytables
+   [timeseries]: https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#time-series-date-functionality
+
+## Where to get it
+The source code is currently hosted on GitHub at:
+https://github.com/pandas-dev/pandas
+
+Binary installers for the latest released version are available at the [Python
+Package Index (PyPI)](https://pypi.org/project/pandas) and on [Conda](https://anaconda.org/conda-forge/pandas).
+
+```sh
+# conda
+conda install -c conda-forge pandas
+```
+
+```sh
+# or PyPI
+pip install pandas
+```
+
+The list of changes to pandas between each release can be found
+[here](https://pandas.pydata.org/pandas-docs/stable/whatsnew/index.html). For full
+details, see the commit logs at https://github.com/pandas-dev/pandas.
+
+## Dependencies
+- [NumPy - Adds support for large, multi-dimensional arrays, matrices and high-level mathematical functions to operate on these arrays](https://www.numpy.org)
+- [python-dateutil - Provides powerful extensions to the standard datetime module](https://dateutil.readthedocs.io/en/stable/index.html)
+- [pytz - Brings the Olson tz database into Python which allows accurate and cross platform timezone calculations](https://github.com/stub42/pytz)
+
+See the [full installation instructions](https://pandas.pydata.org/pandas-docs/stable/install.html#dependencies) for minimum supported versions of required, recommended and optional dependencies.
+
+## Installation from sources
+To install pandas from source you need [Cython](https://cython.org/) in addition to the normal
+dependencies above. Cython can be installed from PyPI:
+
+```sh
+pip install cython
+```
+
+In the `pandas` directory (same one where you found this file after
+cloning the git repo), execute:
+
+```sh
+pip install .
+```
+
+or for installing in [development mode](https://pip.pypa.io/en/latest/cli/pip_install/#install-editable):
+
+
+```sh
+python -m pip install -ve . --no-build-isolation -Ceditable-verbose=true
+```
+
+See the full instructions for [installing from source](https://pandas.pydata.org/docs/dev/development/contributing_environment.html).
+
+## License
+[BSD 3](LICENSE)
+
+## Documentation
+The official documentation is hosted on [PyData.org](https://pandas.pydata.org/pandas-docs/stable/).
+
+## Background
+Work on ``pandas`` started at [AQR](https://www.aqr.com/) (a quantitative hedge fund) in 2008 and
+has been under active development since then.
+
+## Getting Help
+
+For usage questions, the best place to go to is [StackOverflow](https://stackoverflow.com/questions/tagged/pandas).
+Further, general questions and discussions can also take place on the [pydata mailing list](https://groups.google.com/forum/?fromgroups#!forum/pydata).
+
+## Discussion and Development
+Most development discussions take place on GitHub in this repo, via the [GitHub issue tracker](https://github.com/pandas-dev/pandas/issues).
+
+Further, the [pandas-dev mailing list](https://mail.python.org/mailman/listinfo/pandas-dev) can also be used for specialized discussions or design issues, and a [Slack channel](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) is available for quick development related questions.
+
+There are also frequent [community meetings](https://pandas.pydata.org/docs/dev/development/community.html#community-meeting) for project maintainers open to the community as well as monthly [new contributor meetings](https://pandas.pydata.org/docs/dev/development/community.html#new-contributor-meeting) to help support new contributors.
+
+Additional information on the communication channels can be found on the [contributor community](https://pandas.pydata.org/docs/development/community.html) page.
+
+## Contributing to pandas
+
+[![Open Source Helpers](https://www.codetriage.com/pandas-dev/pandas/badges/users.svg)](https://www.codetriage.com/pandas-dev/pandas)
+
+All contributions, bug reports, bug fixes, documentation improvements, enhancements, and ideas are welcome.
+
+A detailed overview on how to contribute can be found in the **[contributing guide](https://pandas.pydata.org/docs/dev/development/contributing.html)**.
+
+If you are simply looking to start working with the pandas codebase, navigate to the [GitHub "issues" tab](https://github.com/pandas-dev/pandas/issues) and start looking through interesting issues. There are a number of issues listed under [Docs](https://github.com/pandas-dev/pandas/issues?labels=Docs&sort=updated&state=open) and [good first issue](https://github.com/pandas-dev/pandas/issues?labels=good+first+issue&sort=updated&state=open) where you could start out.
+
+You can also triage issues which may include reproducing bug reports, or asking for vital information such as version numbers or reproduction instructions. If you would like to start triaging issues, one easy way to get started is to [subscribe to pandas on CodeTriage](https://www.codetriage.com/pandas-dev/pandas).
+
+Or maybe through using pandas you have an idea of your own or are looking for something in the documentation and thinking ‘this can be improved’...you can do something about it!
+
+Feel free to ask questions on the [mailing list](https://groups.google.com/forum/?fromgroups#!forum/pydata) or on [Slack](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack).
+
+As contributors and maintainers to this project, you are expected to abide by pandas' code of conduct. More information can be found at: [Contributor Code of Conduct](https://github.com/pandas-dev/.github/blob/master/CODE_OF_CONDUCT.md)
+
+<hr>
+
+[Go to Top](#table-of-contents)
+
+
+About the Copyright Holders
+===========================
+
+*   Copyright (c) 2008-2011 AQR Capital Management, LLC
+
+    AQR Capital Management began pandas development in 2008. Development was
+    led by Wes McKinney. AQR released the source under this license in 2009.
+*   Copyright (c) 2011-2012, Lambda Foundry, Inc.
+
+    Wes is now an employee of Lambda Foundry, and remains the pandas project
+    lead.
+*   Copyright (c) 2011-2012, PyData Development Team
+
+    The PyData Development Team is the collection of developers of the PyData
+    project. This includes all of the PyData sub-projects, including pandas. The
+    core team that coordinates development on GitHub can be found here:
+    https://github.com/pydata.
+
+Full credits for pandas contributors can be found in the documentation.
+
+Our Copyright Policy
+====================
+
+PyData uses a shared copyright model. Each contributor maintains copyright
+over their contributions to PyData. However, it is important to note that
+these contributions are typically only changes to the repositories. Thus,
+the PyData source code, in its entirety, is not the copyright of any single
+person or institution. Instead, it is the collective copyright of the
+entire PyData Development Team. If individual contributors want to maintain
+a record of what changes/contributions they have specific copyright on,
+they should indicate their copyright in the commit message of the change
+when they commit the change to one of the PyData repositories.
+
+With this in mind, the following banner should be used in any source code
+file to indicate the copyright and license terms:
+
+```
+#-----------------------------------------------------------------------------
+# Copyright (c) 2012, PyData Development Team
+# All rights reserved.
+#
+# Distributed under the terms of the BSD Simplified License.
+#
+# The full license is in the LICENSE file, distributed with this software.
+#-----------------------------------------------------------------------------
+```
+
+Other licenses can be found in the LICENSES directory.
+
+License
+=======
+
+pandas is distributed under a 3-clause ("Simplified" or "New") BSD
+license. Parts of NumPy, SciPy, numpydoc, bottleneck, which all have
+BSD-compatible licenses, are included. Their licenses follow the pandas
+license.
+
+
+#!/usr/bin/env python3
+
+# Note: This file has to live next to setup.py or versioneer will not work
+import argparse
+import os
+import sys
+
+import versioneer
+
+sys.path.insert(0, "")
+
+
+def write_version_info(path) -> None:
+    version = None
+    git_version = None
+
+    try:
+        import _version_meson
+
+        version = _version_meson.__version__
+        git_version = _version_meson.__git_version__
+    except ImportError:
+        version = versioneer.get_version()
+        git_version = versioneer.get_versions()["full-revisionid"]
+    if os.environ.get("MESON_DIST_ROOT"):
+        path = os.path.join(os.environ.get("MESON_DIST_ROOT"), path)
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(f'__version__="{version}"\n')
+        file.write(f'__git_version__="{git_version}"\n')
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-o",
+        "--outfile",
+        type=str,
+        help="Path to write version info to",
+        required=False,
+    )
+    parser.add_argument(
+        "--print",
+        default=False,
+        action="store_true",
+        help="Whether to print out the version",
+        required=False,
+    )
+    args = parser.parse_args()
+
+    if args.outfile:
+        if not args.outfile.endswith(".py"):
+            raise ValueError(
+                f"Output file must be a Python file. "
+                f"Got: {args.outfile} as filename instead"
+            )
+
+        write_version_info(args.outfile)
+
+    if args.print:
+        try:
+            import _version_meson
+
+            version = _version_meson.__version__
+        except ImportError:
+            version = versioneer.get_version()
+        print(version)
+
+
+main()
+
+
+"""
+Public testing utility functions.
+"""
+
+from pandas._testing import (
+    assert_extension_array_equal,
+    assert_frame_equal,
+    assert_index_equal,
+    assert_series_equal,
+)
+
+__all__ = [
+    "assert_extension_array_equal",
+    "assert_frame_equal",
+    "assert_series_equal",
+    "assert_index_equal",
+]
+
+
+# This file helps to compute a version number in source trees obtained from
+# git-archive tarball (such as those provided by github's download-from-tag
+# feature). Distribution tarballs (built by setup.py sdist) and build
+# directories (produced by setup.py build) will contain a much shorter file
+# that just contains the computed version number.
+
+# This file is released into the public domain.
+# Generated by versioneer-0.28
+# https://github.com/python-versioneer/python-versioneer
+
+"""Git implementation of _version.py."""
+
+from collections.abc import Callable
+import errno
+import functools
+import os
+import re
+import subprocess
+import sys
+
+
+def get_keywords():
+    """Get the keywords needed to look up the version information."""
+    # these strings will be replaced by git during git-archive.
+    # setup.py/versioneer.py will grep for the variable names, so they must
+    # each be defined on a line of their own. _version.py will just call
+    # get_keywords().
+    git_refnames = " (HEAD -> main)"
+    git_full = "4f328f08df90906198b3a3f955ab321018964f0a"
+    git_date = "2024-10-10 15:19:55 +0200"
+    keywords = {"refnames": git_refnames, "full": git_full, "date": git_date}
+    return keywords
+
+
+class VersioneerConfig:
+    """Container for Versioneer configuration parameters."""
+
+
+def get_config():
+    """Create, populate and return the VersioneerConfig() object."""
+    # these strings are filled in when 'setup.py versioneer' creates
+    # _version.py
+    cfg = VersioneerConfig()
+    cfg.VCS = "git"
+    cfg.style = "pep440"
+    cfg.tag_prefix = "v"
+    cfg.parentdir_prefix = "pandas-"
+    cfg.versionfile_source = "pandas/_version.py"
+    cfg.verbose = False
+    return cfg
+
+
+class NotThisMethod(Exception):
+    """Exception raised if a method is not valid for the current scenario."""
+
+
+LONG_VERSION_PY: dict[str, str] = {}
+HANDLERS: dict[str, dict[str, Callable]] = {}
+
+
+def register_vcs_handler(vcs, method):  # decorator
+    """Create decorator to mark a method as the handler of a VCS."""
+
+    def decorate(f):
+        """Store f in HANDLERS[vcs][method]."""
+        if vcs not in HANDLERS:
+            HANDLERS[vcs] = {}
+        HANDLERS[vcs][method] = f
+        return f
+
+    return decorate
+
+
+def run_command(commands, args, cwd=None, verbose=False, hide_stderr=False, env=None):
+    """Call the given command(s)."""
+    assert isinstance(commands, list)
+    process = None
+
+    popen_kwargs = {}
+    if sys.platform == "win32":
+        # This hides the console window if pythonw.exe is used
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        popen_kwargs["startupinfo"] = startupinfo
+
+    for command in commands:
+        dispcmd = str([command] + args)
+        try:
+            # remember shell=False, so use git.cmd on windows, not just git
+            process = subprocess.Popen(
+                [command] + args,
+                cwd=cwd,
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=(subprocess.PIPE if hide_stderr else None),
+                **popen_kwargs,
+            )
+            break
+        except OSError:
+            e = sys.exc_info()[1]
+            if e.errno == errno.ENOENT:
+                continue
+            if verbose:
+                print(f"unable to run {dispcmd}")
+                print(e)
+            return None, None
+    else:
+        if verbose:
+            print(f"unable to find command, tried {commands}")
+        return None, None
+    stdout = process.communicate()[0].strip().decode()
+    if process.returncode != 0:
+        if verbose:
+            print(f"unable to run {dispcmd} (error)")
+            print(f"stdout was {stdout}")
+        return None, process.returncode
+    return stdout, process.returncode
+
+
+def versions_from_parentdir(parentdir_prefix, root, verbose):
+    """Try to determine the version from the parent directory name.
+
+    Source tarballs conventionally unpack into a directory that includes both
+    the project name and a version string. We will also support searching up
+    two directory levels for an appropriately named parent directory
+    """
+    rootdirs = []
+
+    for _ in range(3):
+        dirname = os.path.basename(root)
+        if dirname.startswith(parentdir_prefix):
+            return {
+                "version": dirname[len(parentdir_prefix) :],
+                "full-revisionid": None,
+                "dirty": False,
+                "error": None,
+                "date": None,
+            }
+        rootdirs.append(root)
+        root = os.path.dirname(root)  # up a level
+
+    if verbose:
+        print(
+            f"Tried directories {rootdirs!s} \
+            but none started with prefix {parentdir_prefix}"
+        )
+    raise NotThisMethod("rootdir doesn't start with parentdir_prefix")
+
+
+@register_vcs_handler("git", "get_keywords")
+def git_get_keywords(versionfile_abs):
+    """Extract version information from the given file."""
+    # the code embedded in _version.py can just fetch the value of these
+    # keywords. When used from setup.py, we don't want to import _version.py,
+    # so we do it with a regexp instead. This function is not used from
+    # _version.py.
+    keywords = {}
+    try:
+        with open(versionfile_abs, encoding="utf-8") as fobj:
+            for line in fobj:
+                if line.strip().startswith("git_refnames ="):
+                    mo = re.search(r'=\s*"(.*)"', line)
+                    if mo:
+                        keywords["refnames"] = mo.group(1)
+                if line.strip().startswith("git_full ="):
+                    mo = re.search(r'=\s*"(.*)"', line)
+                    if mo:
+                        keywords["full"] = mo.group(1)
+                if line.strip().startswith("git_date ="):
+                    mo = re.search(r'=\s*"(.*)"', line)
+                    if mo:
+                        keywords["date"] = mo.group(1)
+    except OSError:
+        pass
+    return keywords
+
+
+@register_vcs_handler("git", "keywords")
+def git_versions_from_keywords(keywords, tag_prefix, verbose):
+    """Get version information from git keywords."""
+    if "refnames" not in keywords:
+        raise NotThisMethod("Short version file found")
+    date = keywords.get("date")
+    if date is not None:
+        # Use only the last line.  Previous lines may contain GPG signature
+        # information.
+        date = date.splitlines()[-1]
+
+        # git-2.2.0 added "%cI", which expands to an ISO-8601 -compliant
+        # datestamp. However we prefer "%ci" (which expands to an "ISO-8601
+        # -like" string, which we must then edit to make compliant), because
+        # it's been around since git-1.5.3, and it's too difficult to
+        # discover which version we're using, or to work around using an
+        # older one.
+        date = date.strip().replace(" ", "T", 1).replace(" ", "", 1)
+    refnames = keywords["refnames"].strip()
+    if refnames.startswith("$Format"):
+        if verbose:
+            print("keywords are unexpanded, not using")
+        raise NotThisMethod("unexpanded keywords, not a git-archive tarball")
+    refs = {r.strip() for r in refnames.strip("()").split(",")}
+    # starting in git-1.8.3, tags are listed as "tag: foo-1.0" instead of
+    # just "foo-1.0". If we see a "tag: " prefix, prefer those.
+    TAG = "tag: "
+    tags = {r[len(TAG) :] for r in refs if r.startswith(TAG)}
+    if not tags:
+        # Either we're using git < 1.8.3, or there really are no tags. We use
+        # a heuristic: assume all version tags have a digit. The old git %d
+        # expansion behaves like git log --decorate=short and strips out the
+        # refs/heads/ and refs/tags/ prefixes that would let us distinguish
+        # between branches and tags. By ignoring refnames without digits, we
+        # filter out many common branch names like "release" and
+        # "stabilization", as well as "HEAD" and "master".
+        tags = {r for r in refs if re.search(r"\d", r)}
+        if verbose:
+            print(f"discarding '{','.join(refs - tags)}', no digits")
+    if verbose:
+        print(f"likely tags: {','.join(sorted(tags))}")
+    for ref in sorted(tags):
+        # sorting will prefer e.g. "2.0" over "2.0rc1"
+        if ref.startswith(tag_prefix):
+            r = ref[len(tag_prefix) :]
+            # Filter out refs that exactly match prefix or that don't start
+            # with a number once the prefix is stripped (mostly a concern
+            # when prefix is '')
+            if not re.match(r"\d", r):
+                continue
+            if verbose:
+                print(f"picking {r}")
+            return {
+                "version": r,
+                "full-revisionid": keywords["full"].strip(),
+                "dirty": False,
+                "error": None,
+                "date": date,
+            }
+    # no suitable tags, so version is "0+unknown", but full hex is still there
+    if verbose:
+        print("no suitable tags, using unknown + full revision id")
+    return {
+        "version": "0+unknown",
+        "full-revisionid": keywords["full"].strip(),
+        "dirty": False,
+        "error": "no suitable tags",
+        "date": None,
+    }
+
+
+@register_vcs_handler("git", "pieces_from_vcs")
+def git_pieces_from_vcs(tag_prefix, root, verbose, runner=run_command):
+    """Get version from 'git describe' in the root of the source tree.
+
+    This only gets called if the git-archive 'subst' keywords were *not*
+    expanded, and _version.py hasn't already been rewritten with a short
+    version string, meaning we're inside a checked out source tree.
+    """
+    GITS = ["git"]
+    if sys.platform == "win32":
+        GITS = ["git.cmd", "git.exe"]
+
+    # GIT_DIR can interfere with correct operation of Versioneer.
+    # It may be intended to be passed to the Versioneer-versioned project,
+    # but that should not change where we get our version from.
+    env = os.environ.copy()
+    env.pop("GIT_DIR", None)
+    runner = functools.partial(runner, env=env)
+
+    _, rc = runner(GITS, ["rev-parse", "--git-dir"], cwd=root, hide_stderr=not verbose)
+    if rc != 0:
+        if verbose:
+            print(f"Directory {root} not under git control")
+        raise NotThisMethod("'git rev-parse --git-dir' returned error")
+
+    # if there is a tag matching tag_prefix, this yields TAG-NUM-gHEX[-dirty]
+    # if there isn't one, this yields HEX[-dirty] (no NUM)
+    describe_out, rc = runner(
+        GITS,
+        [
+            "describe",
+            "--tags",
+            "--dirty",
+            "--always",
+            "--long",
+            "--match",
+            f"{tag_prefix}[[:digit:]]*",
+        ],
+        cwd=root,
+    )
+    # --long was added in git-1.5.5
+    if describe_out is None:
+        raise NotThisMethod("'git describe' failed")
+    describe_out = describe_out.strip()
+    full_out, rc = runner(GITS, ["rev-parse", "HEAD"], cwd=root)
+    if full_out is None:
+        raise NotThisMethod("'git rev-parse' failed")
+    full_out = full_out.strip()
+
+    pieces = {}
+    pieces["long"] = full_out
+    pieces["short"] = full_out[:7]  # maybe improved later
+    pieces["error"] = None
+
+    branch_name, rc = runner(GITS, ["rev-parse", "--abbrev-ref", "HEAD"], cwd=root)
+    # --abbrev-ref was added in git-1.6.3
+    if rc != 0 or branch_name is None:
+        raise NotThisMethod("'git rev-parse --abbrev-ref' returned error")
+    branch_name = branch_name.strip()
+
+    if branch_name == "HEAD":
+        # If we aren't exactly on a branch, pick a branch which represents
+        # the current commit. If all else fails, we are on a branchless
+        # commit.
+        branches, rc = runner(GITS, ["branch", "--contains"], cwd=root)
+        # --contains was added in git-1.5.4
+        if rc != 0 or branches is None:
+            raise NotThisMethod("'git branch --contains' returned error")
+        branches = branches.split("\n")
+
+        # Remove the first line if we're running detached
+        if "(" in branches[0]:
+            branches.pop(0)
+
+        # Strip off the leading "* " from the list of branches.
+        branches = [branch[2:] for branch in branches]
+        if "master" in branches:
+            branch_name = "master"
+        elif not branches:
+            branch_name = None
+        else:
+            # Pick the first branch that is returned. Good or bad.
+            branch_name = branches[0]
+
+    pieces["branch"] = branch_name
+
+    # parse describe_out. It will be like TAG-NUM-gHEX[-dirty] or HEX[-dirty]
+    # TAG might have hyphens.
+    git_describe = describe_out
+
+    # look for -dirty suffix
+    dirty = git_describe.endswith("-dirty")
+    pieces["dirty"] = dirty
+    if dirty:
+        git_describe = git_describe[: git_describe.rindex("-dirty")]
+
+    # now we have TAG-NUM-gHEX or HEX
+
+    if "-" in git_describe:
+        # TAG-NUM-gHEX
+        mo = re.search(r"^(.+)-(\d+)-g([0-9a-f]+)$", git_describe)
+        if not mo:
+            # unparsable. Maybe git-describe is misbehaving?
+            pieces["error"] = f"unable to parse git-describe output: '{describe_out}'"
+            return pieces
+
+        # tag
+        full_tag = mo.group(1)
+        if not full_tag.startswith(tag_prefix):
+            if verbose:
+                fmt = "tag '%s' doesn't start with prefix '%s'"
+                print(fmt % (full_tag, tag_prefix))
+            pieces["error"] = (
+                f"tag '{full_tag}' doesn't start with prefix '{tag_prefix}'"
+            )
+            return pieces
+        pieces["closest-tag"] = full_tag[len(tag_prefix) :]
+
+        # distance: number of commits since tag
+        pieces["distance"] = int(mo.group(2))
+
+        # commit: short hex revision ID
+        pieces["short"] = mo.group(3)
+
+    else:
+        # HEX: no tags
+        pieces["closest-tag"] = None
+        out, rc = runner(GITS, ["rev-list", "HEAD", "--left-right"], cwd=root)
+        pieces["distance"] = len(out.split())  # total number of commits
+
+    # commit date: see ISO-8601 comment in git_versions_from_keywords()
+    date = runner(GITS, ["show", "-s", "--format=%ci", "HEAD"], cwd=root)[0].strip()
+    # Use only the last line.  Previous lines may contain GPG signature
+    # information.
+    date = date.splitlines()[-1]
+    pieces["date"] = date.strip().replace(" ", "T", 1).replace(" ", "", 1)
+
+    return pieces
+
+
+def plus_or_dot(pieces) -> str:
+    """Return a + if we don't already have one, else return a ."""
+    if "+" in pieces.get("closest-tag", ""):
+        return "."
+    return "+"
+
+
+def render_pep440(pieces):
+    """Build up version string, with post-release "local version identifier".
+
+    Our goal: TAG[+DISTANCE.gHEX[.dirty]] . Note that if you
+    get a tagged build and then dirty it, you'll get TAG+0.gHEX.dirty
+
+    Exceptions:
+    1: no tags. git_describe was just HEX. 0+untagged.DISTANCE.gHEX[.dirty]
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        if pieces["distance"] or pieces["dirty"]:
+            rendered += plus_or_dot(pieces)
+            rendered += f"{pieces['distance']}.g{pieces['short']}"
+            if pieces["dirty"]:
+                rendered += ".dirty"
+    else:
+        # exception #1
+        rendered = f"0+untagged.{pieces['distance']}.g{pieces['short']}"
+        if pieces["dirty"]:
+            rendered += ".dirty"
+    return rendered
+
+
+def render_pep440_branch(pieces):
+    """TAG[[.dev0]+DISTANCE.gHEX[.dirty]] .
+
+    The ".dev0" means not master branch. Note that .dev0 sorts backwards
+    (a feature branch will appear "older" than the master branch).
+
+    Exceptions:
+    1: no tags. 0[.dev0]+untagged.DISTANCE.gHEX[.dirty]
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        if pieces["distance"] or pieces["dirty"]:
+            if pieces["branch"] != "master":
+                rendered += ".dev0"
+            rendered += plus_or_dot(pieces)
+            rendered += f"{pieces['distance']}.g{pieces['short']}"
+            if pieces["dirty"]:
+                rendered += ".dirty"
+    else:
+        # exception #1
+        rendered = "0"
+        if pieces["branch"] != "master":
+            rendered += ".dev0"
+        rendered += f"+untagged.{pieces['distance']}.g{pieces['short']}"
+        if pieces["dirty"]:
+            rendered += ".dirty"
+    return rendered
+
+
+def pep440_split_post(ver):
+    """Split pep440 version string at the post-release segment.
+
+    Returns the release segments before the post-release and the
+    post-release version number (or -1 if no post-release segment is present).
+    """
+    vc = str.split(ver, ".post")
+    return vc[0], int(vc[1] or 0) if len(vc) == 2 else None
+
+
+def render_pep440_pre(pieces):
+    """TAG[.postN.devDISTANCE] -- No -dirty.
+
+    Exceptions:
+    1: no tags. 0.post0.devDISTANCE
+    """
+    if pieces["closest-tag"]:
+        if pieces["distance"]:
+            # update the post release segment
+            tag_version, post_version = pep440_split_post(pieces["closest-tag"])
+            rendered = tag_version
+            if post_version is not None:
+                rendered += f".post{post_version + 1}.dev{pieces['distance']}"
+            else:
+                rendered += f".post0.dev{pieces['distance']}"
+        else:
+            # no commits, use the tag as the version
+            rendered = pieces["closest-tag"]
+    else:
+        # exception #1
+        rendered = f"0.post0.dev{pieces['distance']}"
+    return rendered
+
+
+def render_pep440_post(pieces):
+    """TAG[.postDISTANCE[.dev0]+gHEX] .
+
+    The ".dev0" means dirty. Note that .dev0 sorts backwards
+    (a dirty tree will appear "older" than the corresponding clean one),
+    but you shouldn't be releasing software with -dirty anyways.
+
+    Exceptions:
+    1: no tags. 0.postDISTANCE[.dev0]
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        if pieces["distance"] or pieces["dirty"]:
+            rendered += f".post{pieces['distance']}"
+            if pieces["dirty"]:
+                rendered += ".dev0"
+            rendered += plus_or_dot(pieces)
+            rendered += f"g{pieces['short']}"
+    else:
+        # exception #1
+        rendered = f"0.post{pieces['distance']}"
+        if pieces["dirty"]:
+            rendered += ".dev0"
+        rendered += f"+g{pieces['short']}"
+    return rendered
+
+
+def render_pep440_post_branch(pieces):
+    """TAG[.postDISTANCE[.dev0]+gHEX[.dirty]] .
+
+    The ".dev0" means not master branch.
+
+    Exceptions:
+    1: no tags. 0.postDISTANCE[.dev0]+gHEX[.dirty]
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        if pieces["distance"] or pieces["dirty"]:
+            rendered += f".post{pieces['distance']}"
+            if pieces["branch"] != "master":
+                rendered += ".dev0"
+            rendered += plus_or_dot(pieces)
+            rendered += f"g{pieces['short']}"
+            if pieces["dirty"]:
+                rendered += ".dirty"
+    else:
+        # exception #1
+        rendered = f"0.post{pieces['distance']}"
+        if pieces["branch"] != "master":
+            rendered += ".dev0"
+        rendered += f"+g{pieces['short']}"
+        if pieces["dirty"]:
+            rendered += ".dirty"
+    return rendered
+
+
+def render_pep440_old(pieces):
+    """TAG[.postDISTANCE[.dev0]] .
+
+    The ".dev0" means dirty.
+
+    Exceptions:
+    1: no tags. 0.postDISTANCE[.dev0]
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        if pieces["distance"] or pieces["dirty"]:
+            rendered += f"0.post{pieces['distance']}"
+            if pieces["dirty"]:
+                rendered += ".dev0"
+    else:
+        # exception #1
+        rendered = f"0.post{pieces['distance']}"
+        if pieces["dirty"]:
+            rendered += ".dev0"
+    return rendered
+
+
+def render_git_describe(pieces):
+    """TAG[-DISTANCE-gHEX][-dirty].
+
+    Like 'git describe --tags --dirty --always'.
+
+    Exceptions:
+    1: no tags. HEX[-dirty]  (note: no 'g' prefix)
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        if pieces["distance"]:
+            rendered += f"-{pieces['distance']}-g{pieces['short']}"
+    else:
+        # exception #1
+        rendered = pieces["short"]
+    if pieces["dirty"]:
+        rendered += "-dirty"
+    return rendered
+
+
+def render_git_describe_long(pieces):
+    """TAG-DISTANCE-gHEX[-dirty].
+
+    Like 'git describe --tags --dirty --always -long'.
+    The distance/hash is unconditional.
+
+    Exceptions:
+    1: no tags. HEX[-dirty]  (note: no 'g' prefix)
+    """
+    if pieces["closest-tag"]:
+        rendered = pieces["closest-tag"]
+        rendered += f"-{pieces['distance']}-g{pieces['short']}"
+    else:
+        # exception #1
+        rendered = pieces["short"]
+    if pieces["dirty"]:
+        rendered += "-dirty"
+    return rendered
+
+
+def render(pieces, style):
+    """Render the given version pieces into the requested style."""
+    if pieces["error"]:
+        return {
+            "version": "unknown",
+            "full-revisionid": pieces.get("long"),
+            "dirty": None,
+            "error": pieces["error"],
+            "date": None,
+        }
+
+    if not style or style == "default":
+        style = "pep440"  # the default
+
+    if style == "pep440":
+        rendered = render_pep440(pieces)
+    elif style == "pep440-branch":
+        rendered = render_pep440_branch(pieces)
+    elif style == "pep440-pre":
+        rendered = render_pep440_pre(pieces)
+    elif style == "pep440-post":
+        rendered = render_pep440_post(pieces)
+    elif style == "pep440-post-branch":
+        rendered = render_pep440_post_branch(pieces)
+    elif style == "pep440-old":
+        rendered = render_pep440_old(pieces)
+    elif style == "git-describe":
+        rendered = render_git_describe(pieces)
+    elif style == "git-describe-long":
+        rendered = render_git_describe_long(pieces)
+    else:
+        raise ValueError(f"unknown style '{style}'")
+
+    return {
+        "version": rendered,
+        "full-revisionid": pieces["long"],
+        "dirty": pieces["dirty"],
+        "error": None,
+        "date": pieces.get("date"),
+    }
+
+
+def get_versions():
+    """Get version information or return default if unable to do so."""
+    # I am in _version.py, which lives at ROOT/VERSIONFILE_SOURCE. If we have
+    # __file__, we can work backwards from there to the root. Some
+    # py2exe/bbfreeze/non-CPython implementations don't do __file__, in which
+    # case we can only use expanded keywords.
+
+    cfg = get_config()
+    verbose = cfg.verbose
+
+    try:
+        return git_versions_from_keywords(get_keywords(), cfg.tag_prefix, verbose)
+    except NotThisMethod:
+        pass
+
+    try:
+        root = os.path.realpath(__file__)
+        # versionfile_source is the relative path from the top of the source
+        # tree (where the .git directory might live) to this file. Invert
+        # this to find the root from __file__.
+        for _ in cfg.versionfile_source.split("/"):
+            root = os.path.dirname(root)
+    except NameError:
+        return {
+            "version": "0+unknown",
+            "full-revisionid": None,
+            "dirty": None,
+            "error": "unable to find root of source tree",
+            "date": None,
+        }
+
+    try:
+        pieces = git_pieces_from_vcs(cfg.tag_prefix, root, verbose)
+        return render(pieces, cfg.style)
+    except NotThisMethod:
+        pass
+
+    try:
+        if cfg.parentdir_prefix:
+            return versions_from_parentdir(cfg.parentdir_prefix, root, verbose)
+    except NotThisMethod:
+        pass
+
+    return {
+        "version": "0+unknown",
+        "full-revisionid": None,
+        "dirty": None,
+        "error": "unable to compute version",
+        "date": None,
+    }
+
+
+"""
+This file is very long and growing, but it was decided to not split it yet, as
+it's still manageable (2020-03-17, ~1.1k LoC). See gh-31989
+
+Instead of splitting it was decided to define sections here:
+- Configuration / Settings
+- Autouse fixtures
+- Common arguments
+- Missing values & co.
+- Classes
+- Indices
+- Series'
+- DataFrames
+- Operators & Operations
+- Data sets/files
+- Time zones
+- Dtypes
+- Misc
+"""
+
+from __future__ import annotations
+
+from collections import abc
+from datetime import (
+    date,
+    datetime,
+    time,
+    timedelta,
+    timezone,
+)
+from decimal import Decimal
+import gc
+import operator
+import os
+from typing import (
+    TYPE_CHECKING,
+    Any,
+)
+import uuid
+
+from dateutil.tz import (
+    tzlocal,
+    tzutc,
+)
+import hypothesis
+from hypothesis import strategies as st
+import numpy as np
+import pytest
+
+from pandas.compat._optional import import_optional_dependency
+import pandas.util._test_decorators as td
+
+from pandas.core.dtypes.dtypes import (
+    DatetimeTZDtype,
+    IntervalDtype,
+)
+
+import pandas as pd
+from pandas import (
+    CategoricalIndex,
+    DataFrame,
+    Interval,
+    IntervalIndex,
+    Period,
+    RangeIndex,
+    Series,
+    Timedelta,
+    Timestamp,
+    date_range,
+    period_range,
+    timedelta_range,
+)
+import pandas._testing as tm
+from pandas.core import ops
+from pandas.core.indexes.api import (
+    Index,
+    MultiIndex,
+)
+
+if TYPE_CHECKING:
+    from collections.abc import (
+        Callable,
+        Hashable,
+        Iterator,
+    )
+
+try:
+    import pyarrow as pa
+except ImportError:
+    has_pyarrow = False
+else:
+    del pa
+    has_pyarrow = True
+
+pytz = import_optional_dependency("pytz", errors="ignore")
+
+
+# ----------------------------------------------------------------
+# Configuration / Settings
+# ----------------------------------------------------------------
+# pytest
+
+
+def pytest_addoption(parser) -> None:
+    parser.addoption(
+        "--no-strict-data-files",
+        action="store_false",
+        help="Don't fail if a test is skipped for missing data file.",
+    )
+
+
+def ignore_doctest_warning(item: pytest.Item, path: str, message: str) -> None:
+    """Ignore doctest warning.
+
+    Parameters
+    ----------
+    item : pytest.Item
+        pytest test item.
+    path : str
+        Module path to Python object, e.g. "pandas.DataFrame.append". A
+        warning will be filtered when item.name ends with in given path. So it is
+        sufficient to specify e.g. "DataFrame.append".
+    message : str
+        Message to be filtered.
+    """
+    if item.name.endswith(path):
+        item.add_marker(pytest.mark.filterwarnings(f"ignore:{message}"))
+
+
+def pytest_collection_modifyitems(items, config) -> None:
+    is_doctest = config.getoption("--doctest-modules") or config.getoption(
+        "--doctest-cython", default=False
+    )
+
+    # Warnings from doctests that can be ignored; place reason in comment above.
+    # Each entry specifies (path, message) - see the ignore_doctest_warning function
+    ignored_doctest_warnings = [
+        ("is_int64_dtype", "is_int64_dtype is deprecated"),
+        ("is_interval_dtype", "is_interval_dtype is deprecated"),
+        ("is_period_dtype", "is_period_dtype is deprecated"),
+        ("is_datetime64tz_dtype", "is_datetime64tz_dtype is deprecated"),
+        ("is_categorical_dtype", "is_categorical_dtype is deprecated"),
+        ("is_sparse", "is_sparse is deprecated"),
+        ("DataFrameGroupBy.fillna", "DataFrameGroupBy.fillna is deprecated"),
+        ("DataFrameGroupBy.corrwith", "DataFrameGroupBy.corrwith is deprecated"),
+        ("NDFrame.replace", "Series.replace without 'value'"),
+        ("NDFrame.clip", "Downcasting behavior in Series and DataFrame methods"),
+        ("Series.idxmin", "The behavior of Series.idxmin"),
+        ("Series.idxmax", "The behavior of Series.idxmax"),
+        ("SeriesGroupBy.fillna", "SeriesGroupBy.fillna is deprecated"),
+        ("SeriesGroupBy.idxmin", "The behavior of Series.idxmin"),
+        ("SeriesGroupBy.idxmax", "The behavior of Series.idxmax"),
+        ("to_pytimedelta", "The behavior of TimedeltaProperties.to_pytimedelta"),
+        ("NDFrame.reindex_like", "keyword argument 'method' is deprecated"),
+        # Docstring divides by zero to show behavior difference
+        ("missing.mask_zero_div_zero", "divide by zero encountered"),
+        (
+            "pandas.core.generic.NDFrame.first",
+            "first is deprecated and will be removed in a future version. "
+            "Please create a mask and filter using `.loc` instead",
+        ),
+        (
+            "Resampler.fillna",
+            "DatetimeIndexResampler.fillna is deprecated",
+        ),
+        (
+            "DataFrameGroupBy.fillna",
+            "DataFrameGroupBy.fillna with 'method' is deprecated",
+        ),
+        ("read_parquet", "Passing a BlockManager to DataFrame is deprecated"),
+    ]
+
+    if is_doctest:
+        for item in items:
+            for path, message in ignored_doctest_warnings:
+                ignore_doctest_warning(item, path, message)
+
+
+hypothesis_health_checks = [
+    hypothesis.HealthCheck.too_slow,
+    hypothesis.HealthCheck.differing_executors,
+]
+
+# Hypothesis
+hypothesis.settings.register_profile(
+    "ci",
+    # Hypothesis timing checks are tuned for scalars by default, so we bump
+    # them from 200ms to 500ms per test case as the global default.  If this
+    # is too short for a specific test, (a) try to make it faster, and (b)
+    # if it really is slow add `@settings(deadline=...)` with a working value,
+    # or `deadline=None` to entirely disable timeouts for that test.
+    # 2022-02-09: Changed deadline from 500 -> None. Deadline leads to
+    # non-actionable, flaky CI failures (# GH 24641, 44969, 45118, 44969)
+    deadline=None,
+    suppress_health_check=tuple(hypothesis_health_checks),
+)
+hypothesis.settings.load_profile("ci")
+
+# Registering these strategies makes them globally available via st.from_type,
+# which is use for offsets in tests/tseries/offsets/test_offsets_properties.py
+for name in "MonthBegin MonthEnd BMonthBegin BMonthEnd".split():
+    cls = getattr(pd.tseries.offsets, name)
+    st.register_type_strategy(
+        cls, st.builds(cls, n=st.integers(-99, 99), normalize=st.booleans())
+    )
+
+for name in "YearBegin YearEnd BYearBegin BYearEnd".split():
+    cls = getattr(pd.tseries.offsets, name)
+    st.register_type_strategy(
+        cls,
+        st.builds(
+            cls,
+            n=st.integers(-5, 5),
+            normalize=st.booleans(),
+            month=st.integers(min_value=1, max_value=12),
+        ),
+    )
+
+for name in "QuarterBegin QuarterEnd BQuarterBegin BQuarterEnd".split():
+    cls = getattr(pd.tseries.offsets, name)
+    st.register_type_strategy(
+        cls,
+        st.builds(
+            cls,
+            n=st.integers(-24, 24),
+            normalize=st.booleans(),
+            startingMonth=st.integers(min_value=1, max_value=12),
+        ),
+    )
+
+
+# ----------------------------------------------------------------
+# Autouse fixtures
+# ----------------------------------------------------------------
+
+
+# https://github.com/pytest-dev/pytest/issues/11873
+# Would like to avoid autouse=True, but cannot as of pytest 8.0.0
+@pytest.fixture(autouse=True)
+def add_doctest_imports(doctest_namespace) -> None:
+    """
+    Make `np` and `pd` names available for doctests.
+    """
+    doctest_namespace["np"] = np
+    doctest_namespace["pd"] = pd
+
+
+@pytest.fixture(autouse=True)
+def configure_tests() -> None:
+    """
+    Configure settings for all tests and test modules.
+    """
+    pd.set_option("chained_assignment", "raise")
+
+
+# ----------------------------------------------------------------
+# Common arguments
+# ----------------------------------------------------------------
+@pytest.fixture(params=[0, 1, "index", "columns"], ids=lambda x: f"axis={x!r}")
+def axis(request):
+    """
+    Fixture for returning the axis numbers of a DataFrame.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def observed(request):
+    """
+    Pass in the observed keyword to groupby for [True, False]
+    This indicates whether categoricals should return values for
+    values which are not in the grouper [False / None], or only values which
+    appear in the grouper [True]. [None] is supported for future compatibility
+    if we decide to change the default (and would need to warn if this
+    parameter is not passed).
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False, None])
+def ordered(request):
+    """
+    Boolean 'ordered' parameter for Categorical.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def dropna(request):
+    """
+    Boolean 'dropna' parameter.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def sort(request):
+    """
+    Boolean 'sort' parameter.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def skipna(request):
+    """
+    Boolean 'skipna' parameter.
+    """
+    return request.param
+
+
+@pytest.fixture(params=["first", "last", False])
+def keep(request):
+    """
+    Valid values for the 'keep' parameter used in
+    .duplicated or .drop_duplicates
+    """
+    return request.param
+
+
+@pytest.fixture(params=["both", "neither", "left", "right"])
+def inclusive_endpoints_fixture(request):
+    """
+    Fixture for trying all interval 'inclusive' parameters.
+    """
+    return request.param
+
+
+@pytest.fixture(params=["left", "right", "both", "neither"])
+def closed(request):
+    """
+    Fixture for trying all interval closed parameters.
+    """
+    return request.param
+
+
+@pytest.fixture(params=["left", "right", "both", "neither"])
+def other_closed(request):
+    """
+    Secondary closed fixture to allow parametrizing over all pairs of closed.
+    """
+    return request.param
+
+
+@pytest.fixture(
+    params=[
+        None,
+        "gzip",
+        "bz2",
+        "zip",
+        "xz",
+        "tar",
+        pytest.param("zstd", marks=td.skip_if_no("zstandard")),
+    ]
+)
+def compression(request):
+    """
+    Fixture for trying common compression types in compression tests.
+    """
+    return request.param
+
+
+@pytest.fixture(
+    params=[
+        "gzip",
+        "bz2",
+        "zip",
+        "xz",
+        "tar",
+        pytest.param("zstd", marks=td.skip_if_no("zstandard")),
+    ]
+)
+def compression_only(request):
+    """
+    Fixture for trying common compression types in compression tests excluding
+    uncompressed case.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def writable(request):
+    """
+    Fixture that an array is writable.
+    """
+    return request.param
+
+
+@pytest.fixture(params=["inner", "outer", "left", "right"])
+def join_type(request):
+    """
+    Fixture for trying all types of join operations.
+    """
+    return request.param
+
+
+@pytest.fixture(params=["nlargest", "nsmallest"])
+def nselect_method(request):
+    """
+    Fixture for trying all nselect methods.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[None, "ignore"])
+def na_action(request):
+    """
+    Fixture for 'na_action' argument in map.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def ascending(request):
+    """
+    Fixture for 'na_action' argument in sort_values/sort_index/rank.
+    """
+    return request.param
+
+
+@pytest.fixture(params=["average", "min", "max", "first", "dense"])
+def rank_method(request):
+    """
+    Fixture for 'rank' argument in rank.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def as_index(request):
+    """
+    Fixture for 'as_index' argument in groupby.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def cache(request):
+    """
+    Fixture for 'cache' argument in to_datetime.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True, False])
+def parallel(request):
+    """
+    Fixture for parallel keyword argument for numba.jit.
+    """
+    return request.param
+
+
+# Can parameterize nogil & nopython over True | False, but limiting per
+# https://github.com/pandas-dev/pandas/pull/41971#issuecomment-860607472
+
+
+@pytest.fixture(params=[False])
+def nogil(request):
+    """
+    Fixture for nogil keyword argument for numba.jit.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[True])
+def nopython(request):
+    """
+    Fixture for nopython keyword argument for numba.jit.
+    """
+    return request.param
+
+
+# ----------------------------------------------------------------
+# Missing values & co.
+# ----------------------------------------------------------------
+@pytest.fixture(params=tm.NULL_OBJECTS, ids=lambda x: type(x).__name__)
+def nulls_fixture(request):
+    """
+    Fixture for each null type in pandas.
+    """
+    return request.param
+
+
+nulls_fixture2 = nulls_fixture  # Generate cartesian product of nulls_fixture
+
+
+@pytest.fixture(params=[None, np.nan, pd.NaT])
+def unique_nulls_fixture(request):
+    """
+    Fixture for each null type in pandas, each null type exactly once.
+    """
+    return request.param
+
+
+# Generate cartesian product of unique_nulls_fixture:
+unique_nulls_fixture2 = unique_nulls_fixture
+
+
+@pytest.fixture(params=tm.NP_NAT_OBJECTS, ids=lambda x: type(x).__name__)
+def np_nat_fixture(request):
+    """
+    Fixture for each NaT type in numpy.
+    """
+    return request.param
+
+
+# Generate cartesian product of np_nat_fixture:
+np_nat_fixture2 = np_nat_fixture
+
+
+# ----------------------------------------------------------------
+# Classes
+# ----------------------------------------------------------------
+
+
+@pytest.fixture(params=[DataFrame, Series])
+def frame_or_series(request):
+    """
+    Fixture to parametrize over DataFrame and Series.
+    """
+    return request.param
+
+
+@pytest.fixture(params=[Index, Series], ids=["index", "series"])
+def index_or_series(request):
+    """
+    Fixture to parametrize over Index and Series, made necessary by a mypy
+    bug, giving an error:
+
+    List item 0 has incompatible type "Type[Series]"; expected "Type[PandasObject]"
+
+    See GH#29725
+    """
+    return request.param
+
+
+@pytest.fixture(params=[Index, Series, pd.array], ids=["index", "series", "array"])
+def index_or_series_or_array(request):
+    """
+    Fixture to parametrize over Index, Series, and ExtensionArray
+    """
+    return request.param
+
+
+@pytest.fixture(params=[Index, Series, DataFrame, pd.array], ids=lambda x: x.__name__)
+def box_with_array(request):
+    """
+    Fixture to test behavior for Index, Series, DataFrame, and pandas Array
+    classes
+    """
+    return request.param
+
+
+box_with_array2 = box_with_array
+
+
+@pytest.fixture
+def dict_subclass() -> type[dict]:
+    """
+    Fixture for a dictionary subclass.
+    """
+
+    class TestSubDict(dict):
+        def __init__(self, *args, **kwargs) -> None:
+            dict.__init__(self, *args, **kwargs)
+
+    return TestSubDict
+
+
+@pytest.fixture
+def non_dict_mapping_subclass() -> type[abc.Mapping]:
+    """
+    Fixture for a non-mapping dictionary subclass.
+    """
+
+    class TestNonDictMapping(abc.Mapping):
+        def __init__(self, underlying_dict) -> None:
+            self._data = underlying_dict
+
+        def __getitem__(self, key):
+            return self._data.__getitem__(key)
+
+        def __iter__(self) -> Iterator:
+            return self._data.__iter__()
+
+        def __len__(self) -> int:
+            return self._data.__len__()
+
+    return TestNonDictMapping
+
+
+# ----------------------------------------------------------------
+# Indices
+# ----------------------------------------------------------------
+@pytest.fixture
+def multiindex_year_month_day_dataframe_random_data():
+    """
+    DataFrame with 3 level MultiIndex (year, month, day) covering
+    first 100 business days from 2000-01-01 with random data
+    """
+    tdf = DataFrame(
+        np.random.default_rng(2).standard_normal((100, 4)),
+        columns=Index(list("ABCD"), dtype=object),
+        index=date_range("2000-01-01", periods=100, freq="B"),
+    )
+    ymd = tdf.groupby([lambda x: x.year, lambda x: x.month, lambda x: x.day]).sum()
+    # use int64 Index, to make sure things work
+    ymd.index = ymd.index.set_levels([lev.astype("i8") for lev in ymd.index.levels])
+    ymd.index.set_names(["year", "month", "day"], inplace=True)
+    return ymd
+
+
+@pytest.fixture
+def lexsorted_two_level_string_multiindex() -> MultiIndex:
+    """
+    2-level MultiIndex, lexsorted, with string names.
+    """
+    return MultiIndex(
+        levels=[["foo", "bar", "baz", "qux"], ["one", "two", "three"]],
+        codes=[[0, 0, 0, 1, 1, 2, 2, 3, 3, 3], [0, 1, 2, 0, 1, 1, 2, 0, 1, 2]],
+        names=["first", "second"],
+    )
+
+
+@pytest.fixture
+def multiindex_dataframe_random_data(
+    lexsorted_two_level_string_multiindex,
+) -> DataFrame:
+    """DataFrame with 2 level MultiIndex with random data"""
+    index = lexsorted_two_level_string_multiindex
+    return DataFrame(
+        np.random.default_rng(2).standard_normal((10, 3)),
+        index=index,
+        columns=Index(["A", "B", "C"], name="exp"),
+    )
+
+
+def _create_multiindex():
+    """
+    MultiIndex used to test the general functionality of this object
+    """
+
+    # See Also: tests.multi.conftest.idx
+    major_axis = Index(["foo", "bar", "baz", "qux"])
+    minor_axis = Index(["one", "two"])
+
+    major_codes = np.array([0, 0, 1, 2, 3, 3])
+    minor_codes = np.array([0, 1, 0, 1, 0, 1])
+    index_names = ["first", "second"]
+    return MultiIndex(
+        levels=[major_axis, minor_axis],
+        codes=[major_codes, minor_codes],
+        names=index_names,
+        verify_integrity=False,
+    )
+
+
+def _create_mi_with_dt64tz_level():
+    """
+    MultiIndex with a level that is a tzaware DatetimeIndex.
+    """
+    # GH#8367 round trip with pickle
+    return MultiIndex.from_product(
+        [[1, 2], ["a", "b"], date_range("20130101", periods=3, tz="US/Eastern")],
+        names=["one", "two", "three"],
+    )
+
+
+indices_dict = {
+    "string": Index([f"pandas_{i}" for i in range(10)]),
+    "datetime": date_range("2020-01-01", periods=10),
+    "datetime-tz": date_range("2020-01-01", periods=10, tz="US/Pacific"),
+    "period": period_range("2020-01-01", periods=10, freq="D"),
+    "timedelta": timedelta_range(start="1 day", periods=10, freq="D"),
+    "range": RangeIndex(10),
+    "int8": Index(np.arange(10), dtype="int8"),
+    "int16": Index(np.arange(10), dtype="int16"),
+    "int32": Index(np.arange(10), dtype="int32"),
+    "int64": Index(np.arange(10), dtype="int64"),
+    "uint8": Index(np.arange(10), dtype="uint8"),
+    "uint16": Index(np.arange(10), dtype="uint16"),
+    "uint32": Index(np.arange(10), dtype="uint32"),
+    "uint64": Index(np.arange(10), dtype="uint64"),
+    "float32": Index(np.arange(10), dtype="float32"),
+    "float64": Index(np.arange(10), dtype="float64"),
+    "bool-object": Index([True, False] * 5, dtype=object),
+    "bool-dtype": Index([True, False] * 5, dtype=bool),
+    "complex64": Index(
+        np.arange(10, dtype="complex64") + 1.0j * np.arange(10, dtype="complex64")
+    ),
+    "complex128": Index(
+        np.arange(10, dtype="complex128") + 1.0j * np.arange(10, dtype="complex128")
+    ),
+    "categorical": CategoricalIndex(list("abcd") * 2),
+    "interval": IntervalIndex.from_breaks(np.linspace(0, 100, num=11)),
+    "empty": Index([]),
+    "tuples": MultiIndex.from_tuples(zip(["foo", "bar", "baz"], [1, 2, 3])),
+    "mi-with-dt64tz-level": _create_mi_with_dt64tz_level(),
+    "multi": _create_multiindex(),
+    "repeats": Index([0, 0, 1, 1, 2, 2]),
+    "nullable_int": Index(np.arange(10), dtype="Int64"),
+    "nullable_uint": Index(np.arange(10), dtype="UInt16"),
+    "nullable_float": Index(np.arange(10), dtype="Float32"),
+    "nullable_bool": Index(np.arange(10).astype(bool), dtype="boolean"),
+    "string-python": Index(
+        pd.array([f"pandas_{i}" for i in range(10)], dtype="string[python]")
+    ),
+}
+if has_pyarrow:
+    idx = Index(pd.array([f"pandas_{i}" for i in range(10)], dtype="string[pyarrow]"))
+    indices_dict["string-pyarrow"] = idx
+
+
+@pytest.fixture(params=indices_dict.keys())
+def index(request):
+    """
+    Fixture for many "simple" kinds of indices.
+
+    These indices are unlikely to cover corner cases, e.g.
+        - no names
+        - no NaTs/NaNs
+        - no values near implementation bounds
+        - ...
+    """
+    # copy to avoid mutation, e.g. setting .name
+    return indices_dict[request.param].copy()
+
+
+@pytest.fixture(
+    params=[
+        key for key, value in indices_dict.items() if not isinstance(value, MultiIndex)
+    ]
+)
+def index_flat(request):
+    """
+    index fixture, but excluding MultiIndex cases.
+    """
+    key = request.param
+    return indices_dict[key].copy()
+
+
+@pytest.fixture(
+    params=[
+        key
+        for key, value in indices_dict.items()
+        if not (
+            key.startswith(("int", "uint", "float"))
+            or key in ["range", "empty", "repeats", "bool-dtype"]
+        )
+        and not isinstance(value, MultiIndex)
+    ]
+)
+def index_with_missing(request):
+    """
+    Fixture for indices with missing values.
+
+    Integer-dtype and empty cases are excluded because they cannot hold missing
+    values.
+
+    MultiIndex is excluded because isna() is not defined for MultiIndex.
+    """
+
+    # GH 35538. Use deep copy to avoid illusive bug on np-dev
+    # GHA pipeline that writes into indices_dict despite copy
+    ind = indices_dict[request.param].copy(deep=True)
+    vals = ind.values.copy()
+    if request.param in ["tuples", "mi-with-dt64tz-level", "multi"]:
+        # For setting missing values in the top level of MultiIndex
+        vals = ind.tolist()
+        vals[0] = (None,) + vals[0][1:]
+        vals[-1] = (None,) + vals[-1][1:]
+        return MultiIndex.from_tuples(vals)
+    else:
+        vals[0] = None
+        vals[-1] = None
+        return type(ind)(vals)
+
+
+# ----------------------------------------------------------------
+# Series'
+# ----------------------------------------------------------------
+@pytest.fixture
+def string_series() -> Series:
+    """
+    Fixture for Series of floats with Index of unique strings
+    """
+    return Series(
+        np.arange(30, dtype=np.float64) * 1.1,
+        index=Index([f"i_{i}" for i in range(30)], dtype=object),
+        name="series",
+    )
+
+
+@pytest.fixture
+def object_series() -> Series:
+    """
+    Fixture for Series of dtype object with Index of unique strings
+    """
+    data = [f"foo_{i}" for i in range(30)]
+    index = Index([f"bar_{i}" for i in range(30)], dtype=object)
+    return Series(data, index=index, name="objects", dtype=object)
+
+
+@pytest.fixture
+def datetime_series() -> Series:
+    """
+    Fixture for Series of floats with DatetimeIndex
+    """
+    return Series(
+        np.random.default_rng(2).standard_normal(30),
+        index=date_range("2000-01-01", periods=30, freq="B"),
+        name="ts",
+    )
+
+
+def _create_series(index):
+    """Helper for the _series dict"""
+    size = len(index)
+    data = np.random.default_rng(2).standard_normal(size)
+    return Series(data, index=index, name="a", copy=False)
+
+
+_series = {
+    f"series-with-{index_id}-index": _create_series(index)
+    for index_id, index in indices_dict.items()
+}
+
+
+@pytest.fixture
+def series_with_simple_index(index) -> Series:
+    """
+    Fixture for tests on series with changing types of indices.
+    """
+    return _create_series(index)
+
+
+_narrow_series = {
+    f"{dtype.__name__}-series": Series(
+        range(30), index=[f"i-{i}" for i in range(30)], name="a", dtype=dtype
+    )
+    for dtype in tm.NARROW_NP_DTYPES
+}
+
+
+_index_or_series_objs = {**indices_dict, **_series, **_narrow_series}
+
+
+@pytest.fixture(params=_index_or_series_objs.keys())
+def index_or_series_obj(request):
+    """
+    Fixture for tests on indexes, series and series with a narrow dtype
+    copy to avoid mutation, e.g. setting .name
+    """
+    return _index_or_series_objs[request.param].copy(deep=True)
+
+
+_typ_objects_series = {
+    f"{dtype.__name__}-series": Series(dtype) for dtype in tm.PYTHON_DATA_TYPES
+}
+
+
+_index_or_series_memory_objs = {
+    **indices_dict,
+    **_series,
+    **_narrow_series,
+    **_typ_objects_series,
+}
+
+
+@pytest.fixture(params=_index_or_series_memory_objs.keys())
+def index_or_series_memory_obj(request):
+    """
+    Fixture for tests on indexes, series, series with a narrow dtype and
+    series with empty objects type
+    copy to avoid mutation, e.g. setting .name
+    """
+    return _index_or_series_memory_objs[request.param].copy(deep=True)
+
+
+# ----------------------------------------------------------------
+# DataFrames
+# ----------------------------------------------------------------
+@pytest.fixture
+def int_frame() -> DataFrame:
+    """
+    Fixture for DataFrame of ints with index of unique strings
+
+    Columns are ['A', 'B', 'C', 'D']
+    """
+    return DataFrame(
+        np.ones((30, 4), dtype=np.int64),
+        index=Index([f"foo_{i}" 
+
+Question:
+Suppose you are analyzing the results of chimeric RNA events (RNA transcribed from different DNA fused together) by STAR_fusion with a group of samples. The result file named chimeric.tsv is a tsv file containing four columns (chimeric_events, counts, and samples, types). If you want to transform the tsv file into a matrix with rowname being the chimeric events, column name being the samples and the values of the matrix being the counts. How would use pandas to do this in python? Just list the functions flow (Hints: a sample could be identified with multiple chimeric events and same events with different types, and a chimeric event may happen in different samples; Assume you have typed the following code:Import pandas as pd)
+
+A. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) -> matrix=Chimeric.pivot(index='chimeric_events', columns='samples', values='counts')
+B. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) ->matrix= chimeric.groupby(["chimeric_events", "samples"]).first().unstack()
+C. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) ->matrix= chimeric.groupby(["chimeric_events", "samples"]).counts.first().unstack()
+D. Chimeric=pd.read_csv(“chimeric.tsv”) ->matrix= Chimeric.pivot(index='chimeric_events', columns='samples', values='counts')
+
+Select the correct answer.

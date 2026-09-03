@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+If $x^2 - x - 1 = 0$, what is the value of $x^3 - 2x + 1$?

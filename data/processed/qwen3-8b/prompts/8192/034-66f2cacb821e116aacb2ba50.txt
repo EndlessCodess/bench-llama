@@ -1,0 +1,585 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+The Impact of Large Language Models on Scientific Discovery:
+a Preliminary Study using GPT-4
+Microsoft Research AI4Science
+Microsoft Azure Quantum
+llm4sciencediscovery@microsoft.com
+November, 2023
+Abstract
+In recent years, groundbreaking advancements in natural language processing have culminated in the
+emergence of powerful large language models (LLMs), which have showcased remarkable capabilities across a
+vast array of domains, including the understanding, generation, and translation of natural language, and even
+tasks that extend beyond language processing. In this report, we delve into the performance of LLMs within
+the context of scientific discovery/research, focusing on GPT-4, the state-of-the-art language model. Our
+investigation spans a diverse range of scientific areas encompassing drug discovery, biology, computational
+chemistry (density functional theory (DFT) and molecular dynamics (MD)), materials design, and partial
+differential equations (PDE).
+Evaluating GPT-4 on scientific tasks is crucial for uncovering its potential across various research domains,
+validating its domain-specific expertise, accelerating scientific progress, optimizing resource allocation, guiding
+future model development, and fostering interdisciplinary research. Our exploration methodology primarily
+consists of expert-driven case assessments, which offer qualitative insights into the model’s comprehension
+of intricate scientific concepts and relationships, and occasionally benchmark testing, which quantitatively
+evaluates the model’s capacity to solve well-defined domain-specific problems.
+Our preliminary exploration indicates that GPT-4 exhibits promising potential for a variety of scientific
+applications, demonstrating its aptitude for handling complex problem-solving and knowledge integration
+tasks. We present an analysis of GPT-4’s performance in the aforementioned domains (e.g., drug discovery,
+biology, computational chemistry, materials design, etc.), emphasizing its strengths and limitations. Broadly
+speaking, we evaluate GPT-4’s knowledge base, scientific understanding, scientific numerical calculation abil-
+ities, and various scientific prediction capabilities.
+In biology and materials design, GPT-4 possesses extensive domain knowledge that can help address
+specific requirements. In other fields, like drug discovery, GPT-4 displays a strong ability to predict properties.
+However, in research areas like computational chemistry and PDE, while GPT-4 shows promise for aiding
+researchers with predictions and calculations, further efforts are required to enhance its accuracy. Despite its
+impressive capabilities, GPT-4 can be improved for quantitative calculation tasks, e.g., fine-tuning is needed
+to achieve better accuracy.1
+We hope this report serves as a valuable resource for researchers and practitioners seeking to harness the
+power of LLMs for scientific research and applications, as well as for those interested in advancing natural
+language processing for domain-specific scientific tasks. It’s important to emphasize that the field of LLMs
+and large-scale machine learning is progressing rapidly, and future generations of this technology may possess
+additional capabilities beyond those highlighted in this report. Notably, the integration of LLMs with spe-
+cialized scientific tools and models, along with the development of foundational scientific models, represent
+two promising avenues for exploration.
+1Please note that GPT-4’s capabilities can be greatly enhanced by integrating with specialized scientific tools and models, as
+demonstrated in AutoGPT and ChemCrow. However, the focus of this paper is to study the intrinsic capabilities of LLMs in
+tackling scientific tasks, and the integration of LLMs with other tools/models is largely out of our scope. We only had some brief
+discussions on this topic in the last chapter.
+1
+arXiv:2311.07361v2  [cs.CL]  8 Dec 2023
+
+
+Contents
+1
+Introduction
+4
+1.1
+Scientific areas
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.2
+Capabilities to evaluate
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.3
+Our methodologies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.4
+Our observations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.5
+Limitations of this study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2
+Drug Discovery
+9
+2.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+2.2
+Understanding key concepts in drug discovery . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.2.1
+Entity translation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.2.2
+Knowledge/information memorization . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+2.2.3
+Molecule manipulation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.4
+Macroscopic questions about drug discovery . . . . . . . . . . . . . . . . . . . . . . . .
+18
+2.3
+Drug-target binding
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.3.1
+Drug-target affinity prediction
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.3.2
+Drug-target interaction prediction
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+26
+2.4
+Molecular property prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+29
+2.5
+Retrosynthesis
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+2.5.1
+Understanding chemical reactions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+2.5.2
+Predicting retrosynthesis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+32
+2.6
+Novel molecule generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+37
+2.7
+Coding assistance for data processing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+39
+3
+Biology
+42
+3.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+3.2
+Understanding biological sequences . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+3.2.1
+Sequence notations vs. text notations
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+43
+3.2.2
+Performing sequence-related tasks with GPT-4 . . . . . . . . . . . . . . . . . . . . . .
+44
+3.2.3
+Processing files in domain-specific formats . . . . . . . . . . . . . . . . . . . . . . . . .
+49
+3.2.4
+Pitfalls with biological sequence handling
+. . . . . . . . . . . . . . . . . . . . . . . . .
+53
+3.3
+Reasoning with built-in biological knowledge
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+3.3.1
+Predicting protein-protein interactions (PPI)
+. . . . . . . . . . . . . . . . . . . . . . .
+55
+3.3.2
+Understanding gene regulation and signaling pathways . . . . . . . . . . . . . . . . . .
+57
+3.3.3
+Understanding concepts of evolution . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+61
+3.4
+Designing biomolecules and bio-experiments . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+63
+3.4.1
+Designing DNA sequences for biological tasks . . . . . . . . . . . . . . . . . . . . . . .
+63
+3.4.2
+Designing biological experiments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+66
+4
+Computational Chemistry
+68
+4.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+68
+4.2
+Electronic structure: theories and practices
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+69
+4.2.1
+Understanding of quantum chemistry and physics . . . . . . . . . . . . . . . . . . . . .
+69
+4.2.2
+Quantitative calculation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+73
+4.2.3
+Simulation and implementation assistant . . . . . . . . . . . . . . . . . . . . . . . . . .
+75
+4.3
+Molecular dynamics simulation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+84
+4.3.1
+Fundamental knowledge of concepts and methods . . . . . . . . . . . . . . . . . . . . .
+85
+4.3.2
+Assistance with simulation protocol design and MD software usage . . . . . . . . . . .
+91
+4.3.3
+Development of new computational chemistry methods . . . . . . . . . . . . . . . . . .
+95
+4.3.4
+Chemical reaction optimization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+103
+4.3.5
+Sampling bypass MD simulation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+108
+4.4
+Practical examples with GPT-4 evaluations from different chemistry perspectives . . . . . . .
+118
+4.4.1
+NMR spectrum modeling for Tamiflu . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+119
+4.4.2
+Polymerization reaction kinetics determination of Tetramethyl Orthosilicate (TMOS)
+122
+2
+
+
+5
+Materials Design
+126
+5.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+126
+5.2
+Knowledge memorization and designing principle summarization
+. . . . . . . . . . . . . . . .
+126
+5.3
+Candidate proposal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+129
+5.4
+Structure generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+132
+5.5
+Property prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+134
+5.5.1
+MatBench evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+134
+5.5.2
+Polymer property . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+136
+5.6
+Synthesis planning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+140
+5.6.1
+Synthesis of known materials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+140
+5.6.2
+Synthesis of new materials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+142
+5.7
+Coding assistance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+143
+6
+Partial Differential Equations
+145
+6.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+145
+6.2
+Knowing basic concepts about PDEs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+145
+6.3
+Solving PDEs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+152
+6.3.1
+Analytical solutions
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+152
+6.3.2
+Numerical solutions
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+158
+6.4
+AI for PDEs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+163
+7
+Looking Forward
+170
+7.1
+Improving LLMs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+170
+7.2
+New directions
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+171
+7.2.1
+Integration of LLMs and scientific tools
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+171
+7.2.2
+Building a unified scientific foundation model . . . . . . . . . . . . . . . . . . . . . . .
+172
+A Appendix of Drug Discovery
+182
+B Appendix of Computational Chemistry
+183
+C Appendix of Materials Design
+192
+C.1 Knowledge memorization for materials with negative Poisson Ratio . . . . . . . . . . . . . . .
+192
+C.2 Knowledge memorization and design principle summarization for polymers
+. . . . . . . . . .
+193
+C.3 Candidate proposal for inorganic compounds
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+196
+C.4 Representing polymer structures with BigSMILES
+. . . . . . . . . . . . . . . . . . . . . . . .
+198
+C.5 Evaluating the capability of generating atomic coordinates and predicting structures using a
+novel crystal identified by crystal structure prediction. . . . . . . . . . . . . . . . . . . . . . .
+201
+C.6 Property prediction for polymers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+205
+C.7 Evaluation of GPT-4 ’s capability on synthesis planning for novel inorganic materials . . . . .
+207
+C.8 Polymer synthesis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+209
+C.9 Plotting stress vs. strain for several materials . . . . . . . . . . . . . . . . . . . . . . . . . . .
+213
+C.10 Prompts and evaluation pipelines of synthesizing route prediction of known inorganic materials 220
+C.11 Evaluating candidate proposal for Metal-Organic frameworks (MOFs)
+. . . . . . . . . . . . .
+224
+3
+
+
+1
+Introduction
+The rapid development of artificial intelligence (AI) has led to the emergence of sophisticated large language
+models (LLMs), such as GPT-4 [62] from OpenAI, PaLM 2 [4] from Google, Claude from Anthropic, LLaMA
+2 [85] from Meta, etc.
+LLMs are capable of transforming the way we generate and process information
+across various domains and have demonstrated exceptional performance in a wide array of tasks, including
+abstraction, comprehension [23], vision [29, 89], coding [66], mathematics [97], law [41], understanding of
+human motives and emotions, and more. In addition to the prowess in the realm of text, they have also
+been successfully integrated into other domains, such as image processing [114], speech recognition [38], and
+even reinforcement learning, showcasing its adaptability and potential for a broad range of applications.
+Furthermore, LLMs have been used as controllers/orchestrators [76, 83, 94, 106, 34, 48] to coordinate other
+machine learning models for complex tasks.
+Among these LLMs, GPT-4 has gained substantial attention for its remarkable capabilities. A recent
+paper has even indicated that GPT-4 may be exhibiting early indications of artificial general intelligence
+(AGI) [11]. Because of its extraordinary capabilities in general AI tasks, GPT-4 is also garnering significant
+attention in the scientific community [71], especially in domains such as medicine [45, 87], healthcare [61, 91],
+engineering [67, 66], and social sciences [28, 5].
+In this study, our primary goal is to examine the capabilities of LLMs within the context of natural science
+research. Due to the extensive scope of the natural sciences, covering all sub-disciplines is infeasible; as such,
+we focus on a select set of areas, including drug discovery, biology, computational chemistry, materials design,
+and partial differential equations (PDE). Our aim is to provide a broad overview of LLMs’ performance and
+their potential applicability in these specific scientific fields, with GPT-4, the state-of-the-art LLM, as our
+central focus. A summary of this report can be found in Fig. 1.1.
+GPT-4 for 
+Scientific 
+Discovery
+Drug Discovery
+Understanding concepts 
+in drug discovery 
+Drug-target binding
+Molecular property 
+prediction
+Retrosynthesis
+Novel molecule 
+generation
+Coding assistance for 
+data processing
+Biology
+Understanding biological 
+sequences
+Reasoning with built-in 
+biological knowledge
+Designing biomolecules 
+and bio-experiments
+Computational 
+Chemistry
+Electronic structure: 
+theories and practices
+Molecular dynamics 
+simulation
+Practical examples
+Materials Design
+Memorization and 
+designing principle
+Candidate proposal
+Structure generation
+Property prediction
+Synthesis planning
+Coding assistance
+Partial Differential 
+Equations
+Knowing basic concepts 
+about PDEs
+Solving PDEs
+AI for PDEs
+Figure 1.1: Overview of this report.
+1.1
+Scientific areas
+Natural science is dedicated to understanding the natural world through systematic observation, experimen-
+tation, and the formulation of testable hypotheses. These strive to uncover the fundamental principles and
+4
+
+
+laws governing the universe, spanning from the smallest subatomic particles to the largest galaxies and be-
+yond. Natural science is an incredibly diverse field, encompassing a wide array of disciplines, including both
+physical sciences, which focus on non-living systems, and life sciences, which investigate living organisms. In
+this study, we have opted to concentrate on a subset of natural science areas, selected from both physical and
+life sciences. It is important to note that these areas are not mutually exclusive; for example, drug discovery
+substantially overlaps with biology, and they do not all fall within the same hierarchical level in the taxonomy
+of natural science.
+Drug discovery is the process by which new candidate medications are identified and developed to treat or
+prevent specific diseases and medical conditions. This complex and multifaceted field aims to improve human
+health and well-being by creating safe, effective, and targeted therapeutic agents. In this report, we explore
+how GPT-4 can help drug discovery research (Sec. 2) and study several key tasks in drug discovery: knowledge
+understanding (Sec. 2.2), molecular property prediction (Sec. 2.4), molecular manipulation (Sec. 2.2.3), drug-
+target binding prediction (Sec. 2.3), and retrosynthesis (Sec. 2.5).
+Biology is a branch of life sciences that studies life and living organisms, including their structure, func-
+tion, growth, origin, evolution, distribution, and taxonomy. As a broad and diverse field, biology encompasses
+various sub-disciplines that focus on specific aspects of life, such as genetics, ecology, anatomy, physiology,
+and molecular biology, among others. In this report, we explore how LLMs can help biology research (Sec. 3),
+mainly understanding biological sequences (Sec. 3.2), reasoning with built-in biological knowledge (Sec. 3.3),
+and designing biomolecules and bio-experiments (Sec. 3.4).
+Computational chemistry is a branch of chemistry (and also physical sciences) that uses computer
+simulations and mathematical models to study the structure, properties, and behavior of molecules, as well
+as their interactions and reactions. By leveraging the power of computational techniques, this field aims to
+enhance our understanding of chemical processes, predict the behavior of molecular systems, and assist in the
+design of new materials and drugs. In this report, we explore how LLMs can help research in computational
+chemistry (Sec. 4), mainly focusing on electronic structure modeling (Sec. 4.2) and molecular dynamics
+simulation (Sec. 4.3).
+Materials design is an interdisciplinary field that investigates (1) the relationship between the structure,
+properties, processing, and performance of materials, and (2) the discovery of new materials. It combines
+elements of physics, chemistry, and engineering. This field encompasses a wide range of natural and synthetic
+materials, including metals, ceramics, polymers, composites, and biomaterials. The primary goal of materials
+design is to understand how the atomic and molecular arrangement of a material affects its properties and to
+develop new materials with tailored characteristics for various applications. In this report, we explore how
+GPT-4 can help research in materials design (Sec. 5), e.g., understanding materials knowledge (Sec. 5.2),
+proposing candidate compositions (Sec. 5.3), generating materials structure (Sec. 5.4), predicting materials
+properties (Sec. 5.5), planning synthesis routes (Sec. 5.6), and assisting code development (Sec. 5.7).
+Partial Differential Equations (PDEs) represent a category of mathematical equations that delineate
+the relationship between an unknown function and its partial derivatives concerning multiple independent
+variables. PDEs have applications in modeling significant phenomena across various fields such as physics,
+engineering, biology, economics, and finance. Examples of these applications include fluid dynamics, elec-
+tromagnetism, acoustics, heat transfer, diffusion, financial models, population dynamics, reaction-diffusion
+systems, and more.
+In this study, we investigate how GPT-4 can contribute to PDE research (Sec. 6),
+emphasizing its understanding of fundamental concepts and AI techniques related to PDEs, theorem-proof
+capabilities, and PDE-solving abilities.
+1.2
+Capabilities to evaluate
+We aim to understand how GPT-4 can help natural science research and its potential limitations in scientific
+domains. In particular, we study the following capabilities:
+• Accessing and analyzing scientific literature. Can GPT-4 suggest relevant research papers, extract key
+information, and summarize insights for researchers?
+• Concept clarification. Is GPT-4 capable of explaining and providing definitions for scientific terms,
+concepts, and principles, helping researchers better understand the subject matter?
+• Data analysis. Can GPT-4 process, analyze, and visualize large datasets from experiments, simulations,
+and field observations, and uncover non-obvious trends and relationships in complex data?
+5
+
+
+• Theoretical modeling. Can GPT-4 assist in developing mathematical/computational models of physical
+systems, which would be useful for fields like physics, chemistry, climatology, systems biology, etc.?
+• Methodology guidance. Could GPT-4 help researchers choose the right experimental/computational
+methods and statistical tests for their research by analyzing prior literature or running simulations on
+synthetic data?
+• Prediction. Is GPT-4 able to analyze prior experimental data to make predictions on new hypothetical
+scenarios and experiments (e.g., in-context few-shot learning), allowing for a focus on the most promising
+avenues?
+• Experimental design. Can GPT-4 leverage knowledge in the field to suggest useful experimental param-
+eters, setups, and techniques that researchers may not have considered, thereby improving experimental
+efficiency?
+• Code development.
+Could GPT-4 assist in developing code for data analysis, simulations, and ma-
+chine learning across a wide range of scientific applications by generating code from natural language
+descriptions or suggesting code snippets from a library of prior code?
+• Hypothesis generation. By connecting disparate pieces of information across subfields, can GPT-4 come
+up with novel hypotheses (e.g., compounds, proteins, materials, etc.) for researchers to test in their lab,
+expanding the scope of their research?
+1.3
+Our methodologies
+In this report, we choose the best LLM to date, GPT-4, to study and evaluate the capabilities of LLMs across
+scientific domains. We use the GPT-4 model2 available through the Azure OpenAI Service.3.
+We employ a combination of qualitative4 and quantitative approaches, ensuring a good understanding of
+its proficiency in scientific research.
+In the case of most capabilities, we primarily adopt a qualitative approach, carefully designing tasks and
+questions that not only showcase GPT-4’s capabilities in terms of its scientific expertise but also address the
+fundamental inquiry: the extent of GPT-4’s proficiency in scientific research. Our objective is to elucidate
+the depth and flexibility of its understanding of diverse concepts, skills, and fields, thereby demonstrating its
+versatility and potential as a powerful tool in scientific research. Moreover, we scrutinize GPT-4’s responses
+and actions, evaluating their consistency, coherence, and accuracy, while simultaneously identifying potential
+limitations and biases. This examination allows us to gain a deeper understanding of the system’s potential
+weaknesses, paving the way for future improvements and refinements. Throughout our study, we present
+numerous intriguing cases spanning each scientific domain, illustrating the diverse capabilities of GPT-4 in
+areas such as concept capture, knowledge comprehension, and task assistance.
+For certain capabilities, particularly predictive ones, we also employ a quantitative approach, utilizing
+public benchmark datasets to evaluate GPT-4’s performance on well-defined tasks, in addition to presenting
+a wide array of case studies. By incorporating quantitative evaluations, we can objectively assess the model’s
+performance in specific tasks, allowing for a more robust and reliable understanding of its strengths and
+limitations in scientific research applications.
+In summary, our methodologies for investigating GPT-4’s performance in scientific domains involve a blend
+of qualitative and quantitative approaches, offering a holistic and systematic understanding of its capabilities
+and limitations.
+1.4
+Our observations
+GPT-4 demonstrates considerable potential in various scientific domains, including drug discovery, biology,
+computational chemistry, materials design, and PDEs. Its capabilities span a wide range of tasks and it
+exhibits an impressive understanding of key concepts in each domain.
+2The output of GPT-4 depends on several variables such as the model version, system messages, and hyperparameters like the
+decoding temperature. Thus, one might observe different responses for the same cases examined in this report. For the majority of
+this report, we primarily utilized GPT-4 version 0314, with a few cases employing version 0613.
+3https://azure.microsoft.com/en-us/products/ai-services/openai-service/
+4The qualitative approach used in this report mainly refers to case studies. It is related to but not identical to qualitative
+methods in social science research.
+6
+
+
+In drug discovery, GPT-4 shows a comprehensive grasp of the field, enabling it to provide useful insights
+and suggestions across a wide range of tasks. It is helpful in predicting drug-target binding affinity, molecular
+properties, and retrosynthesis routes.
+It also has the potential to generate novel molecules with desired
+properties, which can lead to the discovery of new drug candidates with the potential to address unmet
+medical needs. However, it is important to be aware of GPT-4’s limitations, such as challenges in processing
+SMILES sequences and limitations in quantitative tasks.
+In the field of biology, GPT-4 exhibits substantial potential in understanding and processing complex
+biological language, executing bioinformatics tasks, and serving as a scientific assistant for biology design. Its
+extensive grasp of biological concepts and its ability to perform various tasks, such as processing specialized
+files, predicting signaling peptides, and reasoning about plausible mechanisms from observations, benefit it
+to be a valuable tool in advancing biological research. However, GPT-4 has limitations when it comes to
+processing biological sequences (e.g., DNA and FASTA sequences) and its performance on tasks related to
+under-studied entities.
+In computational chemistry, GPT-4 demonstrates remarkable potential across various subdomains, in-
+cluding electronic structure methods and molecular dynamics simulations. It is able to retrieve information,
+suggest design principles, recommend suitable computational methods and software packages, generate code
+for various programming languages, and propose further research directions or potential extensions. However,
+GPT-4 may struggle with generating accurate atomic coordinates of complex molecules, handling raw atomic
+coordinates, and performing precise calculations.
+In materials design, GPT-4 shows promise in aiding materials design tasks by retrieving information, sug-
+gesting design principles, generating novel and feasible chemical compositions, recommending analytical and
+numerical methods, and generating code for different programming languages. However, it encounters chal-
+lenges in representing and proposing more complex structures, e.g., organic polymers and MOFs, generating
+accurate atomic coordinates, and providing precise quantitative predictions.
+In the realm of PDEs, GPT-4 exhibits its ability to understand the fundamental concepts, discern relation-
+ships between concepts, and provide accurate proof approaches. It is able to recommend appropriate analytical
+and numerical methods for addressing various types of PDEs and generate code in different programming lan-
+guages to numerically solve PDEs. However, GPT-4’s proficiency in mathematical theorem proving still has
+room for growth, and its capacity for independently discovering and validating novel mathematical theories
+remains limited in scope.
+In summary, GPT-4 exhibits both significant potential and certain limitations for scientific discovery.
+To better leverage GPT-4, researchers should be cautious and verify the model’s outputs, experiment with
+different prompts, and combine its capabilities with dedicated AI models or computational tools to ensure
+reliable conclusions and optimal performance in their respective research domains:
+• Interpretability and Trust: It is crucial to maintain a healthy skepticism when interpreting GPT-4’s
+output. Researchers should always critically assess the generated results and cross-check them with
+existing knowledge or expert opinions to ensure the validity of the conclusions.
+• Iterative Questioning and Refinement: GPT-4’s performance can be improved by asking questions in an
+iterative manner or providing additional context. If the initial response from GPT-4 is not satisfactory,
+researchers can refine their questions or provide more information to guide the model toward a more
+accurate and relevant answer.
+• Combining GPT-4 with Domain-Specific Tools: In many cases, it may be beneficial to combine GPT-4’s
+capabilities with more specialized tools and models designed specifically for scientific discovery tasks,
+such as molecular docking software, or protein folding algorithms. This combination can help researchers
+leverage the strengths of both GPT-4 and domain-specific tools to achieve more reliable and accurate
+results. Although we do not extensively investigate the integration of LLMs and domain-specific tool-
+s/models in this report, a few examples are briefly discussed in Section 
+
+Question:
+According to the two articles above, which of the following statements is incorrect?
+
+A. Using the following prompt to generate a specific molecular will get a better performance on molT5 than asking GPT-4:
+"The molecule is a sulfonated xanthene dye of absorption wavelength 573 nm and emission wavelength 591 nm. It has a role as a fluorochrome."
+B. Using the following prompt to predict protein-molecule affinity will get a better performance on GPT-4 than asking molT5:
+"SMILES: COC1=NC=C(C=C1)COC2=C(C=C(C=C2)CN3C=NC4=C3N=CC(=C4)C5=NN=C(O5)C6CCNCC6)OC, FASTA: MSSWIRWHGPAMARLWGFCWLVVGFWRAAFACPTSCKCSA...TLLQNLAKASPVYLDILG. You need to calculate the binding affinity score."
+C. When given few-shot examples, GPT-4 can produce results almost comparable to existing deep learning models on the Drug-Target Affinity (DTA) task.
+D. GPT-4 demonstrates a solid understanding of key information in evolutionary biology.
+
+Select the correct answer.

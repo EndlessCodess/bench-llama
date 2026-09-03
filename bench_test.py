@@ -73,6 +73,7 @@ DEFAULT_PLATFORM_CONFIG = PROJECT_ROOT / "configs" / "platforms.json"
 #   保留全部字段，使 runs.csv 自描述、无需查代码即知每列含义。
 RUN_FIELDS = [
     "case_id",
+    "dataset",
     "status",
     "phase",
     "phase_run",
@@ -99,6 +100,11 @@ RUN_FIELDS = [
     "prompt_tps_measured",
     "generation_tps_measured",
     "tokens_generated",
+    "draft_tokens_measured",
+    "draft_accepted_measured",
+    "draft_acceptance_rate_measured",
+    "finish_reason",
+    "output_sha256",
     "wall_time_s_measured",
     "throughput_tok_s_est",
     "peak_process_rss_mib_measured",
@@ -119,12 +125,15 @@ RUN_FIELDS = [
 # 汇总表列：一用例一行，五个核心指标（均值），表头为双语"中文/English"。
 SUMMARY_FIELDS = [
     "case_id",
+    "dataset",
     "status",
     "platform",
     "physical_device_index",
     "backend_device",
     "target_prompt_tokens",
     "output_tokens_requested",
+    "平均输入长度(tokens)/Average Input Length(tokens)",
+    "平均实际输出(tokens)/Average Generated Tokens",
     "warmup_runs",
     "formal_runs_requested",
     "formal_runs_ok",
@@ -137,6 +146,7 @@ SUMMARY_FIELDS = [
     "峰值显存(GB)/Peak Memory(GB)",
     "GPU计算单元峰值利用率(%)/Peak GPU Compute Utilization(%)",
     "GPU计算单元平均利用率(%)/Average GPU Compute Utilization(%)",
+    "草稿接受率(%)/Draft Acceptance Rate(%)",
 ]
 
 
@@ -320,8 +330,10 @@ class ProcessMonitor:
 def parse_args():
     parser = argparse.ArgumentParser(description="Run the formal bench_run single-turn benchmark")
     parser.add_argument("--bench-run", default=os.environ.get("BENCH_RUN"), help="path to the bench_run executable (or BENCH_RUN)")  # bench_run 可执行文件路径（默认取环境变量 BENCH_RUN）
+    parser.add_argument("--llama-server", help="llama-server executable used by the server benchmark adapter")
     parser.add_argument("--llama-cli", default=os.environ.get("LLAMA_CLI"), help=argparse.SUPPRESS)  # 已废弃别名：--llama-cli → --bench-run
     parser.add_argument("--model", default=os.environ.get("LLAMA_MODEL"), help="path to the GGUF model")  # GGUF 模型文件路径（默认取环境变量 LLAMA_MODEL）
+    parser.add_argument("--draft-model", help="path to a DFlash draft GGUF")
     parser.add_argument("--config", default=str(DEFAULT_BENCHMARK_CONFIG), help="benchmark case configuration")  # 用例配置文件（默认 configs/fair-baseline.json）
     parser.add_argument("--platform-config", default=str(DEFAULT_PLATFORM_CONFIG), help="platform profiles")  # 平台档案文件（默认 configs/platforms.json）
     parser.add_argument("--processed-dir", default=str(DEFAULT_PROCESSED_DIR))  # 预处理数据目录（prompts、metadata.jsonl 等）
@@ -346,6 +358,11 @@ def parse_args():
     parser.add_argument("--poll", type=int)  # poll 间隔覆盖（LC-025..028 设为 0）
     parser.add_argument("--temperature", type=float)  # 采样温度覆盖（默认 0，确定性输出）
     parser.add_argument("--seed", type=int)  # 随机种子覆盖（默认 42，配合 temp 0 保证可复现）
+    parser.add_argument("--draft-n-max", type=int)
+    parser.add_argument("--draft-n-gpu-layers", type=int)
+    parser.add_argument("--ignore-eos", dest="ignore_eos", action="store_true")
+    parser.add_argument("--no-ignore-eos", dest="ignore_eos", action="store_false")
+    parser.set_defaults(ignore_eos=None)
     parser.add_argument("--monitor-interval", type=float, default=0.1)  # 显存/RSS 采样间隔（秒）
     parser.add_argument(
         "--memory-command",
@@ -355,6 +372,7 @@ def parse_args():
     parser.add_argument("--env", action="append", default=[], metavar="KEY=VALUE")  # 附加环境变量（可重复）
     parser.add_argument("--extra-arg", action="append", default=[], help="extra bench_run argument")  # 附加 bench_run 参数（透传）
     parser.add_argument("--model-sha256", help="precomputed model SHA-256")  # 预计算的模型 SHA-256，直接写入 manifest 不再重复计算
+    parser.add_argument("--draft-model-sha256", help="precomputed draft model SHA-256")
     parser.add_argument("--skip-model-hash", action="store_true")  # 跳过模型 SHA-256 计算（大文件哈希耗时，套件模式下由 run_suite.py 统一算一次）
     parser.add_argument("--skip-prompt-hash-check", action="store_true")  # 跳过 prompt 文件哈希校验
     parser.add_argument("--fail-fast", action="store_true")  # 用例内出现失败轮立即终止该用例（run_suite.py 默认开启）
@@ -395,10 +413,13 @@ def load_benchmark_config(path):
         case_id = item.get("id")
         if not case_id or case_id in cases:
             raise ValueError("benchmark case ids must be non-empty and unique")
-        prompt_tokens = int(item["prompt_tokens"])
+        dataset = item.get("dataset")
+        prompt_tokens = None if dataset else int(item["prompt_tokens"])
         output_tokens = int(item["output_tokens"])
-        if prompt_tokens <= 0 or output_tokens <= 0:
+        if (prompt_tokens is not None and prompt_tokens <= 0) or output_tokens <= 0:
             raise ValueError("case {} has non-positive token counts".format(case_id))
+        if dataset is not None and (not isinstance(dataset, str) or not dataset):
+            raise ValueError("case {} has an invalid dataset".format(case_id))
         cases[case_id] = {**item, "prompt_tokens": prompt_tokens, "output_tokens": output_tokens}
     if not cases:
         raise ValueError("benchmark config has no cases")
@@ -453,6 +474,12 @@ def apply_runtime_defaults(args, runtime):
     for argument, key in mapping.items():
         if getattr(args, argument) is None:
             setattr(args, argument, runtime[key])
+    if args.draft_n_max is None:
+        args.draft_n_max = int(runtime.get("draft_n_max", 15))
+    if args.draft_n_gpu_layers is None:
+        args.draft_n_gpu_layers = int(runtime.get("draft_n_gpu_layers", 99))
+    if args.ignore_eos is None:
+        args.ignore_eos = bool(runtime.get("ignore_eos", True))
 
 
 # 平台解析：--platform auto 时按顺序探测 —— macOS 且档案含 metal → metal；
@@ -554,10 +581,13 @@ def load_inputs(processed_dir):
 # （默认 5 预热 + 100 正式；冒烟测试可覆盖更小值）。请求数不能为负、
 # 不能超过 manifest 该 phase 的总数。返回 [(phase, phase_run, selection)]，
 # phase_run 从 1 重新编号（对应 bench_run 事件里的 phase_run 字段）。
-def choose_selections(manifest, warmup_runs, formal_runs):
+def choose_selections(manifest, warmup_runs, formal_runs, dataset=None):
+    selections = manifest["selections"]
+    if dataset is not None:
+        selections = [item for item in selections if item.get("dataset") == dataset]
     grouped = {
-        "warmup": [item for item in manifest["selections"] if item.get("phase") == "warmup"],
-        "formal": [item for item in manifest["selections"] if item.get("phase") == "formal"],
+        "warmup": [item for item in selections if item.get("phase") == "warmup"],
+        "formal": [item for item in selections if item.get("phase") == "formal"],
     }
     requested = {"warmup": warmup_runs, "formal": formal_runs}
     result = []
@@ -577,15 +607,26 @@ def choose_selections(manifest, warmup_runs, formal_runs):
 # 校验每个用例将用到的全部 prompt：文件存在、metadata 有记录、source_id 与 manifest
 # 一致、目标长度与用例配置匹配、SHA-256 与 metadata 一致（check_hashes 为 False 时跳过哈希）。
 # 保证输入侧与 SGLang/vLLM 完全一致：同一份文件、同一批 token 数。
-def validate_prompts(processed_dir, cases, selected_cases, selections, metadata, check_hashes):
+def prompt_for_case(case, selection):
+    if case.get("dataset"):
+        if selection.get("dataset") != case["dataset"]:
+            raise ValueError("selection dataset does not match case dataset")
+        return selection["prompt_file"]
+    return selection["prompt_files"][str(case["prompt_tokens"])]
+
+
+def validate_prompts(processed_dir, cases, selected_cases, selections_by_case, metadata, check_hashes):
     validated = {}
     for case_id in selected_cases:
-        target = cases[case_id]["prompt_tokens"]
-        for _, _, selection in selections:
-            prompt_key = str(target)
-            if prompt_key not in selection.get("prompt_files", {}):
+        case = cases[case_id]
+        target = case["prompt_tokens"]
+        for _, _, selection in selections_by_case[case_id]:
+            if case.get("dataset"):
+                if "prompt_file" not in selection:
+                    raise ValueError("manifest run {} has no dataset prompt".format(selection.get("run")))
+            elif str(target) not in selection.get("prompt_files", {}):
                 raise ValueError("manifest run {} has no {} prompt".format(selection.get("run"), target))
-            relative = selection["prompt_files"][prompt_key]
+            relative = prompt_for_case(case, selection)
             path = processed_dir / relative
             if not path.is_file():
                 raise ValueError("prompt does not exist: {}".format(path))
@@ -594,7 +635,7 @@ def validate_prompts(processed_dir, cases, selected_cases, selections, metadata,
             item = metadata[relative]
             if item["source_id"] != selection["source_id"]:
                 raise ValueError("source_id mismatch for {}".format(relative))
-            if int(item["target_tokens"]) != target:
+            if target is not None and int(item["target_tokens"]) != target:
                 raise ValueError("target token mismatch for {}".format(relative))
             if check_hashes and relative not in validated:
                 actual = sha256_file(path)
@@ -614,7 +655,7 @@ def build_run_plan(case_id, case, selections, metadata, processed_dir, run_dir):
     run_dir.mkdir(parents=True, exist_ok=True)
     lines = []
     for phase, phase_run, selection in selections:
-        relative = selection["prompt_files"][str(case["prompt_tokens"])]
+        relative = prompt_for_case(case, selection)
         prompt_meta = metadata[relative]
         lines.append("\t".join((
             str((processed_dir / relative).resolve()),  # prompt_file
@@ -655,6 +696,15 @@ def build_bench_run_command(args, model_path, plan_path, n_gpu_layers):
     ]
     if args.threads is not None:
         command.extend(["--threads", str(args.threads)])
+    if args.llama_server:
+        command.extend(["--llama-server", str(Path(args.llama_server).resolve())])
+        if args.draft_model:
+            command.extend([
+                "--draft-model", str(Path(args.draft_model)),
+                "--draft-n-max", str(args.draft_n_max),
+                "--draft-ngl", str(args.draft_n_gpu_layers),
+            ])
+        command.append("--ignore-eos" if args.ignore_eos else "--no-ignore-eos")
     command.extend(args.extra_arg)
     return command
 
@@ -766,6 +816,7 @@ def new_run_record(args, case_id, case, phase, phase_run, round_num, selection, 
     # command 全文冗余存档，runs.csv 自描述、无需查代码即知每列含义。
     return {
         "case_id": case_id,
+        "dataset": case.get("dataset", ""),
         "status": "failed",
         "phase": phase,
         "phase_run": phase_run,
@@ -783,6 +834,8 @@ def new_run_record(args, case_id, case, phase, phase_run, round_num, selection, 
         "target_prompt_tokens": case["prompt_tokens"],
         "actual_prompt_tokens": int(prompt_meta["actual_tokens"]),
         "output_tokens_requested": case["output_tokens"],
+        "finish_reason": None,
+        "output_sha256": None,
         "wall_time_s_measured": None,
         "peak_process_rss_mib_measured": None,
         "device_memory_baseline_mib_measured": None,
@@ -890,7 +943,7 @@ def run_session(
             session_error = ""
             for phase, phase_run, selection in selections:
                 manifest_run = selection["run"]
-                relative = selection["prompt_files"][str(case["prompt_tokens"])]
+                relative = prompt_for_case(case, selection)
                 record = new_run_record(
                     args, case_id, case, phase, phase_run, round_num, selection, metadata[relative], relative,
                     platform_name, backend_device, command_text,
@@ -965,6 +1018,12 @@ def run_session(
                               "e2e_ms_measured", "prompt_tps_measured", "generation_tps_measured"):
                     record[field] = event.get(field)
                 record["tokens_generated"] = event.get("tokens_generated")
+                record["finish_reason"] = event.get("finish_reason")
+                record["output_sha256"] = event.get("output_sha256")
+                draft_tokens = event.get("draft_tokens")
+                record["draft_tokens_measured"] = draft_tokens if draft_tokens else None
+                record["draft_accepted_measured"] = event.get("draft_accepted") if draft_tokens else None
+                record["draft_acceptance_rate_measured"] = event.get("draft_acceptance_rate") if draft_tokens else None
                 record["actual_prompt_tokens"] = event["prompt_tokens"]
                 generation_tps = record.get("generation_tps_measured")
                 if generation_tps is not None and generation_tps > 0.0:
@@ -974,7 +1033,7 @@ def run_session(
                 wall_time = result_time - start_time
                 record["wall_time_s_measured"] = wall_time
                 if wall_time > 0.0:
-                    record["throughput_tok_s_est"] = case["output_tokens"] / wall_time
+                    record["throughput_tok_s_est"] = (record.get("tokens_generated") or 0) / wall_time
                 record["peak_process_rss_mib_measured"] = monitor.peak_rss_mib
                 record["device_memory_baseline_mib_measured"] = baseline_mib
                 record["peak_device_memory_mib_measured"] = monitor.peak_device_mib if device_monitor_enabled else None
@@ -1053,6 +1112,8 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
     ok_records = [record for record in formal_records if record["status"] == "ok"]
     metrics = {}
     for field in (
+        "actual_prompt_tokens",
+        "tokens_generated",
         "prompt_eval_ms_measured",
         "generation_eval_ms_measured",
         "ttft_ms_measured",
@@ -1068,6 +1129,9 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
         "device_memory_delta_mib_measured",
         "peak_gpu_utilization_pct_measured",
         "average_gpu_utilization_pct_measured",
+        "draft_tokens_measured",
+        "draft_accepted_measured",
+        "draft_acceptance_rate_measured",
     ):
         metrics[field] = metric_summary(ok_records, field)
 
@@ -1076,6 +1140,7 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
 
     summary = {
         "case_id": case_id,
+        "dataset": case.get("dataset", ""),
         "status": "ok" if len(ok_records) == formal_runs else "incomplete",
         "platform": platform_name,
         "physical_device_index": device_index,
@@ -1093,6 +1158,8 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
     peak = metrics.get("peak_device_memory_mib_measured")
     e2e = metrics.get("e2e_ms_measured")
     summary["首令牌延迟(ms)/TTFT(ms)"] = rounded(metrics.get("ttft_ms_measured"))
+    summary["平均输入长度(tokens)/Average Input Length(tokens)"] = rounded(metrics.get("actual_prompt_tokens"))
+    summary["平均实际输出(tokens)/Average Generated Tokens"] = rounded(metrics.get("tokens_generated"))
     summary["每令牌时间(ms/token)/TPOT(ms/token)"] = rounded(metrics.get("tpot_ms_measured"))
     summary["令牌间延迟(ms/token)/ITL(ms/token)"] = rounded(metrics.get("itl_ms_measured"))
     summary["端到端耗时(s)/E2E(s)"] = None if not e2e else round(e2e["mean"] / 1000.0, 2)
@@ -1107,15 +1174,23 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
     summary["GPU计算单元平均利用率(%)/Average GPU Compute Utilization(%)"] = rounded(
         metrics.get("average_gpu_utilization_pct_measured")
     )
+    draft_tokens = sum(int(record.get("draft_tokens_measured") or 0) for record in ok_records)
+    draft_accepted = sum(int(record.get("draft_accepted_measured") or 0) for record in ok_records)
+    summary["草稿接受率(%)/Draft Acceptance Rate(%)"] = (
+        round(100.0 * draft_accepted / draft_tokens, 2) if draft_tokens > 0 else None
+    )
     return summary
 
 
 # 查询 bench_run 的 --version 输出（llama.cpp 版本号），写入 manifest，
 # 保证结果可以回溯到具体二进制；不可用时记 "unavailable: ..."（不阻断）。
-def command_version(path):
+def command_version(path, llama_server=None):
     try:
+        command = [str(path), "--version"]
+        if llama_server:
+            command.extend(["--llama-server", str(llama_server)])
         result = subprocess.run(
-            [str(path), "--version"],
+            command,
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -1144,7 +1219,8 @@ def main():
         )
     if args.list_cases:  # --list-cases：只打印用例清单（LC-001~004 及各自长度）就退出
         for case_id, case in cases.items():
-            print("{}\t{} input tokens\t{} output tokens".format(case_id, case["prompt_tokens"], case["output_tokens"]))
+            input_description = case.get("dataset") or "{} input tokens".format(case["prompt_tokens"])
+            print("{}\t{}\t{} output tokens".format(case_id, input_description, case["output_tokens"]))
         return 0
 
     # ② 加载预处理数据：200 个 prompt 文件、105 轮运行清单（run-manifest.json）、每条 prompt 的元数据档案
@@ -1153,13 +1229,16 @@ def main():
     manifest, preparation, metadata = load_inputs(processed_dir)
     warmup_runs = manifest["warmup_runs"] if args.warmup_runs is None else args.warmup_runs  # 5 预热轮
     formal_runs = manifest["formal_runs"] if args.formal_runs is None else args.formal_runs  # 100 正式轮（50 条 × 2 遍）
-    selections = choose_selections(manifest, warmup_runs, formal_runs)  # 选出本轮实际要跑的那几条 prompt
+    selections_by_case = {
+        case_id: choose_selections(manifest, warmup_runs, formal_runs, cases[case_id].get("dataset"))
+        for case_id in selected_cases
+    }
     # ③ 校验：prompt 文件存在、长度与用例配置匹配、SHA-256 与 metadata 一致（防数据被改动）
     validate_prompts(
         processed_dir,
         cases,
         selected_cases,
-        selections,
+        selections_by_case,
         metadata,
         check_hashes=not args.skip_prompt_hash_check,
     )
@@ -1169,16 +1248,31 @@ def main():
         raise ValueError("--bench-run or BENCH_RUN is required")
     if not args.model:
         raise ValueError("--model or LLAMA_MODEL is required")
+    if benchmark_config.get("experiment", {}).get("value") == "dflash" and not args.draft_model:
+        raise ValueError("the DFlash benchmark requires --draft-model")
     bench_run = Path(args.bench_run).resolve()
     model_path = Path(args.model).resolve()
+    draft_model_path = Path(args.draft_model).resolve() if args.draft_model else None
     if not bench_run.is_file() or not os.access(bench_run, os.X_OK):
         raise ValueError("bench_run is not executable: {}".format(bench_run))
+    if args.llama_server:
+        llama_server = Path(args.llama_server).resolve()
+        if not llama_server.is_file() or not os.access(llama_server, os.X_OK):
+            raise ValueError("llama-server is not executable: {}".format(llama_server))
+        args.llama_server = str(llama_server)
     if not model_path.is_file():
         raise ValueError("model does not exist: {}".format(model_path))
+    if draft_model_path is not None and not draft_model_path.is_file():
+        raise ValueError("draft model does not exist: {}".format(draft_model_path))
+    if draft_model_path is not None and args.draft_n_max <= 0:
+        raise ValueError("--draft-n-max must be positive")
     if args.monitor_interval <= 0:
         raise ValueError("--monitor-interval must be positive")
     if args.model_sha256 is not None and not re.fullmatch(r"[0-9a-fA-F]{64}", args.model_sha256):
         raise ValueError("--model-sha256 must contain 64 hexadecimal characters")
+    if args.draft_model_sha256 is not None and not re.fullmatch(r"[0-9a-fA-F]{64}", args.draft_model_sha256):
+        raise ValueError("--draft-model-sha256 must contain 64 hexadecimal characters")
+    args.draft_model = str(draft_model_path) if draft_model_path is not None else None
     args.bench_run = str(bench_run)
 
     # ⑤ 平台解析：确定可见性环境变量（如 CUDA_VISIBLE_DEVICES=4）、传给 llama.cpp 的设备名（CUDA0）、
@@ -1202,12 +1296,13 @@ def main():
         env_text = " ".join("{}={}".format(key, shlex.quote(value)) for key, value in {**platform_env, **extra_env}.items())
         print(
             "validated {} case(s), {} run(s); each case runs as one bench_run process (single-turn, KV cleared per run)".format(
-                len(selected_cases), len(selected_cases) * len(selections)
+                len(selected_cases), sum(len(items) for items in selections_by_case.values())
             )
         )
         with tempfile.TemporaryDirectory(prefix="bench-run-dry-") as tmp:
             for case_id in selected_cases:
                 case = cases[case_id]
+                selections = selections_by_case[case_id]
                 plan_path = build_run_plan(case_id, case, selections, metadata, processed_dir, Path(tmp) / case_id)
                 command = build_bench_run_command(args, model_path, plan_path, n_gpu_layers)
                 print(
@@ -1241,16 +1336,24 @@ def main():
     elif not args.skip_model_hash:
         print("calculating model SHA-256...", flush=True)
         model_sha256 = sha256_file(model_path)
+    draft_model_sha256 = args.draft_model_sha256.lower() if args.draft_model_sha256 else None
+    if draft_model_path is not None and draft_model_sha256 is None and not args.skip_model_hash:
+        print("calculating draft model SHA-256...", flush=True)
+        draft_model_sha256 = sha256_file(draft_model_path)
     run_manifest = {
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "host": host_platform.node(),
         "host_platform": host_platform.platform(),
         "python": sys.version,
         "bench_run": str(bench_run),
-        "bench_run_version": command_version(bench_run),
+        "bench_run_version": command_version(bench_run, args.llama_server),
+        "llama_server": args.llama_server,
         "model": str(model_path),
         "model_size": model_path.stat().st_size,
         "model_sha256": model_sha256,
+        "draft_model": str(draft_model_path) if draft_model_path is not None else None,
+        "draft_model_size": draft_model_path.stat().st_size if draft_model_path is not None else None,
+        "draft_model_sha256": draft_model_sha256,
         "benchmark_config": str(benchmark_config_path),
         "benchmark_definition": benchmark_config,
         "platform": platform_name,
@@ -1276,8 +1379,11 @@ def main():
             "poll": args.poll,
             "temperature": args.temperature,
             "seed": args.seed,
+            "speculative_type": "draft-dflash" if draft_model_path is not None else "none",
+            "draft_n_max": args.draft_n_max if draft_model_path is not None else None,
+            "draft_n_gpu_layers": args.draft_n_gpu_layers if draft_model_path is not None else None,
             "threads": args.threads,
-            "ignore_eos": True,
+            "ignore_eos": args.ignore_eos,
             "prefix_cache_hit_rate_pct": 0,
             "warmup_runs": warmup_runs,
             "formal_runs": formal_runs,
@@ -1296,13 +1402,14 @@ def main():
             "tpot_ms_measured": "time per output token: 1000 / generation_tps_measured, identical to itl_ms_measured by definition",
             "itl_ms_measured": "inter-token latency, same value as tpot_ms_measured (single-stream greedy generation)",
             "wall_time_s_measured": "Python-side wall time between the run_start and result events; includes process/pipe overhead on top of e2e_ms_measured",
-            "throughput_tok_s_est": "end-to-end throughput estimate: output tokens requested divided by Python wall time; differs from generation_tps_measured which covers the generation phase only",
+            "throughput_tok_s_est": "end-to-end throughput estimate: actual generated tokens divided by Python wall time; differs from generation_tps_measured which covers the generation phase only",
             "peak_device_memory_mib_measured": "whole physical device usage sampled per run window (peaks reset at each run_start), not process-specific; reported as 峰值显存(GB)/Peak Memory(GB) using the maximum",
             "device_memory_delta_mib_measured": "per-run window peak minus the baseline read at run_start (after the KV clear), so it reflects one run's KV plus compute buffers",
             "peak_gpu_utilization_pct_measured": "maximum NVML GPU compute utilization sample in each run window; the summary reports the maximum across formal runs",
             "average_gpu_utilization_pct_measured": "arithmetic mean of NVML GPU compute utilization samples in each run window; the summary reports the mean across formal runs",
             "prompt_tps_measured": "prompt tokens per second during prefill, measured inside bench_run",
             "generation_tps_measured": "generated tokens per second during the generation phase, measured inside bench_run",
+            "draft_acceptance_rate_measured": "accepted DFlash draft tokens divided by proposed draft tokens; zero for non-speculative cases",
             "derived_fields": "fields ending in _est are estimates derived from measured values",
         },
     }
@@ -1321,6 +1428,7 @@ def main():
         # 每个用例的多轮循环：每轮 = 一次全新 bench_run 进程（模型重载、warmup 重新吸收冷启动）
         # 例如lc01～lc04，每轮 105 条 prompt（5 预热 + 100 正式），每条 prompt 生成 1 个结果，最终 runs.jsonl 共 4×105=420 条记录
         for case_id in selected_cases:
+            selections = selections_by_case[case_id]
             print(
                 "[{}] {} round(s), each one bench_run process with {} runs".format(
                     case_id, args.rounds, len(selections)

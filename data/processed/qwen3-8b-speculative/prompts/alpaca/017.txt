@@ -1,0 +1,5 @@
+Given the following two sentences, identify the similarities and differences between them.
+
+Input:
+Sentence 1: Creativity needs to be nurtured.
+Sentence 2: Creativity requires discipline.

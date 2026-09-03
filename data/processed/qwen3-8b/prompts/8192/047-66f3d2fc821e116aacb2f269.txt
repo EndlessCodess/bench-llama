@@ -1,0 +1,709 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+U NI T E D NAT I O NS CO NFE R E N C E  ON  T R A D E  A N D  D E VE L OP M E N T
+Investment facilitation 
+and digital government
+2024
+World  
+investment 
+report
+
+
+2024
+World  
+investment 
+report
+U NI T E D NAT I O NS CO NFE R E N C E  ON  T R A D E  A N D  D E VE L OP M E N T
+Investment facilitation
+and digital government
+Geneva, 2024
+
+
+
+ 
+Mention of any firm or licensed process does not imply the endorsement of the United Nations.
+ 
+This publication has been edited externally.
+United Nations publication issued by UN Trade and Development.
+UNCTAD/WIR/2024
+ISBN 978-92-1-003134-9
+PDF ISBN 978-92-1-358973-1
+   EPUB ISBN 978-92-1-358974-8
+Print ISSN 1020-2218
+Online ISSN 2225-1677 
+Sales no. E.24.II.D.11
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+iii
+Preface
+Investment is the fuel for sustainable development. Closing the SDG and climate financing 
+gap will require an estimated $500 billion of international public finance and $500 billion of 
+international private finance per year, much of which would be in the form of foreign direct 
+investment.
+But many developing countries are running on empty. Global and regional crises, trade tensions 
+and tighter financing conditions have had a chilling effect on foreign direct investment, which 
+remained subdued in 2023 for a second year in succession. Global flows of foreign direct 
+investment stagnated at $1.3 trillion. Notably, foreign direct investment in new industrial and 
+infrastructure projects in developing countries declined, while new investment in sectors relevant 
+to the Sustainable Development Goals fell by more than 10 per cent.
+Stagnant SDG investment and insufficient funding is severely hindering implementation of the 
+2030 Agenda and the SDGs, particularly in least developed countries. We need urgent action 
+to remove obstacles and provide a transparent, streamlined investment climate for sustainable 
+development.
+This World Investment Report shows that the lacklustre financial flows to developing countries 
+are not due to a lack of investment policy efforts. Investment facilitation has become a prominent 
+feature of national policies and international agreements. Digital government solutions are 
+proliferating, aiding investors and strengthening governance and institutions.
+But despite these efforts, finance is not flowing at sufficient scale, due to high interest rates and 
+geopolitical conditions. That means we must redouble our efforts.
+I urge all decision makers to prioritize the mobilization of sustainable finance at scale. The SDG 
+Stimulus we have proposed is a practical and achievable means of delivering this. Our call for 
+reform and scaling up of multilateral development banks is intended to significantly increase the 
+crowding in of private investment.
+I also encourage policymakers to prioritize strengthening investment governance in developing 
+countries, to ensure financial flows are directed towards the SDGs. UNCTAD’s recommendations 
+for the use of business facilitation and digital government to ease sustainable investment can 
+play an important part in achieving these goals.
+António Guterres  
+Secretary-General of the United Nations
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+iv
+Foreword
+In a world grappling with global and regional crises, the delicate balance of foreign direct 
+investment (FDI) hangs precariously. This World Investment Report (WIR) serves as a stark 
+reminder that investment, the lifeblood of sustainable development, is not merely a statistic 
+but a lifeline for developing nations. It is the fuel that powers progress towards the 
+Sustainable Development Goals (SDGs) and the  2030 Agenda for Sustainable Development.     
+The challenges we face are multifaceted and interconnected. Geoeconomic fragmentation 
+is reshaping the landscape of global investment. Trade networks are fragmenting, regulatory 
+environments are diverging and international supply chains are being reconfigured. These 
+shifts create both obstacles and isolated opportunities, with some countries benefiting from 
+investments in global value chain-intensive manufacturing while others struggle to participate 
+in the global economy.
+Overall, however, these trends are leading to a further deterioration of the international investment 
+landscape as seen from the developing world. Last year, FDI fell by more than 10 per cent 
+globally, and by 7 per cent in the developing world. International project finance, crucial for 
+infrastructure development, was particularly hard hit, falling by 26 per cent. Prospects for 2024 
+remain challenging, with weakening growth prospects and continuing trade and geopolitical 
+tensions.
+Furthermore, the WIR reveals a crisis in SDG investment, with a more than 10 per cent decrease 
+in 2023. Two sectors, agrifood systems and water and sanitation, registered fewer internationally 
+financed projects in 2023 than in 2015, when the SDGs were adopted. This decline, driven by 
+tighter financing conditions and a slowdown in sustainable finance markets, underscores the 
+need for concerted action to steer investments towards projects that genuinely contribute to a 
+sustainable future.
+Meanwhile, the mobilization of funds for SDG investment through sustainable finance products 
+in global capital markets is still growing but slowing down. Sustainable bonds showed marginal 
+growth in 2023, and new inflows in sustainable investment funds dropped by 60 per cent. 
+Greenwashing concerns are increasingly affecting investor demand. More broadly, policy action 
+is needed to mitigate the risk of a widening backlash against sustainable investment strategies. 
+The world needs a robust and credible sustainable finance industry, and no effort must be spared 
+to fortify it before it is too late.
+But the way we do that must be carefully considered. Policymakers should be mindful of the 
+spillover effects of international sustainability reporting standards, particularly on small and 
+medium-sized enterprises (SMEs) in developing countries. These SMEs, the engines of inclusive 
+growth and job creation, are precisely the ones that need sustainable finance flows the most. 
+However they may struggle to meet increased disclosure requirements, potentially affecting their 
+market access and participation in global supply chains. Striking a balance between promoting 
+transparency and avoiding undue burdens on businesses will be crucial for a sustainable and 
+inclusive investment landscape.
+Against this complex backdrop, the WIR underscores the importance of investment facilitation 
+and digital government as tools to attract and retain investment. By streamlining procedures, 
+enhancing transparency and leveraging digital tools such as online single windows, we can 
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+v
+foster a more conducive investment climate, particularly in developing countries. Furthermore, 
+the report emphasizes that digital business and investment facilitation is not merely a technical 
+solution; it is a stepping stone towards wider digital government implementation, which can 
+address underlying weaknesses in governance and institutions that often hinder investment and 
+impede progress towards sustainable development. 
+Investment facilitation, while essential, is not a panacea for the challenges facing global 
+investment flows. However, it is an undeniable prerequisite for fostering an environment conducive 
+to sustainable investment. The proliferation of digital solutions for investment facilitation, as 
+highlighted in this report, exemplifies the WIR’s commitment to providing tangible and actionable 
+policy recommendations even in the most challenging of times.
+As we navigate the complexities of the 21st century, the WIR reminds us that investment is 
+not just about capital flows; it is about human potential, environmental stewardship and the 
+enduring pursuit of a more equitable and sustainable world. Let us embrace this vision with 
+renewed determination, recognizing that the choices we make today will shape the world we 
+leave behind for generations to come.
+Rebeca Grynspan
+Secretary General of UN Trade and Development
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+vi
+Acknowledgements
+The World Investment Report 2024 was prepared by a team at UNCTAD led by Richard Bolwijn. 
+UNCTAD team members included Dafina Atanasova, Vincent Beyer, Stephania Bonilla, Julien 
+Bornon, Bruno Casella, Joseph Clements, Mathilde Closset, Tiffany Grabski, Frank Grozel, 
+Natalia Guerra, Hamed El Kady, Anastasia Leskova, Massimo Meloni, Anthony Miller, Bita 
+Mortazavi, Abraham Negash, Yongfu Ouyang, Marios Pournaris, Ian Richards, Diana Rosert, 
+Amelia U. Santos-Paulino, Changbum Son, Astrit Sulstarova, Yihua Teng, Claudia Trentini and 
+Kee Hwee Wee.
+Research support and inputs were provided by Ciman Araleh, Gregory Allan Auclair, Weijia Hu, 
+Oktawian Kuc, Corli Le Roux, Noé Michon, Elisa Navarra, Nelson Pérez, Lucas Ricardo, Lauren 
+Satterthwaite, Prachi Sharma, Kjartan Sorensen, Rick van der Maas and Vanina Vegezzi. 
+Comments and contributions were provided by colleagues in UNCTAD: Kiyoshi Adachi, 
+Rodrigo Carcamo, Marco Fugazza, Ebru Gökçe-Dessemond, Poul Hansen, Igor Paunovic, 
+Luisa Rodriguez, Mesut Saygili, Dawei Wang and Anida Yupari, as well as the Office of the 
+Secretary-General. 
+Statistical assistance was provided by Mohamed Chiraz Baly, Kerem Bayrakceken and Bradley 
+Boicourt. IT assistance was provided by Chrysanthi Kourti.
+The manuscript was copy-edited by Lise Lingo. The design of the charts and infographics, and 
+the typesetting of the report were done by Maria Teresa Arrigoni and Matteo Oldani. Production 
+of the report was supported by Elisabeth Mareschal and Katia Vieu.
+At various stages of the preparation of the theme chapter, including the peer review, brainstorming 
+meetings and discussions in the margin of the UNCTAD Investment and Enterprise Commission 
+meeting on Investment Facilitation for Sustainable Development, the team benefited from 
+comments and inputs received from external experts: Yasser Abbas, Isiaka Abdulqadir Imam, 
+Axel Berger, Alejandro Encinas Nájera, Najwa Halaseh, Archie Kariuki, Olga Lucia Lozano, Victor 
+Matassi, Ugo Panizza, Deniz Susar, Camilo Trigueros, Chhime Tshering, Ingmar Vali, Christian 
+Volpe Martincus, Dana Akram Abdallah Al Zoubi, and Juwang Zhu.
+The team is grateful for advice, input and comments received from numerous officials in central 
+banks, national government agencies, international organizations and non-governmental 
+organizations.
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+vii
+Explanatory notes
+The terms country and economy as used in this report also refer, as appropriate, to territories 
+or areas. In addition, the designations of country and economy groupings are intended solely 
+for statistical or analytical convenience and do not necessarily express a judgement about the 
+stage of development reached by a particular country or area in the development process. The 
+major country and economic groupings used in this report follow the classification of the United 
+Nations Statistical Office: 
+•	
+Developed economies: the member countries of the OECD (other than Chile, Colombia, 
+Costa Rica, Mexico and Türkiye), European Union member countries that are not OECD 
+members (Bulgaria, Croatia, Cyprus, Malta and Romania) plus Albania, Andorra, Belarus, 
+Bermuda, Bosnia and Herzegovina, Liechtenstein, Monaco, Montenegro, North Macedonia, 
+the Republic of Moldova, the Russian Federation, San Marino, Serbia and Ukraine, plus the 
+territories of Faroe Islands, Gibraltar, Greenland, Guernsey and Jersey. 
+•	
+Developing economies: in general, all economies not specified above. For statistical 
+purposes, the data for China do not include those for Hong Kong Special Administrative 
+Region (Hong Kong SAR), Macao Special Administrative Region (Macao SAR) or Taiwan 
+Province of China. 
+Throughout the report, data on investment trends for the Netherlands refer only to the 
+Netherlands; information for Aruba, Curaçao and Sint Maarten is reported separately. 
+Methodological details on FDI and MNE statistics can be found on the report website (https://
+unctad.org/topic/investment/world-investment-report). 
+The following symbols have been used in the tables: 
+•	
+Two dots (..) indicate that data are not available or are not separately reported. Rows in 
+tables have been omitted in those cases where no data are available for any of the elements 
+in the row. 
+•	
+A dash (–) indicates that the item is equal to zero or its value is negligible. 
+•	
+A blank in a table indicates that the item is not applicable, unless otherwise indicated. 
+•	
+A slash (/) between dates representing years, e.g., 2020/21, indicates a financial year. 
+•	
+Use of a dash (–) between dates representing years, e.g., 2020–2021, signifies the full period 
+involved, including the beginning and end years. 
+•	
+Reference to “dollars” ($) means United States dollars, unless otherwise indicated. 
+Annual rates of growth or change, unless otherwise stated, refer to annual compound rates. 
+Details and percentages in tables do not necessarily add to totals because of rounding.
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+viii
+Abbreviations
+AfCFTA
+African Continental Free Trade Area
+ASEAN
+Association of Southeast Asian Nations 
+ASYCUDA
+Automated System for Customs Data
+AIFF
+ASEAN Investment Facilitation Framework
+BIT
+bilateral investment treaty
+CDP
+Carbon Disclosure Project
+CEPA
+Comprehensive Economic Partnership 
+Agreement
+COVID-19
+coronavirus disease 2019
+ECT
+Energy Charter Treaty
+EGDI
+eGovernment Development Index
+ESG
+environmental, social and governance
+EVs
+electric vehicles
+FDI
+foreign direct investment
+FTA
+free trade agreement
+GDP
+gross domestic product 
+GER
+Global Enterprise Registration
+GHG
+greenhouse gas
+GSFO
+Global Sustainable Finance Observatory
+GVC
+global value chain
+ICC
+International Chamber of Commerce
+ICSID
+International Centre for Settlement of Investment 
+Disputes
+ICT
+information and communications technology
+IFD
+Investment Facilitation for Development
+IFRS
+International Financial Reporting Standards
+IIA
+international investment agreement
+IMF
+International Monetary Fund
+IPA
+investment promotion agency
+IPFSD
+Investment Policy Framework for Sustainable 
+Development
+ISDS
+investor–State dispute settlement
+ISSB
+International Sustainability Standards Board 
+IT
+Information technology
+LDC
+least developed country 
+LLDC
+landlocked developing country
+M&As
+mergers and acquisitions
+MNE
+multinational enterprise
+MSMEs
+micro-, small and medium-sized enterprises
+NAFTA
+North American Free Trade Agreement
+OECD
+Organisation for Economic Co-operation and 
+Development
+OFDI
+outward FDI
+OFIO
+Office of the Foreign Investment Ombudsman
+OHCHR
+Office of the United Nations High Commissioner for 
+Human Rights 
+OIC
+Organisation of Islamic Cooperation
+PPF
+public pension fund
+PPP
+public–private partnership
+SDGs
+Sustainable Development Goals
+SEZ
+special economic zone
+SIDS
+small island developing States
+SIFA
+sustainable investment facilitation framework
+SMEs
+small and medium-sized enterprises
+SPAC
+special purpose acquisition company
+SWF
+sovereign wealth fund
+TIP
+treaty with investment provision
+TNI
+Transnationality Index 
+UN DESA
+United Nations Department of Economic and 
+Social Affairs
+UNCITRAL
+United Nations Commission on International 
+Trade Law
+UNCTAD
+United Nations Conference on Trade and 
+Development
+UNEP
+United Nations Environment Programme 
+UNIDROIT
+International Institute for the Unification of Private 
+Law
+UNODC
+United Nations Office on Drugs and Crime
+USMCA
+United States–Mexico–Canada Agreement
+WASH
+water, sanitation and hygiene
+WIR
+World Investment Report
+WTO
+World Trade Organization
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+ix
+Table of contents
+Executive summary.
+.......................................................................... xi
+Chapter I
+International investment trends.
+....................................................... 1
+A. Foreign direct investment......................................................... 3
+1. Global trends.
+................................................................................. 3
+2. Trends by geography.
+..................................................................... 5
+3. Trends by project type and sector.
+............................................... 21
+B. Investment in the Sustainable Development Goals.
+................ 29
+C. International production.
+......................................................... 34
+1. Key indicators of international production.
+................................... 34
+2. Internationalization trends of the largest MNEs.
+........................... 36
+3. Shifting investment patterns among the top 100 MNEs.
+.............. 38
+Chapter II
+Investment policy trends................................................................. 45
+A. National investment policies................................................... 47
+1. Overall trends.
+.............................................................................. 47
+2. Policy measures more favourable to investors.
+............................ 50
+3. Policy measures less favourable to investors.
+.............................. 55
+4. Outward foreign direct investment policies.................................. 60
+B. International investment policies............................................ 65
+1. Trends in international investment agreements............................ 65
+2. Trends in investor–State dispute settlement.
+................................ 73
+Chapter III
+Sustainable finance trends.
+............................................................. 77
+A. Sustainability-themed capital market products.
+...................... 79
+1. Sustainable bond markets........................................................... 79
+2. Sustainable funds.
+........................................................................ 85
+B. Sovereign and public institutional investors.
+........................... 88
+1. Sustainability integration strategies and practices.
+...................... 90
+2. Sustainability disclosure.
+.............................................................. 93
+C. Policies, regulations and standards........................................ 96
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+x
+ONLINE ONLY: Regional Trends
+Africa
+Developing Asia
+Latin America and the Caribbean
+Structurally weak, vulnerable and small economies:
+Least developed countries (LDCs) 
+Landlocked developing countries (LLDCs) 
+Small island developing States (SIDS)
+1. International sustainability reporting standards.
+........................... 96
+2. Policymaking at national and regional levels .
+............................ 102
+Chapter IV
+Investment facilitation and digital government........................... 107
+A. Introduction.
+.......................................................................... 109
+B. Progress on digital investment facilitation worldwide........... 113
+1. The wider digital government context........................................ 113
+2. The spread and quality of business portals.
+............................... 115
+3. Foreign investor-specific online procedures.
+.............................. 119
+4. Portal ownership and the role of IPAs........................................ 122
+C. Facilitation in national and international investment policies.
+125
+1. National policies.
+........................................................................ 125
+2. International investment agreements......................................... 129
+D. The impact of investment facilitation and digital government.134
+E. From online business facilitation to digital government........ 140
+1. The basic architecture of digital government services............... 140
+2. Effective implementation.
+........................................................... 142
+3. Connecting with wider digital government................................. 145
+F. Conclusions and policy implications.
+..................................... 150
+References..................................................................................... 153
+Annex tables.
+.................................................................................. 156
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+xi
+Executive summary
+International investment trends
+Global foreign direct investment (FDI) in 2023 decreased marginally, by 2 per cent, to $1.3 trillion. 
+This headline figure was affected by wild swings in financial flows through a small number of 
+European conduit economies; excluding the effect of these conduits, global FDI flows were more 
+than 10 per cent lower than in 2022.
+The global environment for international investment remains challenging in 2024. Weakening 
+growth prospects, economic fracturing trends, trade and geopolitical tensions, industrial policies 
+and supply chain diversification are reshaping FDI patterns, causing some multinational enterprises 
+(MNEs) to adopt a cautious approach to overseas expansion. However, MNE profit levels remain 
+high, financing conditions are easing and increased greenfield project announcements in 2023 
+will positively affect FDI. Modest growth for the full year appears possible.
+International project finance and cross-border mergers and acquisitions (M&As) were especially 
+weak in 2023. M&As, which mostly affect FDI in developed countries, fell by 46 per cent in value. 
+Project finance, important for infrastructure investment, was down 26 per cent. Tighter financing 
+conditions, investor uncertainty, volatility in financial markets and – for M&As – tighter regulatory 
+scrutiny were the principal causes of the decline.
+Greenfield investment project announcements provided a bright spot. Project numbers increased 
+by 2 per cent, with the growth concentrated in manufacturing, interrupting a decade-long trend 
+of gradual decline in the sector. Furthermore, growth was concentrated in developing countries, 
+where the number of projects was up by 15 per cent. In developed countries new project 
+announcements were down 6 per cent.
+In developed countries, the 2023 trend was strongly affected by MNE financial transactions, 
+partly caused by moves to implement a minimum tax on the largest MNEs. FDI flows in Europe 
+jumped from negative $106 billion in 2022 to positive $16 billion because of volatility in conduit 
+economies. Inflows to the rest of Europe were down 14 per cent. Inflows in other developed 
+countries also stagnated, with a 5 per cent decline in North America and sizeable falls elsewhere. 
+FDI flows to developing countries fell by 7 per cent to $867 billion, mainly due to an 8 per 
+cent decrease in developing Asia. Flows fell by 3 per cent in Africa and by 1 per cent in Latin 
+America and the Caribbean. The number of international project finance deals fell by a quarter. 
+Greenfield project announcements in developing countries increased by more than 1,000, but 
+these projects were highly concentrated; South-East Asia accounted for almost half, West Asia 
+for a quarter and Africa registered a small increase, while Latin America and the Caribbean 
+attracted fewer projects.
+•	
+FDI inflows to Africa declined by 3 per cent in 2023 to $53 billion. Greenfield announcements 
+included several megaprojects, including the largest announcement worldwide – a green 
+hydrogen project in Mauritania. International project finance fell by a quarter in number of 
+deals and by half in value, negatively affecting prospects for infrastructure investment.
+•	
+FDI in developing Asia fell by 8 per cent to $621 billion. China, the second largest FDI 
+recipient in the world, saw a rare decline in inflows. Sizeable declines were recorded in India 
+and in West and Central Asia. Only South-East Asia held steady. Industrial investment in 
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+xii
+Asia remains buoyant, as shown by greenfield announcements, but the global downturn in 
+project finance also affected the region.
+•	
+Flows to Latin America and the Caribbean were down 1 per cent, at $193 billion. The number 
+of international project finance and greenfield investment announcements fell, but the value 
+of the latter increased because of large projects in commodity sectors and critical minerals, 
+as well as in renewable energy, green hydrogen and green ammonia.
+•	
+FDI flows to the structurally weak and vulnerable economies increased. FDI inflows to the 
+least developed countries (LDCs) rose to $31 billion, or 2.4 per cent of global FDI flows. 
+Landlocked developing countries and small island developing States also saw increased 
+FDI. In all three groups, FDI remains concentrated among a few countries. International 
+project finance is relatively more important in the poorest countries, which are therefore 
+disproportionally affected by the global downturn in this form of investment.
+Industry trends showed lower investment in the infrastructure and digital economy sectors, but 
+strong growth in the global value chain-intensive sectors of manufacturing and critical minerals. 
+Weak project finance markets negatively affected infrastructure investment, and digital economy 
+sectors continued their slowdown after the boom ended in 2022. Global value chain-intensive 
+sectors, including the automotive, electronics and machinery industries, grew strongly, showing 
+the effect of supply chain restructuring pressures. In critical minerals extraction and processing, 
+investment project numbers and values nearly doubled.
+Global economic fracturing trends are affecting the investment strategies of manufacturing 
+MNEs. The investment behaviour of the top 100 non-financial MNEs shows that, since 2019, the 
+geographical distribution of manufacturing projects, especially in strategic sectors, has shifted 
+towards locations closer to major MNE home markets in Europe and the United States. West 
+Asia, North Africa and Central America are emerging as strategic locations for manufacturing 
+MNEs. 
+International investment in sectors relevant for the Sustainable Development Goals in developing 
+countries declined in 2023. Growth in greenfield project announcements, especially in renewable 
+energy, power and transportation, pushed up the numbers. In value terms, Goals investment 
+in developing countries fell because of the downturn in international project finance, used for 
+larger projects in infrastructure sectors. Project numbers in agrifood systems and in water and 
+sanitation were lower than they were in 2015 when the Goals were adopted. Goals investment is 
+also unequally distributed. The shares of global Goals investment projects attracted by Africa and 
+by Latin America and the Caribbean are smaller than their shares in all projects. Only developing 
+Asia attracts above-average Goals investment.
+Investment policy trends
+The number of investment policy measures adopted in 2023 was 25 per cent lower than in 
+2022 but still in line with the five-year average. Most measures, 72 per cent, were favourable to 
+investors. The overall balance between favourable measures (liberalization, promotion, facilitation) 
+and less favourable ones (restrictions on entry and operation) was unchanged.
+Developing countries mostly aim to promote and facilitate investment, whereas developed 
+countries lean towards more restrictive measures. In developing countries, 86 per cent of 
+measures were favourable to investors. In developed countries, 57 per cent of measures were 
+less favourable to investors. Most of these concerned restrictions to address national security 
+concerns. 
+Investment facilitation and incentives were the main types of measures favourable to investors 
+in both developed and developing countries. Facilitation measures reached almost 40 per cent 
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+xiii
+of favourable measures and 30 per cent of all measures – a record. For incentives, the services 
+sector and renewable energy were the primary focus in 2023.
+Heightened caution towards foreign investments in critical sectors persisted in 2023. The 
+introduction or expansion of FDI screening mechanisms accounted for nearly half of the measures 
+less favourable to investors. Four additional countries implemented FDI screening in 2023, with 
+several more expected to follow in 2024. Countries that conduct FDI screening now account 
+for over half of global FDI flows and three quarters of FDI stock.
+FDI restrictions also increasingly affect outward FDI. Outward FDI policies have evolved over 
+the past decade, reflecting the growing importance of both sustainability and geopolitical 
+considerations in shaping investment policies. 
+In 2023, countries and regions concluded 29 new international investment agreements (IIAs). 
+Traditional bilateral investment treaties accounted for fewer than half of the new treaties; most 
+were broad economic agreements with investment provisions. 
+Efforts to reform the IIA regime are continuing. New treaties tend to include features aimed at 
+safeguarding the right to regulate and they increasingly cover a broader range of issues, including 
+investment facilitation. The recent finalization of the Investment Facilitation for Development 
+Agreement by participating members of the World Trade Organization may provide further 
+impetus for this trend.
+Reform of the stock of old-generation IIAs continues to be slow. About half of the global stock 
+of FDI is still covered by IIAs that have not been reformed, which expose countries to higher 
+risk of investor–State dispute settlement cases. This share is about two thirds for developing 
+countries and closer to three quarters for LDCs. Only 16 per cent of global FDI stock is today 
+covered by a new-generation IIA; reform efforts have so far had a limited effect on mitigating the 
+risk of ISDS, especially in the poorest countries.
+The total ISDS case count reached 1,332, with 60 new arbitrations initiated in 2023. About 
+70 per cent of new cases were brought against developing countries, including three LDCs. 
+International investors in the construction, manufacturing and extractive sectors accounted for 
+over half of the claims in 2023.
+UNCTAD continues to play a leading role in facilitating IIA reform. It launched the Multi-Stakeholder 
+Platform for IIA Reform during the UNCTAD World Investment Forum to chart the way forward 
+towards an investment regime that puts sustainable development at its core.
+Sustainable finance trends
+The sustainable finance market continues to grow, but there are clear signs of a slowdown. In 
+2023, the value of sustainable investment products, encompassing bonds and funds, increased 
+by 20 per cent to more than $7 trillion. However, much of the increase was driven by cumulative 
+issuance and rising valuations, and some segments of the market struggled.
+Sustainable bonds showed marginal growth. Issuance climbed 3 per cent to $872 billion, bringing 
+the outstanding value of the market to more than $4 trillion. Green bonds were the main driver 
+of growth, while issuance in other segments, especially social bonds, fell.
+Sustainable funds experienced strong headwinds. Despite continued growth in the number of 
+funds and asset values, net inflows dropped from $161 billion in 2022 to $63 billion in 2023. In 
+the principal markets, funds in Europe lost growth momentum and those in the United States 
+saw significant net outflows, exceeding those of the broader fund market.
+Greenwashing poses the most significant challenge to the sustainable fund market. The average 
+net exposure of green funds to climate-positive assets (low-carbon assets minus fossil fuels) is 
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+xiv
+only about 20 per cent, and fewer than 5 per cent of these funds are free from oil and gas assets. 
+Further systemic efforts are needed to tackle greenwashing, including well-defined product 
+standards, robust sustainability disclosures, external auditing and third-party ratings.
+Institutional investors made progress on sustainability reporting, but significant gaps remain. 
+In 2023, 58 of the top 100 sovereign wealth and public pension funds monitored by UNCTAD 
+reported on their sustainability performance, up from 55 in 2022. Only a quarter of reporting 
+funds used third-party verification.
+Institutional investors are not moving fast enough to reorient portfolios. Most reporting funds 
+have set out strategies to address climate change. However, only one in three have set a target 
+for fossil fuel divestment and investment in renewables.
+Governments in both developed and developing economies are accelerating sustainable finance 
+policymaking. In 2023, 35 economies tracked by UNCTAD, covering the world’s largest financial 
+markets, introduced 94 new measures and initiatives, up from 63 in 2022. Policy measures 
+mostly concerned disclosure rules, new national strategies, frameworks and guidelines, and 
+(financial) sector- and product-specific requirements. 
+Developing countries are becoming increasingly active in sustainable finance policymaking. They 
+accounted for about 60 per cent of new policy measures in 2023. These measures were mostly 
+concentrated in the largest developing economies or financial centres. Developing countries 
+as a group continue to face challenges in leveraging sustainable finance, as evidenced by the 
+persistently low sustainable investment flows.
+International standards will have significant spillover effects. The new disclosure standards issued 
+by the International Sustainability Standards Board and the European Union will affect firms 
+based outside the main financial markets for which they were primarily developed. Companies in 
+developing countries that are part of the supply chains of firms in those markets will face greater 
+pressure to meet higher sustainability standards, and compliance may become a prerequisite 
+for market access.
+A key policy challenge is to avoid widening resistance to sustainable investment strategies in 
+financial markets and – more broadly – to sustainability and disclosure requirements. In the 
+United States, 17 states have passed legislation prohibiting fund managers from considering 
+environmental, social and governance factors in their investment decisions or prohibiting states 
+from contracting with asset managers that exclude certain industries, such as fossil fuels, from 
+their portfolios. For firms worldwide, the complexity and compliance costs associated with 
+sustainability reporting are a growing concern.
+Investment facilitation and digital government
+Investment facilitation has emerged as a top priority for investment policymakers worldwide. 
+Since the publication of the UNCTAD Global Action Menu on Investment Facilitation in 2016, 
+an international agreement on investment facilitation for development has been negotiated, 
+facilitation has become a mainstay in regional and bilateral trade and investment agreements, 
+and national implementation efforts have proliferated. 
+Business and investment facilitation have become central to both private sector development 
+and FDI attraction in developing countries. Making it easier to establish and operate a business 
+not only attracts foreign investors but also improves the business environment for local firms, 
+supporting the formalization and growth of micro, small and medium-sized enterprises.
+
+
+World Investment Report 2024
+Investment facilitation and digital government
+xv
+At the core of facilitation efforts are information provision, transparent rules and regulations, and 
+streamlined administrative procedures. Because these elements revolve around information and 
+procedures, digitalization is central to their effective implementation.
+Business and investment facilitation have thus led to a wave of digital government initiatives, 
+including information portals and online single windows. Such initiatives now make up a 
+significant share of national investment policy measures monitored by UNCTAD; modern IIAs 
+also increasingly encourage digitalization to implement commitments. 
+The number of digital facilitation tools has grown significantly in recent years, and their quality 
+has improved. UNCTAD data show that the number of national government information portals 
+for business and investor registration in developing countries increased from 82 in 2016 to 124; 
+in developed countries, it increased from 43 to 48. In developing countries, the number of online 
+single windows – which allow for multiple procedures to be carried out online – increased from 
+13 to 67 in the same period; in developed countries it increased from 12 to 28. The quality of 
+portals has also improved, with some in LDCs rivaling those in developed countries, showing 
+that leapfrogging opportunities exist. 
+Challenges remain in building, maintaining and enhancing digital platforms. Despite progress, 
+issues such as outdated information, portal closures and “single window dressing” persist. 
+Continuous updates, clear ownership and adequate resources are essential for the long-term 
+success of digital facilitation platforms. Technical support for developing countries is important; 
+the highest-rated portals in LDCs often were created through development assistance.
+Digital government tools can have a positive impact on FDI attraction. On average, for each 
+additional point in the quality of digital business and investment facilitation portals (in the rating 
+methodology of the UNCTAD Global Enterprise Registration initiative), developing countries 
+gain about 8 per cent more FDI. This effect is not automatic; it is part of the impact of broader 
+investment climate improvements.
+Digital business and investment facilitation also boosts formalization and inclusivity. Countries 
+that implement digital single windows see substantial increases in small business registrations. 
+Many new businesses are established by women, young entrepreneurs and populations outside 
+urban centres, indicating that platforms improve access to services, even in countries with a 
+significant digital divide.
+Governments should adopt a comprehensive approach to digital investment facilitation, avoiding 
+ded
+
+Question:
+Considering the complex interplay of foreign direct investment (FDI) trends, geopolitical factors, and sustainable development goals (SDGs) as highlighted in the 2024 World Investment Report, which of the following scenarios presents the most intricate challenge to achieving the SDGs in developing economies?
+
+A. The simultaneous rise in interest rates across multiple major economies, leading to capital flight from developing markets while inflating costs for sustainable projects due to increased financing conditions.
+B. The proliferation of international investment agreements (IIAs) that prioritize investor rights over regulatory sovereignty, potentially leading to a race to the bottom in environmental and social standards among developing nations.
+C. The integration of digital governance mechanisms that, while enhancing transparency, inadvertently expose developing economies to increased volatility from global financial markets and speculative investments.
+D. The shift in global supply chains due to heightened geopolitical tensions, resulting in the reallocation of FDI away from developing countries toward more stable and developed economies, thereby diminishing local capacities to meet SDGs.
+
+Select the correct answer.

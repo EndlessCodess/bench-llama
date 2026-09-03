@@ -1,0 +1,2852 @@
+{
+  "seed": 20260831,
+  "sampling": {
+    "warmup": "fixed_sequential",
+    "formal": "cycle_sequential"
+  },
+  "warmup_runs": 5,
+  "formal_runs": 100,
+  "pool_size": 50,
+  "datasets": [
+    "alpaca",
+    "math-500",
+    "humaneval"
+  ],
+  "selections": [
+    {
+      "dataset": "alpaca",
+      "run": 1,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 0,
+      "source_id": "alpaca-13065",
+      "prompt_file": "prompts/alpaca/000.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 2,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 1,
+      "source_id": "alpaca-12355",
+      "prompt_file": "prompts/alpaca/001.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 3,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 2,
+      "source_id": "alpaca-33635",
+      "prompt_file": "prompts/alpaca/002.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 4,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 3,
+      "source_id": "alpaca-19391",
+      "prompt_file": "prompts/alpaca/003.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 5,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 4,
+      "source_id": "alpaca-29802",
+      "prompt_file": "prompts/alpaca/004.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 6,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 0,
+      "source_id": "alpaca-13065",
+      "prompt_file": "prompts/alpaca/000.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 7,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 1,
+      "source_id": "alpaca-12355",
+      "prompt_file": "prompts/alpaca/001.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 8,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 2,
+      "source_id": "alpaca-33635",
+      "prompt_file": "prompts/alpaca/002.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 9,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 3,
+      "source_id": "alpaca-19391",
+      "prompt_file": "prompts/alpaca/003.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 10,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 4,
+      "source_id": "alpaca-29802",
+      "prompt_file": "prompts/alpaca/004.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 11,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 5,
+      "source_id": "alpaca-44141",
+      "prompt_file": "prompts/alpaca/005.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 12,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 6,
+      "source_id": "alpaca-5123",
+      "prompt_file": "prompts/alpaca/006.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 13,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 7,
+      "source_id": "alpaca-28914",
+      "prompt_file": "prompts/alpaca/007.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 14,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 8,
+      "source_id": "alpaca-36841",
+      "prompt_file": "prompts/alpaca/008.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 15,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 9,
+      "source_id": "alpaca-50310",
+      "prompt_file": "prompts/alpaca/009.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 16,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 10,
+      "source_id": "alpaca-51623",
+      "prompt_file": "prompts/alpaca/010.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 17,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 11,
+      "source_id": "alpaca-44675",
+      "prompt_file": "prompts/alpaca/011.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 18,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 12,
+      "source_id": "alpaca-37074",
+      "prompt_file": "prompts/alpaca/012.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 19,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 13,
+      "source_id": "alpaca-48827",
+      "prompt_file": "prompts/alpaca/013.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 20,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 14,
+      "source_id": "alpaca-26726",
+      "prompt_file": "prompts/alpaca/014.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 21,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 15,
+      "source_id": "alpaca-49434",
+      "prompt_file": "prompts/alpaca/015.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 22,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 16,
+      "source_id": "alpaca-41586",
+      "prompt_file": "prompts/alpaca/016.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 23,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 17,
+      "source_id": "alpaca-5578",
+      "prompt_file": "prompts/alpaca/017.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 24,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 18,
+      "source_id": "alpaca-24053",
+      "prompt_file": "prompts/alpaca/018.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 25,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 19,
+      "source_id": "alpaca-49959",
+      "prompt_file": "prompts/alpaca/019.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 26,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 20,
+      "source_id": "alpaca-47722",
+      "prompt_file": "prompts/alpaca/020.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 27,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 21,
+      "source_id": "alpaca-44925",
+      "prompt_file": "prompts/alpaca/021.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 28,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 22,
+      "source_id": "alpaca-50595",
+      "prompt_file": "prompts/alpaca/022.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 29,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 23,
+      "source_id": "alpaca-20787",
+      "prompt_file": "prompts/alpaca/023.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 30,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 24,
+      "source_id": "alpaca-32861",
+      "prompt_file": "prompts/alpaca/024.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 31,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 25,
+      "source_id": "alpaca-14945",
+      "prompt_file": "prompts/alpaca/025.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 32,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 26,
+      "source_id": "alpaca-49830",
+      "prompt_file": "prompts/alpaca/026.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 33,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 27,
+      "source_id": "alpaca-27562",
+      "prompt_file": "prompts/alpaca/027.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 34,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 28,
+      "source_id": "alpaca-17202",
+      "prompt_file": "prompts/alpaca/028.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 35,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 29,
+      "source_id": "alpaca-41452",
+      "prompt_file": "prompts/alpaca/029.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 36,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 30,
+      "source_id": "alpaca-33738",
+      "prompt_file": "prompts/alpaca/030.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 37,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 31,
+      "source_id": "alpaca-10065",
+      "prompt_file": "prompts/alpaca/031.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 38,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 32,
+      "source_id": "alpaca-17531",
+      "prompt_file": "prompts/alpaca/032.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 39,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 33,
+      "source_id": "alpaca-48473",
+      "prompt_file": "prompts/alpaca/033.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 40,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 34,
+      "source_id": "alpaca-36936",
+      "prompt_file": "prompts/alpaca/034.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 41,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 35,
+      "source_id": "alpaca-24849",
+      "prompt_file": "prompts/alpaca/035.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 42,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 36,
+      "source_id": "alpaca-3208",
+      "prompt_file": "prompts/alpaca/036.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 43,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 37,
+      "source_id": "alpaca-8466",
+      "prompt_file": "prompts/alpaca/037.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 44,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 38,
+      "source_id": "alpaca-6384",
+      "prompt_file": "prompts/alpaca/038.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 45,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 39,
+      "source_id": "alpaca-40072",
+      "prompt_file": "prompts/alpaca/039.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 46,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 40,
+      "source_id": "alpaca-14693",
+      "prompt_file": "prompts/alpaca/040.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 47,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 41,
+      "source_id": "alpaca-51218",
+      "prompt_file": "prompts/alpaca/041.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 48,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 42,
+      "source_id": "alpaca-1715",
+      "prompt_file": "prompts/alpaca/042.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 49,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 43,
+      "source_id": "alpaca-12903",
+      "prompt_file": "prompts/alpaca/043.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 50,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 44,
+      "source_id": "alpaca-38068",
+      "prompt_file": "prompts/alpaca/044.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 51,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 45,
+      "source_id": "alpaca-42639",
+      "prompt_file": "prompts/alpaca/045.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 52,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 46,
+      "source_id": "alpaca-50477",
+      "prompt_file": "prompts/alpaca/046.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 53,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 47,
+      "source_id": "alpaca-50459",
+      "prompt_file": "prompts/alpaca/047.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 54,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 48,
+      "source_id": "alpaca-49113",
+      "prompt_file": "prompts/alpaca/048.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 55,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 49,
+      "source_id": "alpaca-48927",
+      "prompt_file": "prompts/alpaca/049.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 56,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 0,
+      "source_id": "alpaca-13065",
+      "prompt_file": "prompts/alpaca/000.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 57,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 1,
+      "source_id": "alpaca-12355",
+      "prompt_file": "prompts/alpaca/001.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 58,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 2,
+      "source_id": "alpaca-33635",
+      "prompt_file": "prompts/alpaca/002.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 59,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 3,
+      "source_id": "alpaca-19391",
+      "prompt_file": "prompts/alpaca/003.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 60,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 4,
+      "source_id": "alpaca-29802",
+      "prompt_file": "prompts/alpaca/004.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 61,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 5,
+      "source_id": "alpaca-44141",
+      "prompt_file": "prompts/alpaca/005.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 62,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 6,
+      "source_id": "alpaca-5123",
+      "prompt_file": "prompts/alpaca/006.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 63,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 7,
+      "source_id": "alpaca-28914",
+      "prompt_file": "prompts/alpaca/007.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 64,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 8,
+      "source_id": "alpaca-36841",
+      "prompt_file": "prompts/alpaca/008.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 65,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 9,
+      "source_id": "alpaca-50310",
+      "prompt_file": "prompts/alpaca/009.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 66,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 10,
+      "source_id": "alpaca-51623",
+      "prompt_file": "prompts/alpaca/010.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 67,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 11,
+      "source_id": "alpaca-44675",
+      "prompt_file": "prompts/alpaca/011.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 68,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 12,
+      "source_id": "alpaca-37074",
+      "prompt_file": "prompts/alpaca/012.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 69,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 13,
+      "source_id": "alpaca-48827",
+      "prompt_file": "prompts/alpaca/013.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 70,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 14,
+      "source_id": "alpaca-26726",
+      "prompt_file": "prompts/alpaca/014.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 71,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 15,
+      "source_id": "alpaca-49434",
+      "prompt_file": "prompts/alpaca/015.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 72,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 16,
+      "source_id": "alpaca-41586",
+      "prompt_file": "prompts/alpaca/016.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 73,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 17,
+      "source_id": "alpaca-5578",
+      "prompt_file": "prompts/alpaca/017.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 74,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 18,
+      "source_id": "alpaca-24053",
+      "prompt_file": "prompts/alpaca/018.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 75,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 19,
+      "source_id": "alpaca-49959",
+      "prompt_file": "prompts/alpaca/019.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 76,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 20,
+      "source_id": "alpaca-47722",
+      "prompt_file": "prompts/alpaca/020.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 77,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 21,
+      "source_id": "alpaca-44925",
+      "prompt_file": "prompts/alpaca/021.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 78,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 22,
+      "source_id": "alpaca-50595",
+      "prompt_file": "prompts/alpaca/022.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 79,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 23,
+      "source_id": "alpaca-20787",
+      "prompt_file": "prompts/alpaca/023.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 80,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 24,
+      "source_id": "alpaca-32861",
+      "prompt_file": "prompts/alpaca/024.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 81,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 25,
+      "source_id": "alpaca-14945",
+      "prompt_file": "prompts/alpaca/025.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 82,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 26,
+      "source_id": "alpaca-49830",
+      "prompt_file": "prompts/alpaca/026.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 83,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 27,
+      "source_id": "alpaca-27562",
+      "prompt_file": "prompts/alpaca/027.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 84,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 28,
+      "source_id": "alpaca-17202",
+      "prompt_file": "prompts/alpaca/028.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 85,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 29,
+      "source_id": "alpaca-41452",
+      "prompt_file": "prompts/alpaca/029.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 86,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 30,
+      "source_id": "alpaca-33738",
+      "prompt_file": "prompts/alpaca/030.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 87,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 31,
+      "source_id": "alpaca-10065",
+      "prompt_file": "prompts/alpaca/031.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 88,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 32,
+      "source_id": "alpaca-17531",
+      "prompt_file": "prompts/alpaca/032.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 89,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 33,
+      "source_id": "alpaca-48473",
+      "prompt_file": "prompts/alpaca/033.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 90,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 34,
+      "source_id": "alpaca-36936",
+      "prompt_file": "prompts/alpaca/034.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 91,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 35,
+      "source_id": "alpaca-24849",
+      "prompt_file": "prompts/alpaca/035.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 92,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 36,
+      "source_id": "alpaca-3208",
+      "prompt_file": "prompts/alpaca/036.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 93,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 37,
+      "source_id": "alpaca-8466",
+      "prompt_file": "prompts/alpaca/037.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 94,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 38,
+      "source_id": "alpaca-6384",
+      "prompt_file": "prompts/alpaca/038.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 95,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 39,
+      "source_id": "alpaca-40072",
+      "prompt_file": "prompts/alpaca/039.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 96,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 40,
+      "source_id": "alpaca-14693",
+      "prompt_file": "prompts/alpaca/040.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 97,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 41,
+      "source_id": "alpaca-51218",
+      "prompt_file": "prompts/alpaca/041.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 98,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 42,
+      "source_id": "alpaca-1715",
+      "prompt_file": "prompts/alpaca/042.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 99,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 43,
+      "source_id": "alpaca-12903",
+      "prompt_file": "prompts/alpaca/043.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 100,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 44,
+      "source_id": "alpaca-38068",
+      "prompt_file": "prompts/alpaca/044.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 101,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 45,
+      "source_id": "alpaca-42639",
+      "prompt_file": "prompts/alpaca/045.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 102,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 46,
+      "source_id": "alpaca-50477",
+      "prompt_file": "prompts/alpaca/046.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 103,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 47,
+      "source_id": "alpaca-50459",
+      "prompt_file": "prompts/alpaca/047.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 104,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 48,
+      "source_id": "alpaca-49113",
+      "prompt_file": "prompts/alpaca/048.txt"
+    },
+    {
+      "dataset": "alpaca",
+      "run": 105,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 49,
+      "source_id": "alpaca-48927",
+      "prompt_file": "prompts/alpaca/049.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 1,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 0,
+      "source_id": "test/intermediate_algebra/582.json",
+      "prompt_file": "prompts/math-500/000.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 2,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 1,
+      "source_id": "test/number_theory/357.json",
+      "prompt_file": "prompts/math-500/001.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 3,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 2,
+      "source_id": "test/algebra/1072.json",
+      "prompt_file": "prompts/math-500/002.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 4,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 3,
+      "source_id": "test/algebra/2626.json",
+      "prompt_file": "prompts/math-500/003.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 5,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 4,
+      "source_id": "test/geometry/456.json",
+      "prompt_file": "prompts/math-500/004.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 6,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 0,
+      "source_id": "test/intermediate_algebra/582.json",
+      "prompt_file": "prompts/math-500/000.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 7,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 1,
+      "source_id": "test/number_theory/357.json",
+      "prompt_file": "prompts/math-500/001.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 8,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 2,
+      "source_id": "test/algebra/1072.json",
+      "prompt_file": "prompts/math-500/002.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 9,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 3,
+      "source_id": "test/algebra/2626.json",
+      "prompt_file": "prompts/math-500/003.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 10,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 4,
+      "source_id": "test/geometry/456.json",
+      "prompt_file": "prompts/math-500/004.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 11,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 5,
+      "source_id": "test/algebra/1184.json",
+      "prompt_file": "prompts/math-500/005.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 12,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 6,
+      "source_id": "test/geometry/615.json",
+      "prompt_file": "prompts/math-500/006.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 13,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 7,
+      "source_id": "test/intermediate_algebra/362.json",
+      "prompt_file": "prompts/math-500/007.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 14,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 8,
+      "source_id": "test/precalculus/24313.json",
+      "prompt_file": "prompts/math-500/008.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 15,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 9,
+      "source_id": "test/algebra/518.json",
+      "prompt_file": "prompts/math-500/009.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 16,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 10,
+      "source_id": "test/prealgebra/1787.json",
+      "prompt_file": "prompts/math-500/010.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 17,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 11,
+      "source_id": "test/prealgebra/1742.json",
+      "prompt_file": "prompts/math-500/011.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 18,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 12,
+      "source_id": "test/algebra/907.json",
+      "prompt_file": "prompts/math-500/012.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 19,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 13,
+      "source_id": "test/precalculus/477.json",
+      "prompt_file": "prompts/math-500/013.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 20,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 14,
+      "source_id": "test/prealgebra/307.json",
+      "prompt_file": "prompts/math-500/014.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 21,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 15,
+      "source_id": "test/intermediate_algebra/134.json",
+      "prompt_file": "prompts/math-500/015.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 22,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 16,
+      "source_id": "test/algebra/2058.json",
+      "prompt_file": "prompts/math-500/016.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 23,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 17,
+      "source_id": "test/prealgebra/1238.json",
+      "prompt_file": "prompts/math-500/017.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 24,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 18,
+      "source_id": "test/prealgebra/2086.json",
+      "prompt_file": "prompts/math-500/018.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 25,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 19,
+      "source_id": "test/counting_and_probability/116.json",
+      "prompt_file": "prompts/math-500/019.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 26,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 20,
+      "source_id": "test/counting_and_probability/761.json",
+      "prompt_file": "prompts/math-500/020.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 27,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 21,
+      "source_id": "test/precalculus/902.json",
+      "prompt_file": "prompts/math-500/021.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 28,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 22,
+      "source_id": "test/algebra/1519.json",
+      "prompt_file": "prompts/math-500/022.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 29,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 23,
+      "source_id": "test/number_theory/769.json",
+      "prompt_file": "prompts/math-500/023.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 30,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 24,
+      "source_id": "test/prealgebra/192.json",
+      "prompt_file": "prompts/math-500/024.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 31,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 25,
+      "source_id": "test/intermediate_algebra/1410.json",
+      "prompt_file": "prompts/math-500/025.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 32,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 26,
+      "source_id": "test/algebra/2593.json",
+      "prompt_file": "prompts/math-500/026.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 33,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 27,
+      "source_id": "test/algebra/2391.json",
+      "prompt_file": "prompts/math-500/027.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 34,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 28,
+      "source_id": "test/counting_and_probability/119.json",
+      "prompt_file": "prompts/math-500/028.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 35,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 29,
+      "source_id": "test/algebra/1837.json",
+      "prompt_file": "prompts/math-500/029.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 36,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 30,
+      "source_id": "test/algebra/2214.json",
+      "prompt_file": "prompts/math-500/030.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 37,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 31,
+      "source_id": "test/number_theory/634.json",
+      "prompt_file": "prompts/math-500/031.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 38,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 32,
+      "source_id": "test/algebra/170.json",
+      "prompt_file": "prompts/math-500/032.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 39,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 33,
+      "source_id": "test/algebra/2043.json",
+      "prompt_file": "prompts/math-500/033.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 40,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 34,
+      "source_id": "test/intermediate_algebra/558.json",
+      "prompt_file": "prompts/math-500/034.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 41,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 35,
+      "source_id": "test/geometry/817.json",
+      "prompt_file": "prompts/math-500/035.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 42,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 36,
+      "source_id": "test/geometry/477.json",
+      "prompt_file": "prompts/math-500/036.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 43,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 37,
+      "source_id": "test/prealgebra/1995.json",
+      "prompt_file": "prompts/math-500/037.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 44,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 38,
+      "source_id": "test/number_theory/483.json",
+      "prompt_file": "prompts/math-500/038.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 45,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 39,
+      "source_id": "test/intermediate_algebra/591.json",
+      "prompt_file": "prompts/math-500/039.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 46,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 40,
+      "source_id": "test/prealgebra/2057.json",
+      "prompt_file": "prompts/math-500/040.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 47,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 41,
+      "source_id": "test/algebra/2427.json",
+      "prompt_file": "prompts/math-500/041.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 48,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 42,
+      "source_id": "test/algebra/1457.json",
+      "prompt_file": "prompts/math-500/042.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 49,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 43,
+      "source_id": "test/prealgebra/1003.json",
+      "prompt_file": "prompts/math-500/043.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 50,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 44,
+      "source_id": "test/number_theory/72.json",
+      "prompt_file": "prompts/math-500/044.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 51,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 45,
+      "source_id": "test/prealgebra/846.json",
+      "prompt_file": "prompts/math-500/045.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 52,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 46,
+      "source_id": "test/algebra/2700.json",
+      "prompt_file": "prompts/math-500/046.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 53,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 47,
+      "source_id": "test/geometry/627.json",
+      "prompt_file": "prompts/math-500/047.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 54,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 48,
+      "source_id": "test/intermediate_algebra/2152.json",
+      "prompt_file": "prompts/math-500/048.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 55,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 49,
+      "source_id": "test/geometry/73.json",
+      "prompt_file": "prompts/math-500/049.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 56,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 0,
+      "source_id": "test/intermediate_algebra/582.json",
+      "prompt_file": "prompts/math-500/000.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 57,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 1,
+      "source_id": "test/number_theory/357.json",
+      "prompt_file": "prompts/math-500/001.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 58,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 2,
+      "source_id": "test/algebra/1072.json",
+      "prompt_file": "prompts/math-500/002.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 59,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 3,
+      "source_id": "test/algebra/2626.json",
+      "prompt_file": "prompts/math-500/003.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 60,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 4,
+      "source_id": "test/geometry/456.json",
+      "prompt_file": "prompts/math-500/004.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 61,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 5,
+      "source_id": "test/algebra/1184.json",
+      "prompt_file": "prompts/math-500/005.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 62,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 6,
+      "source_id": "test/geometry/615.json",
+      "prompt_file": "prompts/math-500/006.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 63,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 7,
+      "source_id": "test/intermediate_algebra/362.json",
+      "prompt_file": "prompts/math-500/007.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 64,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 8,
+      "source_id": "test/precalculus/24313.json",
+      "prompt_file": "prompts/math-500/008.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 65,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 9,
+      "source_id": "test/algebra/518.json",
+      "prompt_file": "prompts/math-500/009.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 66,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 10,
+      "source_id": "test/prealgebra/1787.json",
+      "prompt_file": "prompts/math-500/010.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 67,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 11,
+      "source_id": "test/prealgebra/1742.json",
+      "prompt_file": "prompts/math-500/011.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 68,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 12,
+      "source_id": "test/algebra/907.json",
+      "prompt_file": "prompts/math-500/012.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 69,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 13,
+      "source_id": "test/precalculus/477.json",
+      "prompt_file": "prompts/math-500/013.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 70,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 14,
+      "source_id": "test/prealgebra/307.json",
+      "prompt_file": "prompts/math-500/014.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 71,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 15,
+      "source_id": "test/intermediate_algebra/134.json",
+      "prompt_file": "prompts/math-500/015.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 72,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 16,
+      "source_id": "test/algebra/2058.json",
+      "prompt_file": "prompts/math-500/016.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 73,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 17,
+      "source_id": "test/prealgebra/1238.json",
+      "prompt_file": "prompts/math-500/017.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 74,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 18,
+      "source_id": "test/prealgebra/2086.json",
+      "prompt_file": "prompts/math-500/018.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 75,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 19,
+      "source_id": "test/counting_and_probability/116.json",
+      "prompt_file": "prompts/math-500/019.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 76,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 20,
+      "source_id": "test/counting_and_probability/761.json",
+      "prompt_file": "prompts/math-500/020.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 77,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 21,
+      "source_id": "test/precalculus/902.json",
+      "prompt_file": "prompts/math-500/021.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 78,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 22,
+      "source_id": "test/algebra/1519.json",
+      "prompt_file": "prompts/math-500/022.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 79,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 23,
+      "source_id": "test/number_theory/769.json",
+      "prompt_file": "prompts/math-500/023.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 80,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 24,
+      "source_id": "test/prealgebra/192.json",
+      "prompt_file": "prompts/math-500/024.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 81,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 25,
+      "source_id": "test/intermediate_algebra/1410.json",
+      "prompt_file": "prompts/math-500/025.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 82,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 26,
+      "source_id": "test/algebra/2593.json",
+      "prompt_file": "prompts/math-500/026.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 83,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 27,
+      "source_id": "test/algebra/2391.json",
+      "prompt_file": "prompts/math-500/027.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 84,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 28,
+      "source_id": "test/counting_and_probability/119.json",
+      "prompt_file": "prompts/math-500/028.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 85,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 29,
+      "source_id": "test/algebra/1837.json",
+      "prompt_file": "prompts/math-500/029.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 86,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 30,
+      "source_id": "test/algebra/2214.json",
+      "prompt_file": "prompts/math-500/030.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 87,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 31,
+      "source_id": "test/number_theory/634.json",
+      "prompt_file": "prompts/math-500/031.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 88,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 32,
+      "source_id": "test/algebra/170.json",
+      "prompt_file": "prompts/math-500/032.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 89,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 33,
+      "source_id": "test/algebra/2043.json",
+      "prompt_file": "prompts/math-500/033.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 90,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 34,
+      "source_id": "test/intermediate_algebra/558.json",
+      "prompt_file": "prompts/math-500/034.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 91,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 35,
+      "source_id": "test/geometry/817.json",
+      "prompt_file": "prompts/math-500/035.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 92,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 36,
+      "source_id": "test/geometry/477.json",
+      "prompt_file": "prompts/math-500/036.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 93,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 37,
+      "source_id": "test/prealgebra/1995.json",
+      "prompt_file": "prompts/math-500/037.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 94,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 38,
+      "source_id": "test/number_theory/483.json",
+      "prompt_file": "prompts/math-500/038.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 95,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 39,
+      "source_id": "test/intermediate_algebra/591.json",
+      "prompt_file": "prompts/math-500/039.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 96,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 40,
+      "source_id": "test/prealgebra/2057.json",
+      "prompt_file": "prompts/math-500/040.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 97,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 41,
+      "source_id": "test/algebra/2427.json",
+      "prompt_file": "prompts/math-500/041.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 98,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 42,
+      "source_id": "test/algebra/1457.json",
+      "prompt_file": "prompts/math-500/042.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 99,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 43,
+      "source_id": "test/prealgebra/1003.json",
+      "prompt_file": "prompts/math-500/043.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 100,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 44,
+      "source_id": "test/number_theory/72.json",
+      "prompt_file": "prompts/math-500/044.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 101,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 45,
+      "source_id": "test/prealgebra/846.json",
+      "prompt_file": "prompts/math-500/045.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 102,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 46,
+      "source_id": "test/algebra/2700.json",
+      "prompt_file": "prompts/math-500/046.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 103,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 47,
+      "source_id": "test/geometry/627.json",
+      "prompt_file": "prompts/math-500/047.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 104,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 48,
+      "source_id": "test/intermediate_algebra/2152.json",
+      "prompt_file": "prompts/math-500/048.txt"
+    },
+    {
+      "dataset": "math-500",
+      "run": 105,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 49,
+      "source_id": "test/geometry/73.json",
+      "prompt_file": "prompts/math-500/049.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 1,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 0,
+      "source_id": "HumanEval/34",
+      "prompt_file": "prompts/humaneval/000.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 2,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 1,
+      "source_id": "HumanEval/120",
+      "prompt_file": "prompts/humaneval/001.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 3,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 2,
+      "source_id": "HumanEval/142",
+      "prompt_file": "prompts/humaneval/002.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 4,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 3,
+      "source_id": "HumanEval/102",
+      "prompt_file": "prompts/humaneval/003.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 5,
+      "phase": "warmup",
+      "pass": null,
+      "pool_index": 4,
+      "source_id": "HumanEval/157",
+      "prompt_file": "prompts/humaneval/004.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 6,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 0,
+      "source_id": "HumanEval/34",
+      "prompt_file": "prompts/humaneval/000.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 7,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 1,
+      "source_id": "HumanEval/120",
+      "prompt_file": "prompts/humaneval/001.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 8,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 2,
+      "source_id": "HumanEval/142",
+      "prompt_file": "prompts/humaneval/002.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 9,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 3,
+      "source_id": "HumanEval/102",
+      "prompt_file": "prompts/humaneval/003.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 10,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 4,
+      "source_id": "HumanEval/157",
+      "prompt_file": "prompts/humaneval/004.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 11,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 5,
+      "source_id": "HumanEval/28",
+      "prompt_file": "prompts/humaneval/005.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 12,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 6,
+      "source_id": "HumanEval/48",
+      "prompt_file": "prompts/humaneval/006.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 13,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 7,
+      "source_id": "HumanEval/97",
+      "prompt_file": "prompts/humaneval/007.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 14,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 8,
+      "source_id": "HumanEval/122",
+      "prompt_file": "prompts/humaneval/008.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 15,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 9,
+      "source_id": "HumanEval/75",
+      "prompt_file": "prompts/humaneval/009.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 16,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 10,
+      "source_id": "HumanEval/116",
+      "prompt_file": "prompts/humaneval/010.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 17,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 11,
+      "source_id": "HumanEval/140",
+      "prompt_file": "prompts/humaneval/011.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 18,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 12,
+      "source_id": "HumanEval/156",
+      "prompt_file": "prompts/humaneval/012.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 19,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 13,
+      "source_id": "HumanEval/49",
+      "prompt_file": "prompts/humaneval/013.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 20,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 14,
+      "source_id": "HumanEval/65",
+      "prompt_file": "prompts/humaneval/014.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 21,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 15,
+      "source_id": "HumanEval/98",
+      "prompt_file": "prompts/humaneval/015.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 22,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 16,
+      "source_id": "HumanEval/133",
+      "prompt_file": "prompts/humaneval/016.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 23,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 17,
+      "source_id": "HumanEval/130",
+      "prompt_file": "prompts/humaneval/017.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 24,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 18,
+      "source_id": "HumanEval/121",
+      "prompt_file": "prompts/humaneval/018.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 25,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 19,
+      "source_id": "HumanEval/163",
+      "prompt_file": "prompts/humaneval/019.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 26,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 20,
+      "source_id": "HumanEval/117",
+      "prompt_file": "prompts/humaneval/020.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 27,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 21,
+      "source_id": "HumanEval/52",
+      "prompt_file": "prompts/humaneval/021.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 28,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 22,
+      "source_id": "HumanEval/152",
+      "prompt_file": "prompts/humaneval/022.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 29,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 23,
+      "source_id": "HumanEval/64",
+      "prompt_file": "prompts/humaneval/023.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 30,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 24,
+      "source_id": "HumanEval/144",
+      "prompt_file": "prompts/humaneval/024.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 31,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 25,
+      "source_id": "HumanEval/148",
+      "prompt_file": "prompts/humaneval/025.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 32,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 26,
+      "source_id": "HumanEval/107",
+      "prompt_file": "prompts/humaneval/026.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 33,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 27,
+      "source_id": "HumanEval/20",
+      "prompt_file": "prompts/humaneval/027.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 34,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 28,
+      "source_id": "HumanEval/72",
+      "prompt_file": "prompts/humaneval/028.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 35,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 29,
+      "source_id": "HumanEval/80",
+      "prompt_file": "prompts/humaneval/029.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 36,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 30,
+      "source_id": "HumanEval/50",
+      "prompt_file": "prompts/humaneval/030.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 37,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 31,
+      "source_id": "HumanEval/60",
+      "prompt_file": "prompts/humaneval/031.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 38,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 32,
+      "source_id": "HumanEval/59",
+      "prompt_file": "prompts/humaneval/032.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 39,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 33,
+      "source_id": "HumanEval/145",
+      "prompt_file": "prompts/humaneval/033.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 40,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 34,
+      "source_id": "HumanEval/4",
+      "prompt_file": "prompts/humaneval/034.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 41,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 35,
+      "source_id": "HumanEval/7",
+      "prompt_file": "prompts/humaneval/035.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 42,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 36,
+      "source_id": "HumanEval/112",
+      "prompt_file": "prompts/humaneval/036.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 43,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 37,
+      "source_id": "HumanEval/69",
+      "prompt_file": "prompts/humaneval/037.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 44,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 38,
+      "source_id": "HumanEval/138",
+      "prompt_file": "prompts/humaneval/038.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 45,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 39,
+      "source_id": "HumanEval/44",
+      "prompt_file": "prompts/humaneval/039.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 46,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 40,
+      "source_id": "HumanEval/134",
+      "prompt_file": "prompts/humaneval/040.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 47,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 41,
+      "source_id": "HumanEval/86",
+      "prompt_file": "prompts/humaneval/041.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 48,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 42,
+      "source_id": "HumanEval/13",
+      "prompt_file": "prompts/humaneval/042.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 49,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 43,
+      "source_id": "HumanEval/143",
+      "prompt_file": "prompts/humaneval/043.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 50,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 44,
+      "source_id": "HumanEval/8",
+      "prompt_file": "prompts/humaneval/044.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 51,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 45,
+      "source_id": "HumanEval/0",
+      "prompt_file": "prompts/humaneval/045.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 52,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 46,
+      "source_id": "HumanEval/67",
+      "prompt_file": "prompts/humaneval/046.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 53,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 47,
+      "source_id": "HumanEval/66",
+      "prompt_file": "prompts/humaneval/047.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 54,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 48,
+      "source_id": "HumanEval/63",
+      "prompt_file": "prompts/humaneval/048.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 55,
+      "phase": "formal",
+      "pass": 1,
+      "pool_index": 49,
+      "source_id": "HumanEval/88",
+      "prompt_file": "prompts/humaneval/049.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 56,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 0,
+      "source_id": "HumanEval/34",
+      "prompt_file": "prompts/humaneval/000.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 57,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 1,
+      "source_id": "HumanEval/120",
+      "prompt_file": "prompts/humaneval/001.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 58,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 2,
+      "source_id": "HumanEval/142",
+      "prompt_file": "prompts/humaneval/002.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 59,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 3,
+      "source_id": "HumanEval/102",
+      "prompt_file": "prompts/humaneval/003.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 60,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 4,
+      "source_id": "HumanEval/157",
+      "prompt_file": "prompts/humaneval/004.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 61,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 5,
+      "source_id": "HumanEval/28",
+      "prompt_file": "prompts/humaneval/005.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 62,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 6,
+      "source_id": "HumanEval/48",
+      "prompt_file": "prompts/humaneval/006.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 63,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 7,
+      "source_id": "HumanEval/97",
+      "prompt_file": "prompts/humaneval/007.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 64,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 8,
+      "source_id": "HumanEval/122",
+      "prompt_file": "prompts/humaneval/008.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 65,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 9,
+      "source_id": "HumanEval/75",
+      "prompt_file": "prompts/humaneval/009.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 66,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 10,
+      "source_id": "HumanEval/116",
+      "prompt_file": "prompts/humaneval/010.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 67,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 11,
+      "source_id": "HumanEval/140",
+      "prompt_file": "prompts/humaneval/011.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 68,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 12,
+      "source_id": "HumanEval/156",
+      "prompt_file": "prompts/humaneval/012.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 69,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 13,
+      "source_id": "HumanEval/49",
+      "prompt_file": "prompts/humaneval/013.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 70,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 14,
+      "source_id": "HumanEval/65",
+      "prompt_file": "prompts/humaneval/014.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 71,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 15,
+      "source_id": "HumanEval/98",
+      "prompt_file": "prompts/humaneval/015.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 72,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 16,
+      "source_id": "HumanEval/133",
+      "prompt_file": "prompts/humaneval/016.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 73,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 17,
+      "source_id": "HumanEval/130",
+      "prompt_file": "prompts/humaneval/017.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 74,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 18,
+      "source_id": "HumanEval/121",
+      "prompt_file": "prompts/humaneval/018.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 75,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 19,
+      "source_id": "HumanEval/163",
+      "prompt_file": "prompts/humaneval/019.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 76,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 20,
+      "source_id": "HumanEval/117",
+      "prompt_file": "prompts/humaneval/020.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 77,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 21,
+      "source_id": "HumanEval/52",
+      "prompt_file": "prompts/humaneval/021.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 78,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 22,
+      "source_id": "HumanEval/152",
+      "prompt_file": "prompts/humaneval/022.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 79,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 23,
+      "source_id": "HumanEval/64",
+      "prompt_file": "prompts/humaneval/023.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 80,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 24,
+      "source_id": "HumanEval/144",
+      "prompt_file": "prompts/humaneval/024.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 81,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 25,
+      "source_id": "HumanEval/148",
+      "prompt_file": "prompts/humaneval/025.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 82,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 26,
+      "source_id": "HumanEval/107",
+      "prompt_file": "prompts/humaneval/026.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 83,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 27,
+      "source_id": "HumanEval/20",
+      "prompt_file": "prompts/humaneval/027.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 84,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 28,
+      "source_id": "HumanEval/72",
+      "prompt_file": "prompts/humaneval/028.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 85,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 29,
+      "source_id": "HumanEval/80",
+      "prompt_file": "prompts/humaneval/029.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 86,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 30,
+      "source_id": "HumanEval/50",
+      "prompt_file": "prompts/humaneval/030.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 87,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 31,
+      "source_id": "HumanEval/60",
+      "prompt_file": "prompts/humaneval/031.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 88,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 32,
+      "source_id": "HumanEval/59",
+      "prompt_file": "prompts/humaneval/032.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 89,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 33,
+      "source_id": "HumanEval/145",
+      "prompt_file": "prompts/humaneval/033.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 90,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 34,
+      "source_id": "HumanEval/4",
+      "prompt_file": "prompts/humaneval/034.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 91,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 35,
+      "source_id": "HumanEval/7",
+      "prompt_file": "prompts/humaneval/035.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 92,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 36,
+      "source_id": "HumanEval/112",
+      "prompt_file": "prompts/humaneval/036.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 93,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 37,
+      "source_id": "HumanEval/69",
+      "prompt_file": "prompts/humaneval/037.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 94,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 38,
+      "source_id": "HumanEval/138",
+      "prompt_file": "prompts/humaneval/038.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 95,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 39,
+      "source_id": "HumanEval/44",
+      "prompt_file": "prompts/humaneval/039.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 96,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 40,
+      "source_id": "HumanEval/134",
+      "prompt_file": "prompts/humaneval/040.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 97,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 41,
+      "source_id": "HumanEval/86",
+      "prompt_file": "prompts/humaneval/041.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 98,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 42,
+      "source_id": "HumanEval/13",
+      "prompt_file": "prompts/humaneval/042.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 99,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 43,
+      "source_id": "HumanEval/143",
+      "prompt_file": "prompts/humaneval/043.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 100,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 44,
+      "source_id": "HumanEval/8",
+      "prompt_file": "prompts/humaneval/044.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 101,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 45,
+      "source_id": "HumanEval/0",
+      "prompt_file": "prompts/humaneval/045.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 102,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 46,
+      "source_id": "HumanEval/67",
+      "prompt_file": "prompts/humaneval/046.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 103,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 47,
+      "source_id": "HumanEval/66",
+      "prompt_file": "prompts/humaneval/047.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 104,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 48,
+      "source_id": "HumanEval/63",
+      "prompt_file": "prompts/humaneval/048.txt"
+    },
+    {
+      "dataset": "humaneval",
+      "run": 105,
+      "phase": "formal",
+      "pass": 2,
+      "pool_index": 49,
+      "source_id": "HumanEval/88",
+      "prompt_file": "prompts/humaneval/049.txt"
+    }
+  ]
+}

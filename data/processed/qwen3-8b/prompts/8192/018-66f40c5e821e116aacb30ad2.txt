@@ -1,0 +1,928 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+#!/usr/bin/env python
+
+"""
+PETSc: Portable, Extensible Toolkit for Scientific Computation
+==============================================================
+
+The Portable, Extensible Toolkit for Scientific Computation (PETSc),
+is a suite of data structures and routines for the scalable (parallel)
+solution of scientific applications modeled by partial differential
+equations. It employs the Message Passing Interface (MPI) standard for
+all message-passing communication.
+
+.. tip::
+
+  You can also install `petsc-dev`_ with::
+
+    $ pip install petsc==dev
+
+  .. _petsc-dev: https://bitbucket.org/petsc/
+                 petsc-dev/get/tip.tar.gz#egg=petsc-dev
+"""
+
+import sys, os
+from distutils.core import setup
+from distutils.util import get_platform, split_quoted
+from distutils.spawn import find_executable
+from distutils.command.build import build as _build
+if 'setuptools' in sys.modules:
+    from setuptools.command.install import install as _install
+else:
+    from distutils.command.install import install as _install
+from distutils.command.sdist import sdist as _sdist
+from distutils import log
+
+init_py = """\
+# Author:  PETSc Team
+# Contact: petsc-maint@mcs.anl.gov
+
+def get_petsc_dir():
+    import os
+    return os.path.dirname(__file__)
+
+def get_config():
+    conf = {}
+    conf['PETSC_DIR'] = get_petsc_dir()
+    return conf
+"""
+
+metadata = {
+    'provides' : ['petsc'],
+    'requires' : [],
+}
+
+def bootstrap():
+    # Set PETSC_DIR and PETSC_ARCH
+    PETSC_DIR  = os.path.abspath(os.getcwd())
+    PETSC_ARCH = get_platform() + '-python'
+    os.environ['PETSC_DIR']  = PETSC_DIR
+    os.environ['PETSC_ARCH'] = PETSC_ARCH
+    sys.path.insert(0, os.path.join(PETSC_DIR, 'config'))
+    # Generate package __init__.py file
+    from distutils.dir_util import mkpath
+    pkgdir = os.path.join('config', 'pypi')
+    if not os.path.exists(pkgdir): mkpath(pkgdir)
+    pkgfile = os.path.join(pkgdir, '__init__.py')
+    fh = open(pkgfile, 'wt')
+    fh.write(init_py)
+    fh.close()
+    # Simple-minded lookup for MPI and mpi4py
+    mpi4py = mpicc = None
+    try:
+        import mpi4py
+        conf = mpi4py.get_config()
+        mpicc = conf.get('mpicc')
+    except ImportError: # mpi4py is not installed
+        mpi4py = None
+        mpicc = os.environ.get('MPICC') or find_executable('mpicc')
+    except AttributeError: # mpi4py is too old
+        pass
+    if ('setuptools' in sys.modules):
+        metadata['zip_safe'] = False
+        if not mpi4py and mpicc:
+            metadata['install_requires']= ['mpi4py>=1.2.2']
+
+def config(dry_run=False):
+    log.info('PETSc: configure')
+    options = [
+        'PETSC_ARCH='+os.environ['PETSC_ARCH'],
+        '--with-shared-libraries=1',
+        '--with-debugging=0',
+        '--with-c2html=0', # not needed
+        #'--with-sowing=0',
+        #'--with-cmake=0',
+        ]
+    # MPI
+    try:
+        import mpi4py
+        conf = mpi4py.get_config()
+        mpicc  = conf.get('mpicc')
+        mpicxx = conf.get('mpicxx')
+        mpif90 = conf.get('mpif90')
+    except (ImportError, AttributeError):
+        mpicc  = os.environ.get('MPICC')  or find_executable('mpicc')
+        mpicxx = os.environ.get('MPICXX') or find_executable('mpicxx')
+        mpif90 = os.environ.get('MPIF90') or find_executable('mpif90')
+    if mpicc:
+        options.append('--with-cc='+mpicc)
+        if mpicxx:
+            options.append('--with-cxx='+mpicxx)
+        if mpif90:
+            options.append('--with-fc='+mpif90)
+    else:
+        options.append('--with-mpi=0')
+    # Extra configure options
+    config_opts = os.environ.get('PETSC_CONFIGURE_OPTIONS', '')
+    config_opts = split_quoted(config_opts)
+    options.extend(config_opts)
+    log.info('configure options:')
+    for opt in options:
+        log.info(' '*4 + opt)
+    # Run PETSc configure
+    if dry_run: return
+    import configure
+    configure.petsc_configure(options)
+    import logger
+    logger.Logger.defaultLog = None
+
+def build(dry_run=False):
+    log.info('PETSc: build')
+    # Run PETSc build
+    if dry_run: return
+    use_builder_py = False
+    if use_builder_py:
+        import builder
+        builder.PETScMaker().run()
+        import logger
+        logger.Logger.defaultLog = None
+    else:
+        make = find_executable('make')
+        status = os.system(" ".join(
+                [make, 'all']
+                ))
+        if status != 0: raise RuntimeError(status)
+
+def install(dest_dir, prefix=None, dry_run=False):
+    log.info('PETSc: install')
+    if prefix is None:
+        prefix = dest_dir
+    options = [
+        '--destDir=' + dest_dir,
+        '--prefix='  + prefix,
+        ]
+    log.info('install options:')
+    for opt in options:
+        log.info(' '*4 + opt)
+    # Run PETSc installer
+    if dry_run: return
+    use_install_py = True
+    if use_install_py:
+        import install
+        install.Installer(options).run()
+        import logger
+        logger.Logger.defaultLog = None
+    else:
+        make = find_executable('make')
+        status = os.system(" ".join(
+                [make, 'install', 'DESTDIR='+dest_dir]
+                ))
+        if status != 0: raise RuntimeError(status)
+
+class context:
+    def __init__(self):
+        self.sys_argv = sys.argv[:]
+        self.wdir = os.getcwd()
+    def enter(self):
+        del sys.argv[1:]
+        pdir = os.environ['PETSC_DIR']
+        os.chdir(pdir)
+        return self
+    def exit(self):
+        sys.argv[:] = self.sys_argv
+        os.chdir(self.wdir)
+
+class cmd_build(_build):
+
+    def initialize_options(self):
+        _build.initialize_options(self)
+        PETSC_ARCH = os.environ.get('PETSC_ARCH', '')
+        self.build_base = os.path.join(PETSC_ARCH, 'build-python')
+
+    def run(self):
+        _build.run(self)
+        ctx = context().enter()
+        try:
+            config(self.dry_run)
+            build(self.dry_run)
+        finally:
+            ctx.exit()
+
+class cmd_install(_install):
+
+    def initialize_options(self):
+        _install.initialize_options(self)
+        self.optimize = 1
+
+    def run(self):
+        root_dir = self.install_platlib
+        dest_dir = os.path.join(root_dir, 'petsc')
+        bdist_base = self.get_finalized_command('bdist').bdist_base
+        if dest_dir.startswith(bdist_base):
+            prefix = dest_dir[len(bdist_base)+1:]
+            prefix = prefix[prefix.index(os.path.sep):]
+        else:
+            prefix = dest_dir
+        dest_dir = os.path.abspath(dest_dir)
+        prefix   = os.path.abspath(prefix)
+        #
+        _install.run(self)
+        ctx = context().enter()
+        try:
+            install(dest_dir, prefix, self.dry_run)
+        finally:
+            ctx.exit()
+
+class cmd_sdist(_sdist):
+
+    def initialize_options(self):
+        _sdist.initialize_options(self)
+        self.force_manifest = 1
+        self.template = os.path.join('config', 'manifest.in')
+
+def version():
+    import re
+    version_re = {
+        'major'  : re.compile(r"#define\s+PETSC_VERSION_MAJOR\s+(\d+)"),
+        'minor'  : re.compile(r"#define\s+PETSC_VERSION_MINOR\s+(\d+)"),
+        'micro'  : re.compile(r"#define\s+PETSC_VERSION_SUBMINOR\s+(\d+)"),
+        'patch'  : re.compile(r"#define\s+PETSC_VERSION_PATCH\s+(\d+)"),
+        'release': re.compile(r"#define\s+PETSC_VERSION_RELEASE\s+(\d+)"),
+        }
+    petscversion_h = os.path.join('include','petscversion.h')
+    data = open(petscversion_h, 'rt').read()
+    major = int(version_re['major'].search(data).groups()[0])
+    minor = int(version_re['minor'].search(data).groups()[0])
+    micro = int(version_re['micro'].search(data).groups()[0])
+    patch = int(version_re['patch'].search(data).groups()[0])
+    release = int(version_re['release'].search(data).groups()[0])
+    if release:
+        v = "%d.%d" % (major, minor)
+        if micro > 0:
+            v += ".%d" % micro
+        if patch > 0:
+            v += ".%d" % patch
+    else:
+        v = "%d.%d.dev%d" % (major, minor+1, 0)
+    return v
+
+def tarball():
+    VERSION = version()
+    if '.dev' in VERSION:
+        return None
+    bits = VERSION.split('.')
+    if len(bits) == 2: bits.append('0')
+    PETSC_VERSION = '.'.join(bits[:-1]) + '-p' + bits[-1]
+    return ('http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/'
+            'petsc-lite-%s.tar.gz#egg=petsc-%s' % (PETSC_VERSION, VERSION))
+
+description = __doc__.split('\n')[1:-1]; del description[1:3]
+classifiers = """
+License :: Public Domain
+Operating System :: POSIX
+Intended Audience :: Developers
+Intended Audience :: Science/Research
+Programming Language :: C
+Programming Language :: C++
+Programming Language :: Fortran
+Programming Language :: Python
+Topic :: Scientific/Engineering
+Topic :: Software Development :: Libraries
+"""
+
+bootstrap()
+setup(name='petsc',
+      version=version(),
+      description=description.pop(0),
+      long_description='\n'.join(description),
+      classifiers= classifiers.split('\n')[1:-1],
+      keywords = ['PETSc', 'MPI'],
+      platforms=['POSIX'],
+      license='PETSc',
+
+      url='http://www.mcs.anl.gov/petsc/',
+      download_url=tarball(),
+
+      author='PETSc Team',
+      author_email='petsc-maint@mcs.anl.gov',
+      maintainer='Lisandro Dalcin',
+      maintainer_email='dalcinl@gmail.com',
+
+      packages = ['petsc'],
+      package_dir = {'petsc': 'config/pypi'},
+      cmdclass={
+        'build': cmd_build,
+        'install': cmd_install,
+        'sdist': cmd_sdist,
+        },
+      **metadata)
+
+
+//
+//  main.c
+//  PETSc command line example
+//
+//  Created by Barry Smith on 8/2/12.
+//  Copyright (c) 2012 Barry Smith. All rights reserved.
+//
+
+#define PETSC_APPLE_FRAMEWORK
+
+#include "../../../../../../src/snes/examples/tutorials/ex19.c"
+
+
+
+#!/usr/bin/python
+if __name__ == '__main__':
+  import sys
+  import os
+  sys.path.insert(0, os.path.abspath('config'))
+  import configure
+  configure_options = [
+    '--download-mpich',
+    '--with-fc=0',
+    '--with-shared-libraries',
+    '--download-mpich-shared=0',
+    '--with-valgrind=0',            # valgrind is ok but then must also provide -I/opt/local/include to compiler
+    'PETSC_ARCH=arch-osx',
+  ]
+  configure.petsc_configure(configure_options)
+
+
+#!/usr/bin/env python
+# See iosbuilder.py for instructions
+# Note that this "cheats" and runs all the ./configure tests on the Mac NOT on the iPhone
+#     but this is ok because the answers are the same.
+# Force a 32 bit compile because that is what ARM supports.
+# No need to provide BLAS/LAPACK because Mac and iOS support the same Accelerate framework
+#
+if __name__ == '__main__':
+  import sys
+  import os
+  sys.path.insert(0, os.path.abspath('config'))
+  import configure
+  configure_options = [
+    '--with-cc=gcc -m32',
+    '--with-mpi=0',
+    '--with-ios=1',
+    '--with-valgrind=0',
+    '--with-x=0',
+    '--with-fc=0',
+    '--known-blaslapack-mangling=underscore',   # ios only supports this mangling
+    'PETSC_ARCH=arch-ios',
+  ]
+  configure.petsc_configure(configure_options)
+
+
+#!/usr/bin/env python
+#
+#   Builds a iPhone/iPad static library of PETSc
+#
+#   Before using removed /usr/include/mpi.h and /Developer/SDKs/MacOSX10.5.sdk/usr/include/mpi.h or
+#      Xcode will use those instead of the MPIuni one we point to
+#
+#   export PETSC_ARCH=arch-ios
+
+#   ./systems/Apple/iOS/bin/arch-ios.py [use --with-debugging=0 to get iPhone/iPad version, otherwise creates simulator version]
+#      this sets up the appropriate configuration file
+#
+#   ./systems/Apple/iOS/bin/iosbuilder.py
+#      this creates the PETSc iPhone/iPad library
+#      this will open Xcode and give you directions to follow
+#
+#   open xcode/examples/examples.xcodeproj
+#       Project -> Edit Project Setting  -> Configuration (make sure it is Release or Debug depending on if you used --with-debugging=0)
+#       Build -> Build and Debug
+#
+import os, sys
+
+sys.path.insert(0, os.path.join(os.environ['PETSC_DIR'], 'config'))
+sys.path.insert(0, os.path.join(os.environ['PETSC_DIR'], 'config', 'BuildSystem'))
+
+import script
+
+class PETScMaker(script.Script):
+ def __init__(self):
+   import RDict
+   import os
+
+   argDB = RDict.RDict(None, None, 0, 0, readonly = True)
+   argDB.saveFilename = os.path.join(os.environ['PETSC_DIR'], os.environ['PETSC_ARCH'], 'conf', 'RDict.db')
+   argDB.load()
+   script.Script.__init__(self, argDB = argDB)
+   self.log = sys.stdout
+   return
+
+ def setupModules(self):
+   self.mpi           = self.framework.require('config.packages.MPI',         None)
+   self.base          = self.framework.require('config.base',                 None)
+   self.setCompilers  = self.framework.require('config.setCompilers',         None)   
+   self.arch          = self.framework.require('PETSc.utilities.arch',        None)
+   self.petscdir      = self.framework.require('PETSc.utilities.petscdir',    None)
+   self.languages     = self.framework.require('PETSc.utilities.languages',   None)
+   self.debugging     = self.framework.require('PETSc.utilities.debugging',   None)
+   self.make          = self.framework.require('config.programs',             None)
+   self.compilers     = self.framework.require('config.compilers',            None)
+   self.types         = self.framework.require('config.types',                None)
+   self.headers       = self.framework.require('config.headers',              None)
+   self.functions     = self.framework.require('config.functions',            None)
+   self.libraries     = self.framework.require('config.libraries',            None)
+   self.scalarType    = self.framework.require('PETSc.utilities.scalarTypes', None)
+   self.memAlign      = self.framework.require('PETSc.utilities.memAlign',    None)
+   self.libraryOptions= self.framework.require('PETSc.utilities.libraryOptions', None)      
+   self.compilerFlags = self.framework.require('config.compilerFlags', self)
+   return
+
+ def setupHelp(self, help):
+   import nargs
+
+   help = script.Script.setupHelp(self, help)
+   help.addArgument('RepManager', '-rootDir', nargs.ArgDir(None, os.environ['PETSC_DIR'], 'The root directory for this build', isTemporary = 1))
+   help.addArgument('RepManager', '-dryRun',  nargs.ArgBool(None, False, 'Only output what would be run', isTemporary = 1))
+   help.addArgument('RepManager', '-skipXCode',  nargs.ArgBool(None, False, 'Do not run XCode application/files have not been added/removed', isTemporary = 1))
+   help.addArgument('RepManager', '-verbose', nargs.ArgInt(None, 0, 'The verbosity level', min = 0, isTemporary = 1))
+   return help
+
+ def setup(self):
+   script.Script.setup(self)
+   self.framework = self.loadConfigure()
+   self.setupModules()
+   return
+
+ @property
+ def verbose(self):
+   '''The verbosity level'''
+   return self.argDB['verbose']
+
+ @property
+ def skipXCode(self):
+   '''Skip XCode application'''
+   return self.argDB['skipXCode']
+
+ @property
+ def dryRun(self):
+   '''Flag for only output of what would be run'''
+   return self.argDB['dryRun']
+
+ def getPackageInfo(self):
+   packageIncludes = []
+   packageLibs     = []
+   for p in self.framework.packages:
+     # Could put on compile line, self.addDefine('HAVE_'+i.PACKAGE, 1)
+     if hasattr(p, 'lib'):
+       if not isinstance(p.lib, list):
+         packageLibs.append(p.lib)
+       else:
+         packageLibs.extend(p.lib)
+     if hasattr(p, 'include'):
+       if not isinstance(p.include, list):
+         packageIncludes.append(p.include)
+       else:
+         packageIncludes.extend(p.include)
+   packageLibs     = self.libraries.toStringNoDupes(packageLibs+self.libraries.math)
+   packageIncludes = self.headers.toStringNoDupes(packageIncludes)
+   return packageIncludes, packageLibs
+
+ def buildDir(self, dirname):
+   ''' This is run in a PETSc source directory'''
+   if self.verbose: print 'Entering '+dirname
+   os.chdir(dirname)
+   l = len(os.environ['PETSC_DIR'])
+   basedir = os.path.join(os.environ['PETSC_DIR'],os.environ['PETSC_ARCH'],'xcode-links')
+   #newdirname = os.path.join(basedir,dirname[l+1:])
+   #os.mkdir(newdirname)
+
+
+   # Get list of source files in the directory 
+   cnames = []
+   onames = []
+   fnames = []
+   hnames = []
+   for f in os.listdir(dirname):
+     ext = os.path.splitext(f)[1]
+     if ext == '.c':
+       cnames.append(f)
+       onames.append(f.replace('.c', '.o'))
+     if ext == '.h':
+       hnames.append(f)
+   if cnames:
+     if self.verbose: print 'Linking C files',cnames
+     for i in cnames:
+       j = i[l+1:]
+       if not os.path.islink(os.path.join(basedir,i)) and not i.startswith('.'):
+         if i.endswith('openglops.c') and not os.path.islink(os.path.join(basedir,'openglops.m')):
+           os.symlink(os.path.join(dirname,i),os.path.join(basedir,'openglops.m'))
+         else:
+           os.symlink(os.path.join(dirname,i),os.path.join(basedir,i))
+   # do not need to link these because xcode project points to original source code directory
+   #if hnames:
+   #  if self.verbose: print 'Linking h files',hnames
+   #  for i in hnames:
+   #    if not os.path.islink(os.path.join(basedir,i)):
+   #      os.symlink(os.path.join(dirname,i),os.path.join(basedir,i))
+   return
+
+ def checkDir(self, dirname):
+   '''Checks whether we should recurse into this directory
+   - Excludes projects directory
+   - Excludes examples directory
+   - Excludes contrib directory
+   - Excludes tutorials directory
+   - Excludes benchmarks directory
+   - Checks makefile to see if compiler is allowed to visit this directory for this configuration'''
+#   print self.functions.functions
+#   print self.base.defines
+   base = os.path.basename(dirname)
+
+   if base == 'examples': return False
+   if base == 'projects': return False
+   if base.startswith('ftn-') or base.startswith('f90-'): return False
+   if base == 'contrib':  return False
+   if base == 'tutorials':  return False
+   if base == 'benchmarks':  return False
+   if base == 'systems':  return False
+   if base.startswith('arch-'):  return False     
+
+   import re
+   reg   = re.compile(' [ ]*')
+   fname = os.path.join(dirname, 'makefile')
+   if not os.path.isfile(fname):
+     if os.path.isfile(os.path.join(dirname, 'Makefile')): print 'ERROR: Change Makefile to makefile in',dirname
+     return False
+   fd = open(fname)
+   text = fd.readline()
+   while text:
+     if text.startswith('#requires'):
+       text = text[9:-1].strip()
+       text = reg.sub(' ',text)
+       rtype = text.split(' ')[0]
+       rvalue = text.split(' ')[1]
+
+       if rvalue == "'"+'PETSC_HAVE_FORTRAN'+"'" or rvalue == "'"+'PETSC_USING_F90'+"'" or rvalue == "'"+'PETSC_USING_F2003'+"'":
+         if not hasattr(self.compilers, 'FC'):
+           if self.verbose: print 'Rejecting',dirname,'because fortran is not being used'
+           return 0
+       elif rvalue == "'"+'PETSC_USE_LOG'+"'":
+         if not self.libraryOptions.useLog:
+           if self.verbose: print 'Rejecting',dirname,'because logging is turned off'
+           return 0
+       elif rvalue == "'"+'PETSC_USE_FORTRAN_KERNELS'+"'":
+         if not self.libraryOptions.useFortranKernels:
+           if self.verbose: print 'Rejecting',dirname,'because fortran kernels are turned off'
+           return 0
+       elif rtype == 'scalar' and not self.scalarType.scalartype == rvalue:
+         if self.verbose: print 'Rejecting',dirname,'because scalar type '+self.scalarType.scalartype+' is not '+rvalue
+         return 0
+       elif rtype == 'language':
+         if rvalue == 'CXXONLY' and self.languages.clanguage == 'C':
+           if self.verbose: print 'Rejecting',dirname,'because language is '+self.languages.clanguage+' is not C++'
+           return 0
+       elif rtype == 'precision' and not rvalue == self.scalarType.precision:
+         if self.verbose: print 'Rejecting',dirname,'because precision '+self.scalarType.precision+' is not '+rvalue
+         return 0
+       elif rtype == 'package':
+         found = 0
+         if self.mpi.usingMPIUni:
+           pname = 'PETSC_HAVE_MPIUNI'
+           pname = "'"+pname+"'"
+           if pname == rvalue: found = 1
+         for i in self.framework.packages:
+           pname = 'PETSC_HAVE_'+i.PACKAGE
+           pname = "'"+pname+"'"
+           if pname == rvalue: found = 1
+         if not found:
+           if self.verbose: print 'Rejecting',dirname,'because package '+rvalue+' does not exist'
+           return 0
+       elif rtype == 'define':
+         found = 0
+         for i in self.base.defines:
+           pname = 'PETSC_'+i.upper()
+           pname = "'"+pname+"'"
+           if pname == rvalue: found = 1
+         if not found:
+           if self.verbose: print 'Rejecting',dirname,'because define '+rvalue+' does not exist'
+           return 0
+       elif rtype == 'function':
+         found = 0
+         for i in self.functions.functions:
+           pname = 'PETSC_HAVE_'+i.upper()
+           pname = "'"+pname+"'"
+#           print pname
+#           print rvalue
+           if pname == rvalue: found = 1
+         if not found:
+           if self.verbose: print 'Rejecting',dirname,'because function '+rvalue+' does not exist'
+           return 0
+         
+     text = fd.readline()
+   fd.close()
+   return True
+
+ def buildAll(self, rootDir = None):
+   import shutil
+   self.setup()
+   if rootDir is None:
+     rootDir = self.argDB['rootDir']
+   if not self.checkDir(rootDir):
+     print 'Nothing to be done'
+   if rootDir == os.environ['PETSC_DIR']:
+     basedir = os.path.join(self.petscdir.dir, self.arch.arch, 'xcode-links')
+     if os.path.isdir(basedir):
+       if self.verbose: print 'Removing '+basedir
+       shutil.rmtree(basedir)
+   os.mkdir(basedir)       
+   for root, dirs, files in os.walk(rootDir):
+     self.buildDir(root)
+     for badDir in [d for d in dirs if not self.checkDir(os.path.join(root, d))]:
+       dirs.remove(badDir)
+
+   if not self.skipXCode:
+
+     print 'In Xcode mouse click on xcode-links and the delete key, then'
+     print 'control mouse click on "Other Sources" and select "Add files to PETSc ...", then'
+     print 'in the finder window locate ${PETSC_DIR}/arch-ios/xcode-links and select it. Now'
+     print 'exit Xcode'
+
+     try:
+       import subprocess
+       subprocess.call('cd '+os.path.join(os.environ['PETSC_DIR'],'systems','Apple','iOS','PETSc')+';open -W PETSc.xcodeproj', shell=True)
+     except RuntimeError, e:
+       raise RuntimeError('Error opening xcode project '+str(e))
+
+
+   sdk         = ' -sdk iphonesimulator5.1 '
+   destination = 'iphonesimulator'
+   debug       = 'Debug'
+   debugdir    = 'Debug-'+destination
+   if not self.compilerFlags.debugging:
+     debug = 'Release'
+     debugdir = 'Release-'+destination
+   try:
+     output,err,ret  = self.executeShellCommand('cd '+os.path.join(os.environ['PETSC_DIR'],'systems','Apple','iOS','PETSc')+';xcodebuild -configuration '+debug+sdk, timeout=3000, log = self.log)
+   except RuntimeError, e:
+     raise RuntimeError('Error making iPhone/iPad version of PETSc libraries: '+str(e))
+
+   liblocation = os.path.join(os.environ['PETSC_DIR'],'systems','Apple','iOS','PETSc','build',debugdir,'libPETSc.a')
+   if not os.path.exists(liblocation):
+     raise RuntimeError('Error library '+liblocation+' not created')
+   try:
+     output,err,ret  = self.executeShellCommand('mv -f '+liblocation+' '+os.path.join(os.environ['PETSC_DIR'],os.environ['PETSC_ARCH'],'lib'), timeout=30, log = self.log)
+   except RuntimeError, e:
+     raise RuntimeError('Error copying iPhone/iPad version of PETSc libraries: '+str(e))
+
+   return
+
+def noCheckCommand(command, status, output, error):
+  ''' Do no check result'''
+  return 
+  noCheckCommand = staticmethod(noCheckCommand)
+  
+if __name__ == '__main__':
+  PETScMaker().buildAll()
+
+
+#
+#   Run python pyjsbuild --output . AMSOptions.py to generate the needed HTML and Javascript
+#
+
+import pyjd
+
+import AMSJavascript.AMS_Comm as AMS_Comm
+import AMSJavascript.AMS_Memory as AMS_Memory
+import AMSJavascript
+import AMSJavascript
+
+from pyjamas.ui.RootPanel import RootPanel
+from pyjamas.ui.TextArea import TextArea
+from pyjamas.ui.Label import Label
+from pyjamas.ui.Button import Button
+from pyjamas.ui.HTML import HTML
+from pyjamas.ui.VerticalPanel import VerticalPanel
+from pyjamas.ui.HorizontalPanel import HorizontalPanel
+from pyjamas.ui.ListBox import ListBox
+from pyjamas.JSONService import JSONProxy
+from pyjamas.ui.Tree import Tree
+from pyjamas.ui.TreeItem import TreeItem
+
+
+class AMSJavascriptExample:
+    def onModuleLoad(self):
+        self.status=Label()
+        self.button = Button("Display list of all published memories and fields", self)
+        self.buttonupdate = Button("Update data from AMS publisher", self)
+
+        buttons = HorizontalPanel()
+        buttons.add(self.button)
+        buttons.add(self.buttonupdate)
+        buttons.setSpacing(8)
+
+        info = """<p>This example demonstrates the calling of the Memory Snooper in PETSc with Pyjamas and <a href="http://json-rpc.org/">JSON-RPC</a>.</p>"""
+
+        self.panel = VerticalPanel()
+        self.panel.add(HTML(info))
+        self.panel.add(buttons)
+        self.panel.add(self.status)
+        RootPanel().add(self.panel)
+        self.commobj = AMS_Comm()
+        self.tree = None
+        if AMSJavascript.sent > AMSJavascript.recv:
+           self.status.setText('Press button again: AMSJavascript.sent '+str(AMSJavascript.sent)+' AMSJavascript.recv '+str(AMSJavascript.recv))
+           return
+        if self.commobj.commname == 'No AMS publisher running':
+           self.status.setText(self.commobj.commname)
+        else:
+           self.status.setText('Memories for AMS Comm: '+str(AMSJavascript.sent)+str(AMSJavascript.recv)+self.commobj.commname)
+           result = self.commobj.get_memory_list()
+           if self.tree: self.panel.remove(self.tree)
+           self.tree = Tree()
+           for i in result:
+              subtree = TreeItem(i)
+              memory = self.commobj.memory_attach(i)
+              fields = memory.get_field_list()
+              for j in fields:
+                 field = memory.get_field_info(j)
+                 subtree.addItem(j+' = '+str(field[4]))
+              self.tree.addItem(subtree)
+              self.panel.add(self.tree)
+
+    def onClick(self, sender):
+        self.status.setText('Button pressed')
+        if sender == self.buttonupdate:
+            self.commobj = AMS_Comm()
+            self.status.setText('Updating data: Press Display list button to refesh')
+        if sender == self.button:
+            if AMSJavascript.sent > AMSJavascript.recv:
+               self.status.setText('Press button again: AMSJavascript.sent '+str(AMSJavascript.sent)+' AMSJavascript.recv '+str(AMSJavascript.recv))
+               return
+            if self.commobj.commname == 'No AMS publisher running':
+               self.status.setText(self.commobj.commname)
+            else:
+               self.status.setText('Memories for AMS Comm: '+str(AMSJavascript.sent)+str(AMSJavascript.recv)+self.commobj.commname)
+               result = self.commobj.get_memory_list()
+               if self.tree: self.panel.remove(self.tree)
+               self.tree = Tree()
+               for i in result:
+                  subtree = TreeItem(i)
+                  memory = self.commobj.memory_attach(i)
+                  fields = memory.get_field_list()
+                  for j in fields:
+                     field = memory.get_field_info(j)
+                     subtree.addItem(j+' = '+str(field[4]))
+                  self.tree.addItem(subtree)
+                  self.panel.add(self.tree)
+
+
+if __name__ == '__main__':
+    pyjd.setup()
+    app = AMSJavascriptExample()
+    app.onModuleLoad()
+    pyjd.run()
+
+
+
+#
+#   Run python pyjsbuild --output . AMSJavascript.py to generate the needed HTML and Javascript
+#
+
+import pyjd
+
+from pyjamas.ui.RootPanel import RootPanel
+from pyjamas.ui.TextArea import TextArea
+from pyjamas.ui.Label import Label
+from pyjamas.ui.Button import Button
+from pyjamas.ui.HTML import HTML
+from pyjamas.ui.VerticalPanel import VerticalPanel
+from pyjamas.ui.HorizontalPanel import HorizontalPanel
+from pyjamas.ui.ListBox import ListBox
+from pyjamas.JSONService import JSONProxy
+from pyjamas.ui.Tree import Tree
+from pyjamas.ui.TreeItem import TreeItem
+
+
+comm   = -1  # Currently attached AMS communicator; only one is supported at a time
+args   = {}  # Arguments to each remote call
+sent   = 0   # Number of calls sent to server
+recv   = 0   # Number of calls received from server
+
+class AMSJavascriptExample:
+    def onModuleLoad(self):
+        self.status=Label()
+        self.button = Button("Display list of all published memories and fields", self)
+        self.buttonupdate = Button("Update data from AMS publisher", self)
+
+        buttons = HorizontalPanel()
+        buttons.add(self.button)
+        buttons.add(self.buttonupdate)
+        buttons.setSpacing(8)
+
+        info = """<p>This example demonstrates the calling of the Memory Snooper in PETSc with Pyjamas and <a href="http://json-rpc.org/">JSON-RPC</a>.</p>"""
+
+        self.panel = VerticalPanel()
+        self.panel.add(HTML(info))
+        self.panel.add(buttons)
+        self.panel.add(self.status)
+        RootPanel().add(self.panel)
+        self.commobj = AMS_Comm()
+        self.tree = None
+
+    def onClick(self, sender):
+        global sent,recv
+        self.status.setText('Button pressed')
+        if sender == self.buttonupdate:
+            self.commobj = AMS_Comm()
+            self.status.setText('Updating data: Press Display list button to refesh')
+        if sender == self.button:
+            if sent > recv:
+               self.status.setText('Press button again: sent '+str(sent)+' recv '+str(recv))
+            if self.commobj.commname == 'No AMS publisher running':
+               self.status.setText(self.commobj.commname)
+            else:
+               self.status.setText('Memories for AMS Comm: '+self.commobj.commname)
+               result = self.commobj.get_memory_list()
+               if self.tree: self.panel.remove(self.tree)
+               self.tree = Tree()
+               for i in result:
+                  subtree = TreeItem(i)
+                  memory = self.commobj.memory_attach(i)
+                  fields = memory.get_field_list()
+                  for j in fields:
+                     field = memory.get_field_info(j)
+                     subtree.addItem(j+' = '+str(field[4]))
+                  self.tree.addItem(subtree)
+                  self.panel.add(self.tree)
+
+class ServicePython(JSONProxy):
+    def __init__(self):
+        JSONProxy.__init__(self, "No service name", ["YAML_echo", "YAML_AMS_Connect", "YAML_AMS_Comm_attach", "YAML_AMS_Comm_get_memory_list","YAML_AMS_Memory_attach","YAML_AMS_Memory_get_field_list","YAML_AMS_Memory_get_field_info"])
+
+# ---------------------------------------------------------
+class AMS_Memory(JSONProxy):
+    def __init__(self,comm,memory):
+        global args,sent,recv
+        self.comm             = comm
+        self.name             = memory   # string name of memory
+        self.fieldlist        = []
+        self.fields           = {}
+        self.remote           = ServicePython()
+        id = self.remote.YAML_AMS_Memory_attach(comm,memory,self)
+        args[id] = ['YAML_AMS_Memory_attach',comm,memory]
+        sent += 1
+
+    def get_field_list(self,func = null):
+        '''If called with func (net yet supported) then calls func asynchronously with latest memory list;
+           otherwise returns current (possibly out-dated) memory list'''
+        return self.fieldlist
+
+    def get_field_info(self,field, func = null):
+        '''Pass in string name of AMS field
+           If called with func (not yet done) then first updates comm with latest field list and then calls func with field'''
+        if not self.fields.has_key(field):
+            return 'Memory does not have field named '+field
+        return self.fields[field]
+
+    def onRemoteResponse(self, response, request_info):
+        global args,sent,recv
+        recv += 1
+        method = str(request_info.method)
+        rid    = request_info.id
+        if method == "YAML_AMS_Memory_attach":
+            self.memory = response[0]
+            id = self.remote.YAML_AMS_Memory_get_field_list(self.memory,self)
+            args[id] = ['YAML_AMS_Memory_get_field_list',self.memory]
+            sent += 1
+        elif method == "YAML_AMS_Memory_get_field_list":
+            self.fieldlist = response
+            for i in self.fieldlist:
+                id = self.remote.YAML_AMS_Memory_get_field_info(self.memory,i,self)
+                args[id] = ['YAML_AMS_Memory_get_field_info',self.memory,i]
+                sent += 1
+        elif method == "YAML_AMS_Memory_get_field_info":
+            self.fields[args[rid][2]] = response
+
+
+    def onRemoteError(self, code, errobj, request_info):
+        pass
+
+# ---------------------------------------------------------
+class AMS_Comm(JSONProxy):
+    def __init__(self):
+        global args,sent,recv
+        self.comm             = -1
+        self.commname         = ''
+        self.memlist          = []
+        self.memories         = {}
+        self.memory_list_func = null
+        self.remote           = ServicePython()
+        id = self.remote.YAML_AMS_Connect('No argument', self)
+        args[id] = ['YAML_AMS_Connect']
+        sent += 1
+
+    def get_memory_list(self,func = null):
+        '''If called with func then calls func asynchronously with latest memory list;
+           otherwise returns current (possibly out-dated) memory list'''
+        if func:
+            self.memory_list_func = func
+            id = self.remote.YAML_AMS_Comm_get_memory_list(self.comm,self)
+            args[id] = [
+
+Question:
+Which Krylov subspace solver is not supported in PETSc software?
+
+A. Biconjugate Gradient Stabilized
+B. Conjugate Residual
+C. Generalized Conjugate Residual
+D. Generalized Minimum Residual
+
+Select the correct answer.

@@ -1,0 +1,4 @@
+Reorganize the words and punctuation marks to make a correct sentence.
+
+Input:
+dog the brown my is

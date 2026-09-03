@@ -1,0 +1,4 @@
+Suggest a replacement word for the italicized that better suits the context.
+
+Input:
+He silently indulged himself with a hamburger.

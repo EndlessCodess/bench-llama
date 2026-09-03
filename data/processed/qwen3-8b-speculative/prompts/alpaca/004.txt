@@ -1,0 +1,6 @@
+Given a product name and a fact, come up with a convincing argument to promote this product.
+
+Input:
+Product Name: Smartphone
+
+Fact: Uses AI technology in facial recognition

@@ -43,6 +43,24 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 DEFAULT_SUITE = PROJECT_ROOT / "configs" / "lc-001-028-suite.json"
+DEFAULT_PROCESSED_DIR = PROJECT_ROOT / "data" / "processed" / "qwen3.5-9b"
+
+PROFILE_RUNTIME_ARGS = {
+    "n_ctx": "--n-ctx",
+    "n_batch": "--n-batch",
+    "n_ubatch": "--n-ubatch",
+    "n_gpu_layers": "--n-gpu-layers",
+    "parallel": "--parallel",
+    "threads": "--threads",
+    "type_k": "--type-k",
+    "type_v": "--type-v",
+    "flash_attn": "--flash-attn",
+    "poll": "--poll",
+    "temperature": "--temperature",
+    "seed": "--seed",
+    "draft_n_max": "--draft-n-max",
+    "draft_n_gpu_layers": "--draft-n-gpu-layers",
+}
 
 
 def parse_args():
@@ -50,14 +68,17 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run a configured group of bench_run benchmark jobs")
     parser.add_argument("--bench-run", default=os.environ.get("BENCH_RUN") or os.environ.get("LLAMA_CLI"),
                         help="path to the bench_run executable (or BENCH_RUN / LLAMA_CLI)")  # bench_run 可执行文件（C++ 推理内核）
+    parser.add_argument("--llama-server", default=os.environ.get("LLAMA_SERVER"),
+                        help="llama-server executable for jobs with runner=server")
     parser.add_argument("--suite", default=str(DEFAULT_SUITE), help="suite configuration")  # 套件配置（默认 lc-001-028-suite.json）
+    parser.add_argument("--model-profile", help="model profile name from configs/models or a JSON path")
     parser.add_argument("--model", action="append", default=[], metavar="KEY=PATH")  # 模型映射，如 f16=/path/F16.gguf；KEY 必须覆盖套件用到的全部 model_key
     parser.add_argument("--job", action="append", default=[], help="job id or comma-separated job ids")  # 只跑指定 job（可重复/逗号分隔）
     parser.add_argument("--group", action="append", default=[], metavar="N",
-                        help="worksheet category: 0=fair baseline, 1=weight quantization, 2=KV cache precision, 3=attention backend, 4=polling, 5=backend graph execution; repeatable or comma-separated")  # 只跑指定实验类别
+                        help="worksheet category: 0=fair baseline, 1=weight quantization, 2=KV cache precision, 3=attention backend, 4=polling, 5=backend graph execution, 6=DFlash; repeatable or comma-separated")  # 只跑指定实验类别
     parser.add_argument("--platform", default="auto")  # 平台档案名（cuda/cann/metal/cpu），auto 自动检测
     parser.add_argument("--platform-config", default=str(PROJECT_ROOT / "configs" / "platforms.json"))  # 平台档案文件
-    parser.add_argument("--processed-dir", default=str(PROJECT_ROOT / "data" / "processed" / "qwen3.5-9b"))  # 预处理数据目录（prompts、manifest 等）
+    parser.add_argument("--processed-dir")  # 预处理数据目录；显式值优先于 model profile
     parser.add_argument("--results-dir", default=str(PROJECT_ROOT / "results"))  # 结果根目录（默认在其下建时间戳子目录）
     parser.add_argument("--output-dir", help="exact suite output directory")  # 精确指定套件输出目录（替代时间戳目录）
     parser.add_argument("--device-index", type=int, default=0)  # 物理加速卡索引
@@ -65,7 +86,7 @@ def parse_args():
     parser.add_argument("--monitor-interval", type=float, default=0.1)  # 显存/RSS 采样间隔（秒）
     parser.add_argument("--memory-command")  # 自定义显存查询命令（输出 MiB 数值）
     parser.add_argument("--timeout", type=float, default=0.0)  # 每轮超时秒数（0=不超时）
-    parser.add_argument("--rounds", type=int, default=1)  # 每 case 完整跑几轮：10 = 全套重复 10 次（10×105=1050 轮/case，共 29,400 次推理），正式样本合并统计降低噪声
+    parser.add_argument("--rounds", type=int)  # 覆盖 suite job 的轮数；job 未指定时默认 1
     parser.add_argument("--env", action="append", default=[], metavar="KEY=VALUE")  # 附加子进程环境变量
     parser.add_argument("--extra-arg", action="append", default=[])  # 附加 bench_run 参数（透传）
     parser.add_argument("--skip-model-hash", action="store_true")  # 跳过模型 SHA-256 计算（省时间，结果缺校验值）
@@ -99,6 +120,45 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
+def load_model_profile(value):
+    if not value:
+        return None, None
+    candidate = Path(value)
+    if not candidate.is_file():
+        candidate = PROJECT_ROOT / "configs" / "models" / (value if value.endswith(".json") else value + ".json")
+    path = candidate.resolve()
+    if not path.is_file():
+        raise ValueError("model profile does not exist: {}".format(path))
+    profile = json.loads(path.read_text(encoding="utf-8"))
+    if profile.get("schema_version") != 1 or not profile.get("name"):
+        raise ValueError("invalid model profile: {}".format(path))
+    aliases = profile.get("model_key_aliases", {})
+    if not isinstance(aliases, dict) or any(not isinstance(key, str) or not isinstance(item, str) or not key or not item for key, item in aliases.items()):
+        raise ValueError("model profile aliases must contain non-empty string keys and values")
+    runtime = profile.get("runtime_overrides", {})
+    if not isinstance(runtime, dict):
+        raise ValueError("model profile runtime_overrides must be an object")
+    unknown = set(runtime) - set(PROFILE_RUNTIME_ARGS)
+    if unknown:
+        raise ValueError("unsupported model profile runtime setting(s): {}".format(", ".join(sorted(unknown))))
+    if not profile.get("processed_dir"):
+        raise ValueError("model profile has no processed_dir: {}".format(path))
+    return path, profile
+
+
+def profile_model_key(profile, logical_key):
+    if profile is None:
+        return logical_key
+    return profile.get("model_key_aliases", {}).get(logical_key, logical_key)
+
+
+def profile_processed_dir(profile):
+    if profile is None:
+        return DEFAULT_PROCESSED_DIR
+    path = Path(profile["processed_dir"])
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
 def selected_job_ids(values):
     """展开 --job 的重复/逗号分隔写法为去重后的 job id 列表（保持出现顺序）。"""
     selected = []
@@ -111,7 +171,7 @@ def selected_job_ids(values):
 
 
 def selected_groups(values):
-    """同上，但用于 --group（实验类别 0-4）。"""
+    """同上，但用于 --group（实验类别 0-6）。"""
     selected = []
     for value in values:
         for item in value.split(","):
@@ -168,9 +228,14 @@ def load_suite(path, selected_ids, selected_groups):
                     raise ValueError("job {} environment must contain non-empty string values".format(job_id))
         if not isinstance(item.get("unsupported_platforms", []), list):
             raise ValueError("job {} unsupported_platforms must be an array".format(job_id))
+        if "processed_dir" in item and (not isinstance(item["processed_dir"], str) or not item["processed_dir"]):
+            raise ValueError("job {} processed_dir must be a non-empty string".format(job_id))
         declared_model_key = config.get("experiment", {}).get("model_key")
         if declared_model_key and declared_model_key != item.get("model_key"):
             raise ValueError("model key mismatch between suite and {}".format(config_path))
+        declared_draft_key = config.get("experiment", {}).get("draft_model_key")
+        if declared_draft_key and declared_draft_key != item.get("draft_model_key"):
+            raise ValueError("draft model key mismatch between suite and {}".format(config_path))
         jobs.append({**item, "config_path": config_path, "definition": config})
 
     unknown = set(selected_ids) - known
@@ -208,13 +273,13 @@ def resolve_job_environment(job, platform):
     return environment
 
 
-def append_common_args(command, args):
+def append_common_args(command, args, processed_dir, rounds):
     """把与 job 无关的公共参数追加到 bench_test.py 命令尾部。
     每个 job 命令都以 bench_test.py 为基础再叠加 --config / --model / --output-dir。"""
     command.extend([
         "--platform", args.platform,
         "--platform-config", str(Path(args.platform_config).resolve()),
-        "--processed-dir", str(Path(args.processed_dir).resolve()),
+        "--processed-dir", str(Path(processed_dir).resolve()),
         "--device-index", str(args.device_index),
         "--monitor-interval", str(args.monitor_interval),
         "--timeout", str(args.timeout),
@@ -223,8 +288,11 @@ def append_common_args(command, args):
         command.extend(["--backend-device", args.backend_device])
     if args.memory_command:
         command.extend(["--memory-command", args.memory_command])
-    if args.rounds != 1:
-        command.extend(["--rounds", str(args.rounds)])  # 多轮重复测量：每 case 完整跑 N 轮（N>1 才传，保持单轮命令与历史一致）
+    for key, option in PROFILE_RUNTIME_ARGS.items():
+        if key in args.profile_runtime:
+            command.extend([option, str(args.profile_runtime[key])])
+    if rounds != 1:
+        command.extend(["--rounds", str(rounds)])
     if args.skip_prompt_hash_check:
         command.append("--skip-prompt-hash-check")
     for value in args.env:
@@ -246,6 +314,29 @@ def write_csv(path, rows):
         writer.writerows(rows)
 
 
+def add_speculative_comparisons(rows):
+    pairs = {"LC-034": "LC-033", "LC-036": "LC-035", "LC-038": "LC-037"}
+    by_case = {row.get("case_id"): row for row in rows}
+    for enabled_case, baseline_case in pairs.items():
+        enabled = by_case.get(enabled_case)
+        baseline = by_case.get(baseline_case)
+        if enabled is None or baseline is None:
+            continue
+        enabled["baseline_case_id"] = baseline_case
+        base_generation = baseline.get("metrics", {}).get("generation_tps_measured")
+        enabled_generation = enabled.get("metrics", {}).get("generation_tps_measured")
+        base_e2e = baseline.get("metrics", {}).get("e2e_ms_measured")
+        enabled_e2e = enabled.get("metrics", {}).get("e2e_ms_measured")
+        enabled["generation_speedup_x"] = (
+            round(enabled_generation["mean"] / base_generation["mean"], 4)
+            if base_generation and enabled_generation and base_generation["mean"] > 0 else None
+        )
+        enabled["end_to_end_speedup_x"] = (
+            round(base_e2e["mean"] / enabled_e2e["mean"], 4)
+            if base_e2e and enabled_e2e and enabled_e2e["mean"] > 0 else None
+        )
+
+
 def main():
     # ① 校验 bench_run 可执行文件、加载套件配置、解析模型映射：
     #    套件用到的每个 model_key（f16/q8_0/q4_k_m）都必须有 --model KEY=PATH 提供
@@ -256,11 +347,23 @@ def main():
     if not bench_run.is_file() or not os.access(bench_run, os.X_OK):
         raise ValueError("bench_run is not executable: {}".format(bench_run))
 
+    profile_path, profile = load_model_profile(args.model_profile)
+    args.profile_runtime = profile.get("runtime_overrides", {}) if profile else {}
+    processed_dir_explicit = args.processed_dir is not None
+    if args.processed_dir is None:
+        args.processed_dir = str(profile_processed_dir(profile))
+
     selected_ids = selected_job_ids(args.job)
     selected_group_ids = selected_groups(args.group)
     suite_path, suite, jobs = load_suite(args.suite, selected_ids, selected_group_ids)
+    jobs = [{
+        **job,
+        "resolved_model_key": profile_model_key(profile, job["model_key"]),
+        "resolved_draft_model_key": profile_model_key(profile, job["draft_model_key"]) if job.get("draft_model_key") else None,
+    } for job in jobs]
     model_values = parse_assignments(args.model, "--model")
-    required_keys = {job["model_key"] for job in jobs}
+    required_keys = {job["resolved_model_key"] for job in jobs}
+    required_keys.update(job["resolved_draft_model_key"] for job in jobs if job.get("resolved_draft_model_key"))
     missing = required_keys - set(model_values)
     if missing:
         raise ValueError("missing model mapping(s): {}".format(", ".join(sorted(missing))))
@@ -279,14 +382,39 @@ def main():
     base_commands = []
     for job in jobs:
         job = {**job, "resolved_environment": resolve_job_environment(job, args.platform)}
+        if processed_dir_explicit:
+            job_processed_dir = Path(args.processed_dir)
+        else:
+            job_processed_dir = Path(job["processed_dir"]) if job.get("processed_dir") else Path(args.processed_dir)
+        if not job_processed_dir.is_absolute():
+            job_processed_dir = PROJECT_ROOT / job_processed_dir
+        job_rounds = args.rounds if args.rounds is not None else int(job.get("rounds", 1))
+        if job_rounds <= 0:
+            raise ValueError("job {} rounds must be positive".format(job["id"]))
+        job = {**job, "resolved_processed_dir": str(job_processed_dir.resolve()), "resolved_rounds": job_rounds}
+        runner = job.get("runner", "bench")
+        if runner not in ("bench", "server"):
+            raise ValueError("job {} has unsupported runner {}".format(job["id"], runner))
+        job_executable = bench_run
+        if runner == "server":
+            if not args.llama_server:
+                raise ValueError("job {} requires --llama-server or LLAMA_SERVER".format(job["id"]))
+            llama_server = Path(args.llama_server).resolve()
+            if not llama_server.is_file() or not os.access(llama_server, os.X_OK):
+                raise ValueError("llama-server is not executable: {}".format(llama_server))
+            job_executable = PROJECT_ROOT / "bench_server_run.py"
         command = [
             sys.executable,
             str(bench_script),
-            "--bench-run", str(bench_run),
-            "--model", models[job["model_key"]]["path"],
+            "--bench-run", str(job_executable),
+            "--model", models[job["resolved_model_key"]]["path"],
             "--config", str(job["config_path"]),
         ]
-        append_common_args(command, args)
+        if runner == "server":
+            command.extend(["--llama-server", str(llama_server)])
+        if job.get("resolved_draft_model_key"):
+            command.extend(["--draft-model", models[job["resolved_draft_model_key"]]["path"]])
+        append_common_args(command, args, job["resolved_processed_dir"], job["resolved_rounds"])
         for key, value in job["resolved_environment"].items():
             command.extend(["--env", "{}={}".format(key, value)])
         base_commands.append((job, command))
@@ -294,6 +422,8 @@ def main():
     # ④ --dry-run：每个 job 只校验一条代表性命令（0 预热 + 1 正式），不启动推理
     if args.dry_run:
         print("suite: {}".format(suite["name"]))
+        if profile:
+            print("model profile: {} ({})".format(profile["name"], profile_path))
         print("dry-run validates every case with one representative formal command")
         for job, command in base_commands:
             command.extend(["--warmup-runs", "0", "--formal-runs", "1", "--dry-run"])
@@ -306,8 +436,8 @@ def main():
     # ⑤ 建套件输出目录：results/<时间戳>-<套件名>-<平台>-device<卡号>/；已存在则拒绝（防覆盖）
     timestamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     output_dir = Path(args.output_dir).resolve() if args.output_dir else (
-        Path(args.results_dir).resolve() / "{}-{}-{}-device{}".format(
-            timestamp, suite["name"], args.platform, args.device_index
+        Path(args.results_dir).resolve() / "{}-{}{}-{}-device{}".format(
+            timestamp, suite["name"], "-" + profile["name"] if profile else "", args.platform, args.device_index
         )
     )
     if output_dir.exists():
@@ -329,15 +459,19 @@ def main():
     for job, command in base_commands:
         job_output = output_dir / job["id"]
         command.extend(["--output-dir", str(job_output), "--fail-fast"])  # --fail-fast：job 内出现失败轮即中止该 job
-        model_info = models[job["model_key"]]
+        model_info = models[job["resolved_model_key"]]
         if model_info["sha256"]:
             command.extend(["--model-sha256", model_info["sha256"]])
         else:
             command.append("--skip-model-hash")
+        if job.get("resolved_draft_model_key"):
+            draft_info = models[job["resolved_draft_model_key"]]
+            if draft_info["sha256"]:
+                command.extend(["--draft-model-sha256", draft_info["sha256"]])
         if args.smoke:
             # 冒烟模式：每个 job 只跑第一个 case 的 1 轮正式（0 预热）
             first_case = job["definition"]["cases"][0]["id"]
-            command.extend(["--case", first_case, "--warmup-runs", "0", "--formal-runs", "1"])
+            command.extend(["--case", first_case, "--warmup-runs", "0", "--formal-runs", "1", "--rounds", "1"])
 
         print("\n[{}] starting".format(job_label(job)), flush=True)
         result = subprocess.run(command, check=False)
@@ -350,7 +484,13 @@ def main():
             "returncode": result.returncode,
             "config": str(job["config_path"]),
             "model_key": job["model_key"],
+            "draft_model_key": job.get("draft_model_key"),
+            "resolved_model_key": job["resolved_model_key"],
+            "resolved_draft_model_key": job.get("resolved_draft_model_key"),
             "environment": job["resolved_environment"],
+            "processed_dir": job["resolved_processed_dir"],
+            "rounds": 1 if args.smoke else job["resolved_rounds"],
+            "runner": job.get("runner", "bench"),
             "output_dir": str(job_output),
             "command": shlex.join(command),
         })
@@ -371,7 +511,10 @@ def main():
                     "group": job.get("group"),
                     "experiment_variable": job["definition"].get("experiment", {}).get("variable"),
                     "experiment_value": job["definition"].get("experiment", {}).get("value"),
-                    "model_key": job["model_key"],
+                    "model_key": job["resolved_model_key"],
+                    "draft_model_key": job.get("resolved_draft_model_key"),
+                    "suite_model_key": job["model_key"],
+                    "suite_draft_model_key": job.get("draft_model_key"),
                     "errors": "; ".join(run_errors.get(row["case_id"], [])),
                     **row,
                 })
@@ -381,16 +524,21 @@ def main():
             if not args.continue_on_error:
                 break
 
+    add_speculative_comparisons(aggregate)
+
     # ⑨ 落盘套件级产物：suite-manifest.json（溯源：套件定义/模型/每 job 命令）
     #    + summary.json（28 行合并结果）+ summary.csv（剔除 metrics 大字段）
     manifest = {
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "suite_config": str(suite_path),
         "suite_definition": suite,
+        "model_profile_path": str(profile_path) if profile_path else None,
+        "model_profile": profile,
         "mode": "smoke" if args.smoke else "formal",
         "platform": args.platform,
         "physical_device_index": args.device_index,
         "bench_run": str(bench_run),
+        "llama_server": str(Path(args.llama_server).resolve()) if args.llama_server else None,
         "models": models,
         "jobs": run_jobs,
     }

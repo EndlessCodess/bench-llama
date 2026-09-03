@@ -1,0 +1,2807 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+REVIEW ARTICLE
+OPEN
+Cell–cell communication: new insights and clinical
+implications
+Jimeng Su1,2,3, Ying Song1,2, Zhipeng Zhu1,2, Xinyue Huang4, Jibiao Fan3, Jie Qiao5,6,7,8✉and Fengbiao Mao1,2✉
+Multicellular organisms are composed of diverse cell types that must coordinate their behaviors through communication. Cell–cell
+communication (CCC) is essential for growth, development, differentiation, tissue and organ formation, maintenance, and
+physiological regulation. Cells communicate through direct contact or at a distance using ligand–receptor interactions. So cellular
+communication encompasses two essential processes: cell signal conduction for generation and intercellular transmission of
+signals, and cell signal transduction for reception and procession of signals. Deciphering intercellular communication networks is
+critical for understanding cell differentiation, development, and metabolism. First, we comprehensively review the historical
+milestones in CCC studies, followed by a detailed description of the mechanisms of signal molecule transmission and the
+importance of the main signaling pathways they mediate in maintaining biological functions. Then we systematically introduce a
+series of human diseases caused by abnormalities in cell communication and their progress in clinical applications. Finally, we
+summarize various methods for monitoring cell interactions, including cell imaging, proximity-based chemical labeling, mechanical
+force analysis, downstream analysis strategies, and single-cell technologies. These methods aim to illustrate how biological
+functions depend on these interactions and the complexity of their regulatory signaling pathways to regulate crucial physiological
+processes, including tissue homeostasis, cell development, and immune responses in diseases. In addition, this review enhances our
+understanding of the biological processes that occur after cell–cell binding, highlighting its application in discovering new
+therapeutic targets and biomarkers related to precision medicine. This collective understanding provides a foundation for
+developing new targeted drugs and personalized treatments.
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+INTRODUCTION
+The coordination of cellular activities, essential for multicellular
+existence, is contingent upon cell–cell interactions (CCIs) among a
+variety of cell types and tissues throughout an organism.1–3
+Cell–cell communication (CCC) is an essential process that
+profoundly inﬂuences an organism’s homeostasis, development,
+and disease processes.4 Typically, CCC involves interactions with
+secreted ligands and plasma membrane receptors, yet it also
+includes secretases, extracellular matrix proteins, transporters, and
+direct cell-to-cell contact mechanisms.5 Different cells employ
+different CCCs to ensure biological development, homeostasis,
+and tissue repair.
+Essentially, CCC is a fundamental characteristic of multicellular
+organisms.6 The dynamic communication network established
+between cells through collaboration plays a pivotal role in various
+biological
+processes.6–8
+This
+interaction
+is
+integral
+to
+the
+functioning of living organisms, inﬂuencing cellular metabolism,
+energy transformation, maintenance of physiological functions,
+regulation of growth, development, immune responses, single-cell
+functions, and other critical life processes.9 For example, during
+immune responses, CCCs enable immune cells to recognize and
+combat pathogens. In growth and development, CCCs regulate
+cell proliferation and differentiation, facilitating the normal
+development of organs and tissues. Diseases typically manifest
+when cells fail to interact correctly or misinterpret molecular
+information.5
+CCCs reﬂect the fundamental level of physiological commu-
+nication, triggering responses to internal or external environments
+essential for survival. When cells communicate with each other,
+extracellular signals typically induce intracellular signal transduc-
+tion cascades, leading to cellular responses such as changes in the
+cytoskeleton, metabolism, or gene expression.10 The regulation
+and feedback mechanisms at various levels of these transduction
+cascades modulate the pathway’s activity over time.11 Signal
+pathways are the basis of internal communication and response to
+the external environment in organisms. They are responsible for
+converting
+extracellular
+signals
+into
+intracellular
+responses,
+thereby regulating cell behavior and function. These pathways
+involve a series of precise molecular events, including the
+reception of signals, ampliﬁcation, distribution, and the triggering
+of speciﬁc cellular responses.12,13 Critical cellular determinations,
+such as cytoskeletal reorganization, cell cycle checkpoints, and
+Received: 29 December 2023 Revised: 9 May 2024 Accepted: 2 June 2024
+1Institute of Medical Innovation and Research, Peking University Third Hospital, Beijing, China; 2Cancer Center, Peking University Third Hospital, Beijing, China; 3College of Animal
+Science and Technology, Yangzhou University, Yangzhou, Jiangsu, China; 4Biomedical Research Institute, Shenzhen Peking University-the Hong Kong University of Science and
+Technology Medical Center, Shenzhen, China; 5State Key Laboratory of Female Fertility Promotion, Department of Obstetrics and Gynecology, Peking University Third Hospital,
+Beijing, China; 6National Clinical Research Center for Obstetrics and Gynecology (Peking University Third Hospital), Beijing, China; 7Key Laboratory of Assisted Reproduction
+(Peking University), Ministry of Education, Beijing, China and 8Beijing Key Laboratory of Reproductive Endocrinology and Assisted Reproductive Technology, Beijing, China
+Correspondence: Jie Qiao (jie.qiao@263.net) or Fengbiao Mao (fengbiaomao@bjmu.edu.cn)
+These authors contributed equally: Jimeng Su, Ying Song.
+www.nature.com/sigtrans
+Signal Transduction and Targeted Therapy
+
+
+
+programmed cell death, are contingent upon the stringent
+temporal regulation and the speciﬁc spatial distribution of
+activated signal transducers.14 Understanding how these path-
+ways are disrupted in diseases offers the possibility for developing
+new therapeutic approaches.15–17
+The complexity of CCC has been recognized as part of the
+molecular mechanisms of developmental biology, carcinogenesis,
+and organ dysfunction.18 Exploring CCC dynamic changes under
+different conditions provides deeper insights into the underlying
+mechanisms of diverse biological processes and helps elucidate
+the mechanisms behind the onset and progression of diseases.
+Over the decade, single-cell RNA sequencing has gained wide-
+spread use across multiple research ﬁelds to investigate the critical
+role of ligand–receptor dynamics in intercellular communication.19
+Technologies
+like
+single-cell
+RNA
+sequencing
+(scRNA-Seq)
+empower researchers to explore the intricate communication
+patterns between different cell types within multicellular organ-
+isms, offering fresh perspectives on cell communication mechan-
+isms, cell functions, and the organization of cell populations. The
+analysis of intercellular communication assists in understanding
+the interplay between cells, dissecting communication networks,
+uncovering various cell interactions in the developmental process,
+exploring the tumor immune microenvironment, and identifying
+potential therapeutic targets for diseases.20 Therefore, identifying
+and quantifying intercellular signaling pathways have become
+standard practices across diverse disciplines.
+Activating
+speciﬁc
+cell
+signaling
+pathways
+through
+ligand–receptor interactions (LRIs) constitutes a fundamental
+mode of cell communication and is intricately linked to various
+degenerative processes and diseases. Different cell types share
+common
+biological
+elements
+facilitating
+these
+interactions,
+encompassing ligands, surface receptors, adhesion proteins,
+intracellular adaptors, as well as glycans, lipids, cytoskeletons,
+and scaffolding proteins.21 Comprehending the orchestration of
+biophysical, genetic, and biochemical events in CCCs by these
+shared components across various cell types is crucial for
+developing clinical therapies based on proteins and cells that
+either modulate or utilize intercellular communication.22,23 The
+analysis of LRIs provides the foundation for comprehending cell
+behavior and responses to neighboring cells.24
+Historically, CCC research has primarily been conﬁned to
+experiments conducted in vitro involving one or two types of
+cells and a limited set of genes. With advancements in science and
+technology, data acquisition at the single-cell level enables the
+detection of low-abundance genes and provides a robust
+foundation for cell communication study. In recent years, multiple
+research efforts have concentrated on intercellular signaling by
+employing either the co-expression of all genes or particular cell
+markers,25,26 the resemblance in expression patterns.27 or the
+characteristics of regulatory networks.28 Understanding LRIs is an
+effective approach to understand cellular communication at the
+single-cell level, and a multitude of research endeavors are
+dedicated to formulating strategies to construct cellular commu-
+nication networks based on these interactions. Harnessing these
+technologies, many laboratories have developed various algo-
+rithms and softwares for cell communication research.
+The review comprehensively outlines the experimental and
+computational CCC methods rooted in chemistry and biology to
+decode the complexities of CCCs. It extensively examines how
+biological functions rely on CCCs to regulate crucial physiological
+process, including tissue homeostasis, cell development as well as
+immune responses.5,24 Furthermore, this review sheds light on the
+role of CCC mechanisms in regulating various diseases, which
+have not only expanded our understanding of CCC but also paved
+the way for innovative clinical treatments.
+RESEARCH HISTORY AND MILESTONE EVENTS OF CCC
+In multicellular organisms, cells have evolved different intercellular
+communication modes to develop and regulate their coordinated
+functions.29 At the macroscopic level, direct physical contacts
+between adjacent cells lead to the formation of tissues and barrier
+structures, while at the microscopic scale, they drive changes in
+cellular signaling pathways and activation states.24 Comprehend-
+ing how biological components synergize to orchestrate biochem-
+ical, genetic, and biophysically mediated cell interaction events
+among diverse cell types constitutes the essence of enhancing our
+understanding of the biology underlying CCCs (Fig. 1).
+Identifying cell surface receptors and their ligands, such as
+growth factors, is crucial for understanding how cells perceive and
+respond to external signals. During a research endeavor exploring
+the speciﬁc growth-stimulating impacts of mouse sarcoma on the
+sensory and sympathetic nervous systems of chick embryos, it was
+unveiled that mouse sarcoma had the ability to generate a speciﬁc
+factor to speciﬁcally promote the growth and development of
+nerve cells.30 Later, this factor is well-known as nerve growth
+factor (NGF) and stands as the inaugural growth factor to be
+discovered, unveiling the pivotal role of extracellular factors in
+modulating cell growth and differentiation. This revelation has
+exerted a profound impact on the evolution of neuroscience and
+cellular biology. With a deepening understanding of cellular
+signaling molecules, researchers have begun to investigate how
+signal transduction pathways alter in human diseases. Disrupting
+and/or altering these cell interaction events can lead to severe
+downstream
+pathophysiological
+effects.
+Research
+on
+obese
+hyperglycemic mouse models has revealed that insulin resistance
+is associated with dysfunction of insulin receptors.31 Insulin exerts
+its effects by binding to its receptors on the cell surface. Insulin
+resistance may be caused by a reduction of insulin receptors or
+receptor dysfunction, leading to decreased efﬁciency of insulin
+Fig. 1
+Milestone events of CCC research. Key events in the development of CCC were retrospectively summarized from 1951 to the present
+day. Detailed information on milestone events are narrated in this review
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+2
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+signal transduction. Even if insulin successfully binds to its
+receptor, certain components of the signaling pathway may be
+impaired, affecting the biological effects of insulin. The studies of
+the molecular mechanisms of insulin resistance enhance our
+understanding of how cell function and disease states can be
+inﬂuenced at the single-cell level by regulating the interactions
+between signaling molecules and receptors, offering potential
+new targets for the treatment of metabolic diseases. Communica-
+tion errors can lead to diseases such as cancer metastasis, motor
+neuron diseases, virus-host interactions, and diabetes. Therefore,
+research into CCCs can enhance understanding of disease
+mechanisms
+and
+facilitate
+the
+development
+of
+pharmaceuticals.32–35
+Optical microscopy has been widely used as a powerful means
+for over a century to visualize the sites of CCCs and understand
+the spatial or organizational structures underlying these interac-
+tions. Early examples of studying cell contact interfaces based on
+microscopy include the direct observation of cell dissociation in
+sponges and the aggregation of cells into tissue-like structures in
+higher animals using optical microscopy.36,37 With the improve-
+ment of ﬂuorescent dyes and optical systems, scientists began to
+utilize ﬂuorescent materials to study cells and tissues. An early
+study ﬁrst reported the primary structure of the green ﬂuorescent
+protein (GFP) from the jellyﬁsh Aequorea victoria.38 It not only
+identiﬁed the amino acid sequence of GFP but also laid the
+foundation for subsequent research utilizing GFP as a reporter
+gene to visualize and track speciﬁc proteins, organelles, and
+intercellular communication within cells. GFP not only enables the
+direct observation of gene expression in living cells but also allows
+for the tracking of speciﬁc processes within cells through GFP-
+tagged proteins. Without affecting the growth and development
+of the host cell, the ﬂuorescence can be stably inherited by
+offspring, making it an ideal tool for tracking and studying the
+dynamics of gene expression.39
+Super-resolution methodologies have made signiﬁcant strides,
+transcending this limitation through techniques such as near-
+ﬁeld,40 stimulated emission depletion,41 structured illumina-
+tion,42,43 and reversible saturable optical ﬂuorescence transitions
+microscopy.44 Yet, the objective remains to achieve a ﬂuorescence
+technology
+capable
+of
+attaining
+resolutions
+closer
+to
+the
+molecular scale. A technique known as GFP reconstitution across
+synaptic partners (GRASP) employs the fusion of two nonﬂuor-
+escent split GFP fragments onto interacting partners on opposing
+cells to detect CCCs.45 Upon close contact between cells, the split
+proteins associate, reconstituting the GFP. This method has been
+expanded to include other split ﬂuorescent protein fragments, YFP
+(yellow) and CFP (cyan), for the simultaneous imaging of multiple
+synaptic interaction factors.46 An advanced imaging technique
+known as optical super-resolution microscopy, speciﬁcally photo-
+activated localization microscopy, enables the observation of
+ﬂuorescent proteins within cells at nanometer resolution.47
+On the other hand, high-throughput technologies are powerful
+and economical tools for ultra-high-throughput transcription and
+protein analysis,48–52 which have greatly accelerated our under-
+standing
+of
+the
+gene
+expression,
+regulation
+and
+network
+complexity of mammalian cells.53–59 For example, the develop-
+ment of Drop-Seq.60 and inDrop.61 has enabled simultaneous
+analysis of a large number of single cells, signiﬁcantly improving
+sequencing efﬁciency and enhancing our understanding of
+complex tissues and cellular biology. Understanding the spatial
+organization of cells within tissues and how they communicate is
+essential for deciphering the principles of tissue architecture and
+organ
+function.62,63
+Thus,
+spatial
+transcriptome
+technology,
+namely multiplexed error-robust ﬂuorescence in situ hybridization
+(MERFISH), was developed to simultaneously measure the copy
+numbers and spatial distribution of hundreds to thousands of RNA
+species in individual cells by using single-molecule FISH ﬂuor-
+escent probes that bind with high speciﬁcity to the desired RNA
+targets.64 Due to its high speciﬁcity, sensitivity, and spatial
+resolution, MERFISH has a wide range of applications in basic
+biology and medical ﬁelds.65,66
+Meanwhile,
+spatial
+proteome
+approaches
+are
+emerging
+research ﬁelds focusing on understanding the qualitative and
+quantitative aspects of protein composition within single cells.
+Immunohistochemistry
+and
+immunoﬂuorescence
+techniques,
+combined with microscopic imaging technology, can display the
+distribution and density of cells in tumor tissue samples, as well as
+the physiological and biochemical activities involved by different
+cells.67,68 For example, CODEX (CO-Detection by indEXing)62 and
+Cell DIVE69 are cutting-edge high-dimensional imaging technol-
+ogies that have revolutionized the study of cell communication
+and tissue analysis. The core design principle of CODEX is to label
+each antibody with a speciﬁc oligonucleotide “barcode”, of which
+the complementary sequence is bound with the ﬂuorescent dyes
+used for subsequent imaging.62,70 In contrast, each antibody used
+in Cell DIVE is directly labeled with ﬂuorescent dyes, followed by
+multiple rounds of staining, imaging and ﬂuorescence quenching.
+Therefore, both CODEX and Cell DIVE offer high-dimensional
+imaging of dozens of proteins within individual cells, enabling
+researchers to analyze the spatial organization of cells, their
+interactions, and signaling states within tissues. Furthermore,
+novel single-cell spatial in situ imaging technologies, such as
+GeoMx DSP spatial multi-omics technology, break through the
+limitations of the number of detected proteins and enable
+spatially proﬁling 570+ protein targets and the whole transcrip-
+tome
+separately
+or
+simultaneously.63,71
+Collectively,
+these
+advanced spatial single-cell imaging technologies will drive
+deeper insights for cell typing, tissue phenotyping, cell–cell
+interactions, cellular processes, and biomarker discovery.
+MOLECULAR MECHANISM OF CCC
+Cell signaling, which involves transmitting information between
+cells or subcellular components, is an inherent characteristic of
+living organisms. In diverse tissues and organs, cell signaling
+facilitates communication and homeostasis, which are vital for
+cellular interactions within their local environment. Signals can
+propagate through various mechanisms, including chemical
+alterations, mechanical forces, or their synergistic effects. A
+multitude of extracellular signals and cellular membrane proteins
+trigger selective intracellular pathways, inﬂuencing crucial cellular
+outcomes such as survival, apoptosis, growth, motility, differentia-
+tion, and speciﬁc functions like muscular contraction, synaptic
+activity, or thrombocyte activation.72 Typical examples are the
+triggering of the transforming growth factor-β (TGF-β) signaling
+pathway in the context of tissue ﬁbrosis.73 and the excessive
+activation of the Ras signaling pathway in numerous cancer
+types.74 Over the last decades, extensive research into cell
+signaling pathways has culminated in the creation of therapeutics
+rooted in biological science, and the complexity revealed by drugs
+currently in clinical use continues to uncover further insights into
+the extent of interactions between signaling networks.75 Cellular
+communication encompasses two essential processes: cell signal
+conduction, focusing on the generation and intercellular transmis-
+sion of signals, and cell signal transduction, which emphasizes the
+reception of signals and how signals are converted and processed
+upon receipt (Fig. 2).
+Mechanisms of CCC in physiological homeostasis
+Cellular communication involves cells recognizing, receiving, and
+responding to external signal molecules, which can be light,
+electricity, or chemical molecules. Finally, the interaction of
+receptors can activate a series of downstream physiological and
+biochemical processes, which play an important role in coordinat-
+ing cell function. Cellular communication involves the transmis-
+sion of signals from signal generation to signal transduction. Cell
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+3
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+signal transduction is the process through which biological
+information (excitation or inhibition) is transformed and trans-
+mitted between cells or within cells, leading to various biological
+effects. This typically refers to transmembrane signal transduction,
+wherein bioactive substances activate or inhibit cell function
+through receptors or ion channels. Generally, the chemical
+substances involved in intercellular signal communication or
+intracellular signal transduction are known as signal molecules,
+while small molecules specialized in carrying biological informa-
+tion are called messenger molecules. The chains of signal
+molecules that complete the conversion and transmission of
+biological information within or between cells are referred to as
+signal transduction pathways. Therefore, the essence of cell signal
+transduction lies in the intracellular transformation and transmis-
+sion of biological information through speciﬁc signal transduction
+pathways, which may involve regulating the gene expression
+processes of related functional proteins.
+The steps of cell signal conduction
+Production and release of signaling molecules:
+Certain cells,
+such as neurons or endocrine cells, react to external stimuli or
+internal needs by creating and releasing signaling molecules like
+neurotransmitters, hormones, or chemokines. These molecules
+serve as messengers to communicate messages to neighboring
+cells.
+Neurons, as the primary cells that participate in information
+processing, come in a myriad of distinct cell types differentiated
+by morphology, location, connectivity, and chemical properties.76
+The various chemicals that transmit information between neurons
+are known as neurotransmitters. Owing to the central role of
+neurotransmitters in cerebral function, neurotransmitter receptors
+along
+with
+other
+proteins
+engaged
+in
+the
+synthesis
+and
+deactivation of neurotransmitters emerge as critical targets in
+the development of curative medications for mental and nerve
+disorders,
+ache
+and
+many
+other
+conditions.77
+As
+gaseous
+neurotransmitters, such as nitric oxide (NO) and carbon monoxide
+(CO), play a regulatory role in vasodilation and neural transmis-
+sion.78,79 The nervous system typically enables information to be
+transmitted rapidly between different regions of the body.
+In contrast, hormonal communication is predicated on the
+synthesis and dissemination of a plethora of glandular hormones,
+coupled with their transportation via the bloodstream, making it
+more suited to situations requiring broader and more sustained
+regulatory actions. These two systems of communication are
+mutually complementary, with neural stimuli capable of affecting
+the secretion of certain hormones, and conversely.80 Certain
+hormones are tailored to interact exclusively with a limited array
+of target cells, whereas others exert inﬂuence across a broad
+spectrum of cell types throughout the organism. To preserve
+homeostasis and adapt effectively to environmental alterations,
+the biosynthesis and release of hormones are subject to rigorous
+regulation. This regulatory mechanism is achieved through a
+complex interplay among multiple hormones, which reciprocally
+regulate one another, rather than being governed by a solitary
+hormone. Hormones play a pivotal role in orchestrating a
+multitude of bodily functions, encompassing growth and devel-
+opment, metabolic processes, electrolyte equilibrium, and repro-
+ductive functions.
+Cytokines are produced by speciﬁc cells (such as immune cells,
+endothelial cells, etc.) in response to speciﬁc stimuli, such as
+infection, injury, inﬂammatory responses, or the action of other
+cytokines, and are released into the extracellular environment.
+Fig. 2
+Representative signal pathways of CCC. Cellular communication is the process of signal construction to signal transduction. The
+interactions of ligands and receptors usually affect cell metabolism and energy transformation of different cell types to maintain the normal
+function of organisms. Ligands are active substances capable of speciﬁcally binding to receptors. Receptors speciﬁcally recognize and bind to
+signaling molecules, converting them into intracellular signals to perform speciﬁc physiological functions. One of the major signaling
+pathways within the signal transduction pathway are GPCRs pathways, including PKA and PKC systems. The others are enzyme-coupled
+receptor pathways, including PKG and MAPK systems. AC adenylate cyclase, cAMP cyclic adenosine monophosphate, cGMP cyclic guanosine
+monophosphate, CO carbon monoxide, DAG diacylglycerol, ERK extracellular regulated protein kinases, GC guanylate cyclase, GDP guanosine-
+5’-diphosphate, GPCR G-protein-coupled receptor, GTP guanosine triphosphate, IP3 inositol trisphosphate, IP3R inositol trisphosphate
+receptor, MAPK mitogen-activated protein kinase, MEK mitogen-activated extracellular signal-regulated kinase, NO nitric oxide, Pi PIP2
+phosphatidylinositol-4,5-bisphosphate, PKA protein kinase A, PKC protein kinase C, PKG protein kinase G, PLC phospholipase C
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+4
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+Cytokines are capable of activating a variety of cell types within a
+speciﬁc tissue or initiating diversiﬁed signaling pathways within a
+speciﬁc cell type, exempliﬁed by interleukins and interferons,
+regulating various physiological processes, encompassing immu-
+nity, development, growth, and tissue repair.81,82 Serving as
+pivotal mediators of intercellular communication within the
+immune system, dysregulation in cytokine expression or their
+intracellular signaling pathways disrupts immune homeostasis,
+precipitating the onset of pathologies such as chronic inﬂamma-
+tion, autoimmune syndromes, and malignant tumors.83
+The production of signaling molecules initiates with gene
+expression. Speciﬁc stimuli, such as extracellular signals or
+changes in internal states, trigger the transcription and translation
+of speciﬁc genes, leading to the production of proteins or small
+molecules as signaling molecules. Prior to maturation and
+activation, these protein signaling molecules typically go through
+a sequence of post-transcriptional modiﬁcations (such as splicing)
+and posttranslational modiﬁcations (such as phosphorylation and
+glycosylation). Meanwhile, some small-molecule signaling sub-
+stances are synthesized within the cell through speciﬁc biochem-
+ical
+pathways.
+Before
+their
+release,
+signaling
+molecules
+accumulate and are stored in speciﬁc organelles within the cell.
+For instance, neurotransmitters are usually stored in synaptic
+vesicles of presynaptic neurons.84
+When cells receive stimuli to release signaling molecules, such
+as electrical, chemical, or mechanical signals, the vesicles storing
+these signaling molecules move to the vicinity of the cell
+membrane and fuse with it. Through exocytosis, the signaling
+molecules are released outside the cell, a process that is
+particularly important for proteins and certain large molecular
+signaling molecules. On the other hand, some small molecules
+and lipophilic signaling molecules directly pass through the cell
+membrane to enter or exit the cell without vesicle-mediated
+processes. Besides NO and CO, hydrogen sulﬁde is another well-
+recognized gaseous signaling molecule.85 These gaseous mole-
+cules are unique in their mode of action as they can freely diffuse
+across cell membranes, enabling rapid signaling without the need
+for speciﬁc receptors or transport mechanisms for their release
+and action.
+Transmission of signaling molecules:
+Signaling molecules can
+reach target cells via diffusion, blood circulation, direct contact, or
+intercellular junctions. In the context of multicellular organisms,
+four fundamental forms of intercellular signaling exist: autocrine
+signaling, paracrine signaling, signaling through gap junctions,
+and endocrine signaling. Autocrine signaling is prevalent in tumor
+cells, wherein cells secrete ligands to induce responses via
+homologous receptors expressed on the same cell. Paracrine
+signaling
+affects
+nearby
+cells
+by
+secreting
+local
+chemical
+mediators into the extracellular ﬂuid, which act on adjacent target
+cells through local diffusion. Signal transmission across gap
+junctions involves molecules passing directly between cells.
+Endocrine signaling occurs when endocrine cells secrete sub-
+stances into the bloodstream, distributing them to various body
+parts via circulation.
+For long-distance signals, the bloodstream is the primary mode
+of transmission. Endocrine cells regulate the production and
+release of hormones by monitoring the concentration of speciﬁc
+substances in the blood, such as glucose, electrolytes, and other
+hormones. These hormones are then transported to various parts
+of the body through the bloodstream, exerting regulatory effects
+on distant target cells, thereby maintaining physiological equili-
+brium and adapting to changes in the external environment.86 For
+local signals, transmission through intercellular spaces or direct
+cell contact is more common. Neurotransmitters primarily transmit
+information through paracrine signaling. They are produced and
+released by neurons at the presynaptic end, and transmitted
+across the synaptic gap to the adjacent postsynaptic neuron or
+effector cell. Once released, neurotransmitters diffuse across
+synapses. In conjunction with the primarily chemical synapses,
+electrical synapses also exist, facilitating the intercellular ﬂow of
+ions via gap junctions. Electrical synapses enable the transmission
+of simple electrical signals among neurons, while chemical
+synapses allow excitation, inhibition, and complexity of biochem-
+ical information to be passed among cells.77 Cytokines typically act
+on neighboring cells through paracrine signaling, especially
+during immune responses and inﬂammation. However, in some
+cases, they can also be released into the bloodstream to regulate
+systemic immune responses and inﬂammation. Certain cytokines
+that exist in a membrane-bound form require direct contact with
+receptors on adjacent cells to transmit signals.87,88
+Binding of signaling molecules to receptors:
+Signaling molecules
+bind speciﬁcally to receptors on the surface or inside the target
+cell, forming receptor-ligand complexes that activate the receptor.
+Receptors are proteins or glycoproteins designed to recognize and
+bind speciﬁc signaling molecules, converting external signals into
+internal ones. Hormones travel to target cells via the bloodstream
+and bind to speciﬁc receptors located on the cell surface or within
+the cell. These receptors have binding sites that are highly
+complementary to the hormone molecules, allowing hormones to
+speciﬁcally recognize and bind to their receptors. Upon binding to
+its receptor, the hormone typically induces a conformational
+change in the receptor, thereby activating it. For cell surface
+receptors,
+this
+conformational
+change
+can
+directly
+trigger
+intracellular signaling pathways. For intracellular receptors such
+as steroid hormone receptors, the hormone–receptor complex
+often translocates to the nucleus, interacts with DNA, and
+inﬂuences the expression of speciﬁc genes.
+Neurotransmitter molecules, liberated from presynaptic vesicles,
+traverse
+the
+synaptic
+cleft
+and
+bind
+to
+proteins
+on
+the
+postsynaptic neuron’s surface membrane known as neurotrans-
+mitter receptors, altering the function of the postsynaptic neuron.
+There are two types of neurotransmitter receptors: ligand-gated
+ion channel receptors (LGICs) and G-protein-coupled receptors
+(GPCRs). LGIC receptors are proteins speciﬁcally designed to
+rapidly transduce chemical signals of neurotransmitters directly
+into electrical responses.89,90 A part of the protein is dedicated to
+binding with neurotransmitter molecules on the extracellular side
+of the protein. The portion of the protein embedded within the
+cell membrane acts as an ion channel, creating a ﬂuid-ﬁlled
+passage in the membrane for the transit of charged ions, but ions
+are unable to pass across lipid or other solid membrane
+constituents. This synaptic transmission modality allows for the
+direct ﬂow of ions across the outer cell membrane rapidly. When a
+neurotransmitter binds to the receptor, the exchange of nucleo-
+tide guanosine-5’-diphosphate (GDP) and guanosine triphosphate
+(GTP) on the protein’s intracellular side is expedited, culminating
+in the split of the G protein into α- and β/γ-subunits, both two
+types of subunits can act upon “effector” proteins, altering cellular
+biochemistry, physiology, and gene expression, initiating intracel-
+lular chemical signaling events.84,89,90
+Cytokines are classiﬁed as secreted growth factors that instigate
+signal transduction within target cells through binding with the
+extracellular domains of cell surface receptors, forcing receptor
+dimerization.91 Most cytokines contain binding sites for both high-
+afﬁnity and low-afﬁnity receptors.92,93 Typically, the high-afﬁnity
+receptor subunit acts as a cytokine-speciﬁc, private receptor that
+determines
+cell
+speciﬁcity
+as
+well
+as
+the
+cytokine’s
+dose
+sensitivity.94 In contrast, the low-afﬁnity receptor subunits are
+common to be shared among various cytokines and mainly have
+an impact on the efﬁciency of complex assembly, thereby
+affecting the maximum strength and duration of receptor
+signaling.92,95
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+5
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+The steps of cell signal transduction
+Signal transduction and ampliﬁcation:
+The activation of recep-
+tors sets off a cascade of cellular responses internally. Signals are
+transduced and ampliﬁed within the cell through mechanisms like
+second messengers, switch proteins, enzyme cascades, etc.
+Second messengers are small molecular compounds that carry
+information within the cell. The second messengers play a crucial
+role in cell signaling, capable of transforming the activation of a
+cell surface receptor into the activation of multiple molecules
+within
+the
+cell,
+thereby
+amplifying
+and
+conveying
+signals
+internally. This process activates or inhibits speciﬁc target proteins
+and enzymes, triggering a cascade of downstream reactions.
+Through these reactions, second messengers are instrumental in
+regulating a myriad of cellular functions. The discovery of this
+signal transduction pathway has laid the foundational framework
+for understanding how cells communicate via chemical signals.
+An early study elucidated for the ﬁrst time the role of cyclic
+adenosine monophosphate (cAMP) as a second messenger within
+the cell, demonstrating its capacity to translate the cell surface
+receptor’s response to hormones and neurotransmitters into
+intracellular biochemical activities.96 When external signaling
+molecules such as adrenaline bind to GPCRs, the associated G
+proteins are activated. The α subunit of the G protein activates
+adenylate cyclase (AC), converting ATP into cAMP. cAMP, serving
+as a second messenger, activates protein kinase A (PKA). In cardiac
+cells, the increase in cAMP leads to the activation of PKA, which
+phosphorylates L-type calcium channels, increasing the inﬂux of
+calcium ions, thereby enhancing the contractile force of the
+heart.97–99
+Calcium ions (Ca2+) are important second messengers involved
+in various signaling pathways. When external signals such as
+neurotransmitters or hormones act on cells, the opening of
+calcium channels or the release of Ca2+ from the endoplasmic
+reticulum can cause an increase in intracellular Ca2+ concentra-
+tion. Subsequently, Ca2+ binds to calmodulin and then activates
+downstream
+enzymes
+like
+Ca/calmodulin-dependent
+protein
+kinase II (CaMKII), affecting various processes within the cell.
+During neurotransmission, the release of neurotransmitters causes
+the opening of calcium channels on the postsynaptic membrane,
+allowing Ca2+ to ﬂow into the cell, activating signaling pathways
+related to learning and memory, such as the activation of CaMKII,
+which promotes the strengthening of synapses.100–102
+Switch proteins, like G proteins and Ras, regulate the opening
+and closing of signaling pathways. Ras protein is a small GTPase
+involved in regulating signaling pathways for cell proliferation and
+differentiation. When growth factors such as epidermal growth
+factor (EGF) bind to their receptor epidermal growth factor
+receptor (EGFR), EGFR activates Ras, causing Ras to switch from a
+GDP-bound state to a GTP-bound activated state.103,104 The
+activation of Ras promotes the activation of the mitogen-activated
+protein kinase (MAPK) or extracellular signal-regulated kinase
+(ERK) pathway, affecting the expression of cell cycle regulatory
+proteins such as cyclin D, and facilitating the cell to enter a
+proliferative state.
+Enzyme cascades involve a series of enzymes that activate or
+inhibit each other, amplifying and regulating signals (e.g., PKA,
+MAPK). In the MAPK pathway, Raf (MAPKKK) activates MEK
+(MAPKK), which in turn activates ERK (MAPK). Each step of
+activation can lead to the phosphorylation of multiple down-
+stream proteins. In response to cellular stress, the p38 MAPK
+pathway is activated, leading to an increase in the expression of
+inﬂammatory response proteins such as tumor necrosis factor α
+(TNF-α),
+participating
+in
+the
+cell’s
+response
+to
+stress
+and
+inﬂammation.105
+Cell response:
+Signal transduction ultimately inﬂuences the cell’s
+physiological functions, including changes in metabolic activity,
+regulation of gene expression, alterations in shape, or movement.
+Different cell types and states may exhibit varying responses to
+the same signaling molecule. Insulin activates the phosphoinosi-
+tide 3-kinase (PI3K)/Akt (also known as Protein Kinase B, PKB)
+signaling pathway through the insulin receptor. Then, PI3K/Akt
+signaling pathway can promote the surface expression of the
+glucose transporter GLUT4 and increase cellular glucose uptake,
+supporting energy production, and muscle contraction.106–108
+Similarly, in liver cells, insulin also enables the activation of the
+PI3K/Akt signaling pathway and thus promotes the activation of
+glycogen synthase, increasing glycogen synthesis, and lowering
+blood glucose levels.109 In contrast, TNF-α can activate the nuclear
+factor kappa-light-chain-enhancer of activated B cells (NF-κB)
+signaling pathway through its receptor and then promote the
+expression of inﬂammatory response proteins, participating in
+immune responses and cell repair processes.110 However, in some
+cancer cells, the same signaling pathway may promote the
+survival and proliferation of cancer cells because these cells may
+have acquired resistance to apoptosis signals induced by TNF-α.111
+Termination or reduction of signaling response:
+To maintain the
+cell’s sensitivity and adaptability to external stimuli, responses to
+signaling molecules must be terminated or reduced. This can be
+achieved through receptor desensitization, receptor downregula-
+tion, degradation, hydrolysis of second messengers or switch
+proteins, and negative feedback regulation, which involves
+downstream effector molecules inhibiting upstream signaling
+molecules, forming a closed loop. Prolonged exposure to high
+concentrations of agonists (such as adrenaline) leads to desensi-
+tization and downregulation of the corresponding GPCRs. The
+desensitization
+process
+often
+involves
+phosphorylation
+of
+the receptor, which attracts β-arrestin proteins to bind with the
+receptor, preventing further activation of G proteins while
+promoting receptor internalization.112,113 The internalized recep-
+tors may be transported to lysosomes for degradation (down-
+regulation), or be dephosphorylated and recycled back to the cell
+surface. This process leads to the decrease of receptors on the cell
+surface, reducing the cell’s sensitivity to the agonist.
+The rise and fall of cAMP levels are crucial for signal
+transmission. The degradation of cAMP is catalyzed by cAMP
+phosphodiesterase,
+which
+converts
+cAMP
+to
+AMP,
+thereby
+terminating the signal transmission mediated by cAMP.114,115
+The
+MAPK/ERK
+signaling
+pathway
+acts
+importantly
+in
+cell
+proliferation and differentiation. Activation of this pathway
+promotes the phosphorylation of a sequence of downstream
+effector
+molecules,
+consisting
+of
+transcription
+factors,
+thus
+affecting gene expression. Meanwhile, the MAPK pathway also
+activates certain phosphatases, such as DUSP (dual-speciﬁcity
+phosphatases), which can dephosphorylate and inhibit compo-
+nents of the MAPK pathway, such as ERK, forming a negative
+feedback loop to set limits on signal strength and duration,
+preventing overreaction.116 These mechanisms together ensure a
+dynamic balance of signal transduction, allowing cells to make
+adaptive adjustments to continuous or excessive stimuli, main-
+taining the normal functioning of physiological functions.
+Major signaling pathway
+Within the signal transduction pathway, a receptor is a protein
+within a cell responsible for receiving and transducing informa-
+tion. Receptors in the cell membrane are termed membrane
+receptors, while those in the cytoplasm and nucleus are known as
+cytoplasmic and nuclear receptors, respectively. Ligands are active
+substances capable of speciﬁcally binding to receptors. Receptors
+speciﬁcally recognize and bind to signaling molecules, converting
+them into intracellular signals to perform speciﬁc physiological
+functions. Cell signals typically begin with primary messengers like
+growth factors, hormones, and ions instigate a sequence of signal
+transduction processes via membrane-bound or intracellular
+receptors.
+This
+mechanism
+incorporates
+multiple
+feedback
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+6
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+systems and many intracellular chemicals classiﬁed as second
+messengers, consisting of cAMP, cyclic guanosine monopho-
+sphate (cGMP), calcium ions, etc.117
+The conjunction of a ligand with its speciﬁc receptor triggers a
+distinct cellular signaling route.118 There are two types of signal
+transduction pathways based on the nature of the ligand and
+receptor. One is the nuclear receptor-mediated signal transduc-
+tion, wherein lipid-soluble ligands enter the cell through simple
+diffusion and directly bind to cytoplasmic or nuclear receptors,
+typically inﬂuencing gene expression. Another type involves
+water-soluble ligands or physical signals, which initially act on
+the membrane receptor and produce effects through transmem-
+brane and intracellular signal transduction mechanisms. These
+signal transduction receptors include various types, including
+GPCRs, enzyme-coupled receptors and ion channel-linked recep-
+tors. It should be noted that most membrane receptor-mediated
+signal transduction pathways can also alter transcription factor
+activity and affect gene expression.
+GPCRs pathway.
+GPCRs constitute the most extensive and varied
+type of membrane receptors in eukaryotic system. G proteins
+composed of three subunits separately: alpha (α), beta (β), and
+gamma (γ) are unique proteins that bind to nucleotides like GTP
+and GDP. The α and γ subunits are tethered to the cell membrane
+via lipid links. Upon ligands attachment to a GPCR, ligands change
+the GPCR conformation, leading to the activation of the G protein.
+The active G-protein disassociates from the receptor, splitting into
+α and β/γ subunits. These subunits then stimulate speciﬁc
+effectors, leading to the generation of second messengers, which
+are detected by various protein kinases, ultimately triggering a
+cascade of signaling events that drive cellular responses.
+GPCRs play a critical role in cellular detection of external stimuli,
+including odorants, taste compounds, photons, metals, neuro-
+transmitters, biogenic amines, fatty acids, amino acids, peptides,
+proteins, steroids, and lipids. The vast array of potential ligands
+and receptors links GPCRs to numerous physiological and
+pathological states, including pain, asthma, cancer, cardiovascular,
+gastrointestinal, and neurological disorders. This signiﬁcance
+renders GPCRs as prime targets for pharmaceutical interven-
+tion.119 For instance, the identiﬁcation of spontaneous GPCR
+mutations in individuals with various endocrine disorders high-
+lights their importance in endocrinology.120
+The GPCR pathway regulates multiple signaling cascades,
+notably involving the PKA system, inositol trisphosphate (IP3)
+pathway, and the calcineurin-dependent protein kinase (Ca/CaM)
+pathway. These three pathways together constitute the main
+framework of GPCRs signal transduction. Through different second
+messengers and effector proteins, GPCRs participate in adjusting
+numerous physiological functions of the cell.
+The PKA system operates within the cyclic nucleotide system,
+where extracellular signals bind to corresponding receptors. This
+activates a signaling pathway that elicits a response by regulating
+the
+level
+of
+cAMP.
+Typically,
+the
+signaling
+molecules
+are
+hormones, and the cAMP levels are regulated by adenylate
+cyclase. Following the action of the signaling molecule on the
+membrane receptor, the G-protein-coupling system is activated.
+Once cAMP is generated, it will activate PKA to amplify the signal.
+This PKA signal transduction pathway regulates membrane
+protein activity, gene expression, and hormone synthesis as well
+as hormone secretion.121
+IP3 pathway involves inositol trisphosphate as a second
+messenger in G-protein-coupled receptor-mediated signal trans-
+duction. In the IP3 pathway, extracellular signaling molecules bind
+to corresponding GPCRs, activating the Gq protein on the
+membrane. Subsequently, the Gq protein activates Cβ which is
+the one kind of the isoforms of protein kinase C (PKC) and can
+dissolve phosphatidylinositol-4,5-bisphosphate (PIP2) into two
+second messengers. The second messenger IP3 binds to its
+receptor,
+promoting
+the
+release
+of
+Ca2+.
+Another
+second
+messenger, diacylglycerol (DAG), synergistically activates PKC
+along with Ca2+ and phosphoacylserine, culminating in a cascade
+reaction that drives cellular responses.122 PKC enzymes take a
+signiﬁcant part in the process of cell proliferation, differentiation,
+and apoptosis. Ca2+ plays an important role in neuronal cells,
+mediating essential physiological processes.123 Thus, this pathway
+contributes to the regulation of cell proliferation, metabolism, and
+growth, making it a potential target for tumor inhibition and
+myocardial protection.
+Ca/CaM pathway is activated through a series of interactions
+involving calcium ions, calmodulin, and the phosphatase activity
+of calcineurin itself. This pathway involves the release of calcium
+ions from the endoplasmic reticulum or the opening of calcium
+ion channels on the cell membrane, resulting in an increase in the
+concentration of calcium ions in the cytoplasm. The calcium ions
+then bind to calmodulin, thereby activating the phosphorylation
+activity
+of
+protein
+kinases.
+This
+activation
+can
+affect
+the
+physiological functions of the cell by regulating the phosphoryla-
+tion state of substrates.124,125
+Enzyme-coupled
+receptor
+pathway.
+Enzyme-linked
+receptors,
+commonly single-pass transmembrane proteins, have enzymatic
+activity within their intracellular regions or directly interact with
+proteins that have enzymatic activity. The activity of enzyme-
+linked receptors is strictly regulated, including ligand-binding-
+induced receptor dimerization, phosphorylation, and negative
+feedback mechanisms. Ligands, such as growth factors, coupling
+with the extracellular domain of the receptor, inducing receptor
+dimerization or oligomerization, thereby activating its intracellular
+enzymatic activity. Following receptor dimerization, the intracel-
+lular enzymatic domains phosphorylate each other, activating the
+receptor’s enzymatic activity.126–128 The activated receptor trans-
+mits signals by phosphorylating downstream proteins (such as
+protein kinases and transcription factors), triggering a series of
+signal cascade reactions that ultimately lead to changes in the
+expression of speciﬁc genes and regulation of cell behavior. The
+termination of signal transduction is usually achieved through
+mechanisms such as receptor dephosphorylation, endocytosis,
+and degradation, ensuring the precision and timeliness of signal
+transmission. By activating a variety of downstream signaling
+molecules and pathways, enzyme-linked receptors participate in
+the widespread regulation of physiological functions, including
+cell proliferation, differentiation, migration, metabolism, and
+survival.
+Enzyme-coupled receptors possess distinct molecular structures
+and properties compared to GPCRs. For instance, tyrosine kinase
+receptors possess protein tyrosine kinase (PTK) activity. When a
+hormone binds to the receptor, the PTK segment in the
+membrane is activated. This activation initiates a series of
+intracellular information transmission cascade reactions with
+phosphorylation of peptide chains and tyrosine residues in the
+membrane protein substrate.129 Ultimately, gene transcription
+processes change within the nucleus and result in corresponding
+biological effects within the cell. Most growth factors, insulin, and
+some peptide hormones are transmitted through this receptor
+type. It has been reported that PTK is pivotal in initiating
+multicellular
+responses
+related
+to
+DNA
+synthesis
+and
+cell
+proliferation. The proteins encoded by many retrovirus oncogenes
+and the intracellular regions of several growth factor transmem-
+brane receptors exhibit PTK activity. The receptor PTK not only
+plays a role in transmitting extracellular information, such as
+hormones and growth factors, but is also involved in the
+malignant transformation and proliferation of cells. PTK has been
+identiﬁed and characterized as a selective, potent, and well-
+tolerated kinase inhibitor suitable for cancer therapy.130 As PTK
+takes a critical part in the development and progression of
+tumors, it serves as a promising therapeutic target in cancer cells.
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+7
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+Gene-targeting medications available commercially can effectively
+reach therapeutic objectives by suppressing its function.
+There are many other types of enzyme-linked receptors, among
+which the more important ones include receptor tyrosine kinases
+(RTKs) and guanylate cyclase (GC) receptors. RTKs refer to
+receptors
+whose
+intracellular
+part
+of
+the
+membrane
+itself
+possesses tyrosine kinase activity. The extracellular signaling
+molecules that can bind to these receptors and complete signal
+transduction are mainly various growth factors, such as epidermal
+growth factor, platelet-derived growth factor, ﬁbroblast growth
+factor, and insulin. When the extracellular part of the receptor
+binds to a ligand, the activation of the tyrosine kinase in the
+cytoplasmic part of the receptor molecule occurs, thereby
+triggering various signaling proteins to transmit signals along
+different pathways reviewed below.
+The Ras-MAPK is an important signaling pathway mediated by
+RTKs, mainly composed of three key kinases: Ras, Raf, and MAPK.
+When cells are stimulated by growth factors such as EGF, PDGF,
+the growth factor receptors (e.g., EGFR, PDGFR) are activated,
+leading to the accumulation of GTP-bound Ras (Ras-GTP).
+Downstream Raf kinase is then activated by Ras-GTP on the
+cell membrane, phosphorylating and activating MAPKK (MEK),
+which in turn phosphorylates and activates MAPK (ERK).131
+MAPK is able to phosphorylate downstream substrates, which
+are often transcription factors (such as Elk1, Fos, Jun) or other
+proteins that change cell behavior. The aberrant activation of
+the Ras-MAPK signaling pathway has a bearing on many
+diseases,
+including
+cancer
+and
+neurodegenerative
+dis-
+eases.132,133 Moreover, this pathway also interacts with other
+signaling pathways such as PI3K–Akt, Janus kinase (JAK)-signal
+transducers and activators of transcription (STAT), etc., jointly
+regulating processes such as cell growth, proliferation, and
+differentiation.
+Another pathway activated by RTKs is the PI3K–Akt signaling
+pathway. When ligands such as growth factors bind to RTKs, the
+RTKs undergo autophosphorylation and activation, which prompts
+the recruitment and activation of PI3K near the receptor. The
+activated PI3K converts the membrane lipid PIP2 into phospha-
+tidylinositol-3,4,5-trisphosphate (PIP3). PIP3, acting as a second
+messenger, activates Akt, thereby initiating a series of down-
+stream reactions that affect cell survival, proliferation, growth, and
+metabolism.134,135
+GC receptors have a single transmembrane α-helix, with the
+N-terminal ligand-binding site located on the extracellular side
+and the C-terminal GC domain located on the intracellular side.
+Once the receptor binds with a ligand, GC activity is activated.
+Unlike the activation of AC, this process does not require the
+involvement of G proteins. Once activated, GC catalyzes the
+conversion of GTP to cGMP within the cytoplasm, which then bind
+and activate cGMP-dependent protein kinase G (PKG). Similar to
+PKA and PKC, PKG is a serine/threonine protein kinase that
+mediates signal transduction through the phosphorylation of
+substrate proteins. Upon activation by NO and CO, GC augments
+the production of cGMP. The cGMP binds and activates PKG,
+which phosphorylates substrate proteins, activating downstream
+signaling pathways to regulate cell growth and renewal.136 The
+PKG signal transduction system regulates smooth muscle relaxa-
+tion, nervous system function, and physiological processes such as
+intestinal secretion, renin release, bone growth, and visual signal
+transduction.137,138 Besides, there are signal transduction path-
+ways directly initiated or propagated by intracellular functional
+compartments. For instance, the receptor for NO is a type of GC
+located within the cytoplasm, known as soluble GC. When NO acts
+on soluble GC, it increases the concentration of cGMP and the
+activity of PKG within the cytoplasm, leading to responses such as
+the relaxation of vascular smooth muscle.139,140 These pathways
+are essential for coordinating the activities of each organelle with
+other cellular components.
+In addition to the signaling pathways mentioned above,
+enzyme-linked receptors also mediate the JAK/STAT pathway
+and the TGF-β-Smad pathway. The JAK-STAT signaling pathway is
+typically activated by cytokine receptors, which lacks intrinsic
+tyrosine kinase activity, but interacts with members of the
+intracellular tyrosine kinase family JAKs. When cytokines (such as
+interferons and interleukins) bind to their speciﬁc receptors, they
+promote the activation of JAKs. The activated JAKs phosphorylate
+the receptors, providing docking sites for STATs to bind and
+become activated. The activated STATs dimerize and then
+translocate to the nucleus, where they directly regulate the
+expression of target genes.141 Besides, the TGF-β signaling
+pathway is primarily mediated by a class of receptors known as
+Serine/Threonine Kinase Receptors, which possess serine/threo-
+nine kinase activity in their intracellular region. When ligands of
+the TGF-β family, such as TGF-β, bone morphogenetic proteins
+(BMPs), activins, etc., bind to these receptors, they prompt the
+receptor kinases to phosphorylate Smad proteins. The phosphory-
+lated Smad proteins further interact with other Smad proteins or
+DNA-binding proteins, transmitting the signal from the cell
+membrane to the nucleus, thereby regulating the expression of
+speciﬁc genes.142,143
+Other pathways.
+External signaling molecules trigger the pro-
+teolytic cleavage of a potential gene regulatory protein. Controlled
+proteolysis modulates the expression of target genes. Signal
+transduction pathways relying on regulated proteolysis encom-
+pass Notch pathway, Hedgehog (Hh) pathway, Wnt pathway and
+NF-κB pathway.
+The Notch signaling pathway is a highly conserved intercellular
+communication mechanism that is extensively involved in various
+biological processes, including cell fate determination, embryonic
+development, and tissue regeneration.144–146 A distinguishing trait
+of this signaling pathway is its reliance on direct cell–cell contact,
+obviating the requirement for signal molecules to travel long
+distances between cells. The Notch signaling pathway is initiated
+by the direct binding of the Notch receptor located on the surface
+of the signal-receiving cell to its ligand situated on the surface of
+neighboring cells. Notch receptors and ligands are both trans-
+membrane proteins, with typical ligands belonging to the Jagged
+and Delta families. After ligand–receptor binding, the Notch
+receptor undergoes a series of cleavage processes. First, the ADAM
+(a disintegrin and metalloprotease) family member metallopro-
+teases cleave the Notch receptor in the extracellular region,
+followed
+by
+cleavage
+by
+the
+γ-secretase
+complex
+in
+the
+transmembrane region, leading to the release of the Notch
+intracellular domain (NICD).147 The released NICD then enters the
+nucleus, where it binds to the CSL (CBF1/Su(H)/Lag-1) family of
+DNA-binding proteins and other co-activators to form a transcrip-
+tional activation complex, directly regulating the expression of
+downstream genes.148,149
+The
+Hh
+signaling
+pathway
+is
+a
+key
+intercellular
+signal
+transduction mechanism, extensively involved in the development
+of animal embryos and the maintenance of adult tissues. This
+pathway plays a crucial role in the growth and proliferation of cells
+during embryonic development and after embryo formation.
+Aberrant activation of the Hh signaling pathway is associated with
+various cancers and developmental abnormalities.150 Before being
+secreted outside the cell, Hh proteins undergo a series of
+posttranslational modiﬁcations, including autocleavage and cova-
+lent attachment to cholesterol.151 In the absence of Hh ligands,
+the Patched (Ptch) receptor inhibits the activity of Smoothened
+(Smo). When a Hh ligand binds to Ptch, this inhibition is lifted,
+allowing Smo to be activated. The activation of Smo triggers a
+series of intracellular signaling events, ultimately affecting the
+activity of glioma-associated oncogene homolog (Gli) transcription
+factors. In the absence of signaling, Gli factors are partially
+degraded into a repressor form. When the Hh signal is activated,
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+8
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+the inhibition of Gli is removed, allowing its full-length form to
+enter the nucleus. The activated Gli transcription factor enters the
+nucleus and promotes the expression of downstream target genes
+which take part in processes such as cell proliferation, differentia-
+tion, and survival.
+The Wnt signaling pathway is a complex cell signaling system,
+extensively involved in the embryonic development, cell pro-
+liferation, migration, differentiation, and maintenance of adult
+tissue homeostasis in animals. The name of this pathway
+originates from a gene discovered in fruit ﬂies called “wingless”
+and its mouse homolog “Int-1”, collectively known as Wnt.152 The
+Wnt signaling pathway is primarily divided into two pathways: the
+β-catenin-dependent
+canonical
+pathway
+and
+the
+β-catenin-
+independent noncanonical pathways. In the absence of Wnt
+ligands, β-catenin is captured in the cytoplasm by a complex
+(including proteins such as Axin and GSK-3β) and phosphorylated
+by GSK-3β, leading to its ubiquitination and degradation. When
+Wnt signals are present, Wnt ligands bind to the Frizzled receptor
+and LRP5/6 co-receptor, inhibiting the β-catenin degradation
+complex, preventing the phosphorylation and subsequent degra-
+dation of β-catenin. The stabilized β-catenin accumulates and
+translocates to the nucleus, where it binds to transcription factors
+of the TCF/LEF family, activating the expression of downstream
+target genes.153 The noncanonical pathways do not rely on
+β-catenin but are mediated by other signaling molecules such as
+Ca²+, JNK, Rho GTPase, etc., inducing various cellular responses,
+including cell polarity, movement, and tissue morphogenesis.153
+The NF-κB signaling pathway is a key cellular signal transduc-
+tion mechanism, extensively involved in regulating immune
+responses, inﬂammatory reactions, cell survival, proliferation, and
+differentiation among various biological processes.154–156 Serving
+as an immediate response mechanism, it can rapidly respond to a
+wide range of external stimuli, such as cytokines, pathogens, free
+radicals, and other stress signals. The NF-κB pathway can be
+activated by multiple signals, including TNF-α, interleukin 1 (IL-1),
+lipopolysaccharides
+(LPS),
+viral
+infections,
+and
+other
+stress
+conditions. When inactive, NF-κB is bound to its inhibitory protein
+IκB in the cytoplasm. Upon activation by the aforementioned
+signals, the IκB kinase (IKK) complex is activated, leading to the
+phosphorylation of IκB and its subsequent degradation via the
+ubiquitin-proteasome pathway. The degradation of IκB releases
+NF-κB, allowing it to translocate to the nucleus, bind to κB sites on
+DNA, and activate the transcription of speciﬁc genes.157 The
+termination of the NF-κB signal involves newly synthesized IκBα,
+which can enter the nucleus, bind to NF-κB, and export it back to
+the cytoplasm, thereby returning NF-κB to an inactive state.
+Accurate control of the NF-κB signaling pathway is crucial for
+maintaining normal cellular functions and preventing the devel-
+opment of disorders, including cancer, autoimmune diseases, and
+chronic inﬂammatory diseases.158,159 This underscores its signiﬁ-
+cance as a prime target for pharmaceutical interventions.
+Multi-level regulation of CCC and its implications
+Upregulation and downregulation.
+The activity of CCC signal
+transduction can be modulated through upregulation (enhancing
+signal
+transmission)
+and
+downregulation
+(weakening
+signal
+transmission). This regulation can be achieved by altering the
+expression level of receptors, modulating receptor activity, or
+changing the availability of signaling molecules. In certain
+inﬂammatory responses, cytokines such as TNF-α induce the
+upregulation of adhesion molecules, such as intercellular adhesion
+molecule-1 (ICAM-1) and vascular cell adhesion molecule-1
+(VCAM-1), which are located on the surface of endothelial
+cells.160–162 This upregulation enhances the interaction between
+white blood cells and endothelial cells, promoting the migration
+of white blood cells and inﬂammatory responses.163–165 The
+prolonged or excessive use of β-adrenergic receptor (β-AR)
+agonists for asthma treatment leads to a reduction in the quantity
+of β-ARs on cardiac and smooth muscle cells (SMCs), achieved
+through mechanisms of receptor internalization and degrada-
+tion.166–168 GPCRs after being activated over a long period can be
+internalized through a β-arrestin-mediated pathway. This process
+gives rise to a decrease in the number of receptors on the cell
+surface, leading to a dampened receptor activity and ultimately
+impairing signal transmission.113,169–171 This phenomenon dimin-
+ishing the cell responsiveness to the agonist commonly termed
+receptor downregulation.172
+Desensitization.
+Long-term or excessive signal stimulation causes
+cells to become desensitized to certain signals. Desensitization is a
+protective mechanism to prevent overreaction, achieved by
+reducing the surface expression of receptors or inhibiting the
+activity of signal transduction components. In patients with type 2
+diabetes, prolonged high levels of blood glucose and insulin can
+lead to desensitization of insulin receptors, reducing their
+sensitivity to insulin and further exacerbating insulin resistance.173
+In addition, long-term alcohol consumption can increase the
+nervous system’s tolerance to alcohol, achieved by regulating the
+expression and sensitivity of neurotransmitter receptors such as
+GABA receptors and glutamate receptors.174–177
+Upstream regulators and downstream effectors.
+The regulation of
+signaling pathways involves multiple upstream regulators and
+downstream effectors. Upstream regulators are responsible for
+receiving and integrating external signals, while downstream
+effectors execute the biological effects of these signals, such as
+altering gene expression and regulating cell behavior. These
+signaling pathways are key mechanisms for communication
+between cells, regulating cell behavior and cell fate through the
+reception and transmission of external signals. They play roles in a
+variety
+of
+biological
+processes,
+including
+cell
+proliferation,
+differentiation, migration, cell death, and the maintenance of
+tissue
+and
+organ
+homeostasis.
+The
+aberrant
+activation
+or
+inhibition of these pathways is closely related to the development
+of various diseases, especially cancer, inﬂammatory diseases,
+neurodegenerative
+diseases,
+and
+congenital
+developmental
+abnormalities. They demonstrate the diversity and complexity of
+signal transduction, including LRIs, subsequent activation of
+signaling molecules, intracellular signal transmission, and the
+ultimate activation of effectors. There is also crosstalk and
+interaction among these signaling pathways, allowing them to
+inﬂuence and regulate each other, forming a complex network to
+adapt to different physiological and pathological conditions.
+Spatial distribution.
+The spatial distribution of CCC components is
+crucial for the efﬁciency and speciﬁcity of signal transmission. Cells
+achieve precise signal localization and transmission by restricting
+the distribution of receptors, enzymes, and other signaling
+molecules to speciﬁc regions within the cell. In many types of
+cells, speciﬁc receptors are localized to particular microdomains of
+the cell membrane, such as lipid rafts. Lipid rafts are cell
+membrane regions rich in cholesterol and sphingolipids, capable
+of aggregating speciﬁc signaling proteins, including GPCRs and
+RTKs.178,179 This localization enhances the interaction between
+signaling molecules, improving the efﬁciency and speciﬁcity of
+signal transmission. Directed transport allows cells to regulate the
+activity of signaling molecules within speciﬁc temporal and spatial
+ranges. Certain signaling proteins are transported to the cell poles
+during speciﬁc phases of cell division or concentrated in the
+leading edge during cell migration, ensuring the correct execution
+of cell functions. The transmission of signals within neurons
+depends on the precise release and reception of neurotransmit-
+ters, which occur in highly speciﬁc spatial locations. Neurotrans-
+mitters are stored in synaptic vesicles at the axon terminals, and
+upon signal arrival, these vesicles fuse with the presynaptic
+membrane, releasing neurotransmitters into the synaptic cleft.
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+9
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+Receptors typically located on the postsynaptic membrane ensure
+rapid and accurate signal transmission.
+The spatial distribution of signaling molecules also involves the
+localization and transfer of nuclear receptors. Steroid hormone
+receptors, such as estrogen and androgen receptors, are usually
+located in the cytoplasm in their inactive state. Upon hormone
+binding, the receptor–hormone complex moves into the nucleus,
+directly regulating the transcription of target genes. This transfer
+from the cytoplasm to the nucleus is a key step in the signal
+transmission process, affecting changes in gene expression.
+Furthermore, the spatial distribution of CCC components affects
+the assembly of signaling complexes. In the Wnt signaling
+pathway, the stabilization and nuclear transfer of β-catenin
+depend on the interaction of multiple signaling molecules in
+speciﬁc cellular regions. In the absence of Wnt signals, β-catenin is
+captured and degraded in the cytoplasm. When the Wnt signaling
+pathway is activated, proteins such as Axin are recruited to the cell
+membrane, where they impede the degradation of β-catenin. This
+preservation enables β-catenin to amass and translocate to the
+nucleus, inﬂuencing gene expression.
+Other regulatory mechanisms.
+In addition, CCC signal transduc-
+tion is regulated by posttranslational modiﬁcations, synthesis and
+degradation of signaling molecules, etc. Phosphorylation is a
+common posttranslational modiﬁcation that is crucial for the
+regulation of signaling pathways. For example, in the EGF
+signaling pathway, the binding of EGF to its receptor EGFR
+triggers autophosphorylation of the receptor. This process boosts
+the receptor’s tyrosine kinase activity, leading to the activation of
+downstream signaling pathways such as Ras/MAPK, which in turn
+stimulates cell proliferation and differentiation. The dynamic
+balance between phosphorylation and dephosphorylation reg-
+ulates the strength and duration of the signal, affecting the
+determination of cell fate.
+Moreover,
+ubiquitination
+is
+another
+key
+posttranslational
+modiﬁcation
+that
+regulates
+signal
+transduction
+by
+tagging
+proteins for degradation, thereby modulating signaling. In the
+NF-κB signaling pathway, the ubiquitination and subsequent
+proteasome-dependent degradation of IκBα are critical steps for
+activating NF-κB.180
+Furthermore, the synthesis of signaling molecules such as
+neurotransmitters is essential for the transmission of neural signals.
+For instance, serotonin is synthesized from tryptophan catalyzed by
+tryptophan hydroxylase. The amount of serotonin synthesized
+directly affects the strength of neural signal transmission and
+psychological states, such as mood and sleep.181 The timely
+degradation of signaling molecules is also crucial to ensure the
+temporariness of the signal and the restoration of the resting state.
+For example, acetylcholine is rapidly degraded by acetylcholinester-
+ase, ending its signal transmission at the neuromuscular junction.182
+This process is vital for the proper relaxation of muscles and the
+prevention of continuous contraction (spasm). These mechanisms
+work
+together
+to ensure
+the
+dynamic
+regulation
+of signal
+transmission and the cell’s adaptability to environmental changes.
+THE CLINICAL APPLICATION AND RESEARCH PROGRESS OF
+CCC
+As the body adapts to internal and external environmental
+changes, various systems and organs of the body need to
+coordinate to complete the adaptive response, including nervous,
+humoral, and self-regulatory systems. At the micro-level, these
+three regulatory mechanisms rely on the coordinated activities of
+various functional cells in the body, necessitating a complex signal
+communication process between different cells, namely cell signal
+transduction. CCC is so crucial in the development of tissues,
+organs, and immune responses that diseases can emerge when
+cells fail to interact correctly or misinterpret molecular information
+(Fig. 3). Therefore, studying the mechanisms and regulation of cell
+communication holds great scientiﬁc signiﬁcance for under-
+standing the nature of biology and disease, and has practical
+application value for clinical trials.
+Some pathways may be abnormally activated or inhibited in
+disease states, and drugs can act by targeting speciﬁc cell
+signaling pathways.183,184 However, the use of drugs needs to be
+strictly controlled to enhance the efﬁcacy of existing treatments
+and reduce side effects. The United States Food and Drug
+Administration (FDA) conducts rigorous reviews of medications,
+and drugs approved by the FDA have passed a series of clinical
+trials proving their efﬁcacy and safety in treating speciﬁc diseases
+or conditions.185–188 Table 1 shows some FDA-approved drugs
+taking effects through therapeutic CCC targets. In the following
+sections of this chapter, we will introduce the role of CCC in
+different human diseases, including disease diagnosis, prevention,
+treatment, and prediction.
+Cancers
+Cancer is widely recognized as a cluster of disorders marked by
+uncontrolled proliferation and dissemination of aberrant cells.189
+Cancer remains a major global challenge even though signiﬁcant
+efforts have been made to develop new cancer treatments. As a
+result, the discovery of novel therapeutics speciﬁcally targeting
+diverse cancer forms is imperative.190 Since various signal
+transduction pathways regulate cell growth, abnormal activation
+or suppression of these pathways drives tumorigenesis.121 One of
+the principal pathways is the PI3K–AKT–mTOR signaling that
+linked to drug resistance and the malignant tumor process in solid
+cancer patients.191 It is vital to use cell signaling molecules to
+recognize cancer cells to inhibit the expansion and proliferation of
+cancer cells. Posttranslational protein modiﬁcation plays a vital
+role in the control of cellular signaling. Diverse protein kinases and
+phosphatases regulate the phosphorylation and dephosphoryla-
+tion of proteins. Tumors frequently exhibit irregular or uncon-
+trolled activation of such kinases and phosphatases, making them
+as essential targets for targeted cancer therapies. To cite an
+instance, Imatinib is a BCR–ABL fusion tyrosine kinase inhibitor
+and represents the ﬁrst kinase inhibitor successfully applied in
+treating chronic myeloid leukemia (CML).192 Subsequently, inhibi-
+tors targeting protein kinases such as mTOR, VEGFR, MAPK, EGFR,
+CDK12, and ERBB2 have been employed in treating various
+common malignant tumors.193–197 Employing gene-editing tech-
+nologies like CRISPR/Cas9 to intervene at the genetic level in
+cancer cells, whether by knocking out or modifying speciﬁc genes,
+holds the promise of hindering cancer cell proliferation and
+metastasis.198,199
+While genetic or epigenetic alterations are often cited as the
+root cause of cancer, the progression of cancer is intricately linked
+with crosstalk among tumor cells, surrounding stromal cells, and
+the extracellular matrix (ECM).200 Tumor cells promote their own
+growth and proliferation by communicating with surrounding
+normal cells, immune cells, and other cell types within the tumor
+microenvironment (TME), such as ﬁbroblasts and endothelial cells.
+Cancer cells do not manifest the disease in isolation but rather
+conscript and corrupt resident and recruited normal cell types.201
+Cancer cells can select noncancerous cells to engage in extensive
+chemical and physical interactions, with many types of cells being
+recruited into solid tumors and participating in complex interac-
+tions that enable cancer cells to invade.202 Tumor invasion is not a
+simple autonomous process of cancer cells but relies on a
+complex network of paracrine interactions.203 Moreover, this
+network
+can
+change
+as
+cancer
+cells
+disseminate.
+As
+the
+constituent
+cells
+of
+blood
+vessels
+and
+lymphatic
+vessels,
+endothelial cells not only supply tumor with nutrition and oxygen
+but also act as an “escape route” for cancer cells, enabling them to
+metastasize to distant sites.204 The intercellular communication
+between these TME components and cells is a driver of cancer
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+10
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+progression and signiﬁcantly impacts the efﬁcacy of therapeutic
+interventions.
+The study of the TME involves cell communication analysis to
+select the most interacting cell subsets and further investigate
+their mechanisms. For example, by using receptor-ligand analysis
+of different subpopulations in bladder cancer samples, one study
+showed that inﬂammatory cancer-associated ﬁbroblasts (iCAFs)
+specially interact with endothelial cells to promote angiogenesis
+and tumor proliferation, revealing the role of iCAFs in the immune
+microenvironment of bladder cancer.205 In addition, researchers
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+11
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+found the speciﬁc expression of ACKR1 in tumor endothelial cells
+is associated with unfavorable prognostic outcomes in a gastric
+cancer cohort, providing a new target for treating gastric
+cancer.206 Various characteristics of tumors are primarily regulated
+by the TME, including dysregulated ECM, sustained activation of
+proliferative signals, inhibition of suppressors and apoptosis,
+activated invasion and metastasis, metabolic dysregulation, and
+evasion of immune destruction. Furthermore, factors secreted by
+the primary tumor can modify the microenvironment of distant
+organs, rendering them conducive to subsequently colonized by
+metastatic cancer cells.207 The growth and progression of tumors
+depend on angiogenesis, with CAFs being a primary source of pro-
+angiogenic factors such as VEGF or PDGF.208,209 Tumor cells
+discharge pro-angiogenic factors into their surrounding environ-
+ment, contributing to the secretion of PDGF by endothelial cells,
+which attracts supporting cells to solidify the nascent blood
+vessels.210 The PDGF released by tumor cells directly binds to
+receptors on recruited bone marrow progenitor cells and induces
+differentiation into endothelial cells or SMCs through signal
+activation, promoting their growth and migration.211,212
+Mutations in genes and their respective signaling pathways are
+the primary consequences leading to cell apoptosis, proliferation,
+cell survival, and differentiation.213,214 A signiﬁcant number of
+genes frequently mutated in cancer are responsible for encoding
+components or targets of the PI3K–Akt and Ras-ERK pathways.
+Typically, these pathways are transiently activated in response to
+signals from growth factors or cytokines and the occupancy of
+ligands for integrin adhesion receptors. Subsequently, mutations
+in the tumor suppressor genes TSC1 and TSC2 lead to the
+overactivation of mTORC1 signaling, an important target of
+PI3K–Akt signaling.215 The transcription factor Myc is a signiﬁcant
+downstream target of the Ras-ERK signal as well as numerous
+other pathways, and it is often ampliﬁed or overexpressed in
+cancer. Furthermore, the tumor microbiome may also emerge as a
+critical factor in shaping the local immune response in the TME.216
+They can enhance anti-tumor immunity through mechanisms
+such as stimulator of interferon genes signaling activation, T and
+natural killer (NK) cell activation, tertiary lymphoid structure
+production,
+and
+presentation
+of
+tumor
+microbiome-derived
+antigens. In addition, they can reduce anti-tumor immune
+responses and promote cancer progression by increasing reactive
+oxygen species (ROS) levels, fostering an anti-inﬂammatory milieu,
+deactivating T cells, and inducing immunosuppression.217,218
+Immune checkpoint blocking (ICB) is a revolutionary cancer
+treatment that blocks the interaction of inhibitory molecules
+expressed on malignant cells with T cells, rejuvenating T cells in
+the early stages of dysfunction. The main types of ICB therapy
+include PD-1/PD-L1 inhibitors and CTLA-4 inhibitors. PD-L1 (the
+ligand of PD-1) is mainly expressed on tumor cells and tumor-
+inﬁltrating immune cells, and it functions to inhibit T-cell activity
+by binding to PD-1.219,220 The action of PD-1/PD-L1 inhibitors is to
+block the binding between PD-1 and PD-L1, restoring the immune
+cells’ ability to recognize and kill tumor cells.221 CTLA-4 inhibitors
+work by blocking the binding of CTLA-4 to the B7 molecules (B7-1
+and B7-2) on the surface of antigen-presenting cells, thereby
+relieving the inhibitory state of T cells. In addition, CTLA-4
+inhibitors can also reduce the number of regulatory T cells (Tregs)
+that highly express CTLA-4 in the tumor microenvironment by
+blocking CTLA-4, thereby relieving the immunosuppressive effects
+of Treg cells and promoting the activation and proliferation of
+effector T cells.222–225 These two types of inhibitors target different
+immune checkpoint proteins, but their mechanisms of action are
+similar, both working by blocking immune checkpoint proteins to
+activate the immune system. Recent studies have identiﬁed IGSF8
+as an innate immune checkpoint and tumor immunotherapeutic
+target.226 The newly developed IGSF8.06 antibody can block the
+inhibitory effect of IGSF8 expressed on tumors on NK cell function,
+thus stimulating NK cells to kill malignant cells with antigen
+presentation defects and stress signals.226
+Stem cells, a vital component of cell therapy, play a crucial role
+in restoring organs and tissues, holding immense promise for
+various applications. It should be noted that stem cells derived
+from different sources exhibit varying capabilities in terms of
+proliferation, migration, and differentiation. These differences
+inﬂuence their suitability for deployment in anti-tumor therapy.
+In detail, cancer stem cells (CSCs) represent a small fraction of
+cancerous cells characterized by their capacity for multifaceted
+differentiation, high self-renewal, and tumorigenicity.227 The CSC
+theory postulates the existence of a minor yet crucial cadre of self-
+perpetuating cancer cells critical in tumor metastasis, recurrence,
+and resistance to treatment.227 Nevertheless, the precision and
+biological role of CSCs are still ambiguous, prompting some
+researchers to exercise caution and regard the theory as
+contentious.228,229 Despite the ongoing debate, research on CSCs
+continues to evolve and uncover new insights.230 CSCs were
+originally extracted from cases of acute myeloid leukemia,231,232
+possibly emerging from regular tissue-speciﬁc stem cells or
+differentiated cells at the onset of the tumor, triggering survival
+pathways and perpetual proliferation.233 Mechanistic studies
+suggest dysfunction in some developmental and homeostasis
+signaling pathways could facilitate uncontrolled self-renewal and
+differentiation essential for CSC functionality.234 Such molecular
+signaling
+pathways,
+including
+Notch,17
+Hedgehog,235
+Wnt/
+β-catenin,236 PI3K/PTEN,237 JAK/STAT,238 and NF-κB,239 are known
+to regulate normal stem cell proliferation. Further changes in
+these signaling pathways will lead to the formation of CSCs and
+Fig. 3
+Examples of some diseases caused by representative abnormal CCC. CCC is an essential process that profoundly inﬂuences an
+organism’s homeostasis, development, and disease processes. When cells fail to interact correctly or misinterpret molecular information,
+diseases typically manifest. a Tumor cells invade surrounding tissues and blood vessel walls, inﬁltrate into blood vessels and spread to other
+parts of the body along the circulatory system, then interact with original tissue niche cells and migrate to distant tissues to colonize and
+grow. b Antineutrophil cytoplasmic antibody (ANCA)-associated vasculitis: A pro-inﬂammatory environment initiates the production of ANCA
+by plasma cells as well as the priming of neutrophils through cytokines. c Roles of astrocytes and microglia in neurodegeneration: Danger
+signals or invading pathogens activate microglia to release pro-inﬂammatory cytokines, which act on astrocytes, which in turn are activated to
+release pro-inﬂammatory cytokines. d Pathogenesis of rheumatoid arthritis II: The major cell types and cytokine pathways involved in joint
+destruction. e The role of ILC2s in asthma pathogenesis: Allergens, viruses or helminths provoke the release of alarmins from the damaged
+epithelium and stimulate the GATA3+/RORa+ ILC2s to express type 2 cytokines. Interleukins-4, -5, and -13 cause IgE increase from plasma cells,
+eosinophil expansion, and airway hyper-responsiveness, respectively. f Mechanism of SARS-CoV-2 viral entry: SARS-CoV-2 uses its spike (S)
+protein to adsorb and penetrate cells. S1 binds to the receptor angiotensin-converting enzyme II (ACE2) on the cell membrane through its
+receptor binding domain (RBD), and S2 mediates the fusion of the viral envelope with the host, allowing the viral nucleocapsid to enter the
+cytoplasm. g Type I vs. type II diabetes: The destruction of the islet cells prevents them from producing insulin, preventing glucose from
+entering the cells and leading to type 1 diabetes. The reduced responsiveness of the body’s cells to insulin leads to insulin resistance, and the
+inability to properly use insulin to metabolize glucose results in type 2 diabetes. h Differential roles of microglia in the developing brain:
+During healthy brain development, microglia in its homeostatic state mediates the maturation of oligodendrocyte precursor cells (OPCs) into
+myelinating mature oligodendrocytes
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+12
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+Table 1.
+FDA-approved drugs on various diseases caused by abnormal CCC
+FDA-approved drugs on various diseases caused by abnormal CCC
+Generic name of drug
+Active ingredients
+Initial
+approval date
+Molecular target
+Indication
+Cancers
+TALZENNA
+Talazoparib
+03/07/2024
+PARP
+Metastatic breast cancer
+TRUQAP
+Capivasertib
+11/16/2023
+AKT
+Breast cancer
+AUGTYRO
+Repotrectinib
+11/15/2023
+ROS1, TRKA, TRKB, and TRKC
+ROS1-positive non-small cell lung cancer
+FRUZAQLA
+Fruquintinib
+11/08/2023
+VEGFR-1, -2, -3
+Refractory metastatic colorectal cancer
+ZEJULA
+Niraparib Tosylate
+04/26/2023
+PARP-1, -2
+Epithelial ovarian, fallopian tube, or primary peritoneal cancer
+ORSERDU
+Elacestrant
+01/27/2023
+Erα
+Metastatic breast cancer
+KRAZATI
+Adagrasib
+12/12/2022
+KRAS G12C
+KRAS G12C-mutated locally advanced or metastatic non-small
+cell lung cancer (NSCLC)
+ELAHERE
+Mirvetuximab soravtansine-gynx
+11/14/2022
+FRα
+Folate receptor alpha (FRα) positive, platinum-resistant
+epithelial ovarian, fallopian tube, or primary peritoneal cancer
+IMJUDO
+Tremelimumab
+10/21/2022
+CTLA-4
+Metastatic non-small cell lung cancer (NSCLC) with no
+sensitizing epidermal growth factor receptor (EGFR) mutation
+or anaplastic lymphoma kinase (ALK) genomic tumor
+aberrations
+PLUVICTO
+Lutetium lu 177 vipivotide
+tetraxetan
+03/23/2022
+PSMA
+Prostate-speciﬁc membrane antigen (PSMA)-positive
+metastatic castration-resistant prostate cancer (mCRPC)
+OPDUALAG
+Nivolumab;Relatlimab-rmbw
+03/18/2022
+PD-1;LAG-3
+Unresectable or metastatic melanoma
+RYBREVANT
+Amivantamab-vmjw
+5/12/2021
+EGFR and MET
+EGFR exon 20 insertion-mutated non-small cell lung cancer
+indications
+CYTALUX
+Pafolacianine
+11/29/2021
+FR
+Ovarian cancer; Known or suspected cancer in the lung
+TIVDAK
+Tisotumab vedotin-tftv
+09/20/2021
+TF
+Recurrent or metastatic cervical cancer
+EXKIVITY
+Mobocertinib
+09/15/2021
+EGFR exon 20 insertion mutations
+Locally advanced or metastatic non-small cell lung cancer
+(NSCLC) with epidermal growth factor receptor (EGFR) exon
+20 insertion mutations
+JEMPERLI
+Dostarlimab-gxly
+08/17/2021
+PD-1
+Endometrial cancer; solid tumors
+WELIREG
+Belzutifan
+08/13/2021
+HIF-2α
+Von Hippel-Lindau (VHL) dosease; Pancreatic neuroendocrine
+tumors (pNET)
+LUMAKRAS
+Sotorasib
+05/28/2021
+KRAS
+KRAS G12C-mutated locally advanced or metastatic non-small
+cell lung cancer (NSCLC)
+TEPMETKO
+Tepotinib
+02/03/2021
+MET
+Metastatic non-small cell lung cancer
+ORGOVYX
+Relugolix
+12/18/2020
+Pituitary GnRH receptor
+Advanced prostate cancer
+RIABNI
+Rituximab-arrx
+12/17/2020
+CD20
+Non-Hodgkin’s Lymphoma (NHL)
+MARGENZA
+Margetuximab-cmkb
+12/16/2020
+HER2
+Metastatic HER2-positive breast cancer
+GAVRETO
+Pralsetinib
+09/04/2020
+RET
+Metastatic RET fusion-positive thyroid cancer; Metastatic
+rearranged during transfection (RET) fusion-positive non-small
+cell lung cancer
+ZEPZELCA
+Lurbinectedin
+06/15/2020
+Guanine residues
+Metastatic small cell lung cancer (SCLC)
+RETEVMO
+Selpercatinib
+05/08/2020
+RET
+Metastatic non-small cell lung cancer (NSCLC); Metastatic
+medullary thyroid cancer (MTC); Metastatic thyroid cancer;
+Metastatic solid tumors fusion
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+13
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+Table 1.
+continued
+FDA-approved drugs on various diseases caused by abnormal CCC
+Generic name of drug
+Active ingredients
+Initial
+approval date
+Molecular target
+Indication
+TABRECTA
+Capmatinib
+05/06/2020
+MET
+Metastatic non-small cell lung cancer (NSCLC)
+TRODELVY
+Sacituzumab govitecan-hziy
+04/22/2020
+Trop-2
+Metastatic breast cancer; Metastatic urothelial cancer
+TUKYSA
+Tucatinib
+04/17/2020
+HER2
+Metastatic breast cancer; Unresectable or metastatic colorectal
+cancer
+ENHERTU
+Fam-trastuzumab deruxtecan-nxki
+12/20/2019
+HER2
+HER2-positive metastatic breast cancer; HER2-low metastatic
+breast cancer; Unresectable or metastatic HER2-mutant non-
+small cell lung cancer
+PADCEV
+Enfortumab vedotin-ejfv
+12/18/2019
+Nectin-4
+Metastatic urothelial cancer (mUC)
+NUBEQA
+Darolutamide
+07/30/2019
+AR
+Non-metastatic castration-resistant prostate cancer (nmCRPC);
+Metastatic hormone-sensitive prostate cancer (mHSPC)
+RUXIENCE
+Rituximab-pvvr
+07/23/2019
+CD20
+Non-Hodgkin’s lymphoma (NHL)
+TRUXIMA
+Rituximab-abbs
+11/28/2018
+CD20
+Non-Hodgkin’s lymphoma (NHL)
+LORBRENA
+Lorlatinib
+11/02/2018
+ALK and ROS1 as well as TYK1, FER, FPS, TRKA,
+TRKB, TRKC, FAK, FAK2, and ACK
+Metastatic non-small cell lung cancer (NSCLC)
+LIBTAYO
+Cemiplimab-rwlc
+09/28/2018
+PD-1
+Cutaneous squamous cell carcinoma; Basal cell carcinoma;
+Non-small cell lung cancer
+BRAFTOVI
+Encorafenib
+06/27/2018
+BRAF V600E, as well as wild-type BRAF and CRAF
+; JNK1, JNK2, JNK3, LIMK1, LIMK2, MEK4, and
+STK36
+BRAF V600E or V600K mutation-positive unresectable or
+metastatic melanoma; BRAF V600E mutation-positive
+metastatic volorectal cancer (CRC); BRAF V600E mutation-
+positive metastatic non-small cell lung cancer (NSCLC)
+VERZENIO
+Abemaciclib
+02/26/2018
+CDK4 and CDK6
+Metastatic breast cancer
+LYNPARZA
+Olaparib
+08/17/2017
+PARP
+Ovarian cancer; Breast cancer; Pancreatic cancer; Prostate
+cancer
+RITUXAN HYCELA
+Rituximab; HYALURONIDASE
+(HUMAN RECOMBINANT)
+06/22/2017
+CD20
+Follicular lymphoma (FL) ; Diffuse large B-Cell lymphoma
+(DLBCL)
+ALUNBRIG
+Brigatinib
+04/28/2017
+ALK, ROS1, insulin-like growth factor-1 receptor
+(IGF-1R), and FLT-3 as well as EGFR deletion and
+point mutations
+Anaplastic lymphoma kinase (ALK)-positive metastatic non-
+small cell lung cancer (NSCLC)
+RUBRACA
+Rucaparib
+12/19/2016
+PARP
+BRCA-mutated recurrent ovarian cancer; BRCA-mutated
+metastatic castration-resistant prostate cancer
+TECENTRIQ
+Atezolizumab
+10/18/2016
+PD-L1
+Metastatic non-small cell lung cancer; Locally advanced or
+metastatic urothelial carcinoma
+TAGRISSO
+Osimertinib
+11/13/2015
+EGFR
+EGFR mutation-positive non-small cell lung cancer (NSCLC);
+EGFR mutation-positive metastatic NSCLC
+Cardiovascular diseases
+TRYVIO
+Aprocitentan
+03/19/2024
+ET-1
+Hypertension
+INPEFA
+Sotagliﬂozin
+05/26/2023
+SGLT2 and SGLT1
+Cardiovascular death, hospitalization for heart failure, and
+urgent heart failure
+TAVNEOS
+Avacopan
+10/07/2021
+C5aR
+Severe active antineutrophil cytoplasmic autoantibody
+(ANCA)-associated vasculitis (granulomatosis with polyangiitis
+[GPA] and microscopic polyangiitis [MPA])
+VERQUVO
+Vericiguat
+01/19/2021
+sGC
+Cardiovascular death and heart failure (HF) hospitalization
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+14
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+Table 1.
+continued
+FDA-approved drugs on various diseases caused by abnormal CCC
+Generic name of drug
+Active ingredients
+Initial
+approval date
+Molecular target
+Indication
+NEXLETOL
+Bempedoic acid
+02/21/2020
+ACL
+Primary hyperlipidemia in adults with heterozygous familial
+hypercholesterolemia (HeFH) or atherosclerotic cardiovascular
+disease
+VYNDAQEL
+Tafamidis meglumine
+05/03/2019
+TTR
+Cardiomyopathy of wild-type or hereditary transthyretin-
+mediated amyloidosis (ATTR-CM)
+GIAPREZA
+Angiotensin II
+12/21/2017
+G-protein-coupled angiotensin II receptor type 1 Increase blood pressure
+BEVYXXA
+Betrixaban
+06/23/2017
+Fxa
+Thromboembolic complications
+ENTRESTO
+Sacubitril/valsartan
+07/07/2015
+AT1
+Cardiovascular death and hospitalization for heart failure
+KENGREAL
+Cangrelor
+06/22/2015
+P2Y12
+Periprocedural myocardial infarction (MI), repeat coronary
+revascularization, and stent thrombosis (ST)
+CORLANOR
+Ivabradine hydrochloride
+04/15/2015
+HCN)
+Hospitalization for worsening heart failure
+SAVAYSA
+Edoxaban
+01/08/2015
+FXa
+Stroke and systemic embolism (SE)
+Central nervous system diseases
+WAINUA
+(AUTOINJECTOR)
+Eplontersen
+12/21/2023
+TTR mRNA
+The polyneuropathy of hereditary transthyretin-mediated
+amyloidosis
+ZAVZPRET
+Zavegepant
+03/09/2023
+CGRP
+Migraine with or without aura
+SKYCLARYS
+omaveloxolone
+02/28/2023
+Nrf2
+Friedreich’s ataxia
+LEQEMBI
+Lecanemab-irmb
+01/06/2023
+Amyloid beta plaques
+Alzheimer’s disease
+AMVUTTRA
+Vutrisiran
+06/13/2022
+TTR mRNA
+The polyneuropathy of hereditary transthyretin-mediated
+amyloidosis
+QULIPTA
+Atogepant
+09/28/2021
+CGRP
+Migraine
+ADUHELM
+Aducanumab-avwa
+06/07/2021
+Amyloid beta
+Alzheimer’s disease
+DANYELZA
+Naxitamab-gqgk
+11/25/2020
+GD2
+Relapsed or refractory high-risk neuroblastoma in the bone or
+bone marrow
+DETECTNET
+Copper Cu 64 dotatate injection
+09/03/2020
+SSTR2
+Positron emission tomography (PET) for localization of
+somatostatin receptor positive neuroendocrine tumors (NETs)
+ENSPRYNG
+Satralizumab-mwge
+08/14/2020
+IL-6
+Neuromyelitis optica spectrum disorder (NMOSD)
+EVRYSDI
+Risdiplam
+08/07/2020
+SMN2
+Spinal muscular atrophy (SMA)
+UPLIZNA
+Inebilizumab-cdon
+06/11/2020
+CD19
+Neuromyelitis optica spectrum disorder (NMOSD)
+TAUVID
+Flortaucipir F18
+05/28/2020
+Aggregated tau protein
+Alzheimer’s disease (AD)
+ONGENTYS
+Opicapone
+04/24/2020
+COMT
+Parkinson’s disease (PD)
+KOSELUGO
+Selumetinib
+04/10/2020
+MEK1/2
+Neuroﬁbromatosis type 1 (NF1)
+NURTEC ODT
+Rimegepant
+02/27/2020
+Calcitonin gene-related peptide receptor
+Migraine
+VYEPTI
+Eptinezumab-jjmr
+02/21/2020
+CGRP
+Migraine
+UBRELVY
+Ubrogepant
+12/23/2019
+Calcitonin gene-related peptide receptor
+Migraine
+REYVOW
+Lasmiditan
+10/11/2019
+5-HT1F
+Migraine
+NOURIANZ
+Istradefylline
+08/27/2019
+A2A
+Parkinson’s disease (PD)
+TEGSEDI
+Inotersen
+10/05/2018
+TTR mRNA
+Polyneuropathy of hereditary transthyretin-mediated
+amyloidosis
+AJOVY
+Fremanezumab-vfrm
+09/14/2018
+CGRP
+Migraine
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+15
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+Table 1.
+continued
+FDA-approved drugs on various diseases caused by abnormal CCC
+Generic name of drug
+Active ingredients
+Initial
+approval date
+Molecular target
+Indication
+AIMOVIG
+Erenumab-aooe
+05/17/2018
+CGRP
+Migraine
+BRINEURA
+Cerliponase alfa
+04/27/2017
+M6P/IGF2
+Infantile neuronal ceroid lipofuscinosis type 2 (CLN2)
+INGREZZA
+Valbenazine
+04/11/2017
+VMAT2
+Huntington’s disease; Tardive dyskinesia
+AUSTEDO
+Deutetrabenazine
+04/03/2017
+VMAT2
+Huntington’s disease; Tardive dyskinesia
+XADAGO
+Saﬁnamide
+03/21/2017
+MAO-B
+Parkinson’s disease (PD)
+SPINRAZA
+Nusinersen
+12/23/2016
+SMN
+Spinal muscular atrophy (SMA)
+NUPLAZID
+Pimavanserin
+04/29/2016
+serotonin 5-HT2A
+Parkinson’s disease
+BRIVIACT
+Brivaracetam
+02/18/2016
+SV2A
+Partial-onset seizures
+UNITUXIN
+Dinutuximab
+03/10/2015
+GD2
+High-risk neuroblastoma
+Autoimmune diseases
+BIMZELX
+Bimekizumab
+10/17/2023
+IL-17A, IL-17F, and interleukin 17-AF cytokines
+Moderate-to-severe plaque psoriasis
+BRIUMVI
+Ublituximab-xiiy
+12/28/2022
+CD20
+Relapsing forms of multiple sclerosis (MS)
+SOTYKTU
+Deucravacitinib
+09/09/2022
+TYK2
+Moderate-to-severe plaque psoriasis
+SPEVIGO
+Spesolimab-sbzo
+09/01/2022
+IL-36
+Generalized pustular psoriasis (GPP)
+VTAMA
+Tapinarof
+05/23/2022
+AhR
+Plaque psoriasis
+SAPHNELO
+Anifrolumab-fnia
+07/30/2021
+IFN
+Moderate-to-severe systemic lupus erythematosus (SLE)
+PONVORY
+Ponesimod
+03/18/2021
+S1P
+Multiple sclerosis (MS)
+ZEPOSIA
+Ozanimod
+03/25/2020
+S1P
+Multiple sclerosis (MS); Ulcerative colitis (UC)
+RINVOQ
+Upadacitinib
+08/16/2019
+JAK
+Rheumatoid arthritis; Psoriatic arthritis; Atopic dermatitis
+MAYZENT
+Siponimod
+03/26/2019
+S1P
+Multiple sclerosis (MS)
+CABLIVI
+Caplacizumab-yhdp
+02/06/2019
+A1-domain of vWF
+Acquired thrombotic thrombocytopenic purpura (aTTP)
+OLUMIANT
+Baricitinib
+05/31/2018
+JAK
+Moderately to severely active rheumatoid arthritis
+TREMFYA
+Guselkumab
+07/13/2017
+IL-23
+Moderate-to-severe plaque psoriasis
+KEVZARA
+Sarilumab
+05/22/2017
+IL-6
+Rheumatoid arthritis
+OCREVUS
+Ocrelizumab
+03/28/2017
+CD20
+Multiple sclerosis (MS)
+ZINBRYTA
+Daclizumab
+05/27/2016
+IL-2
+Multiple sclerosis (MS)
+TALTZ
+Ixekizumab
+03/22/2016
+IL-17A
+Moderate-to-severe plaque psoriasis; Psoriatic arthritis;
+Ankylosing spondylitis; Active non-radiographic axial
+spondyloarthritis
+COSENTYX
+Secukinumab
+01/21/2015
+IL-17A
+Moderate to severe plaque psoriasis
+Respiratory diseases
+BEYFORTUS
+Nirsevimab-alip
+07/17/2023
+RSV
+RSV lower respiratory tract disease
+PAXLOVID
+(COPACKAGED)
+Nirmatrelvir, ritonavir
+05/25/2023
+SARS-CoV-2; CYP3A
+COVID-19
+TEZSPIRE
+Tezepelumab-ekko
+12/17/2021
+TSLP
+Severe asthma
+VEKLURY
+Remdesivir
+10/22/2020
+SARS-CoV-2
+COVID-19
+XENLETA
+Lefamulin
+08/19/2019
+The A- and P-sites of the peptidyl transferase
+center (PTC) in domain V of the 23 s rRNA of the
+50 S subunit
+Community-acquired bacterial pneumonia (CABP)
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+16
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+Table 1.
+continued
+FDA-approved drugs on various diseases caused by abnormal CCC
+Generic name of drug
+Active ingredients
+Initial
+approval date
+Molecular target
+Indication
+PRETOMANID
+Pretomanid
+08/14/2019
+Mycolic acid
+Pulmonary tuberculosis (TB)
+AEMCOLO
+Rifamycin
+11/9/2018
+The beta subunit of the bacterial DNA-
+dependent RNA polymerase
+Travelers’ diarrhea
+FASENRA
+Benralizumab
+11/14/2017
+IL-5Rα
+Severe asthma
+CINQAIR
+Reslizumab
+03/23/2016
+IL-5
+Severe asthma
+NUCALA
+Mepolizumab
+11/04/2015
+IL-5
+Severe asthma; Chronic rhinosinusitis
+Infectious diseases
+PAXLOVID
+(COPACKAGED)
+Nirmatrelvir, ritonavir
+05/25/2023
+SARS-CoV-2; CYP3A
+COVID-19
+SUNLENCA
+Lenacapavir sodium
+12/22/2022
+p24
+HIV-1
+LIVTENCITY
+Maribavir
+11/23/2021
+CMV
+Post-transplant CMV infection/disease
+CABENUVA KIT
+Cabotegravir and rilpivirine
+(copackaged)
+01/21/2021
+Integrase active site; HIV-1 reverse transcriptase
+(RT)
+HIV-1
+EBANGA
+Ansuvimab-zykl
+12/21/2020
+Glycan cap and inner chalice of the EBOV GP1
+subunit
+Zaire ebolavirus
+VEKLURY
+Remdesivir
+10/22/2020
+SARS-CoV-2 RNA-dependent RNA polymerase
+(RdRp)
+COVID-19
+INMAZEB
+Atoltivimab, maftivimab, and
+odesivimab-ebgn
+10/14/2020
+Zaire ebolavirus glycoprotein (GP)
+Zaire ebolavirus
+RUKOBIA
+Fostemsavir
+07/02/2020
+Gp120 subunit within the HIV-1 envelope
+glycoprotein gp160
+HIV-1
+PIFELTRO
+Doravirine
+08/30/2018
+HIV-1 reverse transcriptase (RT)
+HIV-1
+TPOXX
+Tecovirimat
+07/13/2018
+Orthopoxvirus VP37 protein
+Human smallpox disease
+TROGARZO
+Ibalizumab-uiyk
+03/06/2018
+Domain 2 of CD4
+HIV-1
+MAVYRET
+Glecaprevir and pibrentasvir
+08/03/2017
+HCV NS3/4 A protease
+HCV
+VOSEVI
+Sofosbuvir, velpatasvir and
+voxilaprevir
+07/18/2017
+HCV NS5B RNA-dependent RNA polymerase
+HCV
+ZEPATIER
+Elbasvir and grazoprevi
+01/28/2016
+HCV NS5A; HCV NS3/4 A protease
+HCV
+DAKLINZA
+Daclatasvir
+07/24/2015
+NS5A
+HCV
+Metabolic diseases
+RIVFLOZA
+Nedosiran
+09/29/2023
+GalNAc aminosugar residues
+Primary hyperoxaluria type 1 (PH1)
+POMBILITI
+Cipaglucosidase alfa-atga
+09/28/2023
+M6P
+Late-onset Pompe disease
+BRENZAVVY
+Bexagliﬂozin
+01/20/2023
+SGLT2
+Type 2 diabetes
+TZIELD
+Teplizumab-mzwv
+11/17/2022
+CD3
+Type 1 diabetes (T1D)
+MOUNJARO
+Tirzepatide
+05/13/2022
+GIP and GLP-1
+Type 2 diabetes
+LEQVIO
+Inclisiran
+12/22/2021
+GalNAc
+Primary hyperlipidemia
+NEXVIAZYME
+Avalglucosidase alfa-ngpt
+08/06/2021
+M6P
+Late-onset pompe disease
+KERENDIA
+Finerenone
+07/09/2021
+MR
+Type 2 diabetes (T2D)
+ZEGALOGUE
+Dasiglucagon
+03/22/2021
+Hepatic glucagon receptors
+Severe hypoglycemia
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+17
+Signal Transduction and Targeted Therapy   (2024) 9:196 
+
+
+Table 1.
+continued
+FDA-approved drugs on various diseases caused by abnormal CCC
+Generic name of drug
+Active ingredients
+Initial
+approval date
+Molecular target
+Indication
+OXLUMO
+Lumasiran
+11/23/2020
+Hydroxyacid oxidase 1 (HAO1)
+Primary hyperoxaluria type 1 (PH1)
+LOKELMA
+Sodium zirconium cyclosilicate
+05/18/2018
+Potassium
+Hyperkalemia
+STEGLATRO
+Ertugliﬂozin
+12/19/2017
+SGLT2
+Type 2 diabetes
+OZEMPIC
+Semaglutide
+12/05/2017
+GLP-1
+Type 2 diabetes
+MEPSEVII
+Vestronidase alfa-vjbk
+11/15/2017
+Lysosomes
+Mucopolysaccharidosis VII
+ADLYXIN
+Lixisenatide
+07/27/2016
+GLP-1
+Type 2 diabetes
+ZURAMPIC
+Lesinurad
+12/22/2015
+URAT1; OAT4
+Hyperuricemia
+VELTASSA
+Patiromer for oral suspension
+10/21/2015
+Potassium
+Hyperkalemia
+TRESIBA
+Insulin degludec injection
+09/25/2015
+Circulating albumin
+Diabetes mellitus
+Developmental disorders
+DUVYZAT
+Givinostat
+03/21/2024
+Histone deacetylase
+Duchenne muscular dystrophy (DMD)
+AGAMREE
+Vamorolone
+10/26/2023
+Glucocorticoid receptor
+Duchenne muscular dystrophy (DMD)
+NGENLA
+Somatrogon-ghla
+06/27/2023
+GH
+Growth failure due to inadequate secretion of endogenous
+growth hormone
+VOXZOGO
+Vosoritide
+11/19/2021
+NPR-B
+Achondroplasia with open epiphyses
+SKYTROFA
+Lonapegsomatropin-tcgd
+08/25/2021
+GH
+Growth failure due to inadequate secretion of endogenous
+growth hormone (GH)
+AMONDYS 45
+Casimersen
+02/25/2021
+Exon 45 of dystrophin pre-mRNA
+Duchenne muscular dystrophy (DMD)
+SOGROYA
+Somapacitan-beco
+08/28/2020
+Dimeric GH receptor
+Growth failure due to inadequate secretion of endogenous
+growth hormone (GH)
+VILTEPSO
+Viltolarsen
+08/12/2020
+Exon 53 of dystrophin pre-mRNA
+Duchenne muscular dystrophy (DMD)
+VYONDYS 53
+Golodirsen
+12/12/2019
+Exon 53 of dystrophin pre-mRNA
+Duchenne muscular dystrophy (DMD)
+MACRILEN
+Macimorelin acetate
+12/20/2017
+Growth hormone secretagogue receptors
+Adult growth hormone deﬁciency
+EMFLAZA
+Deﬂazacort
+02/09/2017
+Glucocorticoid receptor
+Duchenne muscular dystrophy (DMD)
+EXONDYS 51
+Eteplirsen
+09/19/2016
+Exon 51 of dystrophin pre-mRNA
+Duchenne muscular dystrophy (DMD)
+The FDA-approved drugs summarized from 2015 to the present day. These drugs are mainly used to treat cancers, cardiovascular diseases, central nervous system diseases, respiratory diseases, infectious
+diseases, metabolic diseases, and developmental disorders
+Cell–cell communication: new insights and clinical. . .
+Su et al.
+18
+Signal Transduction and Targeted Therapy  (2024) 9:196 
+
+
+subsequent cancer cells. Given that, biomarkers of CSC are
+instrumental in diagnosing cancer, guiding targeted treatments,
+and forecasting disease progression since growing evidences
+indicate CSCs may play pivotal roles in critical disease stages from
+cancer initiation to metastatic spread.240
+Cardiovascular diseases
+Vital body functions such as heartbeat and blood pressure
+maintenance are under the control of the autonomic nervous
+system. The cardiovascular system respond to sympathetic
+stimulation of hormones secreted from nerve terminals by
+adrenergic receptors (ARs), which are the dominant GPCRs in
+the heart. In vascular smooth muscle, catecholamine stimulation
+causes vasoconstriction through α-ARs and causes vasodilation
+through β2-ARs. In the heart, catecholamine stimulation causes
+increased heart rate and myocardial contractility through β-AR.
+The signaling pathway most extensively researched in cardiac
+myocytes
+is
+activated
+in
+response
+to
+β-adrenergic
+stimulation.241,242
+The contraction of the heart is initiated by an elevation in
+cytosolic Ca2+ concentration within cardiac myocytes following
+their electrical activation. This process is regulated by a multitude
+of signaling pathways, which involve cascades of signaling
+molecules culminating in posttranslational modiﬁcation (PTM,
+e.g., phosphorylation) of target proteins.243 For example, CaMKII is
+a pivotal regulator of excitation-contraction coupling and Ca2+
+cycling, in charge of numerous essential cardiac functions.
+According to reports, the expression level and activity of the
+main cardiac subtype CaMKIIδ are unregulated in human heart
+failure.244,245 Chronic overactivation of CaMKII can lead to several
+other pathological symptoms, including cardiac hypertrophy,246
+diastolic and systolic dysfunction,247,248 arrhythmia,249,250, and
+ischemia/reperfusion injury.251,252 Different PTMs of CaMKII lead
+heart disease through different pathological mechanisms. In
+details, oxidized CaMKII contributes to apoptosis post-myocardial
+infarction and atrial ﬁbrillation,246 while O-GlcNAcylation con-
+tributes to hyperglycemia-induced arrhythmia.253–256 Whereas,
+nitrosylation of CaMKII confers a sex-dependent protective effect
+against harm from ischemia/reperfusion in females.257
+Cardiovascular disease encompasses a range of conditions
+impacting the heart or circulatory system, including heart failure,
+coronary
+artery
+disease,
+stroke,
+high
+blood
+pressure,
+and
+atherosclerosis. Atherosclerosis is a chronic inﬂammatory disease
+characterized by the formation of lipid-rich plaques on the walls of
+blood vessels, which can lead to myocardial infarction, stroke,
+unstable angina, and sudden cardiac death.258–260 Atherosclerosis
+is not considered simply as a lipid storage disorder any more, as
+research has reported the involvement of inﬂammatory mechan-
+isms in the progression of the disease, such as the accumulation of
+leukocytes at site of lesion.261,262 Leukocytes within the plaque
+produce growth factors, inducing SMC proliferation in advanced
+lesions.263 The ﬂow of atherosclerosis triggers NF-κB activation in
+endothelial cells, leading to the production of inﬂammatory
+cytokines, thereby establishing an environment conducive to
+atherosclerosis.264 A typical atherosclerotic plaque contains a lipid
+core, with apoptotic macrophages constituting a necrotic core.265
+Macrophage activation triggers the release of various cytokines,
+transformation into foam cells, and subsequent necrosis.266
+In addition, coronary heart disease (CHD) accounts for 42.1% of
+all cardiovascular disease deaths. High-density lipoprotein-asso-
+ciated cholesterol (HDL-C) is linked to lower risk and enhanced
+outcomes in CHD patients via CCC. Cholesterol is transported from
+peripheral tissue cells such as macrophages or vascular SMCs to
+the liver through HDL-C for recovery or excretion through bile or
+feces.267–269 ApoA-1 is the major HDL structural protein, which has
+been recognized as an anti-atherosclerotic marker for acquiring
+cholesterol and phospholipids efﬂuxed by hepatocytes and
+enterocytes.270 The deposition of cholesterol in arteries can
+initiate the atherosclerotic process, giving rise to the inﬁltration
+of multifarious cell types including macrophages, ﬁbroblasts, and
+SMCs, all of which play a role in plaque formation.267
+Studies have documented the presence of extracellular vesicles
+(EVs) within developing plaques and intimal lesions of advanced
+plaques, indicating their role at both the inception and culmina-
+tion of plaque formation in humans.271–273 EVs originating from
+foam cells have been identiﬁed as catalysts for SMC migration and
+activation of the ERK pathway, thereby exacerbating lesion
+progression.274 Research has shown that following exposure to
+an atherogenic trigger like oxidized low-density lipoprotein,
+macrophage EVs are enriched with numerous miRNAs, including
+miR-146a, miR-128, and miR-185.275 Furthermore, miR-146a has
+been
+implicated
+in
+accelerating
+atherosclerosis
+progression
+through the promotion of macrophage migration towards the
+vascular wall.275 Intercellular communication between endothelial
+cells and SMCs is crucial for maintaining vascular homeostasis. The
+transfer of miR-155 mediated by EVs from SMCs to endothelial
+cells, driven by KLF5, leads to the disruption of tight junctions and
+endothelial barrier integrity, promoting atherosclerosis.276 The
+transfer of miR-143 and miR-145 in endothelial cell EVs induced by
+KLF2 blocks the transdifferentiation of SMCs, thereby mediating a
+protective effect against atherosclerosis through endothelial cell-
+SMC communication.277
+In the heart, increasing evidence suggests the presence of CCC
+among cardiomyocytes and non-myocyte cells such as ﬁbroblasts
+and macrophages. Besides, cardiomyocytes and vascular endothe-
+lial cells share numerous systems of CCC, including direct
+communication and paracrine signals such as pansexins, hemi-
+channels, and purinergic signals. It is reasonable to believe that
+they can regulate each other’s behavior through CCC. For
+example, vascular dysfunction is related to arrhythmia.278–280
+With our increasing understanding of CCC, new opportunities will
+emerge to promote the treatment of various cardiovascular
+diseases.
+Central nervous system diseases
+Almost one-sixth of the people in the world suffer from central
+nervous system (CNS) diseases, ranging from mild nerve injury to
+coma and even brain death.281 The main cell type in neural tissue
+is neurons. The primary function of neurons is to be capable of
+communicating with each other and with other cell types. The
+axons of neurons release contents to synaptic intervals through
+exocytosis, transmitting these chemical neurotransmitters to
+receptors on another postsynaptic cell.282
+Exosomes are active participants in CCC, being released by a
+variety of cell types within the body, including neurons. Present in
+diverse body ﬂuids like blood, cerebrospinal ﬂuid, alveolar lavage
+ﬂuid, ascites, and amniotic ﬂuid, exosomes inﬂuence other cells,
+triggering a range of physiological or pathological responses.283 For
+example, exosomes secreted by oligodendroglioma cells can
+induce neuronal death. In conditions such as amyotrophic lateral
+sclerosis (ALS), frontotemporal dementia (FTD), FTD-ALS, tau protein
+disease, Parkinson’s disease (PD), and Alzheimer’s disease (AD),
+exosomes migrate through the blood and cerebrospinal ﬂuid,
+carrying misfolded proteins or pro-inﬂammatory molecules.284–286
+Exosomes released by neurons can be internalized by other
+neurons, indicating a novel avenue for interneuronal communica-
+tion.
+
+Question:
+In this review, which statements is correct?
+
+A. In CCC history, researcher found that the growth factor could facilitate the growth of cells and given the fact that platelet and other cells could release growth factors. Therefore, cancer cells’ growth mainly is stimulated by other cells signals.
+B. In CCC mechanism, it mentioned that the endocrine cells regulate the secretion by detecting the concentration of specific substances. Therefore, by employing single cell seq technique, researcher could analyze how the endocrine cells could be activated by glucose, electrolytes, and other hormones by specific computational tools mentioned in this article.
+C. This article summarizes the computational tools for analyzing the cell-cell interaction. The tools in permutation-based tool can generally classified into two categories (discrete and continuous) based on the methods to evaluate the interactions.
+D. The summary part mentioned the potential improvements by including multi-omics methods. Therefore, to better understand the CCC mechanism, researcher could involve transcriptomics, viriomics, and etc.
+
+Select the correct answer.

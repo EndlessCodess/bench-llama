@@ -1,0 +1,4 @@
+Assemble a LEGO model.
+
+Input:
+LEGO model: Deluxe Fire Station

@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+Roslyn has ten boxes. Five of the boxes contain pencils, four of the boxes contain pens, and two of the boxes contain both pens and pencils. How many boxes contain neither pens nor pencils?

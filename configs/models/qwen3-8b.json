@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "qwen3-8b",
+  "description": "Qwen3-8B BF16 benchmark profile with its paired DFlash draft",
+  "processed_dir": "data/processed/qwen3-8b",
+  "model_key_aliases": {
+    "f16": "bf16",
+    "dflash_f16": "dflash_bf16"
+  },
+  "runtime_overrides": {
+    "n_ctx": 40960,
+    "draft_n_max": 15,
+    "draft_n_gpu_layers": 99
+  },
+  "metadata": {
+    "target_family": "Qwen3-8B",
+    "target_precision": "BF16",
+    "target_train_context": 40960,
+    "draft_family": "Qwen3-8B-DFlash-b16",
+    "draft_block_size": 16
+  }
+}

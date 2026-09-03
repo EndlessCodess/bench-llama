@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+What is $\left(4\dfrac{5}{8}\right)^{55} \cdot \left(\dfrac{8}{37}\right)^{55}$?

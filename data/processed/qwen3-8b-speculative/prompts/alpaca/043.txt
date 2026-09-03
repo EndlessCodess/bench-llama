@@ -1,0 +1,9 @@
+Match each sentence with the corresponding definition.
+
+Input:
+A. Encyclopedia
+B. Thesaurus
+C. Dictionary
+1. A collection of words and their definitions 
+2. A reference work with information about a particular subject
+3. A book of synonyms and antonyms

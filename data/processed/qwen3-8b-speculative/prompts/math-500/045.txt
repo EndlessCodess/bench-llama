@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+A class of 30 students recently took a test.  If 20 students scored 80, 8 students scored 90, and 2 students scored 100, then what was the class average (the mean) on this test?

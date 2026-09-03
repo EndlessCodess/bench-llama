@@ -1,0 +1,130 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+{"zhuang_word": "a", "zh_meanings": ["乌鸦", "呀", "呢"], "source": "https://zha_zho.en-academic.com/001", "zh_meanings_full": ["乌鸦 [与roegga同]", "呀 Caezgya vaiq daeuj ～！大家快来呀!", "(【见】 le) 呢 [语气词, 表示疑问]"]}
+{"zhuang_word": "adgyad", "zh_meanings": ["懒洋洋的"], "source": "https://zha_zho.en-academic.com/002", "zh_meanings_full": ["(【见】 hwetraez) 懒洋洋的"]}
+{"zhuang_word": "ae", "zh_meanings": ["咳嗽", "男的人称量词"], "source": "https://zha_zho.en-academic.com/003", "zh_meanings_full": ["咳嗽", "【方言】 男的人称量词 [多用于成年男子] Miz sam～. 有三个男人"]}
+{"zhuang_word": "ae'gyo'gyo", "zh_meanings": ["咳得很厉害, 喉头里有痰塞住的咳声"], "source": "https://zha_zho.en-academic.com/004", "zh_meanings_full": ["【方言】 咳得很厉害, 喉头里有痰塞住的咳声"]}
+{"zhuang_word": "ae'ngab", "zh_meanings": ["哮喘, 气喘"], "source": "https://zha_zho.en-academic.com/005", "zh_meanings_full": ["(【见】 haebgyawh) 哮喘, 气喘"]}
+{"zhuang_word": "aeeb'eb", "zh_meanings": ["轻而慢地咳"], "source": "https://zha_zho.en-academic.com/006", "zh_meanings_full": ["【方言】 轻而慢地咳"]}
+{"zhuang_word": "aegwj", "zh_meanings": ["尽管, 只管"], "source": "https://zha_zho.en-academic.com/007", "zh_meanings_full": ["(【见】 guenj) 尽管, 只管"]}
+{"zhuang_word": "aek", "zh_meanings": ["胸; 胸膛; 胸怀"], "source": "https://zha_zho.en-academic.com/008", "zh_meanings_full": ["【方言】 najaek; bakaek 胸; 胸膛; 胸怀"]}
+{"zhuang_word": "aekbuh", "zh_meanings": ["衣襟"], "source": "https://zha_zho.en-academic.com/009", "zh_meanings_full": ["衣襟"]}
+{"zhuang_word": "aekdiuq", "zh_meanings": ["心惊; 胆颤; 心悸; 心跳"], "source": "https://zha_zho.en-academic.com/010", "zh_meanings_full": ["(【见】 simdiuq) 心惊; 胆颤; 心悸; 心跳"]}
+{"zhuang_word": "aekex", "zh_meanings": ["蛤蚧"], "source": "https://zha_zho.en-academic.com/011", "zh_meanings_full": ["【方言】 aekez; gaekgex; daekdo 蛤蚧"]}
+{"zhuang_word": "aekez", "zh_meanings": ["蛤蚧"], "source": "https://zha_zho.en-academic.com/012", "zh_meanings_full": ["(【见】 aekex) 蛤蚧"]}
+{"zhuang_word": "aekgaeb", "zh_meanings": ["胸怀狭窄"], "source": "https://zha_zho.en-academic.com/013", "zh_meanings_full": ["胸怀狭窄"]}
+{"zhuang_word": "aeknaj", "zh_meanings": ["对小孩迁就"], "source": "https://zha_zho.en-academic.com/014", "zh_meanings_full": ["【方言】 对小孩迁就"]}
+{"zhuang_word": "aem", "zh_meanings": ["茁壮; 肥壮"], "source": "https://zha_zho.en-academic.com/015", "zh_meanings_full": ["(【见】 noengq) 茁壮; 肥壮 [指小孩和动物]"]}
+{"zhuang_word": "aemcangz", "zh_meanings": ["窝藏; 暗藏; 隐藏"], "source": "https://zha_zho.en-academic.com/016", "zh_meanings_full": ["(【见】 cangz; amqcangz) 窝藏; 暗藏; 隐藏"]}
+{"zhuang_word": "aemj", "zh_meanings": ["稀饭", "不"], "source": "https://zha_zho.en-academic.com/017", "zh_meanings_full": ["(【见】 souh) 稀饭", "(【见】 mbouj) 不"]}
+{"zhuang_word": "aemq", "zh_meanings": ["背", "披"], "source": "https://zha_zho.en-academic.com/018", "zh_meanings_full": ["【方言】 maq; dex; neng; naenj 背 ～lwgnyez 背小孩", "(【见】 longz) 披 (衣服)"]}
+{"zhuang_word": "aen", "zh_meanings": ["个", "支", "张", "只", "辆", "座; 幢", "盏", "块", "恩惠"], "source": "https://zha_zho.en-academic.com/019", "zh_meanings_full": ["【方言】 ngeq", "1. 张 (桌子, 椅子) song～daiz 两张桌子", "2. 个 (蛋, 漏斗、果子) song～gyaeq 两个蛋", "3. 盏 song～daeng 两盏灯", "4. 座; 幢 ～ranz ndeu 一座房子", "5. 只 (船)", "6. 辆 (车)", "(【见】 ci) 支 (枪)", "【方言】 块 (畲地)", "恩惠"]}
+{"zhuang_word": "aen'gvaekfeiz", "zh_meanings": ["火镰"], "source": "https://zha_zho.en-academic.com/020", "zh_meanings_full": ["(【见】 lwggvaek) 火镰"]}
+{"zhuang_word": "aen'gveuj", "zh_meanings": ["旋儿"], "source": "https://zha_zho.en-academic.com/021", "zh_meanings_full": ["(【见】 cuenh) 旋儿"]}
+{"zhuang_word": "aen'gyangj", "zh_meanings": ["大箩筐"], "source": "https://zha_zho.en-academic.com/022", "zh_meanings_full": ["(【见】 laep) 大箩筐"]}
+{"zhuang_word": "aenbaed", "zh_meanings": ["神位; 神堂"], "source": "https://zha_zho.en-academic.com/023", "zh_meanings_full": ["(【见】 ham) 神位; 神堂"]}
+{"zhuang_word": "aenbaez", "zh_meanings": ["平常; 日常; 平时; 往常", "每次"], "source": "https://zha_zho.en-academic.com/024", "zh_meanings_full": ["(【见】 baeznaengz) 平常; 日常; 平时; 往常", "【方言】 每次"]}
+{"zhuang_word": "aenbinengh", "zh_meanings": ["鞦韆"], "source": "https://zha_zho.en-academic.com/025", "zh_meanings_full": ["(【见】 aennungxnengh) 鞦韆"]}
+{"zhuang_word": "aenbix", "zh_meanings": ["胎衣; 胞衣"], "source": "https://zha_zho.en-academic.com/026", "zh_meanings_full": ["(【见】 bauei) 胎衣; 胞衣"]}
+{"zhuang_word": "aenboemh", "zh_meanings": ["小坛子"], "source": "https://zha_zho.en-academic.com/027", "zh_meanings_full": ["【方言】 小坛子"]}
+{"zhuang_word": "aenbou", "zh_meanings": ["沙煲"], "source": "https://zha_zho.en-academic.com/028", "zh_meanings_full": ["(【见】 cabau) 沙煲"]}
+{"zhuang_word": "aenbyazyiz", "zh_meanings": ["挖花生用的铁制小齿耙"], "source": "https://zha_zho.en-academic.com/029", "zh_meanings_full": ["(【见】 fagnyauj) 挖花生用的铁制小齿耙"]}
+{"zhuang_word": "aencaet", "zh_meanings": ["塞子"], "source": "https://zha_zho.en-academic.com/030", "zh_meanings_full": ["(【见】 lwgsaek) 塞子"]}
+{"zhuang_word": "aencamj", "zh_meanings": ["罩子"], "source": "https://zha_zho.en-academic.com/031", "zh_meanings_full": ["罩子 [指罩鸡, 鸭用的]"]}
+{"zhuang_word": "aencaqfaenj", "zh_meanings": ["榨米粉的工具"], "source": "https://zha_zho.en-academic.com/032", "zh_meanings_full": ["(【见】 caeufaenj) 榨米粉的工具"]}
+{"zhuang_word": "aencaqyouz", "zh_meanings": ["士榨油机"], "source": "https://zha_zho.en-academic.com/033", "zh_meanings_full": ["(【见】 youzcaq) 士榨油机"]}
+{"zhuang_word": "aencek", "zh_meanings": ["笼"], "source": "https://zha_zho.en-academic.com/034", "zh_meanings_full": ["(【见】 rungz) (鸡、鸭) 笼"]}
+{"zhuang_word": "aencibuh", "zh_meanings": ["缝纫机"], "source": "https://zha_zho.en-academic.com/035", "zh_meanings_full": ["缝纫机"]}
+{"zhuang_word": "aencingz", "zh_meanings": ["恩情"], "source": "https://zha_zho.en-academic.com/036", "zh_meanings_full": ["恩情"]}
+{"zhuang_word": "aencoeng", "zh_meanings": ["髻网"], "source": "https://zha_zho.en-academic.com/037", "zh_meanings_full": ["【方言】 gyaeujsaeng; doenggyauj 髻网"]}
+{"zhuang_word": "aencouq", "zh_meanings": ["挑鱼花用的篓子"], "source": "https://zha_zho.en-academic.com/038", "zh_meanings_full": ["【方言】 couqbya 挑鱼花用的篓子"]}
+{"zhuang_word": "aencung", "zh_meanings": ["坛子"], "source": "https://zha_zho.en-academic.com/039", "zh_meanings_full": ["【方言】 坛子"]}
+{"zhuang_word": "aencux", "zh_meanings": ["榷, 布纽扣"], "source": "https://zha_zho.en-academic.com/040", "zh_meanings_full": ["(【见】 gaetnuk) 榷, 布纽扣 [带圈的]"]}
+{"zhuang_word": "aendaengjgu", "zh_meanings": ["藤圈, 篾圈"], "source": "https://zha_zho.en-academic.com/041", "zh_meanings_full": ["(【见】 doj) 藤圈, 篾圈"]}
+{"zhuang_word": "aendaez", "zh_meanings": ["勺"], "source": "https://zha_zho.en-academic.com/042", "zh_meanings_full": ["(【见】 cok) (油, 酒) 勺"]}
+{"zhuang_word": "aendak", "zh_meanings": ["托盘"], "source": "https://zha_zho.en-academic.com/043", "zh_meanings_full": ["托盘"]}
+{"zhuang_word": "aendangq", "zh_meanings": ["扒谷子用的无齿木耙"], "source": "https://zha_zho.en-academic.com/044", "zh_meanings_full": ["(【见】 daengqgyauz) 扒谷子用的无齿木耙"]}
+{"zhuang_word": "aendojhoh", "zh_meanings": ["长喇叭"], "source": "https://zha_zho.en-academic.com/045", "zh_meanings_full": ["【方言】 长喇叭 [一种管乐器]"]}
+{"zhuang_word": "aenduengqnengh", "zh_meanings": ["鞦韆"], "source": "https://zha_zho.en-academic.com/046", "zh_meanings_full": ["(【见】 aennungxnengh) 鞦韆"]}
+{"zhuang_word": "aeng", "zh_meanings": ["闷热", "轻佻", "逞能", "噙"], "source": "https://zha_zho.en-academic.com/047", "zh_meanings_full": ["【方言】 hwngq; gug; oem; oem 闷热", "【方言】", "1. 轻佻 Dah neix ～lai. 这女孩作风轻佻。", "2. 逞能 Mwngz gaej～lai。 你不要逞能。", "【方言】 噙 [眼里含着泪]"]}
+{"zhuang_word": "aengab", "zh_meanings": ["夹棍"], "source": "https://zha_zho.en-academic.com/048", "zh_meanings_full": ["夹棍 [刑具之一]"]}
+{"zhuang_word": "aengaen", "zh_meanings": ["量米简", "升"], "source": "https://zha_zho.en-academic.com/049", "zh_meanings_full": ["(【见】 swng)", "1. 量米简 [比mbaek大, 能装一斤左右]", "2. 升"]}
+{"zhuang_word": "aengaep", "zh_meanings": ["铁猫"], "source": "https://zha_zho.en-academic.com/050", "zh_meanings_full": ["(【见】 dietmeuz) 铁猫 [捕鼠或野兽的工具]"]}
+{"zhuang_word": "aengaepnyaen", "zh_meanings": ["铁猫"], "source": "https://zha_zho.en-academic.com/051", "zh_meanings_full": ["(【见】 dietmeuz) 铁猫 [捕野兽的工具]"]}
+{"zhuang_word": "aengaet", "zh_meanings": ["扣子"], "source": "https://zha_zho.en-academic.com/052", "zh_meanings_full": ["(【见】 lwggaet) 扣子"]}
+{"zhuang_word": "aengaq", "zh_meanings": ["架子"], "source": "https://zha_zho.en-academic.com/053", "zh_meanings_full": ["架子"]}
+{"zhuang_word": "aengaujfaiq", "zh_meanings": ["土扎棉机"], "source": "https://zha_zho.en-academic.com/054", "zh_meanings_full": ["【方言】 ngad 土扎棉机"]}
+{"zhuang_word": "aengei", "zh_meanings": ["饭箕"], "source": "https://zha_zho.en-academic.com/055", "zh_meanings_full": ["(【见】 lahleiz) 饭箕 [盛米、饭用的]"]}
+{"zhuang_word": "aengien", "zh_meanings": ["圈子"], "source": "https://zha_zho.en-academic.com/056", "zh_meanings_full": ["圈子"]}
+{"zhuang_word": "aengiengh", "zh_meanings": ["鱼篓"], "source": "https://zha_zho.en-academic.com/057", "zh_meanings_full": ["(【见】 rieng) 鱼篓"]}
+{"zhuang_word": "aengj", "zh_meanings": ["打"], "source": "https://zha_zho.en-academic.com/058", "zh_meanings_full": ["(【见】 moeb) 打"]}
+{"zhuang_word": "aengjgwxlinxvaiz", "zh_meanings": ["春菜"], "source": "https://zha_zho.en-academic.com/059", "zh_meanings_full": ["【方言】 春菜"]}
+{"zhuang_word": "aengjgyaengj", "zh_meanings": ["慌张", "为难", "犹豫"], "source": "https://zha_zho.en-academic.com/060", "zh_meanings_full": ["(【见】 muengzsueng) 慌张", "(【见】 veiznanz)", "1. 为难", "2. 犹豫"]}
+{"zhuang_word": "aengjsaeng", "zh_meanings": ["嬉皮笑脸"], "source": "https://zha_zho.en-academic.com/061", "zh_meanings_full": ["【方言】 嬉皮笑脸"]}
+{"zhuang_word": "aengq", "zh_meanings": ["闭气使力"], "source": "https://zha_zho.en-academic.com/062", "zh_meanings_full": ["【方言】 mbingq (大便时) 闭气使力"]}
+{"zhuang_word": "aengungfaiq", "zh_meanings": ["弹棉弓"], "source": "https://zha_zho.en-academic.com/063", "zh_meanings_full": ["弹棉弓"]}
+{"zhuang_word": "aenhaemh", "zh_meanings": ["每晚"], "source": "https://zha_zho.en-academic.com/064", "zh_meanings_full": ["【方言】 每晚"]}
+{"zhuang_word": "aenhujliemz", "zh_meanings": ["火镰"], "source": "https://zha_zho.en-academic.com/065", "zh_meanings_full": ["(【见】 lwggvaek) 火镰"]}
+{"zhuang_word": "aenlaeuh", "zh_meanings": ["漏斗"], "source": "https://zha_zho.en-academic.com/066", "zh_meanings_full": ["【方言】 haeuxlaeuh; couqlaeuh; laeuhdouj 漏斗"]}
+{"zhuang_word": "aenlakfaiq", "zh_meanings": ["绕纱架"], "source": "https://zha_zho.en-academic.com/067", "zh_meanings_full": ["绕纱架 [用手绕上的]"]}
+{"zhuang_word": "aenlingj", "zh_meanings": ["车轮的铁圈"], "source": "https://zha_zho.en-academic.com/068", "zh_meanings_full": ["车轮的铁圈"]}
+{"zhuang_word": "aenluz", "zh_meanings": ["旋儿"], "source": "https://zha_zho.en-academic.com/069", "zh_meanings_full": ["(【见】 cuenh) 旋儿"]}
+{"zhuang_word": "aenlwt", "zh_meanings": ["卷纱用的小竹筒"], "source": "https://zha_zho.en-academic.com/070", "zh_meanings_full": ["【方言】 lot 卷纱用的小竹筒"]}
+{"zhuang_word": "aenmban", "zh_meanings": ["大簸箕"], "source": "https://zha_zho.en-academic.com/071", "zh_meanings_full": ["【方言】 大簸箕"]}
+{"zhuang_word": "aenmbuek", "zh_meanings": ["水瓢"], "source": "https://zha_zho.en-academic.com/072", "zh_meanings_full": ["(【见】 rok) 水瓢 [用竹筒做成的长柄瓢]"]}
+{"zhuang_word": "aenmyok", "zh_meanings": ["花朵"], "source": "https://zha_zho.en-academic.com/073", "zh_meanings_full": ["(【见】 dujva) 花朵"]}
+{"zhuang_word": "aennaw", "zh_meanings": ["每早"], "source": "https://zha_zho.en-academic.com/074", "zh_meanings_full": ["【方言】 每早"]}
+{"zhuang_word": "aennganz", "zh_meanings": ["水碾"], "source": "https://zha_zho.en-academic.com/075", "zh_meanings_full": ["(【见】 nienjraemx; suijnenj) 水碾"]}
+{"zhuang_word": "aenngoenz", "zh_meanings": ["每天; 每日; 日常"], "source": "https://zha_zho.en-academic.com/076", "zh_meanings_full": ["【方言】 每天; 每日; 日常"]}
+{"zhuang_word": "aennienj", "zh_meanings": ["水碾"], "source": "https://zha_zho.en-academic.com/077", "zh_meanings_full": ["(【见】 nienjraemx; suijnenj) 水碾"]}
+{"zhuang_word": "aennungxnengh", "zh_meanings": ["鞦韆"], "source": "https://zha_zho.en-academic.com/078", "zh_meanings_full": ["【方言】 aenbinengh; aenduengqnengh; yungxyaz 鞦韆"]}
+{"zhuang_word": "aennyag", "zh_meanings": ["横鼓"], "source": "https://zha_zho.en-academic.com/079", "zh_meanings_full": ["【方言】 横鼓"]}
+{"zhuang_word": "aenq", "zh_meanings": ["细水长流", "估计; 酌量", "有计划地节制"], "source": "https://zha_zho.en-academic.com/080", "zh_meanings_full": ["细水长流", "【方言】 cienghliengh; amq; nanq", "1. 估计; 酌量", "2. 有计划地节制"]}
+{"zhuang_word": "aenqseiz", "zh_meanings": ["按时; 如期"], "source": "https://zha_zho.en-academic.com/081", "zh_meanings_full": ["(【见】 ciuqseiz) 按时; 如期"]}
+{"zhuang_word": "aenrengq", "zh_meanings": ["在豆科植物根部形成的根瘤"], "source": "https://zha_zho.en-academic.com/082", "zh_meanings_full": ["在豆科植物根部形成的根瘤"]}
+{"zhuang_word": "aensujfwngz", "zh_meanings": ["手铐"], "source": "https://zha_zho.en-academic.com/083", "zh_meanings_full": ["【方言】 手铐"]}
+{"zhuang_word": "aenvaenz", "zh_meanings": ["往常; 往日; 往时"], "source": "https://zha_zho.en-academic.com/084", "zh_meanings_full": ["(【见】 ciengzngoenz) 往常; 往日; 往时"]}
+{"zhuang_word": "aenvanlouh", "zh_meanings": ["旋涡"], "source": "https://zha_zho.en-academic.com/085", "zh_meanings_full": ["【方言】 旋涡"]}
+{"zhuang_word": "aenvih", "zh_meanings": ["因为"], "source": "https://zha_zho.en-academic.com/086", "zh_meanings_full": ["因为"]}
+{"zhuang_word": "aenvonz", "zh_meanings": ["日子"], "source": "https://zha_zho.en-academic.com/087", "zh_meanings_full": ["(【见】 ndwenngoenz) 日子"]}
+{"zhuang_word": "aenvuek", "zh_meanings": ["水瓢"], "source": "https://zha_zho.en-academic.com/088", "zh_meanings_full": ["(【见】 rok) 水瓢 [用竹筒做成的长柄瓢]"]}
+{"zhuang_word": "aenvunz", "zh_meanings": ["恩人"], "source": "https://zha_zho.en-academic.com/089", "zh_meanings_full": ["恩人"]}
+{"zhuang_word": "aenyienh", "zh_meanings": ["砚台"], "source": "https://zha_zho.en-academic.com/090", "zh_meanings_full": ["(【见】 maegyienh) 砚台"]}
+{"zhuang_word": "aenyienz", "zh_meanings": ["姻缘"], "source": "https://zha_zho.en-academic.com/091", "zh_meanings_full": ["姻缘"]}
+{"zhuang_word": "aenyok", "zh_meanings": ["水瓢"], "source": "https://zha_zho.en-academic.com/092", "zh_meanings_full": ["(【见】 rok) 水瓢 [用竹筒做成的长柄瓢]"]}
+{"zhuang_word": "aep", "zh_meanings": ["胡说; 胡诌; 发", "狗追捕鸟兽时的叫声", "用狗围猎野兽"], "source": "https://zha_zho.en-academic.com/093", "zh_meanings_full": ["(【见】 hoed) 胡说; 胡诌; 发 (牢骚)", "1. 狗追捕鸟兽时的叫声", "2. 用狗围猎野兽"]}
+{"zhuang_word": "aeu", "zh_meanings": ["要", "拿; 取", "用", "娶", "采取⋯⋯的方法"], "source": "https://zha_zho.en-academic.com/094", "zh_meanings_full": ["1. 要", "2. 拿; 取", "3. 用", "4. 娶", "5. 采取⋯⋯的方法 [用在动词后, 表示采取某种方式]"]}
+{"zhuang_word": "aeubawx", "zh_meanings": ["结婚 ; 娶妻"], "source": "https://zha_zho.en-academic.com/095", "zh_meanings_full": ["(【见】 aeuyah) 结婚 [指男方] ; 娶妻"]}
+{"zhuang_word": "aeubaz", "zh_meanings": ["结婚 ; 娶妻"], "source": "https://zha_zho.en-academic.com/096", "zh_meanings_full": ["(【见】 aeuyah) 结婚 [指男方] ; 娶妻"]}
+{"zhuang_word": "aeuboux", "zh_meanings": ["配种"], "source": "https://zha_zho.en-academic.com/097", "zh_meanings_full": ["配种 [指家禽]"]}
+{"zhuang_word": "aeucungj", "zh_meanings": ["配种"], "source": "https://zha_zho.en-academic.com/098", "zh_meanings_full": ["配种"]}
+{"zhuang_word": "aeueiq", "zh_meanings": ["尊重"], "source": "https://zha_zho.en-academic.com/099", "zh_meanings_full": ["尊重 ～bohmeh 尊重父母"]}
+{"zhuang_word": "aeufaen", "zh_meanings": ["交配"], "source": "https://zha_zho.en-academic.com/100", "zh_meanings_full": ["【方言】 aeugoeng; aeuvaen 交配 [指牲畜]"]}
+{"zhuang_word": "aeugoeng", "zh_meanings": ["交配"], "source": "https://zha_zho.en-academic.com/101", "zh_meanings_full": ["(【见】 aeufaen) 交配 [指牲畜]"]}
+{"zhuang_word": "aeuj", "zh_meanings": ["紫", "果子过度成熟", "火烟熏", "火烟; 烟雾"], "source": "https://zha_zho.en-academic.com/102", "zh_meanings_full": ["【方言】 cij 紫 (色)", "(【见】 ngaeux) 果子过度成熟", "(【见】 oenq) 火烟熏 (人)", "(【见】 hoenz) 火烟; 烟雾"]}
+{"zhuang_word": "aeulangz", "zh_meanings": ["配种"], "source": "https://zha_zho.en-academic.com/103", "zh_meanings_full": ["【方言】 dohmaq 配种 [指猪]"]}
+{"zhuang_word": "aeumaex", "zh_meanings": ["结婚, 娶妻"], "source": "https://zha_zho.en-academic.com/104", "zh_meanings_full": ["(【见】 aeuyah) 结婚, 娶妻"]}
+{"zhuang_word": "aeumeh", "zh_meanings": ["结婚; 娶妻"], "source": "https://zha_zho.en-academic.com/105", "zh_meanings_full": ["(【见】 aeuyah) 结婚; 娶妻"]}
+{"zhuang_word": "aeunaj", "zh_meanings": ["要脸, 留面子"], "source": "https://zha_zho.en-academic.com/106", "zh_meanings_full": ["要脸, 留面子"]}
+{"zhuang_word": "aeunangz", "zh_meanings": ["结婚, 娶妻"], "source": "https://zha_zho.en-academic.com/107", "zh_meanings_full": ["(【见】 aeuyah) 结婚, 娶妻"]}
+{"zhuang_word": "aeuq", "zh_meanings": ["炖", "熏"], "source": "https://zha_zho.en-academic.com/108", "zh_meanings_full": ["【方言】 omj 炖", "(【见】 oemq) 熏"]}
+{"zhuang_word": "aeuqheiq", "zh_meanings": ["心烦; 忧心", "怄气"], "source": "https://zha_zho.en-academic.com/109", "zh_meanings_full": ["(【见】 dauzheiq) 心烦; 忧心", "怄气"]}
+{"zhuang_word": "aeuqnaeuq", "zh_meanings": ["懊恼"], "source": "https://zha_zho.en-academic.com/110", "zh_meanings_full": ["懊恼"]}
+{"zhuang_word": "aeuvaen", "zh_meanings": ["交配"], "source": "https://zha_zho.en-academic.com/111", "zh_meanings_full": ["(【见】 aeufaen) 交配 [指牲畜]"]}
+{"zhuang_word": "aeuya", "zh_meanings": ["妇女用线箝拔汗毛的动作"], "source": "https://zha_zho.en-academic.com/112", "zh_meanings_full": ["(【见】 gyaet) 妇女用线箝拔汗毛的动作"]}
+{"zhuang_word": "aeuyah", "zh_meanings": ["结婚 ; 娶妻"], "source": "https://zha_zho.en-academic.com/113", "zh_meanings_full": ["【方言】 aeumeh; aeumaex; aeunangz; aeubaz; aeubawx 结婚 [指男方] ; 娶妻"]}
+{"zhuang_word": "aevunz", "zh_meanings": ["别人; 人家"], "source": "https://zha_zho.en-academic.com/114", "zh_meanings_full": ["(【见】 bouxwnq) 别人; 人家"]}
+{"zhuang_word": "aeya", "zh_meanings": ["唉呀, 哎呀"], "source": "https://zha_zho.en-academic.com/115", "zh_meanings_full": ["唉呀, 哎呀 [表示感叹]"]}
+{"zhuang_word": "aeyo", "zh_meanings": ["哎哟"], "source": "https://zha_zho.en-academic.com/116", "zh_meanings_full": ["哎哟 ～! In raixcaix. 哎哟!痛得很。"]}
+{"zhuang_word": "ah", "zh_meanings": ["对
+
+Question:
+You are given a translation textbook from Zhuang to Chinese, how to translate the following sentence in Zhuang into Chinese: "Gienh saeh gou ceiq muengh ndeu dwg gijmaz ne, couh dwg hawj gyoengq beixnuengx gwn donq noh imq ndeu, baezlaeng caiqlij ndaej seizseiz gwn noh dem."?
+
+A. 我最希望的事，就是让乡亲们能吃上一顿好肉，以后也要保证他们经常能吃到肉。
+B. 我最想完成的事情，就是让村民们能够吃上一顿美味的肉，并且保证他们往后都不会缺少肉吃。
+C. 我最希望的事是什么呢，就是让乡亲们能吃上一顿美味的好肉，并且保证他们往后都不会缺少肉吃。
+D. 我很期盼的一件事是什么呢，就是让乡亲们饱餐一顿肉，并且今后能够经常吃肉。
+
+Select the correct answer.

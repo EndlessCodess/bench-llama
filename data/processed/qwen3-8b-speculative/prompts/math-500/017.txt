@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+What integer $x$ satisfies $\frac{1}{4}<\frac{x}{7}<\frac{1}{3}$?

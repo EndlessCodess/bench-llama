@@ -1,0 +1,4 @@
+Given an input text, change the tense from present to past
+
+Input:
+She runs every morning

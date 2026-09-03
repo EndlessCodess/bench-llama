@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+Let $p(x)$ be a monic polynomial of degree 4.  Three of the roots of $p(x)$ are 1, 2, and 3.  Find $p(0) + p(4).$

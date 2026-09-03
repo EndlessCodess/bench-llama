@@ -1,0 +1,37 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+{"zhuang_word": "a", "zh_meanings": ["乌鸦", "呀", "呢"], "source": "https://zha_zho.en-academic.com/001", "zh_meanings_full": ["乌鸦 [与roegga同]", "呀 Caezgya vaiq daeuj ～！大家快来呀!", "(【见】 le) 呢 [语气词, 表示疑问]"]}
+{"zhuang_word": "adgyad", "zh_meanings": ["懒洋洋的"], "source": "https://zha_zho.en-academic.com/002", "zh_meanings_full": ["(【见】 hwetraez) 懒洋洋的"]}
+{"zhuang_word": "ae", "zh_meanings": ["咳嗽", "男的人称量词"], "source": "https://zha_zho.en-academic.com/003", "zh_meanings_full": ["咳嗽", "【方言】 男的人称量词 [多用于成年男子] Miz sam～. 有三个男人"]}
+{"zhuang_word": "ae'gyo'gyo", "zh_meanings": ["咳得很厉害, 喉头里有痰塞住的咳声"], "source": "https://zha_zho.en-academic.com/004", "zh_meanings_full": ["【方言】 咳得很厉害, 喉头里有痰塞住的咳声"]}
+{"zhuang_word": "ae'ngab", "zh_meanings": ["哮喘, 气喘"], "source": "https://zha_zho.en-academic.com/005", "zh_meanings_full": ["(【见】 haebgyawh) 哮喘, 气喘"]}
+{"zhuang_word": "aeeb'eb", "zh_meanings": ["轻而慢地咳"], "source": "https://zha_zho.en-academic.com/006", "zh_meanings_full": ["【方言】 轻而慢地咳"]}
+{"zhuang_word": "aegwj", "zh_meanings": ["尽管, 只管"], "source": "https://zha_zho.en-academic.com/007", "zh_meanings_full": ["(【见】 guenj) 尽管, 只管"]}
+{"zhuang_word": "aek", "zh_meanings": ["胸; 胸膛; 胸怀"], "source": "https://zha_zho.en-academic.com/008", "zh_meanings_full": ["【方言】 najaek; bakaek 胸; 胸膛; 胸怀"]}
+{"zhuang_word": "aekbuh", "zh_meanings": ["衣襟"], "source": "https://zha_zho.en-academic.com/009", "zh_meanings_full": ["衣襟"]}
+{"zhuang_word": "aekdiuq", "zh_meanings": ["心惊; 胆颤; 心悸; 心跳"], "source": "https://zha_zho.en-academic.com/010", "zh_meanings_full": ["(【见】 simdiuq) 心惊; 胆颤; 心悸; 心跳"]}
+{"zhuang_word": "aekex", "zh_meanings": ["蛤蚧"], "source": "https://zha_zho.en-academic.com/011", "zh_meanings_full": ["【方言】 aekez; gaekgex; daekdo 蛤蚧"]}
+{"zhuang_word": "aekez", "zh_meanings": ["蛤蚧"], "source": "https://zha_zho.en-academic.com/012", "zh_meanings_full": ["(【见】 aekex) 蛤蚧"]}
+{"zhuang_word": "aekgaeb", "zh_meanings": ["胸怀狭窄"], "source": "https://zha_zho.en-academic.com/013", "zh_meanings_full": ["胸怀狭窄"]}
+{"zhuang_word": "aeknaj", "zh_meanings": ["对小孩迁就"], "source": "https://zha_zho.en-academic.com/014", "zh_meanings_full": ["【方言】 对小孩迁就"]}
+{"zhuang_word": "aem", "zh_meanings": ["茁壮; 肥壮"], "source": "https://zha_zho.en-academic.com/015", "zh_meanings_full": ["(【见】 noengq) 茁壮; 肥壮 [指小孩和动物]"]}
+{"zhuang_word": "aemcangz", "zh_meanings": ["窝藏; 暗藏; 隐藏"], "source": "https://zha_zho.en-academic.com/016", "zh_meanings_full": ["(【见】 cangz; amqcangz) 窝藏; 暗藏; 隐藏"]}
+{"zhuang_word": "aemj", "zh_meanings": ["稀饭", "不"], "source": "https://zha_zho.en-academic.com/017", "zh_meanings_full": ["(【见】 souh) 稀饭", "(【见】 mbouj) 不"]}
+{"zhuang_word": "aemq", "zh_meanings": ["背", "披"], "source": "https://zha_zho.en-academic.com/018", "zh_meanings_full": ["【方言】 maq; dex; neng; naenj 背 ～lwgnyez 背小孩", "(【见】 longz) 披 (衣服)"]}
+{"zhuang_word": "aen", "zh_meanings": ["个", "支", "张", "只", "辆", "座; 幢", "盏", "块", "恩惠"], "source": "https://zha_zho.en-academic.com/019", "zh_meanings_full": ["【方言】 ngeq", "1. 张 (桌子, 椅子) song～daiz 两张桌子", "2. 个 (蛋, 漏斗、果子) song～gyaeq 两个蛋", "3. 盏 song～daeng 两盏灯", "4. 座; 幢 ～ranz ndeu 一座房子", "5. 只 (船)", "6. 辆 (车)", "(【见】 ci) 支 (枪)", "【方言】 块 (畲地)", "恩惠"]}
+{"zhuang_word": "aen'gvaekfeiz", "zh_meanings": ["火镰"], "source": "https://zha_zho.en-academic.com/020", "zh_meanings_full": ["(【见】 lwggvaek) 火镰"]}
+{"zhuang_word": "aen'gveuj", "zh_meanings": ["旋儿"], "source": "https://zha_zho.en-academic.com/021", "zh_meanings_full": ["(【见】 cuenh) 旋儿"]}
+{"zhuang_word": "aen'gyangj", "zh_meanings": ["大箩筐"], "source": "https://zha_zho.en-academic.com/022", "zh_meanings_full": ["(【见】 laep) 大箩筐"]}
+{"zhuang_word": "aenbaed", "zh_meanings": ["神位; 神堂"], "source": "https://zha_zho.en-academic.com/023", "zh_meanings_full": ["(【见】 ham) 神位; 神堂"]}
+{"zhuang_word": "aenbaez", "zh_meanings": ["平常; 日常; 平时; 往常", "每次"], "source": "https://zha_zho.en-academic.com/024", "zh_meanings_full": ["(【见】 baeznaeng
+
+Question:
+You are given a translation textbook from Zhuang to Chinese, how to translate the following sentence in Zhuang into Chinese: "Gienh saeh gou ceiq muengh ndeu dwg gijmaz ne, couh dwg hawj gyoengq beixnuengx gwn donq noh imq ndeu, baezlaeng caiqlij ndaej seizseiz gwn noh dem."?
+
+A. 我最希望的事，就是让乡亲们能吃上一顿好肉，以后也要保证他们经常能吃到肉。
+B. 我最想完成的事情，就是让村民们能够吃上一顿美味的肉，并且保证他们往后都不会缺少肉吃。
+C. 我最希望的事是什么呢，就是让乡亲们能吃上一顿美味的好肉，并且保证他们往后都不会缺少肉吃。
+D. 我很期盼的一件事是什么呢，就是让乡亲们饱餐一顿肉，并且今后能够经常吃肉。
+
+Select the correct answer.

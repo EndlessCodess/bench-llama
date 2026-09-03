@@ -1,0 +1,4 @@
+You are given a design concept and need to come up with an appropriate title for it.
+
+Input:
+A website for a company that specializes in marketing and advertising.

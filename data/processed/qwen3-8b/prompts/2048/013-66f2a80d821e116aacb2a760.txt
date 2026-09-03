@@ -1,0 +1,101 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+[
+    {
+        "zhuang": "Gak boux daiqbiuj：",
+        "zh": "各位代表：",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Seizneix, gou daiqbiuj Gozvuyen, yiengq daihhoih baugau gij hong cwngfuj, cingj saemjlwnh, caemhcaiq cingj Daengx Guek Cwnghez gak boux veijyenz daezok yigen.",
+        "zh": "现在，我代表国务院，向大会报告政府工作，请予审议，并请全国政协各位委员提出意见。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "It、Dauqyawj Gij Hong 2016 Nienz",
+        "zh": "一、2016年工作回顾",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Bi gvaqbae neix, guek raeuz fazcanj bungzdaengz diuhcan yiemzhaenq, ndaw guek rog guek haujlai mauzdun doxdab doxgya、fungyiemj huxndumj doxca doxgyoeb.",
+        "zh": "过去一年，我国发展面临国内外诸多矛盾叠加、风险隐患交汇的严峻挑战。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Miz aen Dangjcunghyangh aeu Siz Ginbingz dungzci guh haedsim haenx giengiengz lingjdauj, daengx guek gak cuz yinzminz soemh hojnanz buekguh, haenqheiq byaij baenaj, doidoengh ginghci sevei lienzdaemh cangqheiq fazcanj.",
+        "zh": "在以习近平同志为核心的党中央坚强领导下，全国各族人民迎难而上，砥砺前行，推动经济社会持续健康发展。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Baez Cibbet Gaiq Roek Cungh Cienzhoih aen Dangj cingqsik mingzbeg doekdingh aen diegvih haedsim Siz Ginbingz cungjsuhgi, daejyienh le gij gaenbonj leih'ik aen Dangj caeuq yinzminz, doiq baujcwng aen Dangj caeuq guekgya hoenghvuengh fatdad、ciengzgeiz onjdingh, miz yiyi cibfaen hungnaek youh gyaelaeg.",
+        "zh": "党的十八届六中全会正式明确习近平总书记的核心地位，体现了党和人民的根本利益，对保证党和国家兴旺发达、长治久安，具有十分重大而深远的意义。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gak digih、gak bouhmonz mboujduenh demgiengz cwngci eiqsik、daihbuenz eiqsik、haedsim eiqsik、gaenhwnj eiqsik, doidoengh cienzmienh hwnqbaenz aen biengz siujgangh caiq ndaej fazcanj baenaj youqgaenj, cienzmienh gyalaeg gaijgwz yamq ok yamqdin hungnaek, cienzmienh ciuqfap ceihleix guekgya ndaej haeujlaeg saedhengz, cienzmienh coengzyiemz ceihleix aen Dangj ndaej coh laeg doicaenh, daengx bi ginghci sevei fazcanj cujyau muzbiuh yinvu guh baenz caezcup, \"Cibsam Haj\" saedyienh le haibuenz ndei.",
+        "zh": "各地区、各部门不断增强政治意识、大局意识、核心意识、看齐意识，推动全面建成小康社会取得新的重要进展，全面深化改革迈出重大步伐，全面依法治国深入实施，全面从严治党纵深推进，全年经济社会发展主要目标任务圆满完成，“十三五”实现了良好开局。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ginghci yinhhengz youq ndaw gemj menh yiengq onjmaenh、youq ndaw onjmaenh yiengq ndei.",
+        "zh": "经济运行缓中趋稳、稳中向好。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Ndaw guek swnghcanj cungjciz dabdaengz 74.4 fanh ik maenz, demmaj 6.7％, baizmingz youq gaxgonq seiqgyaiq gak guek, doiq cienz seiqgyaiq ginghci demmaj gunghawj beijlwd mauhgvaq 30％.",
+        "zh": "国内生产总值达到74.4万亿元，增长6.7%，名列世界前茅，对全球经济增长的贡献率超过30%。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gihminz siufeiq gyaqcienz lai hwnj 2％.",
+        "zh": "居民消费价格上涨2%。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gunghyez giyez leihyinh daj bigonq doek bae 2.3％ cienj baenz demmaj 8.5％, danhvei ndaw guek swnghcanj cungjciz siuhauq nwngzyenz roengzdaemq 5％, ginghci fazcanj caetliengh caeuq yauqik yienhda raen daezsang.",
+        "zh": "工业企业利润由上年下降2.3%转为增长8.5%，单位国内生产总值能耗下降5%，经济发展的质量和效益明显提高。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Couhnieb demmaj mauhgvaq yawhgeiz.",
+        "zh": "就业增长超出预期。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Daengx bi hawsingz lai gya couhnieb 1314 fanh vunz.",
+        "zh": "全年城镇新增就业1314万人。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gauhyau bizyezswngh couhnieb cauhnieb vunzsoq caiq ndaej gya lai.",
+        "zh": "高校毕业生就业创业人数再创新高。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Nienzdaej hawsingz daenghgeiq saetnieb beijlwd 4.02％, dwg lai bi daeuj bi ceiq daemq.",
+        "zh": "年末城镇登记失业率4.02%，为多年来最低。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Aen guek hung cingqcaih fazcanj miz 13 ik vunz baenzneix, couhnieb ndaej haemq cungfaen, gig mbouj yungzheih.",
+        "zh": "13亿多人口的发展中大国，就业比较充分，十分不易。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gaijgwz hailangh ndaej doicaenh haeujlaeg.",
+        "zh": "改革开放深入推进。",
+        "source": "government_work_report"
+    },
+    {
+        "zhuang": "Gij gaijgwz ndaw lingjyiz youqgaenj caeuq hothoh gvanhgen ndaej cungbyoengq fazcanj baenaj, gaijgwz gij gezgou mbiengj gunghawj codaeuz raen mi
+
+Question:
+You are given a translation parallel corpus from Zhuang to Chinese, now translate the following words in Chinese into Zhuang: "勤俭", "金钱", "银行"
+
+A. gaenxgiemh, cienzngaenz, ngaenzhangz
+B. gaenxgiemh, cienzngaenz, ginhyungz
+C. gaenxgiemh, swhyenz, ginhyungz
+D. nwngzyenz, cienzngaenz, ginhyungz
+
+Select the correct answer.

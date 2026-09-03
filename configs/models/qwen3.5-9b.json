@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "name": "qwen3.5-9b",
+  "description": "Qwen3.5-9B benchmark profile",
+  "processed_dir": "data/processed/qwen3.5-9b",
+  "model_key_aliases": {},
+  "runtime_overrides": {},
+  "metadata": {
+    "target_family": "Qwen3.5-9B",
+    "target_precision": "F16",
+    "draft_family": "Qwen3.5-9B-DFlash"
+  }
+}

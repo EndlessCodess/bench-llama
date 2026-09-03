@@ -139,11 +139,12 @@ def request_json(base_url, method, path, payload=None, timeout=120.0):
 
 
 class TokenizerServer:
-    def __init__(self, executable, model, log_path, timeout):
+    def __init__(self, executable, model, log_path, timeout, enable_thinking=True):
         self.executable = executable
         self.model = model
         self.log_path = log_path
         self.timeout = timeout
+        self.enable_thinking = enable_thinking
         self.port = free_port()
         self.base_url = "http://127.0.0.1:{}".format(self.port)
         self.process = None
@@ -215,6 +216,7 @@ class TokenizerServer:
             {
                 "messages": [{"role": "user", "content": content}],
                 "add_generation_prompt": True,
+                "chat_template_kwargs": {"enable_thinking": self.enable_thinking},
             },
             timeout=self.timeout,
         )

@@ -1,0 +1,1790 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+1
+Overview
+2
+Getting Started
+3
+Applications for Short Range Radio
+Communications
+4
+Applications for Mobile Communication
+5
+Commissioning
+6
+Operation
+7
+Time Synchronization
+8
+Communication Protocols
+9
+Technical Data
+10
+Device Maintenance, Storage, Transport 11
+Failures and LED Indications
+12
+Operational Indications
+13
+Operational Parameters
+14
+SICAM FCG and SICAM FSI Firmware
+Compatibility
+A
+Literature
+Glossary
+Index
+
+
+i
+i
+NOTE
+For your own safety, observe the warnings and safety instructions contained in this document, if available.
+Disclaimer of Liability
+Subject to changes and errors. The information given in
+this document only contains general descriptions and/or
+performance features which may not always specifically
+reflect those described, or which may undergo modifica-
+tion in the course of further development of the products.
+The requested performance features are binding only when
+they are expressly agreed upon in the concluded contract.
+Document version: E50417-H1040-C584-B7.00
+Edition: 04.2024
+Version of the product described: V04.21
+Copyright
+Copyright © Siemens 2024. All rights reserved.
+The disclosure, duplication, distribution and editing of this
+document, or utilization and communication of the content
+are not permitted, unless authorized in writing. All rights,
+including rights created by patent grant or registration of a
+utility model or a design, are reserved.
+Trademarks
+SIPROTEC, DIGSI, SIGRA, SIGUARD, SIMEAS, SAFIR, SICAM,
+and MindSphere are trademarks of Siemens. Any unauthor-
+ized use is prohibited.
+
+
+Preface
+Purpose of the Manual
+This manual describes the application, functions, installation, commissioning, and operation of the Fault
+Collector Gateway 6MD2340.
+Target Audience
+This manual is intended for project engineers, commissioning engineers, and operating personnel in electrical
+systems and substations.
+Scope
+This manual is valid for the Fault Collector Gateway 6MD2340.
+Indication of Conformity
+This product complies with the directive of the Council of the European Communities
+on the harmonization of the laws of the Member States relating to electromagnetic
+compatibility (EMC Directive 2014/30/EU) and concerning electrical equipment for use
+within specified voltage limits (Low Voltage Directive 2014/35/EU) as well as restriction
+on usage of hazardous substances in electrical and electronic equipment (RoHS Direc-
+tive 2011/65/EU).
+This conformity has been proved by tests conducted by Siemens AG in accordance of
+the Council Directive in accordance with the product standard IEC/EN 61326-1 for the
+EMC directives, and with the standard IEC/EN 61010-1 for the low-voltage directive.
+Standards for short-range radio and mobile communication acc. to RED directive
+2014/53/EU:
+•
+EMC testing acc. to EN 301 489
+•
+Radio testing acc. to EN 301 511
+•
+Short-range radio acc. to EN 300 328
+RoHS directive 2011/65/EU is met using the standard IEC/EN 63000.
+The device has been designed and produced for industrial use.
+FCC Conformity Information
+This device complies with part 15 of the FCC rules. Operation is subject to the following 2 conditions:
+•
+This device may not cause harmful interference.
+•
+This device must accept any interference received, including interference that may cause undesired
+operation.
+This equipment has been tested and found to comply with the limits for a Class A digital device, pursuant
+to part 15 of the FCC rules. These limits are designed to provide reasonable protection against harmful
+interference when the equipment is operated in a commercial environment. This equipment generates, uses,
+and can radiate radio frequency energy and, if not installed and used in accordance with the instructions, may
+cause harmful interference to radio communications. Operation of this equipment in a residential area is likely
+SICAM, Fault Collector Gateway, Manual
+3
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+to cause harmful interference in which case the user will be required to correct the interference at their own
+expense.
+i
+i
+NOTE
+Any changes or modifications not expressly approved by the party responsible for compliance could void
+the users’ authority to operate this equipment.
+!
+CAUTION
+Radiation RF exposure
+This equipment complies with FCC radiation exposure limits set forth for an uncontrolled environ-
+ment.
+²
+This equipment should be installed and operated with minimum distance 20 cm between the radiator
+and your body.
+ISED Compliance Statement
+This device complies with ISED's license-exempt RSSs. Operation is subject to the following 2 conditions:
+•
+This device may not cause harmful interference.
+•
+This device must accept any interference received, including interference that may cause undesired
+operation.
+Cet appareil est conforme aux RSS exemptés de licence de l’ISED. L’opération est soumise aux 2 conditions
+suivantes :
+•
+Cet appareil ne peut pas causer d’interférences nocives.
+•
+Cet appareil doit accepter toute interférence, y compris les interférences qui peuvent provoquer un
+fonctionnement non désiré de l’appareil.
+!
+CAUTION
+Radiation RF exposure
+This equipment complies with ISED radiation exposure limits set forth for an uncontrolled environ-
+ment.
+²
+This equipment should be installed and operated with minimum distance 20 cm between the radiator
+and your body.
+!
+CAUTION
+Déclaration sur l’exposition aux rayonnements
+Cet équipement est conforme aux limites d’exposition aux rayonnements. ISED établies pour un
+environnement non contrôlé.
+²
+Cet équipement doit être installé et actionné avec la distance minimale 20 cm entre le radiateur et
+votre corps.
+Preface
+4
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Detachable Antenna Usage
+This radio transmitter (IC: 5123A-GM210P and IC: 5131A-GE910) has been approved by ISED to operate with
+the antenna type listed below with maximum permissible gain indicated. Antenna types not included in this
+list, having a gain greater than the maximum gain indicated for that type, are strictly prohibited for use with
+this device.
+Antenna Name
+Antenna Type
+Antenna
+Gain (dBi)
+Transmitting Power
+Level
+Antenna Part No.
+Planar Mobile Commu-
+nications Antenna-Reel
+Make-WLAN 2400 MHz
+M70XCR Roof Mount
+0 dBi
+20 dBm
+6MD2318-0CA20
+Planar Mobile Commu-
+nications Antenna-Reel
+Make GSM Quadband
++ UMTS
+M70ZXR Roof Mount
+0 dBi
+850 MHz: 33 dBm
+(Power Class 5)
+1900 MHz: 30 dBm
+(Power Class 0)
+6MD2318-0CA10
+i
+i
+NOTE
+•
+The device integrates a ZigBee transmitter having FCC ID: QOQGM210P, IC ID: 5123A-GM210P and 2G
+module transmitter having FCC ID: R17GE910, IC ID: 5131A-GE910 for radio communication. The RF
+modules are integrated to this host product as per module integration guidelines defined in module
+grants and FCC KDB 996369. Co-location/simultaneous transmission requirements are addressed in
+this host test report as per guidelines defined in KDB 447498.
+•
+RF exposure evaluation for co-locating and simultaneous operation of ZigBee and 2G protocol have
+been addressed and results are compliant to FCC and IC RF exposure evaluation limits.
+Module Name
+FCC ID
+IC ID
+Operating Frequency Range
+ZigBee module
+QOQGM210P
+5123A-GM210P
+2400 MHz to 2483.5 MHz
+2G Module
+R17GE910
+5131A-GE910
+Band 1:  850
+MHz  (824.2 MHz to 848.8 MHz)
+Band 2: 1900 MHz
+(1850.2 MHz to 1989.2 MHz)
+Customer Support Center
+Our Customer Support Center provides a 24-hour service.
+Siemens AG
+Smart Infrastructure – Digital Grid
+Phone: +49 911 2155 4466
+Customer Support Center
+E-mail: energy.automation@siemens.com
+Additional Support
+For questions about the system, contact your Siemens sales partner.
+Training Courses
+You can request the individual training course offer at our Training Center:
+Siemens AG
+Siemens Power Academy TD
+Phone: +49 911 9582 7100
+Humboldtstraße 59
+E-mail: poweracademy@siemens.com
+90459 Nuremberg
+Internet: www.siemens.com/poweracademy
+Germany
+Preface
+SICAM, Fault Collector Gateway, Manual
+5
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Notes on Safety
+This document is not a complete index of all safety measures required for operation of the equipment (module
+or device). However, it comprises important information that must be followed for personal safety, as well
+as to avoid material damage. Information is highlighted and illustrated as follows according to the degree of
+danger:
+!
+DANGER
+DANGER means that death or severe injury will result if the measures specified are not taken.
+²
+Comply with all instructions, in order to avoid death or severe injuries.
+!
+WARNING
+WARNING means that death or severe injury may result if the measures specified are not taken.
+²
+Comply with all instructions, in order to avoid death or severe injuries.
+!
+CAUTION
+CAUTION means that medium-severe or slight injuries can occur if the specified measures are not taken.
+²
+Comply with all instructions, in order to avoid moderate or minor injuries.
+NOTICE
+NOTICE means that property damage can result if the measures specified are not taken.
+²
+Comply with all instructions, in order to avoid property damage.
+i
+i
+NOTE
+Important information about the product, product handling or a certain section of the documentation
+which must be given attention.
+Qualified Electrical Engineering Personnel
+Only qualified electrical engineering personnel may commission and operate the equipment (module, device)
+described in this document. Qualified electrical engineering personnel in the sense of this document are
+people who can demonstrate technical qualifications as electrical technicians. These persons may commission,
+isolate, ground and label devices, systems and circuits according to the standards of safety engineering.
+Proper Use
+The equipment (device, module) may be used only for such applications as set out in the catalogs and the
+technical description, and only in combination with third-party equipment recommended and approved by
+Siemens.
+Problem-free and safe operation of the product depends on the following:
+•
+Proper transport
+•
+Proper storage, setup and installation
+•
+Proper operation and maintenance
+Preface
+6
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+When electrical equipment is operated, hazardous voltages are inevitably present in certain parts. If proper
+action is not taken, death, severe injury or property damage can result:
+•
+The equipment must be grounded at the grounding terminal before any connections are made.
+•
+All circuit components connected to the power supply may be subject to dangerous voltage.
+•
+Hazardous voltages may be present in equipment even after the supply voltage has been disconnected
+(capacitors can still be charged).
+•
+Operation of equipment with exposed current-transformer circuits is prohibited. Before disconnecting the
+equipment, ensure that the current-transformer circuits are short-circuited.
+•
+The limiting values stated in the document must not be exceeded. This must also be considered during
+testing and commissioning.
+Selection of Used Symbols on the Device
+Nr.
+Symbol
+Description
+1
+Direct current, IEC 60417, 5031
+2
+Alternating current, IEC 60417, 5032
+3
+Direct and alternating current, IEC 60417, 5033
+4
+Earth (ground) terminal, IEC 60417, 5017
+5
+Protective conductor terminal, IEC 60417, 5019
+6
+Caution, risk of electric shock
+7
+Caution, risk of danger, ISO 7000, 0434
+8
+Protective Insulation, IEC 60417, 5172, Safety Class II devices
+9
+Guideline 2002/96/EC for electrical and electronic devices
+10
+Guideline for the Eurasian Market
+11
+Mandatory Conformity Mark for Electronics and Electrotechnical Products in Morocco
+OpenSSL
+This product includes software developed by the OpenSSL Project for use in OpenSSL Toolkit (http://
+www.openssl.org/).
+This product includes software written by Tim Hudson (tjh@cryptsoft.com).
+This product includes cryptographic software written by Eric Young (eay@cryptsoft.com).
+Preface
+SICAM, Fault Collector Gateway, Manual
+7
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+8
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Table of Contents
+Preface..........................................................................................................................................................3
+1
+User Information........................................................................................................................................ 15
+1.1
+Device Description............................................................................................................ 16
+1.2
+SICAM FCG Conditions and Recommendations for Secure System Operation...................... 19
+1.3
+Environmental Protection Hints.........................................................................................21
+2
+Overview.................................................................................................................................................... 23
+2.1
+Ordering Information, Scope of Delivery, and Accessories ................................................. 24
+2.2
+Design.............................................................................................................................. 26
+3
+Getting Started........................................................................................................................................... 29
+3.1
+SICAM FCG Unpacking, Inspecting the Delivery..................................................................30
+3.2
+Installing and Changing the Battery...................................................................................31
+3.2.1
+Installing the Battery....................................................................................................31
+3.2.2
+Replacing the Battery ..................................................................................................32
+3.3
+Installing and Changing the SIM Card................................................................................ 33
+3.4
+Assembly.......................................................................................................................... 35
+3.4.1
+General Assembly Notes.............................................................................................. 35
+3.4.2
+Assembly.....................................................................................................................35
+3.5
+Electrical Connection.........................................................................................................37
+3.5.1
+Safety Notes................................................................................................................37
+3.5.2
+Power Supply of the SICAM FCG...................................................................................38
+3.5.3
+Terminal Blocks of Binary Inputs/Binary Outputs........................................................... 39
+3.5.4
+Terminals on Binary Inputs and Binary Outputs (Terminal Block L and P) ...................... 40
+3.6
+Communication Interfaces................................................................................................ 42
+3.6.1
+Ethernet Interface (RJ45 Socket Z)............................................................................... 42
+3.6.2
+GSM and Short-Range Radio Interfaces (Socket C and Socket M)...................................42
+3.6.3
+System Requirements.................................................................................................. 44
+3.6.4
+Access Rights...............................................................................................................44
+3.7
+Meaning of the LEDs......................................................................................................... 46
+3.7.1
+LEDs on the Top Side of the Housing............................................................................46
+3.7.2
+LEDs on the Terminal Side............................................................................................47
+4
+Applications for Short Range Radio Communications................................................................................49
+4.1
+Overview.......................................................................................................................... 50
+4.2
+Parameterizing the SICAM FSI............................................................................................52
+4.3
+SICAM FSI Measured Values...............................................................................................53
+4.4
+SICAM FSI Event Indications.............................................................................................. 54
+4.5
+SICAM FSI Fault Clearance................................................................................................. 55
+SICAM, Fault Collector Gateway, Manual
+9
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+4.6
+Communication Test Mode............................................................................................... 56
+4.7
+SICAM FSI Firmware Update.............................................................................................. 57
+5
+Applications for Mobile Communication....................................................................................................59
+5.1
+SICAM FCG Connected to Public Mobile Network with IPSec in Device................................ 60
+5.2
+SICAM FCG Connected to Virtual Private Mobile Network without IPSec in Device...............62
+5.3
+SICAM FCG Connected to MindSphere Cloud Service..........................................................63
+5.4
+SICAM FCG Connected to Electrification X Cloud Service.................................................... 65
+5.5
+SICAM FCG Applications Connected to the Utility Private Network Using an External
+Router ..............................................................................................................................67
+6
+Commissioning...........................................................................................................................................69
+6.1
+Initial Commissioning........................................................................................................70
+6.2
+Commissioning................................................................................................................. 71
+6.3
+Starting the Device with the Default IP Address .................................................................72
+6.4
+Disabling the Ethernet Interface........................................................................................ 73
+6.5
+SICAM FCG and SICAM FSI Commissioning using SICAM FCG Web GUI................................74
+6.6
+Commissioning and Configuration of SICAM FCG and SICAM FSI using SICAM Localizer......81
+6.7
+SICAM FCG Onboarding to Electrification X Cloud.............................................................. 83
+7
+Operation....................................................................................................................................................87
+7.1
+General Usage Notes.........................................................................................................88
+7.2
+Start and Design of the User Interface............................................................................... 89
+7.2.1
+Initial Start of the User Interface...................................................................................89
+7.2.2
+Enabling JavaScript......................................................................................................90
+7.2.3
+Number of Connections via HTTP ................................................................................ 91
+7.2.4
+Layout of the User Interface.........................................................................................91
+7.2.5
+Web GUI Log on...........................................................................................................92
+7.2.6
+Starting the User Interface during Operation................................................................ 94
+7.2.7
+Information Tab...........................................................................................................95
+7.2.7.1
+Show Device Information....................................................................................... 95
+7.2.7.2
+Save Device Information and Message Logs............................................................95
+7.2.7.3
+Message Logs Menu...............................................................................................99
+7.3
+Device Configuration using SICAM Web GUI.....................................................................102
+7.3.1
+Configuration of the Device....................................................................................... 102
+7.3.2
+Device-Configuration Procedure.................................................................................102
+7.3.3
+Get Device Configuration...........................................................................................103
+7.3.4
+Open Configuration from File.................................................................................... 104
+7.3.5
+Finish Configuration.................................................................................................. 105
+7.3.6
+Access to the Passive Parameter Set by Multiple Users................................................ 109
+7.3.7
+Setting the Operational Parameters............................................................................110
+7.4
+Binary Interfaces............................................................................................................. 111
+7.4.1
+Binary Inputs............................................................................................................. 111
+7.4.2
+Binary Outputs (Relay Outputs)..................................................................................113
+7.4.3
+Binary Output Modes.................................................................................................115
+7.5
+LEDs............................................................................................................................... 117
+7.5.1
+LED Settings.............................................................................................................. 117
+Table of Contents
+10
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+7.6
+SICAM FSI Parameterization.............................................................................................119
+7.6.1
+Parameterizing the SICAM FSI.................................................................................... 119
+7.7
+Administrative................................................................................................................ 120
+7.7.1
+Administrative Settings..............................................................................................120
+7.7.2
+Indication Properties..................................................................................................120
+7.7.3
+Time-Synchronization Settings...................................................................................121
+7.7.4
+General Configuration............................................................................................... 124
+7.8
+Communication - Ethernet and Protocols.........................................................................126
+7.8.1
+Ethernet....................................................................................................................126
+7.8.2
+Enabling the External Communication via Ethernet.................................................... 127
+7.8.3
+Selection of Bus Protocol and Cloud Interface.............................................................128
+7.8.3.1
+Selection of Bus Protocol...................................................................................... 128
+7.8.3.2
+Selection of Cloud Interface..................................................................................128
+7.8.4
+Communication with IEC 60870-5-104 Bus Protocol...................................................129
+7.8.4.1
+IEC 60870-5-104 Bus Protocol Communication Settings........................................129
+7.8.4.2
+Editing the Communication Protocol IEC 60870-5-104 Settings.............................133
+7.8.4.3
+IEC 60870-5-104 Signal Mapping......................................................................... 135
+7.8.5
+Communication with DNP3 Bus Protocol.................................................................... 138
+7.8.5.1
+Communication with DNP3 Bus Protocol...............................................................138
+7.8.5.2
+Editing the Communication Protocol DNP3 Settings..............................................139
+7.8.6
+Communication - DNS Server .................................................................................... 141
+7.9
+Communication Mobile...................................................................................................142
+7.9.1
+Communication Mobile Settings................................................................................ 142
+7.9.2
+Mobile Ping Supervision Settings............................................................................... 144
+7.10
+IP Security (IPSec)............................................................................................................146
+7.10.1
+IP Security (IPSec)...................................................................................................... 146
+7.10.2
+IPSec Authentication..................................................................................................148
+7.10.3
+Local Site...................................................................................................................148
+7.10.4
+Remote Site...............................................................................................................149
+7.10.5
+IKE Security Association............................................................................................. 149
+7.10.6
+IPSec Security Associations........................................................................................ 150
+7.10.7
+IPSec Tunnel Supervision by Ping............................................................................... 151
+7.10.8
+Ethernet IPSec HTTP Bypassing...................................................................................152
+7.11
+Short-Range Radio Communication Settings ................................................................... 153
+7.12
+Finish Configuration........................................................................................................155
+7.13
+MindConnect Library Protocol......................................................................................... 156
+7.13.1
+MindConnect Library Protocol Configuration.............................................................. 156
+7.13.2
+Firmware update remotely through SICAM Localizer.................................................. 162
+7.13.3
+Device Parameter Configuration remotely through SICAM Localizer............................162
+7.14
+MQTT JSON PubSub Configuration ..................................................................................164
+7.15
+Value View......................................................................................................................170
+7.15.1
+SICAM FSI Measured Values ...................................................................................... 170
+7.15.2
+Binary Interfaces........................................................................................................170
+7.16
+Maintenance - Firmware Upload and Date/Time...............................................................172
+7.16.1
+Maintenance............................................................................................................. 172
+7.16.2
+SICAM FCG and SICAM FSI Firmware Update using SICAM FCG Web GUI..................... 172
+7.16.3
+Date/Time..................................................................................................................179
+Table of Contents
+SICAM, Fault Collector Gateway, Manual
+11
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+7.17
+Maintenance - Message Logs...........................................................................................181
+7.17.1
+Message Logs............................................................................................................181
+7.17.2
+Operational Logs....................................................................................................... 181
+7.17.3
+Error Logs..................................................................................................................182
+7.18
+Maintenance - Diagnosis................................................................................................. 183
+7.18.1
+Diagnosis IEC 60870-5-104........................................................................................183
+7.18.2
+Diagnosis DNP3......................................................................................................... 184
+7.18.3
+Diagnosis MindConnect Protocol................................................................................184
+7.18.4
+Diagnosis MQTT JSON PubSub................................................................................... 185
+7.18.5
+Diagnosis SICAM FSI.................................................................................................. 187
+7.18.6
+Diagnosis Short-Range Communication......................................................................189
+7.18.7
+Diagnosis Communication Mobile..............................................................................190
+7.19
+Parameterization and Analysis Example with IEC 60870-5-104.........................................193
+7.19.1
+Task.......................................................................................................................... 193
+7.19.2
+Required Settings according to Task...........................................................................193
+7.19.3
+Parameterization as Defined by the Task.................................................................... 194
+7.19.4
+Parameterization of Binary Inputs and Outputs...........................................................195
+7.19.5
+Parameterization of the LEDs..................................................................................... 196
+7.19.6
+Parameterization of the Communication.................................................................... 197
+7.19.7
+Parameterization of the Communication with Bus Protocol IEC 60870-5-104.............. 197
+7.19.8
+Parameterization of FSIs............................................................................................ 198
+7.19.9
+Parameterization of Short-Range Radio...................................................................... 199
+7.19.10
+Example of a Connection to the Mobile Network........................................................200
+7.19.11
+Parameterization of the Date/Time Format................................................................. 203
+7.19.12
+Value View................................................................................................................ 203
+7.19.13
+Short Message Service............................................................................................... 204
+8
+Time Synchronization...............................................................................................................................209
+8.1
+General...........................................................................................................................210
+8.1.1
+General..................................................................................................................... 210
+8.2
+Internal Time Keeping..................................................................................................... 211
+8.2.1
+Time Format..............................................................................................................211
+8.2.2
+Status Bits................................................................................................................. 211
+8.3
+External Time Synchronization with NTP..........................................................................212
+8.3.1
+Time Synchronization................................................................................................ 212
+8.4
+External Time Synchronization with DNP3....................................................................... 214
+8.4.1
+Time Synchronization ............................................................................................... 214
+8.5
+Internal Time Synchronization via RTC............................................................................. 215
+9
+Communication Protocols........................................................................................................................ 217
+9.1
+Communication Features................................................................................................ 218
+9.2
+Communication Matrix....................................................................................................219
+9.3
+Ethernet Communication................................................................................................ 220
+9.3.1
+IP Address..................................................................................................................220
+9.4
+IEC 60870-5-104 Protocol............................................................................................... 222
+9.4.1
+IEC 60870-5-104 Protocol..........................................................................................222
+9.4.2
+Function Range......................................................................................................... 222
+Table of Contents
+12
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+9.4.3
+Redundancy Mode.....................................................................................................222
+9.4.4
+Information Objects for SICAM FCG............................................................................225
+9.4.5
+IEC 60870-5-104 Diagnosis........................................................................................247
+9.5
+DNP3 Protocol.................................................................................................................251
+9.5.1
+Overview ..................................................................................................................251
+9.5.2
+DNP3 Device Profile with Data Points List................................................................... 251
+9.5.3
+DNP3 Diagnosis......................................................................................................... 251
+9.6
+MindConnect Library (MCL) Protocol............................................................................... 253
+9.6.1
+Overview ..................................................................................................................253
+9.6.2
+Operational Datapoints for MindConnect Protocol......................................................253
+9.6.3
+MindConnect Library Diagnosis..................................................................................254
+9.7
+MQTT Protocol................................................................................................................ 255
+9.7.1
+Overview ..................................................................................................................255
+9.7.2
+Operational Datapoints for MQTT Protocol................................................................. 255
+10
+Technical Data.......................................................................................................................................... 257
+10.1
+SICAM FCG General Device Data...................................................................................... 258
+10.2
+Communications.............................................................................................................260
+10.3
+Environmental Data........................................................................................................ 262
+10.4
+General Data...................................................................................................................263
+10.5
+Electrical Tests ............................................................................................................... 264
+10.6
+Mechanical Stress Tests...................................................................................................267
+10.7
+Climatic Stress Tests........................................................................................................268
+10.8
+Dimensions.....................................................................................................................269
+10.8.1
+Dimensional Data ..................................................................................................... 269
+10.9
+Certifications / Wireless Regulatory Requirements............................................................ 270
+11
+Device Maintenance, Storage, Transport................................................................................................. 271
+11.1
+Maintenance...................................................................................................................272
+11.2
+Storage...........................................................................................................................273
+11.3
+Transport........................................................................................................................274
+12
+Failures and LED Indications.....................................................................................................................275
+12.1
+General Inspection.......................................................................................................... 276
+12.2
+Commissioning during Failures....................................................................................... 277
+12.2.1
+Recovery of the Device via Boot Loader...................................................................... 277
+12.2.2
+Procedure to Restart with Factory Settings................................................................. 278
+12.2.3
+Manual Start of the Boot Loader.................................................................................279
+12.3
+Indications Signaled by LEDs........................................................................................... 280
+12.3.1
+LEDs on the Top Side of the Housing..........................................................................280
+12.3.2
+Communication LEDs Behavior on the Terminal Side.................................................. 282
+12.4
+Troubleshooting............................................................................................................. 284
+13
+Operational Indications............................................................................................................................ 287
+13.1
+Operational Indications................................................................................................... 288
+Table of Contents
+SICAM, Fault Collector Gateway, Manual
+13
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+14
+Operational Parameters........................................................................................................................... 301
+14.1
+Process Connections....................................................................................................... 302
+14.1.1
+Binary Outputs (Relay Outputs)..................................................................................302
+14.1.2
+LEDs..........................................................................................................................305
+14.1.3
+SICAM FSIs................................................................................................................ 306
+14.2
+Administrative................................................................................................................ 311
+14.2.1
+Indication Properties..................................................................................................311
+14.2.2
+Time Synchronization................................................................................................ 311
+14.2.3
+General Configuration............................................................................................... 312
+14.3
+Communication.............................................................................................................. 313
+14.3.1
+Ethernet and Protocols.............................................................................................. 313
+14.3.1.1
+Communication................................................................................................... 313
+14.3.1.2
+Communication with DNP3 Bus Protocol...............................................................314
+14.4
+DNS Server......................................................................................................................316
+14.5
+Communication Mobile...................................................................................................317
+14.6
+IP Security (IPSec)............................................................................................................318
+14.7
+Short-Range Radio Communication ................................................................................ 320
+A
+SICAM FCG and SICAM FSI Firmware Compatibility................................................................................. 321
+A.1
+Firmware Versions Compatibility..................................................................................... 322
+Literature..................................................................................................................................................323
+Glossary.................................................................................................................................................... 325
+Index.........................................................................................................................................................331
+Table of Contents
+14
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+User Information
+1.1
+Device Description
+16
+1.2
+SICAM FCG Conditions and Recommendations for Secure System Operation
+19
+1.3
+Environmental Protection Hints
+21
+1
+SICAM, Fault Collector Gateway, Manual
+15
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Device Description
+Overview
+The SICAM Fault Collector Gateway (FCG) device receives both distribution line faults and the load current
+values from the SICAM Fault Sensor Indicator (FSI) via short-range radio (SRR) communication. The received
+current measured values and status are transmitted to the control center/MindSphere cloud based on the
+selected communication protocol.
+SICAM FCG is available in multiple variants and provides variant specific hardware functionalities. Refer to
+Table 1-1 for more information.
+SICAM FCG provides 6 binary inputs and 3 binary outputs. SICAM FCG can be configured and diagnosed locally
+using the Web GUI by connecting to a PC or laptop computer or remotely via General Packet Radio Service
+(GPRS).
+SICAM FCG must be mounted inside a housing which can comply with standard IP54 or IP65. The Global
+System for Mobile Communications (GSM) and short-range radio antennas must be mounted outside the
+housing. Installation distance between short-range and GSM antennas must be atleast 30 cm (centre to centre
+distance) to avoid interference.
+SICAM FCG Web GUI allows you to configure the parameters, display error and event log, upgrade of firmware,
+and download the configuration.
+The following table provides a snapshot of SICAM FCG variant wise functionalities.
+Table 1-1
+SICAM FCG - Variant wise Functionalities
+Function Block
+6MD2340-3JM7x-8AA2
+6MD2340-3AM01-8AA2
+Binary Inputs - Terminal L
+●
+●
+Binary Inputs - Terminal P
+●
+Binary Output - Terminal P
+●
+Ethernet Port Interface
+●
+●
+GSM/GPRS Module
+●
+Short-Range Radio Module
+●
+●
+Functions of SICAM FCG
+Figure 1-1 represents the 6MD2340-3JM7x-8AA2 variant of SICAM FCG. Refer to Table 1-1 for variant specific
+functionalities.
+[dw_fcg_blockdiagram, 2, en_US]
+Figure 1-1
+Functional Principle, Device
+1.1
+User Information
+1.1 Device Description
+16
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Following sections describe about interfaces and modules for the functions mentioned in Figure 1-1.
+Binary Interfaces
+On the terminal block L, all the 3 binary inputs are independent and have a fixed threshold of 8 V. On the
+terminal block P, 2 binary inputs have a common input (P8, P9, and P10), 1 binary input (P11, P12) which is
+independent. These binary inputs have selectable thresholds of DC 19 V, DC 88 V and DC 176 V.
+Therefore an optimal adjustment to the pickup voltage can be made in the case of increased interference
+level.
+The binary outputs are designed as relay contacts. The terminal block P has 2 relay outputs - Normally Open
+(NO) and 1 relay output Change Over (CO). The relays can switch voltages up to AC/DC 250 V and currents up
+to AC/DC 5 A.
+Communication
+SICAM FCG is a gateway device between the SICAM FSIs and control center/MindSphere cloud. It provides
+interfaces and supports communication protocols to the SICAM FSIs (via short-range radio) and to the control
+center/MindSphere Cloud. The gateway contains an interworking function for the communication exchanged
+between SICAM FSIs and the control center/MindSphere cloud.
+Various communication interfaces and protocols are available for the communication between SICAM FCG and
+control center/MindSphere cloud.
+The communication interfaces support the device parameterization and the transmission of messages and
+measured values. The information is transmitted in telegrams in a secured way.
+SICAM FCG can communicate with either control center or MindSphere cloud at any given time. Simultaneous
+communication of SICAM FCG with control center and MindSphere cloud is not possible.
+Ethernet Port Interface
+SICAM FCG has an Ethernet interface which supports the device parameterization and monitoring.
+The Ethernet interface can also support communication to the control center based on the telecontrol proto-
+cols IEC 60870-5-104 or DNP3 via an external router. Refer to 5.5 SICAM FCG Applications Connected to the
+Utility Private Network Using an External Router for application details.
+GSM/GPRS Module
+The GSM module1 supports 4 frequency bands: 850 MHz, 900 MHz, 1800 MHz, and 1900 MHz.
+The communication to the control center can be executed based on the telecontrol protocols IEC 60870-5-104
+or DNP3 via GSM/GPRS networks.
+The communication to the MindSphere cloud is established by MindConnect Library (MCL) via GPRS
+networks.2
+You can execute the configuration, firmware update and perform diagnosis using SICAM FCG Web GUI via
+GPRS.
+Short-Range Radio Module
+The short-range radio module1 communicates directly with SICAM FSI via a radio link in the license-free
+2400-MHz band and up to 100 meters. Any overhead distribution line fault or other status change detected by
+SICAM FSI is communicated to the SICAM FCG through the short-range radio module.
+1
+The distance between SICAM FCG (along with GSM and SRR antennas) and SICAM FSI must be less than or equal to 100 m (line of
+sight). The GSM antenna (MLFB: 6MD2318-0CA10) and Short-range radio antenna (MLFB: 6MD2318-0CA20) are tested along with
+SICAM FCG.
+2
+The MindConnect Library is a collection of functionalities which allows a client application to connect and exchange data with
+MindSphere. The connection to MindSphere is secured by using Secure Sockets Layer (SSL)/Transport Layer Security (TLS) in order to
+protect client's transferred data.
+User Information
+1.1 Device Description
+SICAM, Fault Collector Gateway, Manual
+17
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Time Synchronization
+In operation, the device needs the date and time for all time-relevant processes. This ensures a uniform
+time basis and a time stamp for the communication with peripheral devices. The following types of time
+synchronization are performed according to the parameterization:
+•
+External time synchronization via Network Time Protocol (NTP) or DNP3 protocol (NTP recommended, see
+8.3.1 Time Synchronization
+•
+Internal time synchronization via Real-Time Clock (RTC) (if there is no external time synchronization)
+User Information
+1.1 Device Description
+18
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+SICAM FCG Conditions and Recommendations for Secure System
+Operation
+Siemens recommends providing the following conditions and complying with the recommendations for safe
+operation:
+General Recommendations applicable for all use cases
+•
+To avoid unauthorized access, the SICAM FCGs must be installed in a lockable housing.
+•
+Make sure that the installation is vandalism-proof.
+•
+The configuration and maintenance of the SICAM FCG must be performed by trained and authorized
+personnel only.
+•
+Replace all factory-set passwords of the SICAM FCG by individual passwords. These passwords must be
+accessible only for persons authorized to configure and maintain the devices.
+•
+Store the SICAM FCG configuration data and firmware images in secure backup server.
+•
+Connect a PC or laptop computer to the Ethernet interface of the SICAM FCG when you configure,
+maintain, and monitor the device. Connect this port to a protected LAN only. This port must not be
+accessible from a public communication network (Internet).
+Communication with control center using built-in GPRS modem3
+•
+Siemens strongly recommends using IPSec for the communication via mobile network. The communica-
+tion via public networks (public APN of a mobile network provider, Internet) without IPSec is a consider-
+able security risk.
+•
+Siemens recommends the following authentication and encryption parameters for IPSec:
+–
+AES-128, AES 192 or AES-256
+–
+SHA1
+–
+Diffie-Hellman Group 2
+–
+Perfect Forward Secrecy enabled
+DES and MD5 are a security risk and must be used only for interoperability with the IPSec peer device.
+•
+Siemens recommends using IKEv2 instead of IKEv1. With IKEv2, use individual pre-shared keys per IPSec
+tunnel. (With IKEv1, this is not possible for technical reasons).
+Siemens recommends configuring the VPN client IP address (that is, the IP address with which the
+SICAM FCG communicates through the IPSec tunnel) in a different subnetwork from that of the Ethernet
+interface of SICAM FCG.
+Communication with MindSphere cloud service or third party cloud service using built-in GPRS modem3
+•
+Store the client key/certificate, decryption PIN, and root CA certificate in secure backup server.
+Communication with control center and/or cloud service using an external router
+In addition to above recommendations, following recommendations apply for this use case:
+•
+Siemens recommends manually hardening the external router used for wireless connectivity to control
+center or cloud. This is achieved by disabling unused interfaces, unused services, and unused manage-
+ment protocols in router configuration.
+•
+Siemens recommends ensuring up-to-date vulnerability and patch management of external modem via
+regular firmware updates.
+•
+Siemens recommends enabling strong authentication for router configuration tool.
+1.2
+3
+Only applicable for 6MD2340-3JM7x-8AA2
+User Information
+1.2 SICAM FCG Conditions and Recommendations for Secure System Operation
+SICAM, Fault Collector Gateway, Manual
+19
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Management of Security-related Issues
+To report a security vulnerability affecting a Siemens product or solution, contact Siemens via this Internet
+page: https://new.siemens.com/global/en/products/services/cert/vulnerability-process.html.
+Information on validated security vulnerabilities that directly involve Siemens products are published in the
+Siemens Security Advisories (refer to https://new.siemens.com/global/en/products/services/cert.html#Security-
+Publications).
+Security Update Management
+For software and firmware updates, Siemens offers a systematic patch management service. For more infor-
+mation, refer to https://www.siemens.com/global/en/products/energy/energy-automation-and-smart-grid/grid-
+security/operational-security.html.
+Information on software and firmware updates including third-party components is part of the respective
+release notes. Release notes are part of each delivery and are available in the SIOS portal.
+Refer to https://support.industry.siemens.com/cs/ww/en/ps/24639- for more information.
+User Information
+1.2 SICAM FCG Conditions and Recommendations for Secure System Operation
+20
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Environmental Protection Hints
+Disposal of Old Equipment and Batteries (Applicable only for European Union and Countries with a Recycling
+System)
+The disposal of our products and possible recycling of their components after decommissioning has to be
+carried out by an accredited recycling company, or the products/components must be taken to applicable
+collection points. Such disposal activities must comply with all local laws, guidelines and environmental
+specifications of the country in which the disposal is done. For the European Union the sustainable disposal of
+electronic scrap is defined in the respective regulation for "waste electrical and electronic equipment" (WEEE).
+The crossed-out wheelie bin on the products, packaging and/or accompanying documents means
+that used electrical and electronic products and batteries must not be mixed with normal house-
+hold waste.
+According to national legislation, penalties may be charged for incorrect disposal of such
+waste.
+By disposing of these products correctly you will help to save valuable resources and prevent any potential
+negative effects on human health and the environment.
+i
+i
+NOTE
+Our products and batteries must not be disposed of as household waste. For disposing batteries it is
+necessary to observe the local national/international directives.
+Disposal of Mobile Storage Devices (e.g. USB Sticks and Memory Cards)
+When disposing of/transferring mobile storage devices, using the format or delete functions only changes the
+file management information and does not completely delete the data from your mobile storage device. When
+disposing of or transferring a mobile storage device, Siemens strongly recommends physically destroying it
+or completely deleting data from the mobile storage device by using a commercially available computer data
+erasing software.
+REACH/RoHS Declaration
+You can find our current REACH/RoHS declarations at:
+https://www.siemens.com/global/en/home/products/energy/ecotransparency/ecotransparency-down-
+loads.html
+i
+i
+NOTE
+You can find more information about activities and programs to protect the climate at the EcoTransparency
+website:
+https://www.siemens.com/global/en/home/products/energy/ecotransparency.html
+1.3
+User Information
+1.3 Environmental Protection Hints
+SICAM, Fault Collector Gateway, Manual
+21
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+22
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Overview
+2.1
+Ordering Information, Scope of Delivery, and Accessories
+24
+2.2
+Design
+26
+2
+SICAM, Fault Collector Gateway, Manual
+23
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Ordering Information, Scope of Delivery, and Accessories 
+Selection and Ordering Data
+Table 2-1
+SICAM FCG Selection and Ordering Data
+Description
+Versions
+Order no.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10 11
+12
+1
+3
+14
+15
+16
+SICAM Fault Collector Gateway
+6 M D 2 3 4 0 - □□□□□- □A A □
+▲▲▲▲▲
+▲
+▲
+Power supply
+│││││
+│
+│
+DC 12 V compatible (suitable for interface with 12 V battery for backup)
+3 ││││
+│
+│
+Input/output interface 1 (Terminal P)
+││││
+│
+│
+Without Binary input/output (3 BI/3 BO)
+A │││
+│
+│
+Binary input/output (3 BI/3 BO)
+J │││
+│
+│
+Input/output interface 2 (Terminal L)
+│││
+│
+│
+Short-range radio & I/O (3 BI + short-range radio coordinator)
+M ││
+│
+│
+Communication interface
+││
+│
+│
+Ethernet
+0 │
+│
+│
+Ethernet and General packet radio services (GPRS)
+7 │
+│
+│
+Device with/without antenna
+│
+│
+│
+Device without antenna4
+0
+│
+│
+Device with antenna5
+GPRS antenna – MLFB number
+6MD2318-0CA10
+Short-range radio frequency antenna–
+MLFB number 6MD2318-0CA20
+1
+│
+│
+Protocol
+│
+│
+IEC 60870-5-104 (server) / MindConnect
+Library/ DNP3slave (TCP/IP) with SMS func-
+tionality
+8
+│
+IPSec
+with IPSec
+2
+i
+i
+NOTE
+For markets requiring FCC certification and ISED certification, SICAM FCG should be ordered as:
+6MD2340-3JM71-8AA2-Z/DD.
+Scope of Delivery
+The following components are included in the delivery:
+•
+SICAM FCG according to the order reference
+•
+PANASONIC C2032 or VARTA 6032 101 501 internal battery (contained separately in the battery
+compartment of the device)
+•
+Product information
+2.1
+4
+Applicable only for spares/external router based applications. For external router based applications, it is mandatory to order
+short-range radio frequency antenna (MLFB: 6MD2318-0CA20).
+5
+For SICAM FCG (6MD2340-3AM01-8AA2), only short-range radio frequency antenna is provided.
+Overview
+2.1 Ordering Information, Scope of Delivery, and Accessories
+24
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+i
+i
+NOTE
+Current documentation, updates, and device drivers can also be found on the Internet in the download
+area under https://support.industry.siemens.com/cs/start?lc=en-WW.
+Accessories/Spares
+The following components are optionally available:
+•
+Antenna for GPRS communication (MLFB: 6MD2318-0CA10)
+•
+Antenna for short-range radio frequency (MLFB: 6MD2318-0CA20)
+•
+Siemens recommends to replace battery with following makes: PANASONIC CR2032 or VARTA 6032 101
+501.
+Overview
+2.1 Ordering Information, Scope of Delivery, and Accessories
+SICAM, Fault Collector Gateway, Manual
+25
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Design
+The electrical modules are installed in a plastic case with the dimensions 96 mm x 96 mm x 100 mm (W x H x
+D). The case is prepared for mounting on a DIN rail.
+The top side of the device accommodates the RJ45 Ethernet connector with 2 LEDs and 4 additional LEDs. At
+the cover of the battery compartment, there is a labeling strip for the 3 configurable LEDs H1, H2, ERROR and
+a battery symbol that indicates the polarity. Also the type label is affixed and contains the performance charac-
+teristics of the device. A lithium battery is located under the removable cover of the battery compartment.
+The device contains the following terminals:
+Table 2-2
+SICAM FCG Variant wise Terminals Summary
+6MD2340-3JM7x-8AA2
+6MD2340-3AM01-8AA2
+•
+Binary inputs - Terminal blocks L and P
+•
+Binary outputs - Terminal block P
+•
+GSM antenna socket - Socket C
+•
+Short-range radio antenna socket - Socket M
+•
+Supply voltage and protective grounding -
+Terminal Block X
+•
+SIM card slot
+•
+Binary inputs - Terminal block L
+•
+Short-range radio antenna socket - Socket M
+•
+Supply voltage and protective grounding -
+Terminal Block X
+You can find more information on the assignment of the terminals in 3.5.1 Safety Notes.
+[le_fcg_design-mcl, 2, en_US]
+Figure 2-1
+SICAM FCG Design
+(1)
+Top side (Cover of battery compartment)
+(2)
+Back side
+(3)
+Terminal side (Front side)
+2.2
+Overview
+2.2 Design
+26
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+The snap-in unit is mounted in the center of the back side. The IP-Addr. push-button is located in the lower
+right corner of the back side. The default IP address and the default subnet mask of the Ethernet interface are
+imprinted on the left side of the device. Press this push-button (> 3 s) to activate the factory-set default IP
+address. Press the push-button for (< 3 s) to disable the Ethernet interface.
+To active the factory-set default IP address, refer to 6.3 Starting the Device with the Default IP Address . To
+disable Ethernet interface, refer to 6.4  Disabling the Ethernet Interface.
+Overview
+2.2 Design
+SICAM, Fault Collector Gateway, Manual
+27
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+28
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Getting Started
+3.1
+SICAM FCG Unpacking, Inspecting the Delivery
+30
+3.2
+Installing and Changing the Battery
+31
+3.3
+Installing and Changing the SIM Card
+33
+3.4
+Assembly
+35
+3.5
+Electrical Connection
+37
+3.6
+Communication Interfaces
+42
+3.7
+Meaning of the LEDs
+46
+3
+SICAM, Fault Collector Gateway, Manual
+29
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+SICAM FCG Unpacking, Inspecting the Delivery
+Unpacking
+The SICAM FCG has been safely packed for transport in the factory. Unpack the device carefully and do not
+use force. Use an appropriate tool if necessary. After unpacking, inspect the device visually for any mechanical
+defects.
+i
+i
+NOTE
+If the device has been damaged during transport, do not connect and operate it.
+Observe any additional notes enclosed with the packaging.
+Keep the transport packaging for future transport.
+Inspecting the Delivery
+After unpacking, first compare the packing list against your original purchase order to check that the delivered
+device has the desired rated data and functions and that all necessary and ordered accessories are enclosed.
+3.1
+Getting Started
+3.1 SICAM FCG Unpacking, Inspecting the Delivery
+30
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Installing and Changing the Battery
+Installing the Battery
+Upon delivery, the battery is insulated in the battery compartment of the device. The battery need to be
+activated just before installing the device and commencing operation. The lithium coin battery is intended for
+powering the battery-backed memory (SRAM) and the real-time clock (RTC).
+i
+i
+NOTE
+When no battery is inserted or when the battery is discharged, the device can still be operated with
+normal power supply. If the supply voltage is lost, error reports are deleted and the real-time clock is reset
+(2000-01-01 00:00). In case the supply voltage is lost while the device is using MCL communication, then
+MCL certificates must be reconfigured to onboard the device.
+Customer-specific parameters are permanently stored in the Flash-EPROM even without a battery.
+It is recommended to replace the battery with new battery once battery low alarm is seen in operational
+log or alarm is seen in the SCADA. Refer to Accessories/Spares, Page 25 to know the recommended spare
+battery for SICAM FCG.
+[le_sfcg_topside, 1, en_US]
+Figure 3-1
+Top Side of the SICAM FCG
+(1)
+Polarity of the battery
+(2)
+Cover of the battery compartment
+To activate the battery, observe the notes in the supplied Product Information and proceed as follows:
+²
+Lever the cover of the battery compartment out of the socket with a suitable tool (for example, precision
+engineer screwdriver 2.0 mm).
+²
+Take the wrapped battery out of the battery compartment.
+²
+Remove the plastic foil from the battery.
+²
+Insert the battery into the battery compartment with the polarity indicated on the top side of the device.
+²
+Close the cover of the battery compartment.
+3.2
+3.2.1
+Getting Started
+3.2 Installing and Changing the Battery
+SICAM, Fault Collector Gateway, Manual
+31
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Replacing the Battery
+!
+WARNING
+In case of an incorrect treatment of the lithium battery (type PANASONIC CR2032 or VARTA 6032 101 501)
+or in case of an incorrect battery type, the battery might burn, explode, or trigger chemical reactions.
+See product information for the type of battery to be used.
+Non-observance of the following measures can lead to death or serious injury.
+²
+Installing the battery or replacing it may only be carried out by trained personnel (see Preface) who
+are familiar with and observe the safety requirements and precautions.
+²
+Do not reverse the polarity of the battery.
+²
+Do not short-circuit the contacts. Use non-conducting tools for removing and installing the battery.
+²
+Do not attempt to open the battery.
+²
+Do not recharge, disassemble, heat above 100 °C (212 °F) or incinerate.
+²
+Dispose of used battery promptly. Keep away from children.
+Replace the batteries if the battery charge is too low (avoid full discharge). In this case, the Battery Failure
+operation indication is generated. This indication can also be parameterized on one of the 3 LEDs H1/H2/
+ERROR or switched to one of the binary outputs (see chapter 14.1.1  Binary Outputs (Relay Outputs)).
+When the Internal Battery Failure indication is displayed, replace the battery as follows:
+²
+Lever the cover of the battery compartment out of the socket with a suitable tool (for example, precision
+engineer screwdriver 2.0 mm).
+²
+Use an appropriate non-conducting tool (for example, plastic tweezers) to pull the battery out of the
+compartment.
+²
+Remove the new battery type PANASONIC CR2032 or VARTA 6032 101 501 from the packaging. Check
+the expiry date on the packaging.
+²
+Insert the battery into the battery compartment with the polarity indicated on the top side of the device.
+²
+Press the cover of the battery compartment back into the housing and make sure that it is in the correct
+position.
+You can find information on the battery life in chapter 10.4 General Data
+i
+i
+NOTE
+The battery used in this device contains lithium. It may only be replaced by qualified personnel and
+disposed of by authorized recycling companies.
+Do not dispose of the battery in the regular household waste.
+The national and international regulations must be observed when disposing of the battery. Refer to
+1.3 Environmental Protection Hints for disposal of old equipment and batteries.
+3.2.2
+Getting Started
+3.2 Installing and Changing the Battery
+32
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Installing and Changing the SIM Card
+i
+i
+NOTE
+The installation or changing of SIM card is applicable for 6MD2340-3JM7x-8AA2 only.
+[le_sfcg_sim card slot, 1, en_US]
+Figure 3-2
+SIM Card Slot
+(1)
+SIM Card Slot
+Installation and Enabling of the SIM Card during Initial Commissioning of the Device
+²
+When you commission the device for the first time, the communication module has no factory-set
+activation.
+²
+Remove the SIM card cover with a suitable tool.
+²
+Observe the correct orientation of the SIM card before inserting it.
+²
+Insert the SIM card into the SIM card holder until it locks.
+²
+Put the SIM card cover back in place.
+Changing the SIM Card (For example, after Changing the Provider)
+²
+In the user interface, deactivate the mobile communication (see chapter 14.5 Communication Mobile).
+²
+Disconnect the device from the supply voltage and wait for at least 30 s.
+i
+i
+NOTE
+Do not remove the SIM card during operation. This can damage the SIM card and the device.
+²
+Remove the SIM card cover with a suitable tool (for example, a screw driver).
+3.3
+Getting Started
+3.3 Installing and Changing the SIM Card
+SICAM, Fault Collector Gateway, Manual
+33
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+²
+Remove the SIM card: to remove the SIM card, push it until it unlocks, then pull it out of the SIM card
+holder.
+²
+Insert the new SIM card into the SIM card holder until it locks and put the SIM card cover back in place.
+²
+Switch on the device.
+²
+Configure the mobile communication with the SIM PIN (if required) and APN according to chapter
+14.5 Communication Mobile
+(The APN has to be configured in most cases. SIM PIN has to be configured case-by-case depending on
+the operator policy).
+i
+i
+NOTE
+The SIM card inserted in SICAM FCG is of Standard/Mini SIM card size (15 mm x 25 mm).
+Getting Started
+3.3 Installing and Changing the SIM Card
+34
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Assembly
+General Assembly Notes
+The SICAM FCG is intended to be installed on a DIN rail, for example in a control cabinet.
+!
+WARNING
+Do not touch any live parts.
+Non-observance of the following measure can lead to death or serious injury.
+²
+After installation of the device and wiring, close the control cabinet.
+•
+The installation site must be vibration-proof. The permitted ambient temperature must be observed (see
+the technical data in chapter 10.3 Environmental Data).
+•
+Operating the device outside the permitted operating temperature range can lead to measuring errors
+and device failure.
+•
+The terminals are designed for core cross sections of 2.5 mm² max. (AWG 14)
+•
+The device must not be exposed to condensation during operation.
+•
+The device must be installed in a location where it is not exposed to direct sunlight and strong tempera-
+ture variations.
+Assembly
+Mount the SICAM FCG on a DIN rail which conforms to the standard EN 60715. The DIN rail must be installed
+in horizontal orientation to have a proper mounting of the device. Refer to the following procedure:
+3.4
+3.4.1
+3.4.2
+Getting Started
+3.4 Assembly
+SICAM, Fault Collector Gateway, Manual
+35
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+[le_sfcg_assembly, 2, en_US]
+Figure 3-3
+Mounting on a DIN Rail
+(1)
+Guiding of the Snap-in Clip
+(2)
+Snap-in Clip
+(3)
+DIN Rail
+(4)
+Release Handle
+(5)
+Pulling Direction
+²
+Pull down the release handle at the snap-in clip and hold it in this position.
+²
+Slide the device with the guiding of the snap-in clip onto one side of the DIN rail.
+²
+Move the device into the desired position on the DIN rail.
+²
+Release the release handle. The device is now firmly mounted on the DIN rail.
+i
+i
+NOTE
+The snap-in clip is adjusted to a certain height setting by the manufacturer. You can change this setting
+if necessary. To do so, lever the release device out of its guiding (no special tool required) and move the
+release device into the desired position. Subsequently, press the release device back into its guiding.
+i
+i
+NOTE
+For more information about recommendations on pole mounted SICAM FCG with solar panel (including
+battery, charger), refer to the SICAM FCG/SICAM FSI Application Note (E50417-T1040-C587-A6).
+Getting Started
+3.4 Assembly
+36
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Electrical Connection
+Safety Notes
+!
+DANGER
+Hazard posed by high contact voltage.
+Non-observance of the following measures leads to death or serious injury.
+²
+Only trained personnel (see Preface), who are familiar with the safety requirements and precautions
+and observes them can carry out the work.
+²
+If there is any hazardous voltage present, work may never be carried out.
+²
+Connect the protective conductor terminal X 
+ to the protective conductor of the switch panel or of
+the control cabinet.
+²
+De-energize the device.
+²
+In addition, connect a suitable isolating device upstream in order to be able to disconnect the device
+from the power supply!
+i
+i
+NOTE
+For electrical installations, observe and comply with the national and international provisions concerning
+the installation of electric power installation and with the low-voltage directive 2006/95/EG.
+Before commissioning the device, check that all connections are made properly.
+To allow temperature equalization and to avoid dampness and condensation, Siemens recommends
+leaving the device for a minimum of 2 hours in the operating room before using it.
+i
+i
+NOTE
+Before switching on the supply voltage, check whether the operational data comply with the rated data
+on the type label and the technical data according to chapter 10.1 SICAM FCG General Device Data. This
+applies particularly to the VH supply voltage and the maximum values on the binary interfaces.
+3.5
+3.5.1
+Getting Started
+3.5 Electrical Connection
+SICAM, Fault Collector Gateway, Manual
+37
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Power Supply of the SICAM FCG
+[le_sfcg_powersupply, 2, en_US]
+Figure 3-4
+Supply Voltage Terminal on the SICAM FCG
+(1)
+Terminal Connection of the DC 12 V / 24 V Supply Voltage
+Table 3-1
+Terminal Block X
+Terminal -
+Negative supply voltage
+Terminal +
+Positive supply voltage
+Terminal 
+Protective grounding
+i
+i
+NOTE
+You can find information on the connection conditions in the technical data in chapter 10.1 SICAM FCG
+General Device Data.
+Care must be taken for the polarity. Reversing the polarity of the supply voltage can result in device failure.
+i
+i
+NOTE
+The grounding on the SICAM FCG always has to be connected to the terminal for protective conductor 
+.
+Table 3-2
+Terminals for Supply Voltage (Terminal Block X)
+Conductor cross-section, rigid maximum
+2.5 mm² (AWG 14)
+Conductor cross-section with ferrule
+1.5 mm² (AWG 16)
+Tightening torque
+0.4 Nm to 0.5 Nm (3.5 in-lb to 4.5 in-lb)
+i
+i
+NOTE
+The internal power supply unit of the device is not electrically isolated.
+3.5.2
+Getting Started
+3.5 Electrical Connection
+38
+SICAM, Fault Collector Gateway, Manual
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+Connection of an External Power Supply to the Terminal Block X
+i
+i
+NOTE
+When operating a SICAM FCG with an external power supply, make sure that the external power supply
+meets the safety criteria for the environment where the SICAM FCG is operated. The external power supply
+must be able to supply a Safety Extra Low Voltage (SELV) 12 V / 24 V power to the SICAM FCG under the
+conditions at the place of operation.
+i
+i
+NOTE
+If you use an external power supply, note the installation, operation, and safety instructions in the docu-
+mentation of the power-supply unit. In addition, note the safety instructions given in this manual in
+chapter 3.5.1 Safety Notes
+Table 3-3
+Output Values of the External Power Supply
+Output
+Value
+Rated voltage
+DC 12 V or 24 V
+Min. current
+≥ 1 A
+i
+i
+NOTE
+The cable length between SICAM FCG and the external power supply must not exceed 0.5 m.
+!
+DANGER
+Hazard posed by high contact voltage.
+Non-observance of the following measure leads to death or serious injury.
+²
+The device is designed for operation with SELV by a Limited Power Source (LPS). This means that
+only SELV with LPS complying with EN 60950/EN 60950-1/VDE0805 must be connected to the power-
+supply terminal. The power-supply unit for the device power supply must comply with NEC Class 2, as
+described by the National Electrical Code ® (ANSI/NFPA 70).
+Terminal Blocks of Binary Inputs/Binary Outputs
+i
+i
+NOTE
+The SICAM FCG contains binary interfaces (see chapter 2.1 Ordering Information, Scope of Delivery, and
+Accessories ). They are located on the terminal side. All terminals which are possible depending on the
+device are described in the following.
+3.5.3
+Getting Started
+3.5 Electrical Connection
+SICAM, Fault Collector Gateway, Manual
+39
+E50417-H1040-C584-B7, Edition 04.2024
+
+
+[le_sfcg_trmlblkbibo, 2, en_US]
+Figure 3-5
+Arrangement of the Terminal Blocks of the Binary Inputs/Binary Outputs
+
+
+Question:
+Which of the following is incorrect according to the equipment manual?
+
+A. A dynamic IP address is assigned to the SICAM FCG when it is connected to Electrification X Cloud or MindSphere Cloud via GPRS.
+B. FQDN such as "myfcg.example.com" which is resolvable via DNS can be a legal value for  "Indentifier (Local ID)" when entering an Internet Key Exchange address.
+C. IP Address of "192.168.0.55" is used after I press the IP-Addr. push-button for > 3 seconds. The LED on the terminal side will indicate "Default IP address is applied".
+D. When I establish the communication between SICAM FCG and FSI, I need to scan or manually copy the QR code on the FSI to the FCG.
+
+Select the correct answer.

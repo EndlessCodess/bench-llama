@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "name": "lc-001-038-v1",
+  "description": "All 38 llama.cpp cases including paired DFlash dataset tests",
+  "jobs": [
+    {"id": "fair-baseline", "group": 0, "config": "fair-baseline.json", "model_key": "f16"},
+    {"id": "weight-q8-0", "group": 1, "config": "lc-005-008-weight-q8-0.json", "model_key": "q8_0"},
+    {"id": "weight-q4-k-m", "group": 1, "config": "lc-009-012-weight-q4-k-m.json", "model_key": "q4_k_m"},
+    {"id": "kv-q8-0", "group": 2, "config": "lc-013-016-kv-q8-0.json", "model_key": "f16"},
+    {"id": "kv-q4-0", "group": 2, "config": "lc-017-020-kv-q4-0.json", "model_key": "f16"},
+    {"id": "flash-attn-off", "group": 3, "config": "lc-021-024-flash-attn-off.json", "model_key": "q8_0"},
+    {"id": "poll-0", "group": 4, "config": "lc-025-028-poll-0.json", "model_key": "f16"},
+    {
+      "id": "graph-off",
+      "group": 5,
+      "config": "lc-029-032-graph-off.json",
+      "model_key": "f16",
+      "unsupported_platforms": ["cann_310p", "metal", "cpu"],
+      "environment_by_platform": {
+        "cuda": {"GGML_CUDA_DISABLE_GRAPHS": "1"},
+        "cann": {"GGML_CANN_ACL_GRAPH": "off"},
+        "cann_910b": {"GGML_CANN_ACL_GRAPH": "off"}
+      }
+    },
+    {
+      "id": "dflash-off",
+      "group": 6,
+      "config": "lc-033-037-dflash-off.json",
+      "model_key": "f16",
+      "runner": "server",
+      "rounds": 10,
+      "processed_dir": "data/processed/qwen3.5-9b-speculative-nothink"
+    },
+    {
+      "id": "dflash-on",
+      "group": 6,
+      "config": "lc-034-038-dflash-on.json",
+      "model_key": "f16",
+      "draft_model_key": "dflash_f16",
+      "runner": "server",
+      "rounds": 10,
+      "processed_dir": "data/processed/qwen3.5-9b-speculative-nothink"
+    }
+  ]
+}

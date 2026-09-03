@@ -1,0 +1,126 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+Interest Rate Cuts vs. Stimulus Payments:
+An Equivalence Result
+Abstract: I derive a general condition on consumer behavior ensuring that,
+in a simple textbook model of demand-determined output, any path of aggregate
+inflation and output that is implementable via interest rate policy is also imple-
+mentable through time-varying uniform lump-sum transfers (“stimulus checks”)
+alone. The condition is satisfied in popular models of non-Ricardian consumer
+behavior (e.g., HANK, OLG). Across these models, the transfer-only policy that
+closes a given demand shortfall is well-characterized by a small number of mea-
+surable sufficient statistics. My results extend to environments with investment if
+transfers are supplemented by a second standard fiscal tool—bonus depreciation.
+†Email: ckwolf@mit.edu. I am grateful to the Editor, Andy Atkeson, and three anonymous referees for
+their extremely useful feedback. I also received helpful comments from Mark Aguiar, Manuel Amador, Marios
+Angeletos, Cristina Arellano, Gadi Barlevy, Martin Beraja, Anmol Bhandari, Lukas Freund, Erik Hurst,
+Oleg Itskhoki, Greg Kaplan, Loukas Karabarbounis, Jennifer La’O, Alisdair McKay, Amanda Michaud,
+Benjamin Moll, Simon Mongey, Jonathan Parker, Mikkel Plagborg-Møller, Ricardo Reis, Harald Uhlig,
+Gianluca Violante, Tom Winberry, Iv´
+an Werning, and seminar participants at various venues. I thank Isabel
+Di Tella for outstanding research assistance.
+1
+
+
+1
+Introduction
+The prescription of standard New Keynesian theory is to conduct stabilization policy through
+changes in short-term interest rates. In recent years, much policy and academic interest
+has centered on the question of whether—and if so, how—alternative policy tools could be
+used to replicate monetary stimulus when nominal interest rates are constrained by a zero or
+effective lower bound (ELB).1 Prior work has in particular identified tax policy, often labeled
+unconventional fiscal policy, as an attractive option (Correia et al., 2008, 2013): time-varying
+tax rates manipulate intertemporal prices just like monetary policy and thus can replicate
+any desired monetary allocation.
+In this paper I ask whether conventional fiscal policy—that is, fiscal instruments that are
+already part of the standard stabilization policy toolkit—are similarly sufficient to replicate
+any given monetary policy. The setting for much of my analysis is a textbook business-cycle
+model with nominal rigidities and without capital, extended to allow for more general, non-
+Ricardian household consumption behavior. The conventional fiscal stabilization tool that I
+consider are uniform, deficit-financed transfers (“stimulus checks”), a policy instrument used
+in all recent U.S. recessions. My first contribution is to identify a general sufficient condition
+under which any time paths of aggregate output and inflation that are implementable via
+interest rate policy are also implementable solely by adjusting the time path of such uniform
+lump-sum taxes and transfers. It follows in particular that, under my condition, standard
+output and inflation targeting rules remain uniquely implementable even with a binding
+ELB. Next I argue that this theoretical result is also practically relevant: I show that my
+sufficient condition holds in popular models of non-Ricardian consumption behavior, includ-
+ing heterogeneous-agent (HANK) and overlapping-generations (OLG) models. Furthermore,
+for all of these models, the required stimulus check policy that closes any given demand
+shortfall is well-characterized by a very small number of empirically measurable “sufficient
+statistics.” At conventional values for these sufficient statistics, stimulus check policies of the
+magnitudes already observed in practice suffice to stabilize the economy in the face even of
+relatively sizable shortfalls in private spending. Finally, I show that all of these conclusions
+extend to richer models with investment as long as stimulus checks are supplemented by a
+second, similarly conventional fiscal tool: bonus depreciation stimulus.
+1A notable early example is Bernanke (2002).
+Important recent contributions include Correia et al.
+(2008), Correia et al. (2013), Gal´
+ı (2020), and Reis & Tenreyro (2022).
+2
+
+
+Environment & equivalence result.
+My model economy features a policymaker with
+access to two instruments: nominal interest rates and uniform, lump-sum taxes and transfers.
+My objective is to characterize the space of allocations implementable through manipulation
+of these two instruments. All results apply to (linearized) perfect foresight transition paths,
+or equivalently to the model’s first-order perturbation solution with aggregate risk. Key for
+me are properties of the two matrices Cib and Cτ, whose (t, s)th entries are, respectively, the
+derivatives of partial equilibrium consumption demand at time t with respect to a) a change
+in the time-s rate of interest on bonds and b) a uniform lump-sum transfer paid out at time
+s. Note that Cτ is a matrix of intertemporal marginal propensities to consume (iMPCs), as
+studied first in Auclert et al. (2018).
+In this environment I establish that, if Cτ is invertible—a condition that I will refer to
+as strong Ricardian non-equivalence—, then any sequence of aggregate output and inflation
+that can be attained via interest rate policy is also implementable by only adjusting the time
+profile of uniform lump-sum transfers. The proof begins with the household consumption-
+savings problem. A feasible monetary policy is a path of nominal interest rates together with
+a path of lump-sum taxes or transfers that ensures a balanced government budget. Through
+the household problem, this policy induces some path of net excess consumption demand.
+Can a transfer-only policy—that is, a policy that only changes the time profile of taxes and
+transfers, again subject to budget balance—engineer the same path of net excess demand?
+For Ricardian households, the answer is no: for them, only the net present value of transfers
+matters, so any budget-feasible transfer policy leaves spending unchanged. Mathematically,
+this is reflected in Cτ being rank-1. If instead the timing of transfers matters (in the strong
+sense that Cτ is invertible), then there does exist some path of transfers and taxes alone that
+perturbs consumption demand in exactly the same way as the baseline monetary policy. Since
+this monetary policy was by assumption budget-balanced, the equivalent transfer policy is
+feasible as well. The argument is then completed by showing that, in my environment, two
+policies that generate the same partial equilibrium net excess consumption demand paths
+must be accommodated in general equilibrium through the same market-clearing adjustments
+in prices (inflation, wages, . . . ) and quantities (output, hours worked, . . . ). Though revenue-
+equivalent in net present value terms, the two policies do invariably induce different short-run
+government debt dynamics: while interest rate policy can in principle have aggregate effects
+even if outstanding debt is fixed, uniform stimulus checks work only because they change
+the time path of government bonds held by the private sector.
+Under the conditions of my equivalence result, transfer payments can serve as a perfect
+3
+
+
+substitute for interest rate policy in the eyes of a conventional “dual mandate” policymaker.
+Formally, my results imply that systematic policy rules like the well-known (flexible) inflation
+forecast target criteria (Woodford, 2011) continue to be implementable even if nominal rates
+are constrained by a binding lower bound. In particular, this conclusion holds completely
+independently of the menu of non-policy disturbances hitting the economy.
+Practical relevance & policy characterization.
+I next discuss the practical rel-
+evance of the theoretical equivalence result. I first ask what assumptions on economic prim-
+itives are required to ensure the high-level condition of “strong Ricardian non-equivalence”.
+My main finding here is that this condition holds 
+
+Question:
+Which of the following statements are false according to the papers?
+
+(1).  For broad stock market indices such as the CRSP value-weighted index, an unanticipated 25-basis-point rate cut generally results in a roughly one percent rise in stock prices. This outcome remains consistent regardless of whether outliers are excluded and irrespective of the time windows used to measure the stock market's reaction. The response of equity prices to monetary policy is largely directly due to the policy's impact on the real interest rate.
+(2). The interest rate and stimulus check policies can influence consumer demand with flexibility. This attribute of the model, combined with a net excess demand approach to equilibrium characterization similar to the Arrow-Gebreu model, establishes policy equivalence.
+(3). In an interest rate-only policy, the policymaker has the freedom to adjust the trajectory of nominal rates but must passively modify lump-sum transfers or taxes periodically to maintain budget balance. This approach influences intertemporal prices while keeping the total amount of government debt held by households constant over time.
+(4). Accurately measuring policy surprises using the average funds rate is complicated and typically reduces the perceived size of the surprises. While assuming rate changes occur exclusively during scheduled FOMC meetings after 1995 could help, unexpected rate adjustments, such as those seen in 2001, undermine this approach's validity.
+
+A. (1)(2)(3)
+B. (1)(3)(4)
+C. (2)(3)(4)
+D. (1)(2)(4)
+
+Select the correct answer.

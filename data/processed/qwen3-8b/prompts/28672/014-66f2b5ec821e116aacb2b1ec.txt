@@ -1,0 +1,2321 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+artist,album,rating
+Janelle Monae,Dirty Computer,86
+Post Malone,Beerbongs & Bentleys,53
+Grouper,Grid of Points,79
+Speedy Ortiz,Twerp Verse,76
+Anne-Marie,Speak Your Mind,55
+Half Waif,Lavender,78
+Okkervil River,In The Rainbow Rain,68
+Wiley,Godfather II,60
+Forth Wanderers,Forth Wanderers,78
+Twin Shadow,Caer,65
+Dr. Dog,Critical Equation,70
+Blossoms,Cool Like You,68
+IZA,Dona de Mim,74
+DMA's,For Now,63
+Buzzy Lee,Facepaint,85
+Dylan Carlson,Conquistador,79
+ELOHIM,Elohim,67
+Sigur Ros,Route One,74
+Launder,Pink Cloud,78
+Ingested,The Level Above Human,61
+Saara Aalto,Wild Wild Wonderland,59
+Willie Nelson,Last Man Standing,77
+We Are Scientists,Megaplex,64
+Youngboy Never Broke Again,Until Death Call My Name,65
+Anemone,Baby Only You & I,90
+Stimulator Jones,Exotic Worlds and Masterful Treasures,61
+Lucinate,Big Noise,90
+Eomac,Reconnect,80
+Giraffes? Giraffes!,Memory Lame,75
+Elysia Crampton,Elysia Crampton,80
+Power Trip,Opening Fire: 2008 - 2014,86
+Acquasumarte,Vivere non si puo,80
+Shiba San,Off To Funk,76
+Steve Angello,Human,80
+Foreigner,With the 21st Century Symphony Orchestra & Chorus,50
+Sugai Ken,tele-n-tech-da,70
+Axel Boy,Hypnotism EP,77
+Florian Pellissier Quintet,Bijou Voyou Caillou,82
+Alice Glass,Alice Glass (Remixes),51
+Blitzkrieg,Judge Not!,40
+Sibille Attar,Paloma's Hand,70
+Kat Edmonson,Old Fashioned Gal,60
+Riot V,Armor of Light,68
+Poo Bear,Poo Bear Presents: Bearthday Music,58
+The Erised,One Hundred,80
+My Brightest Diamond,Champagne,66
+Homewrecker,Hell Is Here Now,70
+Godsmack,When Legends Rise,70
+Kid Koala,Floor Kids (Original Video Game Soundtrack),65
+Deadbeat,Wax Poetic For This Our Great Resolve,80
+Luton,Black Box Animals,80
+Steven Julien,Bloodline,76
+Quiet As A Mouse,Is it Funny When it Hurts?,80
+KAZKA,KARMA,75
+Adam Stafford,Fire Behind The Curtain,90
+Nick Cave & Warren Ellis,Kings OST,0
+Through & Through,Homebody,0
+The Parkinsons,The Shape Of Nothing To Come,0
+Liz Brasher,Outcast,0
+Myth Syzer,Bisous,0
+Totalselfhatred,Solitude,80
+VARSITY,Parallel Person,85
+LLNN,Deads,0
+Spielbergs,Distant Star,90
+PBSR,...and Dusky Doors,0
+Dark Sarah,The Golden Moth,0
+Kell Smith,Girassol,0
+The Beat Escape,Life Is Short The Answer's Long,80
+Javiera Mena,Espejo,0
+Clara Luzia,When I Take Your Hand,0
+Keith Urban,Graffiti U,55
+Tony Njoku,H.P.A.C.,60
+Emily Ritz,Pattern Recess,60
+Sing Leaf,Shu Ra,60
+Elena Temnikova,TEMNIKOVA III: Ne modnye,0
+Ilan Bluestone,Scars,0
+God Is An Astronaut,Epitaph,70
+Van Morrison & Joey DeFrancesco,You're Driving Me Crazy,77
+Boosie Badazz,Boonk Gang,0
+Paul White,Rejuvenate,70
+Mefjus,Manifest,0
+Midas Fall,Evaporate,70
+Nadia Struiwigh,WHRRu,70
+Zhu,Ringos Desert Pt. 1,66
+Autechre,NTS Session 4,84
+Autechre,NTS Sessions 1-4,92
+Vansire,Angel Youth,0
+Alexandra Stan,Mami,62
+Persiano,Pessoas Reais Disponiveis para Conversar,74
+Ugly God,Just A Lil Something Before The Album...,28
+Donato Dozzy,Mindless Fullness,84
+DJ Bone,A Piece of Beyond,71
+TACONAFIDE,025 mg,0
+Punnany Massif,PMXV,0
+Delroy Edwards,Aftershock,0
+Ulrika Spacek,Suggestive Listening,75
+AIGEL,Muzyka,73
+Jamie Stewart,An Aggressive Chain Smoking Alcoholic,70
+Girls Names,Primitive Desire,50
+Neil Young,Roxy: Tonight's the Night Live,83
+Robert Gorl,The Paris Tapes,70
+Spacemen 3,Taking Drugs To Make Music To Take Drugs To,0
+Jah Wobble & MoMo Project,Maghrebi Jazz,70
+Say Sue Me,It's Just A Short Walk!,0
+Peach Kelli Pop,Which Witch,80
+Mac DeMarco,Old Dog Demos,0
+David Bowie,Welcome to the Blackout (Live London '78),0
+The National,Boxer (Live in Brussels),60
+J. Cole,KOD,70
+Kimbra,Primal Heart,73
+Sleep,The Sciences,84
+A Perfect Circle,Eat the Elephant,62
+Bishop Briggs,Church of Scars,77
+Lord Huron,Vide Noir,72
+Drinks,Hippo Lite,67
+Post Animal,When I Think of You In a Castle,79
+The Chainsmokers,Sick Boy,48
+Sting & Shaggy,44/876,50
+Foliage,III,71
+Alexis Taylor,Beautiful Thing,69
+Del the Funky Homosapien & Amp Live,Gate 13,78
+Exitmusic,The Recognitions,75
+Tess Roby,Beacon,70
+Hearts Hearts,Goods / Gods,80
+The Longshot,Love Is for Losers,80
+Ricky Eat Acid,Am I Happy Singing,79
+John Moods,The Essential John Moods,78
+Thievery Corporation,Treasures from the Temple,73
+Smoke DZA,Not for Sale,76
+Sweet Valley,Eternal Champ II,36
+C. Tangana,Avida Dollars,29
+Ashley Monroe,Sparrow,83
+Cloud Castle Lake,Malingerer,65
+Ivar Bjornson & Einar Selvik,Hugsja,84
+October,Ultra Red,64
+LE1F,Blue Dream,66
+Jaala,Joonya Spirit,68
+Perel,Hermetica,75
+Zoe,Aztlan,83
+Charmer,Charmer,65
+Melvins,Pinkus Abortion Technician,64
+Bones & Cat Soup,Augmented,43
+Die Nerven,Fake,79
+Denmark Vessey,Sun Go Nova,64
+Old Crow Medicine Show,Volunteer,76
+Samantha Jade,Best of My Love,67
+The New Tigers,Do Xao,73
+Bessie Turner,22:22,72
+Wiegedood,De Doden Hebben Het Goed III,82
+Gabriel Flag,Murder Class,88
+My Indigo,My Indigo,58
+Gang of Four,Complicit,57
+TesseracT,Sonder,58
+Mark Peters,Innerland,70
+Ras G & The Afrikan Space Program,Stargate Music,73
+Lume,Wrung Out,58
+Small Talk,Aquarium,64
+Faces on TV,Night Funeral,64
+Mallory Run,Spin,60
+Flirtini,Heartbreaks & Promises Vol. 4,75
+Limboski,Poliamoria,52
+Swear Tapes,Second Son,64
+Ails,The Unraveling,78
+Nines,Crop Circle,75
+Ganser,Odd Talk,73
+Yazan,Hahaha,68
+Pennywise,Never Gonna Die,65
+Beat Degeneration,Searching for Some Heaven,62
+Bella Boo,Fire,70
+Mya,TKO (The Knock Out),78
+Responsible Party,A Lesson in Poor Planning,66
+Glasperlenspiel,Licht & Schatten,55
+Sangre de Muerdago,Noite,75
+BE3K,Exoneration,64
+Cancer Bats,The Spark That Moves,85
+Mike Donovan,How To Get Your Record Played in Shops,70
+The HIRS Collective,Friends. Lovers. Favorites.,79
+Ibibio Sound Machine,Eyio,63
+Jj18,jj's prayer,60
+Shuggie Otis,Inter-Fusion,58
+Dumlords,Smiles For Miles,60
+Ghost-Note,Swagism,80
+Lisa Wulff Quartett,Wondrous Strange,80
+Tomemitsu,The Cave,85
+Slum Village,The Lost Scrolls Vol.2 (Slum Village Edition),70
+GusGus,Don't Know How to Love,60
+Ellevator,Ellevator,80
+Donovan Woods,Both Ways,78
+Doon Kanda,Luna,70
+King Goat,Debts of Aeons,83
+Serum Dreg,Lustful Vengeance,90
+Sera Cahoone,The Flora String Sessions,0
+The Who,Live at Fillmore East 1968,87
+International Harvester,Remains,84
+OBUXUM,H.E.R.,80
+Agua Roja,Roses,0
+Eyes Of Others,Lust Unrequited,80
+Maceo Plex,Fabric 98,76
+Jesus Jones,Passages,0
+Alma Elste,Dreams Gone Quieter,0
+Evelyn Ida Morris,Evelyn Ida Morris,0
+D.A. Stern,Isn't It Obvious?,0
+The Flaming Lips,Scratching the Door: The First Recordings of the Flaming Lips,0
+Alison Moyet,The Other Live Collection,0
+Kink Gong,Music Is Not a Copy,0
+Thomas Fehlmann / Terrence Dixon,We Take It From Here,0
+Father Murphy,Rising. A Requiem for Father Murphy.,0
+Lack The Low,One Eye Closed,86
+Autechre,NTS Session 3,83
+PRETTYMUCH,PRETTYMUCH An EP,84
+GRMLN,Explore II,0
+Ralo,12 Can't Stop Shit,0
+ASAP TyY,Troubles of the World,0
+The Vegetablets,The Vegetablets,0
+Sasha Sloan,sad girl,80
+Various Artists,BC35: The 35 Year Anniversary of BC Studio,73
+GlokkNine,Bloodshells Revenge,73
+Litku Klemetti,Taika Tapahtuu,0
+Kosmo Kat,Rose,0
+Marcelo Cabral,Motor,65
+Chilly Gonzales,Other People's Pieces,80
+The Submissives,Pining for a Boy,22
+VIXX,EAU DE VIXX,100
+Evilnox,Honey Moon and Blackened Stars,95
+Lena Willikens,Selectors 005,77
+Adana Twins,Jupiter,56
+Waveshaper,Lost Shapes,65
+Cora,El Rapto,74
+emamouse X yeongrak,mouth mouse maus,65
+Michal Turtle,Return to Jeka,0
+Luigi Tozzi,Ecate,0
+Ora Iso,Image Certifies,60
+In Love With A Ghost,gay story,65
+Rrhea,Rrhea,67
+Jack Stauber,HiLo,74
+N. Heroux,Frozen Dinner,58
+Sebnem Ferah,Parmak izi,58
+Tinashe,Joyride,66
+Princess Nokia,A Girl Cried Red,58
+Rival Consoles,Persona,84
+Confidence Man,Confident Music For Confident People,85
+King Tuff,The Other,68
+Laura Veirs,The Lookout,78
+A Place To Bury Strangers,Pinned,61
+Young Thug,Hear No Evil,60
+Mouse on Mars,Dimensional People,68
+Carnage,Battered Bruised & Bloody,50
+Sofi Tukker,Treehouse,75
+Smokepurpp & Murda Beatz,Bless Yo Trap,59
+Manic Street Preachers,Resistance Is Futile,68
+Say Sue Me,Where We Were Together,80
+Breaking Benjamin,Ember,60
+Chrome Sparks,Chrome Sparks,80
+Sarah Davachi,Let Night Come On Bells End The Day,81
+Many Rooms,There Is a Presence Here,80
+John Prine,The Tree of Forgiveness,76
+A Hawk and a Hacksaw,Forest Bathing,75
+nothingnowhere.,ruiner,56
+Brazilian Girls,Let's Make Love,80
+Mol,JORD,85
+Isaac Gracie,isaac gracie,55
+Night Flowers,Wild Notion,70
+The Damned,Evil Spirits,70
+Josh Rouse,Love in the Modern Age,74
+Novelist,Novelist Guy,72
+Fiddlehead,Springtime and Blind,90
+u-Ziq,Challenge Me Foolish,72
+Malena Zavala,Aliso,71
+Wrekmeister Harmonies,The Alone Rush,80
+L.A. Salami,The City of Bootmakers,80
+Jim Jones,Wasted Talent,76
+Human Tetris,Memorabilia,73
+Stonefield,Far From Earth,61
+Bryde,Like an Island,70
+Slug,HiggledyPiggledy,72
+Odeko,Rose Tinted Vision Implant,72
+The Moondoggies,A Love Sleeps Deep,64
+Goldmund,Occasus,70
+Prof,Pookie Baby,73
+Lewsberg,Lewsberg,84
+Wrong,Feel Great,75
+Florentino,Fragmentos,73
+Josh T. Pearson,The Straight Hits!,66
+Space Invadas,Wild World,68
+RLYR,Actual Existence,76
+Animal Flag,Void Ripper,63
+Juliana Hatfield,Juliana Hatfield Sings Olivia Newton-John,74
+Pac Div,1st Baptist,74
+Bodega Bamz,PAPI,90
+Marrakesh,Cold as a Kitchen Floor,76
+Blu & Nottz,Gods in the Spirit Titans in the Flesh,77
+Beak>,L.A. Playback,66
+War On Women,Capture the Flag,73
+Sim Hutchins,Clubeighteen2thirty,69
+Arikon,The Prophet's Blood Is Boiling,73
+Crystales,Crystales,77
+The Reign of Kindo,Happy However After,76
+Boothroyd,Pure Country,63
+Kate Mo$$,I STEPPED ON A DEAD RATS HEAD TODAY,65
+Gosheven,Bivaq,70
+Mackenzie Nicole,The Edge,56
+Low Jack,Riddims du Lieu-dit,80
+Kermes,We Choose Pretty Names,80
+Wendy McNeill,Hunger Made You Brave,94
+The Alchemist,Lunch Meat,90
+Simone Felice,The Projector,90
+Ufo361,808,66
+mmph,Dear God,73
+Holiday Inn,Torbido,75
+Reveries,Reveries,68
+Chrisette Michele,Out of Control,61
+Black Dresses,WASTEISOLATION,67
+Pizzagirl,An Extended Play,35
+Nekrogoblikon,Welcome to Bonkers,70
+Our Place Of Worship Is Silence,With Inexorable Suffering,62
+TACONAFIDE,SOMA 05 mg,10
+Rachael Cantu,Love Rush,90
+Bush Tetras,Take the Fall,60
+Suave,Portugues Suave,50
+Dead Combo,Odeon Hotel,65
+Great Lake Swimmers,Side Effects,81
+Titica,Pra Que Julgar,74
+Queen Kwong,Love Me To Death,80
+Erik Friedlander,Artemisia,75
+Derek Smalls,Smalls Change (Meditations Upon Ageing),53
+Misnomer,Neighborhood,70
+Leila Abdul-Rauf,Diminution,60
+Robert Glasper & Kaytranada,The ArtScience Remixes,67
+John Roberts,Spill,85
+Jason Aldean,Rearview Town,69
+Gozu,Equilibrium,74
+Illy,Voo Longe,86
+Frequency Drift,Letters to Maro,90
+The Nels Cline 4,Currents Constellations,80
+The Baggios,Juliana,60
+Priest,The Lost Lions,80
+Nino Tempo,Purveyor of Balladry: The Best of Nino Tempo on Atlantic,80
+Various Artists,Flowers From The Ashes: Contemporary Italian Electronic Music,80
+Oceanator,Lows,0
+Various Artists,Baby Driver Volume 2: The Score for a Score,0
+Crematory,Oblivion,0
+Home$lice,Howdy,60
+Breakfast Muff,Crocodile,0
+Coping Skills,Worst New Music,0
+Bacchae,Bacchae,0
+Winter Dies In June,Penelope Sebastian,0
+DJ Seinfeld,Sakura EP,0
+The Album Leaf,The Endless (Original Motion Picture Soundtrack),0
+The Sorority,Pledge,90
+Bazzi,COSMIC,70
+Knxwledge,Gladwemet,68
+PeeWee Longway,Spaghetti Factory,67
+Weekday Wolves,The World's Most Liveable City,63
+Autechre,NTS Session 2,88
+Barbara Barth & Manuel Krass,In Spheres,85
+The Longshot,The Longshot EP,80
+DJ Sprinkles,Deproduction EP 1,0
+Cordel Do Fogo Encantado,Viagem ao Coracao do Sol,0
+Dingo Bells,Todo Mundo Vai Mudar,76
+Bicep,Rain,73
+Haru Nemuri,Haru to Shura,80
+Christian Fitness,Nuance - The musical,80
+Fate Gear,7 Years Ago,0
+ORESAMA,Hi-Fi POPS,0
+Goose House,Flight,0
+Sinoptik,Fields On Fire,75
+No Vacation,No Vacation on Audiotree Live,80
+EXO-CBX,Blooming Days,47
+NERVE,AUTO-SABOTAGEM,80
+Simon Cummings,Jian  (ma),0
+Twice,What is Love?,61
+Hunee,Hunchin' All Night,88
+Kim Oki,Public Domain For Me,80
+Slimesito,Scarface Sito,51
+Various Artists,I Only Listen to the Mountain Goats: All Hail West Texas,75
+Paul Hares,Concentration,0
+Surrenderdorothy,breathingexercise,56
+Kali Uchis,Isolation,85
+Cardi B,Invasion of Privacy,81
+Unknown Mortal Orchestra,Sex & Food,73
+Hop Along,Bark Your Head Off Dog,80
+Flatbush Zombies,Vacation in Hell,74
+Lil Xan,TOTAL XANARCHY,50
+Wye Oak,The Louder I Call The Faster It Runs,80
+30 Seconds To Mars,AMERICA,60
+Hinds,I Don't Run,77
+Kylie Minogue,Golden,63
+Daniel Avery,Song For Alpha,81
+Famous Dex,Dex Meets Dexter,60
+The Wonder Years,Sister Cities,81
+Goat Girl,Goat Girl,76
+Eels,The Deconstruction,67
+The Aces,When My Heart Felt Volcanic,70
+Young Galaxy,Down Time,90
+Dr. Octagon,Moosebumps: An Exploration Into Modern Day Horripilation,70
+Tom Misch,Geography,68
+GUM,The Underdog,75
+Ross from Friends,Aphelion,76
+Alina Baraz,The Color of You,71
+Zola Jesus,Okovi: Additions,72
+Alison Wonderland,Awake,56
+Rainbow Kitten Surprise,How To: Friend Love Freefall,70
+Air Waves,Warrior,75
+MIEN,MIEN,76
+Panopticon,The Scars of Man on the Once Nameless Wilderness Part I and II,77
+BAMBARA,Shadow on Everything,80
+Mastersystem,Dance Music,80
+City Calm Down,Echoes In Blue,71
+Paul De Jong,You Fucken Sucker,63
+Sloan,12,77
+The Amazing,In Transit,80
+Kississippi,Sunset Blush,69
+Makeness,Loud Patterns,70
+Fenne Lily,On Hold,64
+Lowell,Lone Wolf,80
+Hey Ocean!,The Hurt of Happiness,74
+ISLAND,Feels Like Air,75
+Nonpareils,Scented Pictures,60
+Project Pablo,There's Always More at the Store,74
+Gin Wigmore,Ivory,78
+Underoath,Erase Me,77
+Sarah Shook & The Disarmers,Years,81
+ODIE,Analogue,70
+Mind Over Mirrors,Bellowing Sun,80
+Various Artists,Revamp: The Songs of Elton John & Bernie Taupin,58
+Joey Pecoraro,Music For Happiness,76
+Christina Vantzou,No. 4,80
+Wallows,Spring,70
+Look Vibrant,The Up Here Place,70
+Kwes,Songs For Midi,76
+Triptides,Visitors,80
+Francoise Hardy,Personne d'autre,68
+Cosmo Sheldrake,The Much Much How How and I,80
+Rafiq Bhatia,Breaking English,75
+Teen Creeps,Birthmarks,75
+MY,Blizhe,69
+Winter,Ethereality,80
+Soft as Snow,Deep Wave,80
+Little Boots,Burn,61
+Bosq,Love and Resistance,76
+Ripe,Joy In The Wild Unknown,82
+Angie,Suicidal Since 1995,76
+Dusted,Blackout Summer,76
+JC Flowers,User,72
+Vince Ash,Do or Die,75
+KOOL-A$$-YEEZU$,the untitled riot of tomorrow,74
+Diamond Thug,Apastron,77
+Knuckle Puck,Shifted,53
+Boerd,Static,68
+Oshun,bittersweet vol.1,79
+Oberon Rose,Tell Me All About It,59
+Great Lakes,Dreaming Too Close to the Edge,60
+Johann Johannsson,Englaborn & Variations,85
+SG Lewis,Dusk,61
+Krakow Loves Adana,Songs After the Blue,74
+Lisa Stansfield,Deeper,80
+Adam Ackerman,Autobiologist,74
+Ebo Taylor,Yen Ara,74
+Winterfylleth,The Hallowing of Heirdom,84
+Kalmah,Palo,72
+No Thank You,All It Takes To Ruin It All,91
+Snakehips,Stay Home Tapes,48
+Kamelot,The Shadow Theory,60
+Kemialliset Ystavat,Siipi Empii,65
+Mines Falls,Nepenthe,87
+Dreamend,Dreamend,79
+Blackberry Smoke,Find A Light,78
+En Attendant Ana,Lost and Found,80
+J.K. The Reaper,Digital Tears,61
+Blithe Field,Days Drift By,71
+Sly & Robbie + Nils Petter Molvaer + Eivind Aarset + Vladislav Delay,Nordub,76
+Steve Bug & Langenberg,Paradise Sold,70
+Andris Nelsons & Gewandhausorchester Leipzig,Brucker: Symphony No. 7 / Wagner: Siegfried's Funeral March,40
+Motta,Vivere o Morire,75
+SD,Pay Attention,59
+Tina Arena,Quand tout recommence,89
+Pleasure Model,The Executive,70
+Glorior Belli,The Apostates,75
+Western Centuries,Songs From the Deluge,80
+Glasser,Sextape,78
+Sonido Gallo Negro,Mambo Cosmico,70
+BOYBOY,Boyboy,66
+Matyas Szandai Mathias Levy & Miklos Lukacs,Bartok Impressions,85
+Manuel Valera' Trio,The Planets,75
+Husalah,H,72
+Gus & Vic,Savana,75
+X-Wife,X-Wife,90
+Spiders,Killer Machine,75
+Various Artists,Universal Love - Wedding Songs Reimagined,64
+The Longcut,Arrows,75
+Mariam the Believer,Soft Moon,81
+Chicago,Chicago: VI Decades Live (This Is What We Do),50
+Freak Heat Waves,Beyond XXXL,78
+Cry Kestrel,Soulburned,0
+TOSHIO MATSUURA GROUP,LOVEPLAYDANCE,0
+Black Salvation,Uncertainty Is Bliss,0
+Exmaid,Fair Sex,0
+Matt Douglas,Affirmation (with Discomfort),90
+Various Artists,Restoration: Reimagining the Songs of Elton John and Bernie Taupin,85
+Peelander-Z,Go Pz Go,0
+Dax J,Offending Public Morality,0
+Dan Weiss,Starebaby,80
+Black Rainbows,Pandaemonium,0
+Elvis Presley,Elvis Presley: The Searcher (The Original Soundtrack),80
+The Cavemen,Nuke Earth,0
+Judee Sill,Judee Sill: Songs of Rapture and Redemption: Rarities & Live,0
+Kevin George,Loveland,0
+Dark Times,Tell Me What I Need,0
+Bug Bus Piano,My song is from the bottom,0
+Ian Pace / Simon Limbrick,Floating Drifting,0
+The Griswolds,Year After Year,0
+Firestations,The Year Dot,40
+Caliban,Elements,50
+Palm Reader,Braille,50
+Benin City,Last Night,60
+Rosehardt,Songs in the Key of Solitude,0
+Various Artists,Johnny Cash: Forever Words,74
+E-40 & B-Legit,Connected & Respected,73
+Fluxion,Ripple Effect,70
+En Vogue,Electric Cafe,70
+Royal Wood,Ever After the Farewell,70
+Saba,Care for Me,86
+The Caretaker,Everywhere at the End of Time - Stage 4,79
+Blush Response,Hearts Grow Dull,77
+Ashley Paul,Lost in Shadows,76
+Autechre,NTS Session 1,83
+Bloody Knives,White Light Black Moon,0
+Elg,Vu Du Dome,0
+Rui R De Matos,The Same But Different,0
+Hoof Glove,Hoof Glove,78
+BTS,Face Yourself,43
+Frode Haltli,Avant Folk,80
+Winner,EVERYD4Y,70
+CADE,CADE,75
+Urbangarde,Shoujo Fiction,0
+AA=,(re:Rec),0
+Yuzu,Big Yell,0
+Aimi,Aimilion,0
+Passepied,Neon to Tora,0
+Uri Nakayama,Caldera,0
+Bones & Greaf,BREATHINGEXERCISE,0
+Lebanon Hanover,Let Them Be Alien,74
+Mr. Fingers,Cerebral Hemispheres,69
+Steven Gutheinz,Atlas,76
+Dean Blunt,BOOKEY,70
+Jacquees,This Time I'm Serious,58
+El Coyote,El Coyote,80
+Edward,Rumours EP,0
+The Vexing Grimoire,The Vexing Grimoire,78
+Lil Zubin,Misery,67
+Oh My Girl,Banana Allergy Monkey,63
+Pentagon,Positive,67
+Wreck And Reference,Alien Pains,73
+Wreck & Reference,Alien Pains,71
+Niko Niko,Ozero Zabvenii,61
+Warm Bodies,Warm Bodies,77
+Danheim,Fridr,84
+Sergey Lazarev,The One,18
+Littlebabyangel,Gada,73
+Mad Pilot,Russia Today,70
+DJ Healer,Nothing 2 Loose / Prime Minister Of Doom - Mudshadow Propaganda,92
+Dong Wu Yuan Ding Zi Hu ,Dong Wu Yuan Ding Zi Hu ,77
+Larry Wish,How More Can You Need?,80
+Sergei Lazarev,The One,0
+Empire,The Empire Strikes Start!!,0
+Various Artists,Uneven Paths: Deviant Pop From Europe 1980-1991,77
+Moodymann,Pitch Black City Reunion,76
+Luniz,No Pressure,0
+Kacey Musgraves,Golden Hour,81
+The Weeknd,My Dear Melancholy,64
+The Voidz,Virtue,72
+Amen Dunes,Freedom,80
+Frankie Cosmos,Vessel,74
+CZARFACE & MF DOOM,Czarface Meets Metal Face,73
+Jean Grae & Quelle Chris,Everything's Fine,79
+Hayley Kiyoko,Expectations,76
+Sons of Kemet,Your Queen is a Reptile,81
+The Vaccines,Combat Sports,77
+Rich The Kid,The World Is Yours,69
+Cabbage,Nihilistic Glamour Shots,70
+Kate Nash,Yesterday Was Forever,64
+Sevdaliza,The Calling,70
+The Garden,Mirror Might Steal Your Charm,58
+Her,Her,60
+Doja Cat,Amala,74
+FACS,Negative Houses,80
+Holy Wave,Adult Fear,60
+Major Murphy,No. 1,80
+Chris Carter,Chris Carter's Chemistry Lessons Vol. 1,78
+Orquesta Akokan,Orquesta Akokan,90
+Paul Cherry,Flavour,70
+DJ Esco,KOLORBLIND,72
+The Shacks,Haze,61
+Trace Mountains,A Partner to Lean On,76
+No Joy / Sonic Boom,No Joy / Sonic Boom,69
+Naked Giants,Sluff,80
+SAINt JHN,Collection One,74
+Jukebox the Ghost,Off to the Races,80
+Ash Koosha,Aktual,71
+Lindi Ortega,Liberty,81
+Queen Of Jeans,Dig Yourself,70
+Daphne & Celeste,Daphne & Celeste Save The World,77
+Delroy Edwards,Rio Grande,80
+Altin Gun,On,82
+Adrian Younge,Voices of Gemma,66
+Trembling Bells,Dungeness,74
+Ashley McBryde,Girl Going Nowhere,81
+Broken Records,What We Might Know,80
+Henry Green,Shift,70
+The Spectors,Ooh Aah Aah,73
+Tom Rosenthal,Don't Die Curious,69
+Primordial,Exile Amongst the Ruins,75
+Tink,Pain & Pleasure,58
+Escape The Fate,I Am Human,43
+Chevel,Always Yours,72
+Innov Gnawa,Aicha,85
+Prides,A Mind Like the Tide: Part Two,55
+N Kramer,Endless,69
+Ben Harper & Charlie Musselwhite,No Mercy In This Land,73
+Barren Earth,A Complex of Cages,77
+Nihilist Cheerleader,Riot Right?,73
+Haux,Something to Remember,78
+Augury,Illusive Golden Age,78
+Desperate Journalist,You Get Used To It,81
+Lifted Bells,Minor Tantrums,57
+Samoe bol'shoe prostoe chislo,My ne spali my snilis',79
+Altin Gun,On,65
+Camilla Blue,Blue,44
+Deadmau5,Where's the Drop?,77
+Cavalier,Private Stock,75
+Mary Halvorson,Code Girl,79
+Media Jeweler,1-800-SUCCEED,70
+Slomatics & Mammoth Weed Wizard Bastard,Totems,76
+Oh Land,Watermusic,57
+Lychgate,The Contagion in Nine Steps,70
+Zeke,Hellbender,77
+Andreas Tilliander,Solen Traffar Topparna Forst,70
+The Lonely Biscuits,The Universe In You,35
+TTeo,GGG,1
+Dj Ten,Trinity (Deluxe Edition),80
+PTTRNS,Material Und Geschichte,66
+Cascadeur,Camera,89
+Benabar,Le debut de la suite,78
+Alam Khan,Immersion,80
+Matteo Bortone,Claroscuro,75
+Various Artists,Before Anythang (Original Motion Picture Soundtrack),10
+Eric Copeland,Beat It,60
+Maria Antonietta,Deluderti,55
+Wendy Rae Fowler,Warped,75
+Harrison Brome,Body High,50
+The Fearless Flyers,The Fearless Flyers,95
+Wantigga,Suddenly Everything,82
+Minutes Unlimited,Making Contact,70
+Groeni,Nihx,70
+Mary Chapin Carpenter,Sometimes Just the Sky,70
+Lil Durk,Just Cause Y'all Waited,73
+Kim Richey,Edgeland,75
+Laurence Pike,Distant Early Warning,80
+Eagle Twin,The Thundering Heard,80
+Blue Lab Beats,Xover,90
+Dogbite,True Lo-Fi Will Find You In The End,73
+Judicator,The Last Emperor,85
+Yung Buda,Halloween o Ano Todo,57
+Punchline,LION,71
+Advokaty,23:45,85
+Verge Collection,Flaneur,62
+Levellers,We the Collective,76
+Meyhem Lauren,Glass,0
+Napalm Death,Coded Smears And More Uncommon Slurs,0
+The Cars,Heartbeat City [Expanded],0
+The Cars,Shake It Up [Expanded],0
+Styles P,Nickel Bag,0
+Natali Felicia,Wrong Era,80
+Eric Andersen,The Essential Eric Andersen,80
+Echo Collective,Echo Collective Plays Amnesiac,0
+Sam Morrow,Concrete and Mud,80
+Barbarossa,Lier,80
+Bettye LaVette,Things Have Changed,78
+Anna & Elizabeth,The Invisible Comes to Us,76
+Monoloc & Beauty of Inconsequenz,Storyline EP,40
+Charles Lloyd Quartet,Live 1966,55
+WuW,Rien ne nous sera epargne,56
+U-God,Venom,58
+Bones & Beeker,Inside a Different Mind,0
+Recloose,So This Is the Dining Room,0
+Light the Torch,Revival,70
+Lio,Lio Canta Caymmi,0
+Will Saul,Inside Out 1,74
+Megumi Hayashibara,Fifty~Fifty,0
+Blackbird Blackbird,Neon Night,70
+KOOL-A$$-YEEZU$,dialect was the prequel,58
+Brandon Can't Dance,Back in Bed,65
+Throwing Snow,Simmer,60
+Solar Fields,Ourdom,74
+Conway The Machine,BLAKK TAPE,75
+Mokira,Chill Out,0
+Empath,Liberating Guilt and Fear,81
+Curren$y,Parking Lot Music,59
+CASTLEBEAT,VHS,76
+Joan Shelley,Rivers and Vessels,87
+Kwame,Endless Conversations.,78
+NxxxxxS,FRIENDZONE,70
+Koda Kumi,Driving Hit's 8,80
+!!!,MEGAMiiiX Vol 01: Shake Shake Shake,70
+Callie Ryan,Health,0
+Ssaliva,WYIN,0
+Fhana,World Atlas,0
+Sakanaction,Sakana Zukan,0
+Garnidelia,G.R.N.D.,0
+B.A.P,Massive,0
+Boris,Eternity,0
+The Republic of Wolves,Shrine,94
+Besvarjelsen,Vallmo,64
+Hong Chulki / Will Guthrie,Mosquitoes and Crabs,83
+A Boogie Wit da Hoodie,Love Bridge,0
+Toshiya Tsunoda / Taku Unami,Wovenland,0
+Christian Wolff / Antoine Beuger,Where Are We Going Today,0
+Wussy,Getting Better,0
+Ice Crime,Ataraxia,45
+Marcel Lune,Family Grooves EP,79
+Manoel Magalhaes,Consertos em Geral,76
+Lil' Flip,King Life,0
+VACATIONS,Changes,72
+Photo Fire,Over & Over / Frame by Frame,68
+metoronori,metoronori works 14 - 18 peru,53
+Caroline Davis,Heart Tonic,85
+Jack White,Boarding House Reach,71
+Preoccupations,New Material,70
+Sunflower Bean,Twentytwo in Blue,75
+Diplo,California,59
+at Wendy's,We Beefin?,10
+Bonny Doon,Longwave,71
+Chloe x Halle,The Kids Are Alright,76
+George Ezra,Staying at Tamara's,63
+Cavern of Anti-Matter,Hormone Lemonade,75
+Yamantaka // Sonic Titan,Dirt,80
+Mark Pritchard,The Four Worlds,67
+Lissie,Castles,77
+Courtney Marie Andrews,May Your Kindness Remain,78
+Guided By Voices,Space Gun,73
+Trouble & Mike WiLL Made It,Edgewood,78
+Alice Bag,Blueprint,79
+Of Feather And Bone,Bestial Hymns of Perversion,90
+Seth Graham,Gasp,80
+Toni Braxton,Sex & Cigarettes,72
+The Messthetics,The Messthetics,71
+Demob Happy,Holy Doom,100
+Club Kuru,Giving In,70
+Field Report,Summertime Songs,62
+NoMBE,They Might've Even Loved Me,72
+Ben Frost,All That You Love Will Be Eviscerated,70
+Baloji,137 Avenue Kaniama,70
+Band of Gold,Where's the Magic,75
+GosT,Possessor,61
+Pale Kids,Hesitater,80
+Erika Wennerstrom,Sweet Unknown,74
+Vancouver Sleep Clinic,Therapy Phase 01,65
+Lojii,lofeye,70
+Sloppy Jane,Willow,65
+The Sword,Used Future,61
+Esme Bridie,Today It Rains,85
+Mournful Congregation,The Incubus of Karma,76
+Lingua Nada,Snuff,60
+Lucy Railton,Paradise 94,69
+Monster Magnet,Mindfucker,70
+Will Haven,Muerte,70
+The Maghreban,01DEAS,71
+Various Artists,Isle of Dogs (Original Soundtrack),72
+Ursula K. Leguin & Todd Barton,Music and Poetry of the Kesh,81
+Sol Invictus,Necropolis,90
+Fatima Dunn,Birds and Bones,67
+Swampmeat Family Band,Too Many Things to Hide,73
+Kink Gong,Dian Long: Soundscape China / Destruction of Chinese Pop,67
+Baustelle,L'amore e la violenza Vol. 2,77
+Tropic,No Cigar,62
+Jacob Bellens,Trail of Intuition,55
+Hide,Castration Anxiety,77
+Tony Clifton,Love Nordic Women,52
+Don Q,Don Talk,52
+Brother JT,Tornado Juice,72
+Wet Tuna,Livin' the Die,72
+McCafferty,Yarn,67
+Dialect,Loose Blooms,79
+Wish,Nice Dreams,65
+Nico Wussy,I Could Care Less,70
+Kasbo,Places We Don't Know,60
+Spanish Love Songs,Schmaltz,65
+Westside Gunn & Mr. Green,FLYGOD Is Good... All The Time,72
+Shuta Hasunuma & U-zhaan,2 Tone,74
+Squirrel Nut Zippers,Beasts of Burgundy,75
+Jenny Wilson,Exorcism,75
+The Mover,Undetected Act From the Gloom Chamber,76
+Takecha,Deep Soundscapes,76
+Matthew Shipp,Zero,85
+Your Food,Poke It With a Stick,65
+Josienne Clarke & Ben Walker,Seedlings All,95
+La Secte Du Futur,Wounded Princes,72
+Dami Im,I Hear a Song,50
+Anne Guthrie,Brass Orchids,72
+Mom & Bear,Bury Your Dead,75
+ATL Smook,World War Rude,61
+Il Fieno,Riverberi,70
+Auri,Auri,74
+Various Artists,Eccentric Soul: The Saru Label,90
+Maitre Gims,Ceinture Noire,29
+070 Shake,Glitter,48
+Various Artists,The Originators,73
+Death Alley,Superbia,69
+Nightmarer,Cacophony of Terror,57
+Rauelsson & Erik K Skodvin,A Score for Darling,73
+Hardcore Anal Hydrogen,HyperCut,56
+Floral Tattoo,Approaching Bearable,71
+Triangulo De Amor Bizarro,El Gatopardo,70
+Demonical,Chaos Manifesto,74
+Hot Mulligan,Pilot,88
+Neil Young & Promise of the Real,Paradox,58
+Drew McDowall & Hiro Kone,The Ghost of Georges Bataille,60
+Shakarchi & Straneus,Steal Chickens From Men And The Future From God,70
+Sidi Toure,Toubalbero,75
+Yakamoto Kotzuga,Slowly Fading,80
+You Are Wolf,KELD,83
+Matthew Shipp Quartet,Sonic Fiction,85
+Miles Davis & John Coltrane,The Final Tour: The Bootleg Series Vol. 6,87
+Nicole Cross,Shapeshifter,0
+Antlers,Beneath.Below.Behold.,0
+Two Door Cinema Club,Four Words to Stand On,0
+Ursula K. Leguin & Todd Barton,Musicand Poetry of the Kesh,0
+Kellarissa,Ocean Electro,0
+Max Wurden,Momentum,0
+Setec,Atrial Flutters (or Raise Yr Hand If Yr Afraid),0
+Snail's House,Sno,0
+Ryan Vail,Distorted Shadows,0
+KeKe,ToTu,0
+Blessthefall,Hard Feelings,42
+M A E S T R O,Wav God,66
+The Pandoras,Hey! It's the Pandoras,70
+Deep'a & Biri,Dominance,70
+Wylderness,Wylderness,70
+Erland Cooper,Solan Goose,75
+Woolymammoth,Filling Spots,75
+Kurt Elling,The Questions,80
+Entourage,Ceremony of Dreams: Studio Sessions & Outtakes 1972-1977,84
+Alasdair Roberts Amble Skuse & David McGuinness,What News,85
+Holger Czukay,Cinema,85
+ONUKA,MOZAYiKA,76
+Nadine Coyle,Nadine,74
+Zulu,Analogue Heart // Digital Brain,62
+Arve Henriksen Nils Okland Svante Henryson Gjermund Larsen Mats Eilertsen & Audun Kleive,Composograph,80
+Chief Keef,The Leek 5,0
+Kaitlyn Aurelia Smith,Electronic Series Vol 1 : Abstractions,0
+Another Sky,Forget Yourself,69
+DJ Krush,Cosmic Yard,77
+Never,Never,64
+Miliyah Kato,I hate you,80
+Cat Turner,Contrast,80
+Memai Siren,Shinsou Kara,0
+Yui Makino,Will,0
+Ayaka Segawa,Sentimental,0
+Masaki Suda,Play,0
+Hark Madley,EP1,70
+Yung Bans,Yung Bans Vol. 4,50
+[?] Unity,All Is One,67
+KOOL-A$$-YEEZU$,dialect,44
+Steven Holland,Sanguine Hill,92
+Blissard,Blissard II,31
+New People,New People,72
+Awon & Phoniks,The Actual Proof,72
+True Love,The Pact,80
+Marco Malasomma,JURA,0
+White Jam,Amaoto,0
+Flux Velociraptor,Velociraptor Attractor,60
+Reindeer,Field Reports From The Western Lands,76
+N.E.R.D.,Lemon (Drake Remix),57
+Cleo,Jungle Kid,2
+Krystal Klear,The Division,84
+Dan Stock,Take It Too Far,76
+Alejandro Mosso,Rituals,77
+Memory Leaks Onto The Rug,Listening Library,63
+Tiara Thomas,FWMM,70
+Greyhaven,Empty Black,76
+Eric Taxxon,Punk,71
+GRMLN,Afraid Of . . .,0
+Geographer,Alone Time,62
+Ghost Dance Collective,Ghost Dance Collective,93
+Mount Eerie,Now Only,84
+XXXtentacion,?,43
+Hot Snakes,Jericho Sirens,84
+Yo La Tengo,There's a Riot Going On,74
+PRhyme,PRhyme 2,71
+The Decemberists,I'll Be Your Girl,67
+Bishop Nehru,Elevators Act I & II,74
+The Magic Gang,The Magic Gang,78
+Essaie Pas,New Path,79
+Dungen & Woods,Myths 003,73
+Meshell Ndegeocello,Ventriloquism,78
+Caroline Says,No Fool Like an Old Fool,69
+Djonga,O Menino Que Queria Ser Deus,80
+Stone Temple Pilots,Stone Temple Pilots,55
+Fickle Friends,You Are Someone Else,70
+Rich Homie Quan,Rich as in Spirit,69
+Murs,A Strange Journey Into The Unimaginable,68
+Black Foxxes,REIdI,88
+Garden City Movement,Apollonia,70
+Chuck Strangers,Consumers Park,67
+Alva Noto,Unieqav,79
+Snoop Dogg,Bible of Love,52
+Saweetie,High Maintenance,72
+Tangled Hair,We Do What We Can,78
+Sango,In The Comfort Of,50
+Creep Show,Mr. Dynamite,70
+Earthless,Black Heaven,71
+Rafael Anton Irisarri,Sirimiri,67
+Will Long,Long Trax 2,70
+Gundelach,Baltus,67
+Lauren Auder,Who Carry's You,78
+Marina Lima,Novas Familias,44
+Boys Noize,Strictly Raw Vol. 2,60
+Alexandra Burke,The Truth Is,40
+JB Dunckel,H+,67
+Nakhane,You Will Not Die,80
+Various Artists,Love Simon (Original Motion Picture Soundtrack),73
+Erica Eso,'129 Dreamless GMG',67
+Blanck Mass,World Eater Re-Voxed,70
+Freedom Baby,How You'll Grow,74
+INVSN,Forever Rejected,64
+Drik Barbosa,Espelho,76
+Sun Ra,Of Abstract Dreams,54
+NINA,Sleepwalking,75
+Chaines,The King,75
+Flowertruck,Mostly Sunny,69
+Catch The Breeze,Glow,70
+Bichkraft,800,65
+Hell To Pay,Bliss,72
+Biosphere,The Hilvarenbeek Recordings,75
+Press Club,Late Teens,80
+Rivers of Nihil,Where Owls Know My Name,90
+Jouska,From Elson To Emmett,80
+Rose McGowan,Planet 9,68
+We Are Waves,Hold,60
+Hollow Hearts,Annabelle,60
+Me and My Kites,Natt O Dag,54
+Hey Elbow,C0C0C0,73
+Temple Yeti,Monastery,46
+The Avulsions,Expanding Program,40
+Trae tha Truth,Hometown Hero,68
+Green Druid,Ashen Blood,58
+Mythless,Patience Hell,76
+Arat Kilo Mamani Keita & Mike Ladd,Visions of Selam,75
+Boy Harsher,Country Girl [Extended Version],71
+Sunset Rollercoaster,Cassa Nova,70
+Vanessa Amara,Manos,76
+Kreisky,Blitz,48
+Jeremy Loops,Critical as Water,70
+LE$,Texas Rattlesnake,64
+Desired,Timeless,68
+Ulvesang,The Hunt,75
+Lokki,Cirrhi,64
+Oklou,The Rite of May,67
+Slaves BC,Lo and I Am Burning,70
+Steve Spacek,EP3: Mov Clsr,74
+Cats On Trees,Neon,70
+Laura Pausini,Fatti Sentire,95
+Secret State,Zero Zero One,68
+Morgan Willis,Supernova,75
+Odradek,Pentimento,65
+Yannick Nezet-Seguin,Mass,25
+Casey,Where I Go When I Am Sleeping,72
+Fijimacintosh,Satellite Crash,72
+Evren Besta,Babafingo,55
+Veiled,Black Celestial Orbs,55
+Ace A Caped Crusader,Whxte,96
+Els Catarres,Tots els meus principis,65
+Space Ghost,Endless Light,71
+Rivers of Nihil,Where Owls Know My Name,46
+Kim Wilde,Here Come The Aliens,60
+Varvara,Go,70
+Luke Vibert,Arcadia,78
+The Crown,Cobra Speed Venom,80
+Oscar Mulero,Perfect Peace,0
+Curren$y,Back at Burnie's,0
+Durand Jones & The Indications,Durand Jones & The Indications [Deluxe Edition],0
+Poppy,Poppy.Remixes,0
+La Habitacion Roja,Memoria,0
+Manolo Garcia,Geometria del Rayo,0
+Ten Typ Mes,Rapersampler,0
+Maria Schneider & SWR Big Band,Maria Schneider & SWR Big Band,0
+Felix Blume,Death in Haiti: Funeral Brass Bands & Sounds from Port Au Prince,0
+Origami Girl,Lotus Flowers,60
+King Witch,Under the Mountain,70
+Rich Aucoin,Hold,70
+Edu Passeto & Gui Tavares,Noite que Brincou de Lua,70
+Various Artists,NON Worldwide Compilation Trilogy Volume 2: Part 1,74
+BCUC,Emakhosini,80
+Dorothy,28 Days in the Valley,80
+Walt Disco,No Need For a Curtain,80
+The Handsome Family,Through The Trees [20th Anniversary Edition],90
+Cocteau Twins,Treasure,90
+Cocteau Twins,Head Over Heels,90
+Trixie Mattel,One Stone,61
+Sexores,East / West,69
+Serengeti,The Moon,84
+Dustin Zahn & Joel Mull,Way Of The Wild,76
+Sojourner,The Shadowed Road,80
+Grave Upheaval,[Untitled],80
+Dautha,Brethren of the Black Soil,0
+Rites of Thy Degringolade,The Blade Philosophical,80
+Lolina,The Smoke,90
+Kadebostany,Monumental,78
+Acollective,The Coming of Light,68
+Kash Doll,Brat Mail (Mixtape),61
+The Fin,There,0
+Moka Sato,Lukewarm,0
+Yumi Hara,You & Me,0
+Reol,Kyoko Shu,0
+NCT,NCT 2018 EMPATHY,0
+tpsb,Paris CDG,0
+Day6,If: Mata Aetara,0
+Wale,It's Complicated,61
+Electric Indigo,511593,78
+Diseased Earth,Bleeding of the Light,80
+Procol Harum,Still There'll Be More: An Anthology 1967-2017,80
+Bezier,Parler Musique,76
+The Banana Monkeys,Label Is Not 'Bad',0
+Various Artists,Hunchin' All Night,73
+Rose Mulet,Lost,12
+Ruru,Far Out,83
+Young Fathers,Cocoa Sugar,84
+Logic,Bobby Tarantino II,62
+Lil Yachty,Lil Boat 2,54
+David Byrne,American Utopia,70
+Albert Hammond Jr.,Francis Trouble,73
+of Montreal,White Is Relic/Irrealis Mood,68
+Editors,Violence,65
+The Neighbourhood,The Neighbourhood,57
+Nap Eyes,I'm Bad Now,75
+Judas Priest,Firepower,75
+Gengahr,Where Wildness Grows,58
+Remo Drive,Pop Music,59
+George FitzGerald,All That Must Be,70
+Kraus,Path,67
+Liza Anne,Fine But Dying,77
+The Fratellis,In Your Own Sweet Time,62
+Teenage Wrist,Chrome Neon Jesus,75
+Nathaniel Rateliff & The Night Sweats,Tearing at the Seams,72
+DJ Nigga Fox,Cranio,74
+ACTORS,It Will Come to You,77
+Between the Buried and Me,Automata I,72
+Spector,Ex-Directory,75
+Submotion Orchestra,Kites,71
+Oneida,Romance,77
+Three Days Grace,Outsider,56
+Moose Blood,I Don't Think I Can Do This Anymore,65
+Martha Ffion,Sunday Best,80
+Jonny Greenwood,You Were Never Really Here,78
+Ministry,AmeriKKKant,53
+Air Formation,Near Miss,72
+Myles Kennedy,Year of the Tiger,60
+03 Greedo,The Wolf of Grape Street,70
+Drowse,Cold Air,74
+Jeremih,The Chocolate Box,52
+Jeremy Messersmith,Late Stage Capitalism,80
+Beautify Junkyards,The Invisible World of Beautify Junkyards,63
+Quiet Friend,Quiet Friend,63
+Gloria,Oidophon Echorama,73
+Calum Scott,Only Human,76
+Jimi Hendrix,Both Sides of the Sky,64
+Turbowolf,The Free Life,79
+Dear Rouge,Phases,80
+Eric Chenaux,Slowly Paradise,80
+Chevalrex,Anti Slogan,68
+Conjurer,Mire,74
+Shamir,Resolution,67
+Datarock,Face the Brutality,70
+Cloud,Plays With Fire,70
+The Skull Eclipses,The Skull Eclipses,73
+Whyte Horses,Empty Words,90
+Peter Kernel,The Size of the Night,68
+Thousand,Le tunnel vegetal,73
+Painted Forest,The Best Time of Our Lives (To Run Away),68
+Brett Naucke,The Mansion,75
+YFN Lucci,Ray Ray From Summerhill,78
+Various Artists,Gumba Fire: Bubblegum Soul & Synth-Boogie in 1980s South Africa,78
+The Naked and Famous,A Still Heart,80
+The Boxer Rebellion,Ghost Alive,80
+Feu! Chatterton,L'Oiseleur,78
+The Fjords,Ladders,41
+Fanny Bloom,Liqueur,76
+Arin Ray,Platinum Fire,68
+Oh Mercy,Cafe Oblivion,61
+Erasure,World Beyond,54
+Embrace,Love Is a Basic Need,59
+Scenic Route To Alaska,Tough Luck,70
+August Greene,August Greene,71
+Ministri,Fidatevi,60
+Ikonika,The Library Album,79
+RITUALZ,Doom,69
+Hank Wood and the Hammerheads,Hank Wood and the Hammerheads,79
+Yahyel,Human,80
+Shark Toys,Labyrinths,62
+Geoff Barrow & Ben Salisbury ,Annihilation (Music From The Motion Picture),64
+David Kitt,Yous,70
+Saint Michel,The Two of Us,59
+Samantha Harvey,Please,65
+Ady Suleiman,Memories,60
+What So Not,Not All the Beautiful Things,60
+Borusiade,A Body,78
+De Leon,De Leon,78
+Brad Mehldau,After Bach,80
+Suicidal Tendencies,Get Your Fight On!,80
+Wrongonyou,Rebirth,70
+Dominique A,Toute Latitude,90
+Talk Tired Thanatoid,Internet Connection,84
+So Below,II,70
+Kidaf,In The Air,69
+Bike,Their Shamanic Majesties' Third Request,65
+Siavash Amini & Matt Finney,Gospel,66
+Flipp Dinero,GuaLa See GuaLa,68
+Ruth Lorenzo,Loveaholic,77
+Alfred Brendel,Live in Vienna,50
+Swoll,Swoll,63
+Prag 83,Fragments of Silence,83
+Jake Miller,Silver Lining,70
+Demuja,Vinum,69
+Them Moose Rush,Don't Pick Your Noise,84
+Krosis,Solem Vatem,80
+Nightwish,Decades - An Archive Of Song,70
+Twitching Tongues,Gaining Purpose Through Passionate Hatred,70
+The Men That Will Not Be Blamed For Nothing,Double Negative,70
+Miesha & The Spanks,Girls Girls Girls,70
+Runeshard,Dreaming Spire,70
+Acid Dad,Acid Dad,75
+The Dean Ween Group,Deaner Rock 2,75
+Tom Grennan,Lighting Matches,0
+Majeure,Timespan Redux,0
+Various Artists,Memphis Rent Party: The Blues Rock and Soul,0
+Starkweather / Concealment,Split,0
+Crooked Man,Echo Loves Narcissus,0
+The Fear Ratio,Live EP,0
+Banque De France,Ti Amo Diaries H,0
+Robb Bank$,Molly World,0
+Zombie Picnic,Rise of a New Ideology,0
+Aukai,Branches Of Sun,0
+Gold Casio,Sinners,30
+Irit,Hello,60
+Charlotte De Witte,Heart of Mine,61
+President T,Stranger Returns,70
+Deetron,DJ-Kicks,74
+Azalia Snail,Neon Resistance,80
+Drudkh,Yim chasto snit'sia kapizh (They Often See Dreams About the Spring),86
+Heize,Wish & Wind,75
+Space Afrika,Somewhere Decent To Live,78
+Bell Witch,Demo 2011,80
+D.K.,Mystery Dub,68
+Zlota Jesien,w tobie nie jestem soba,50
+I Valiance,I,80
+Luster,Luster,0
+Michael Seyer,Bad Bonez,72
+Inscape,Momentary Love,70
+Mika Nakashima,Kiss of Death,30
+Marty Friedman,B: The Beginning - The Image Album,35
+Girls Rituals,Im Desperate,75
+Manatsu Nagahara,Great Hungry,75
+Mamamoo,Yellow Flower,60
+Brian Fresco,Love Scars,64
+Fiend,International Jones: Player Chit,0
+The Pats Pats,Sing and Pretty,0
+Paellas,Yours,0
+The Back Horn,Joukei Dorobou,0
+Rokutoshichi,A Deep Well,0
+Smerz,Have Fun,81
+KILLY,Surrender Your Soul,69
+GNOB,Electric Dream Demon,75
+Kamikaze Space Programme,Void Coefficient,85
+Various Artists,Physically Sick 2,76
+Germany Germany,Juneau,70
+Various Artists,The Bedroom Tapes: A Compilation of Minimal Wave From Around the World 1980-1991,0
+Pursuit Grooves,Felt Armour,75
+Pouya,FIVE FIVE,65
+Trna,Earthcult,71
+Dust-e-1,The Dust In The Dance,74
+Attic Abasement,Dancing Is Depressing [Expanded Edition],80
+Huey,Ma,0
+Room306,Visit,0
+Dino J . A. Deane,For Leena,0
+Ben Businovski,Amalfi Outrun,80
+Clown Core,Toilet,67
+Felicia Atkinson,Coyotes,70
+FiveHead,How To Bombproof Your Horse,80
+Norwell,Forgotten Songs I,80
+Various Artists,Art Of The Uncarved Block Winter Compilation 2018,80
+Soccer Mommy,Clean,80
+Superorganism,Superorganism,72
+Lucy Dacus,Historian,81
+Anna von Hausswolff,Dead Magic,74
+Camp Cope,How to Socialise & Make Friends,79
+Haley Heynderickx,I Need to Start a Garden,78
+The Breeders,All Nerve,79
+Rolo Tomassi,Time Will Die and Love Will Bury It,83
+Moby,Everything Was Beautiful and Nothing Hurt,74
+Gwenno,Le Kov,80
+Moaning,Moaning,72
+Peggy Gou,Once,80
+Titus Andronicus,A Productive Cough,66
+Tory Lanez,Memories Don't Die,47
+Tracey Thorn,Record,76
+Andrew W.K.,You're Not Alone,68
+The Men,Drift,65
+Suuns,Felt,69
+Jonathan Wilson,Rare Birds,73
+Alma,Heavy Rules Mixtape,65
+Phonte,No News Is Good News,84
+Park Jiha,Communion,75
+Ed Schrader's Music Beat,Riddles,75
+Seun Kuti & Egypt 80,Black Times,75
+Slugdge,Esoteric Malacology,92
+DJ Taye,Still Trippin',75
+Mt. Joy,Mt. Joy,60
+Lucius,NUDES,68
+Tech N9ne,Planet,78
+Gift Wrap,Losing Count,60
+Hibou,Something Familiar,74
+Gulfer,Dog Bless,74
+Lost Girls,Feeling,78
+Barbagallo,Danse Dans Les Ailleurs,66
+Apathy,The Widow's Son,76
+E Ruscha V,Who Are You,66
+Helena Deland,"From the Series of Songs ""Altogether Unaccompanied"" Vol. I",75
+Jackson MacIntosh,My Dark Side,70
+Current Joys,A Different Age,75
+In Tall Buildings,Akinetic,80
+Barely Civil,We Can Live Here Forever,64
+Eddy De Pretto,Cure,66
+Bearcubs,Ultraviolet,60
+Buffalo Tom,Quiet and Peace,70
+Habibi,Cardamom Garden,72
+Sue Foley,The Ice Queen,80
+The Noise Figures,Telepath,79
+Helena Deland,"From the Series of Songs ""Altogether Unaccompanied"" Vol. II",73
+Dick Stusso,In Heaven,70
+The Herbaliser,Bring Out the Sound,75
+Sonny Smith,Rod for Your Love,80
+Donovan Wolfington,Waves,59
+Mikky Ekko,Advance Copy,68
+VOWWS,Under the World,71
+Cut Chemist,Die Cut,66
+All We Are,Sunny Hills (Acoustic),83
+Sworr.,Sworr.,85
+The Undercover Dream Lovers,In Real Time,59
+Delage,Loverboy Beatface,73
+Secret Vaccine,Shake Well Before Use,88
+Iron Reagan / Gatecreeper,Iron Reagan / Gatecreeper,55
+Paddy Hanna,Frankly I Mutate,60
+Sorority Noise,YNAAYT,60
+Peter Zummo,Frame Loop,74
+Joan Baez,Whistle Down the Wind,76
+Sam Vance-Law,Homotopia,80
+Ancst,Ghosts of the Timeless Void,74
+The Zen Circus,Il Fuoco In Una Stanza,71
+Nightmare Air,Fade Out,54
+Mozzy,Spiritual Conversations,68
+Prism Tats,Mamba,70
+Ty,A Work of Heart,80
+Richard Youngs,Belief,80
+Rose Mercie,Rose Mercie,83
+Chrysta Bell,Chrysta Bell,69
+Naked Cameo,Of Two Minds,52
+Heaven,All Love Is Blue,57
+The Modern Institute,Another Exhibition at the Modern Institute,75
+Shy Shy Shy,Make Up,59
+Clara-Nova,The Iron Age,64
+Soom T,Born Again,80
+Boys Age,Romance Planet,81
+Candace,New Ruins,75
+DJ Boring & Stanley Schmidt,Vienna001,70
+Dead Meadow,The Nothing They Need,70
+David Wakeling,Almost Everything,57
+Edit Select,Cyclical Undulations,69
+Riko Dan,Hard Food EP,80
+J.C. Satan,Centaur Desire,90
+Toiret Status,toiret statue,5
+Drawing Boards,Drawing Boards,80
+Rubel,Casas,84
+Margaret Glaspy,Born Yesterday,73
+D'Arcangelo,D'Arcangelo,80
+Amaya Laucirica,Rituals,100
+Sleepy,Identity,86
+Sixth June,Without a Sign,75
+Mathias Eick,Ravensburg,63
+Gontard!,Tout nait / Tout s'acheve dans un disque,75
+Lostboycrow,Traveler: The Third Legend,70
+Kazy Lambist,The City,65
+Wild Meadows,Wild Meadows,75
+Tangents,Stents + Arteries,70
+808INK,When I'm About You'll Know,68
+Lucy In Disguise,Unknown Frequency,90
+Nessly,Wildflower,65
+Spiny Normen,Spiny Normen,75
+Ness Nite,Dream Girl,59
+Xscap3,Here for It,71
+The Last Gang,Keep Them Counting,75
+Foggieraw,Fogtavious Vandross,76
+Zoe Mc Pherson,String Figures,70
+Chief Keef,The Leek 4,2
+Nightports & Matthew Bourne,NIGHTPORTS with MATTHEW BOURNE,82
+Etherwood,In Stillness,84
+Mesa,Touche,70
+The High Divers,Chicora,50
+Barrence Whitfield & the Savages,Soul Flowers of Titan,70
+J-Hope,Hope World,70
+Ilsa,Corpse Fortress,72
+Larry June,You're Doing Good,78
+Keith Jarrett Gary Peacock Jack DeJohnette,After the Fall,80
+Banque De France,Ti Amo Diaries G,0
+Elijah Bank$y,Coldest Day in February Shines the Amethyst Rock,0
+Sam Moss,Neon,0
+Vivian Leva,Time Is Everything,0
+Voidhanger,Dark Days of the Soul,0
+Rodion G.A.,Rozalia,65
+Whiskey Wolves of the West,Country Roots,70
+Jackie DeShannon,Stone Cold Soul: The Complete Capitol Recordings,75
+Iannis Xenakis,Persepolis,78
+Valee,GOOD Job You Found Me,74
+8ULENTINA,Eucalyptus,75
+Naive Set,Naive Set,64
+JACK,Alchemical Rounds,60
+DJ LOSER,Crusade Melancholia,72
+Gavlyn & DJ Hoppa,Headspace,87
+Arad,The Glimpse,75
+BRAZZAVILLE,Dream Sea,75
+Sangam & Thug Widow,The Holy City is Empty,67
+Sleeping Pandora,From Above,100
+Arto,Fantasma,75
+The Merrymakers,Up and Away,75
+Red Samara Automobile Club,Golye fakty,80
+Okkyung Lee,Dahl - Tah - Ghi,0
+CRZKNY,GVVVV,66
+The Ex,27 Passports,68
+Nilufer Yanya,Do you like Pain?,69
+Miles Davis & John Coltrane,The Final Tour: Copenhagen March 24 1960,90
+David Bowie,Live in Berlin [1978] L.P.,65
+Vakula,Metaphors,82
+Geena,EP1,0
+Juju & Jordash,Slack Trax Vol. 1,0
+Various Artists,Directions,0
+SOPHIE,Whole New World,0
+Liziuz,Geschichten des Lebens,70
+Appleblim,Life in a Laser,75
+Roc Marciano,RR2: The Bitter Dose,80
+Kilchhofer,The Book Room,77
+Terekke,Improvisational Loops,76
+Hampshire & Foat,The Honeybear,74
+Qual,The Ultimate Climax,64
+Very Friendly,Flourish,50
+Diogo Picao,Cidade Saloia,70
+Getter & Ghostemane,Dahlia I,69
+Desgraca,Madrugada,71
+Koda Kumi,AND,65
+Airospace,DVLMN tape. SIDE A,71
+Knelt Rote,Alterity,81
+DECADES / FAILURES,Untitled No . 4,82
+Marianaa,Sdds Role Lixo,60
+PLOHO,Kuda Ptitsy Uletaiut Umirat',75
+SPECIAL INTEREST,Spiraling,75
+Glowbug,Weezing,0
+Trail Of Lies,W.A.R,0
+Everything Everything,A Deeper Sea,80
+Jorge Elbrecht,Here Lies,78
+Rafael Anton Irisarri,Midnight Colours,75
+Madison Acid And TV Girl,Maddie Acid's Purple Hearts Club Band,73
+Higher Brothers,Type-3,23
+Lisa/Liza,Barn Coat EP,78
+The Shell Corporation,FUCKED.,84
+Graham Nicholas,Dial Tones and Pretty Notes,70
+Cosmic Girls,Dream Your Dream,70
+Gigante,Himalaya,71
+Alexia Avina,Betting on an Island,70
+Pity Party,Are You Happy Yet?,77
+The Snivellers,The Servile Worm Demo,60
+Bai Shui  [Bai Shui],Er Tong Le Yuan ,78
+Chris Cornell,You Never Knew My Mind,60
+Phase,Stakes,87
+Banda Eddie,Mundo Engano,86
+SF9,Mamma Mia!,64
+Neige Et Noirceur,Vent fantome,0
+Trevor Sensor,Conversations,55
+Bad Sector,Pressurized Music,80
+Demuja,Demujas Disco Cuts,67
+Eric Taxxon,Gallery,0
+Mick Jenkins,or more; the frustration,67
+Sitcom,Be the One You Love,71
+Elucid,Shit Don't Rhyme No More,77
+Curren$y,The Spring Collection,73
+Asunojokei,Awakening,74
+6ix9ine,Day69,48
+Screaming Females,All at Once,81
+Caroline Rose,Loner,81
+Black Milk,FEVER,78
+SOB X RBE,Gangin,75
+Bea Miller,Aurora,75
+Turnstile,Time & Space,67
+S. Carey,Hundred Acres,68
+MINT FIELD,Pasar de las Luces,81
+Dedekind Cut,Tahoe,78
+Lo Moon,Lo Moon,71
+Frigs,Basic Behaviour,74
+Insecure Men,Insecure Men,76
+Totally Mild,Her,78
+Renata Zeiguer,Old Ghost,70
+The Low Anthem,The Salt Doll Went to Measure the Depths of the Sea,77
+Jericho Jackson,Khrysis & Elzhi Are Jericho Jackson,79
+Towkio,WWW.,58
+Sarah Blasko,Depth of Field,80
+Vance Joy,Nation of Two,50
+Ronny J,OMGRONNY,68
+Holly Miranda,Mutual Horse,75
+Charlotte Day Wilson,Stone Woman,76
+Dessa,Chime,83
+Vundabar,Smell Smoke,75
+Olden Yolk,Olden Yolk,76
+Nathan Fake,Sunder,79
+Public Access T.V.,Street Safari,77
+Hurry,Every Little Thought,81
+El Perro Del Mar,We Are History,63
+Imarhan,Temet,70
+Kal Marks,Universal Care,74
+GusGus,Lies Are More Flexible,75
+EARTHGANG,Royalty,84
+Computer Magic,Danz,40
+Bad Gyal,Worldwide Angel,61
+Lionlimb,Tape Recorder,70
+Starchild & The New Romantic,Language,74
+Keiji Haino & Sumac,American Dollar Bill - Keep Facing Sideways You're Too Hideous To Look At Face On,75
+Jung An Tagen,Agent Im Objekt,80
+700 Bliss,Spa 700,81
+Lone,Ambivert Tools Volume Three,66
+P. ADRIX,Album Desconhecido,72
+The Lovely Eggs,This is Eggland,73
+Jason Sharp,Stand Above The Streams,80
+Anna McClellan,Yes and No,70
+Woodes,Golden Hour,61
+Lord LuCN,The U Album,68
+Table Scraps,Autonomy,72
+Go-Kart Mozart,Mozart's Mini Mart,76
+Darlingside,Extralife,80
+Wake,Misery Rites,90
+Ismo Laakso,Ofelia,73
+Ratboys,GL,72
+Cosmic Child,Blue,72
+Surf Harp,Mr. Big Picture,76
+6ix9ine,DAY69: Graduation Day,5
+Dana Buoy,Ice Glitter Gold,60
+Grant-Lee Phillips,Widdershins,78
+The Skull Defekts,The Skull Defekts,80
+Hieroglyphic Being,The Red Notes,80
+Reggie and the Full Effect,41,66
+Federico Albanese,By the Deep Sea,80
+A Tale of Golden Keys,Shrimp,60
+Customs,Magik,55
+Young Statues,Amarillo,63
+Luca,You'll Never Be at Peace With This,57
+Sur Back,Kitsch II,73
+Nino De Elche,Antologia del cante flamenco heterodoxo,79
+Pageants,Forever,55
+Destroyer 666,Call Of The Wild,70
+Tor Lundvall,A Dark Place,70
+Ex-Terrestrial,Urth Born,72
+Debit,Animus,74
+Answer Code Request,Gens,75
+ADT,Insecurities,53
+Until The Ribbon Breaks,Until The Ribbon Breaks,55
+Victoria Monet,Life After Love Pt. 1,73
+Red Lama,Motions,85
+Headless Horseman,47014,78
+5 A Seco,Sintese,79
+Mamuthones,Fear on the Corner,79
+HoodRich Pablo Juan & Brodinski,The Matrix,65
+Mujuice,LVOE,74
+Fine China,Not Thrilled,72
+Alvvays,Alvvays,77
+Kings Of The Beach,Super Awkward Fucking Awesome,64
+The Ancients,Frozen Aisle,66
+Good Gas,Good Gas (vol 1),61
+Concrete Knives,Our hearts,76
+Psychic Markers,Hardly Strangers,65
+Femi Kuti,One People One World,68
+Insect Ark,Marrow Hymns,78
+The Dead Mantra,Saudade Forever,81
+Ball Park Music,Good Mood,78
+Von Grall,Infinitum,55
+Max Durante,The Experiment,87
+Joseph Black,Northern Exposure,84
+Swan Lingo,Wonder What,78
+Omid,Finally at Home,73
+Thunderpussy,Greatest Tits,78
+FiFi Rong,Awake,68
+Lowpines,In Silver Halides,75
+DYLYN,Sauvignon and a Kimono,76
+Young Scooter,Trippple Cross,37
+Stables,Reverie,46
+Stalley,Tell the Truth: Shame the Devil Vol. 2,68
+High Up,You Are Here,58
+Necrophobic,Mark of the Necrogram,68
+Huntsmen,American Scrap,82
+Grounders,Coffee & Jam,70
+CHAPPO,Do It,80
+Michael Timmons,Bone Coloured,80
+Zed Penguin,A Ghost A Beast,80
+David Bowie,Lodger [Reissue],90
+Shy Kids,In a State,50
+Arstidir,Hvel,75
+Ponctuation,Mon herbier du monde entier,50
+White Hills / Der Blutharsch And The Infinite Church Of The Leading Hand,Desire,68
+Angophora,Scenes,77
+Anoyd,Blame It On Jay-Z,79
+Al Di Meola,Opus,70
+The Doors,Live at the Isle of Wight Festival 1970,75
+Jorge & Mateus,Terra Sem CEP,61
+Nacho Picasso,Role Model,75
+Red Lines,Paisley,60
+Household,Everything a River Should Be,60
+Raphaele Lannadere,Chansons,84
+A$AP ANT,The Prelude,26
+Usurpress,Interregnum,80
+Erdmobel,Hinweise zum Gebrauch,65
+Low Hum,Low Hum,75
+MGT,Gemini Nyte,75
+Thick Syrup,Living in Leeds,75
+Royal Brat,Eyesore,70
+Brett,WutKitsch,77
+Francis Harris,Minor Forms,80
+Felpa,Tregua,70
+Necropanther,Eyes of Blue Light,76
+Vexes,Ancient Geometry,86
+All The Luck In The World,A Blind Arcade,65
+Che Lingo,Charisma,72
+Norwell,Odd,83
+Apostle Of Solitude,From Gold to Ash,78
+Belako,Render Me Numb Trivial Violence,70
+Lia Kapp,Metamorphosis,64
+Deathwhite,For a Black Tomorrow,76
+One Dimensional Man,You Don't Exist,70
+Blac Youngsta,2.23,69
+Demon Lung,Pareidolia,70
+Our Lady Peace,Somethingness,60
+Joey Dosik,Game Winner [Deluxe Edition],63
+Amy Rigby,The Old Guys,70
+Aylu,Walden,70
+Six Organs of Admittance,Hexadic III,74
+YoshimiO / Susie Ibarra / Robert Aiki Aubrey Lowe,Flower of Sulphur,77
+Ant Orange,Right There,80
+Janiva Magness,Love Is An Army,80
+Patricia Kopatchinskaja & Polina Leschenko,Deux,100
+Too $hort,The Pimp Tape,0
+Deliverance,The Subversive Kind,0
+Nanook of the North,Nanook of the North,0
+Banque De France,Ti Amo Diaries F,0
+The Staves,Pine Hollow (Live),0
+The Avalanches,Because I'm Me (Remixes),0
+Luisa Sonza,Rebolar (Remix),0
+Milestones,Red Lights,0
+We Were Sharks,Lost Touch,40
+Caleb Caudle,Crushed Coins,65
+Joshua Hyslop,Echos,70
+ESOCTRILIHUM,Pandaemorthium (Forbidden Formulas to Awaken the Blind Sovereigns of Nothingness),70
+Alterbeast,Feast,70
+Black Wizard,Livin' Oblivion,73
+Rainbow Reservoir,Channel Hanna,74
+Bert Jansch,A Man I'd Rather Be (Part 2),79
+Tengger Cavalry,Cian Bi,80
+Ryan Porter,The Optimist,80
+Various Artists,Self-Salvation,80
+Louis Brennan,Dead Capital,83
+Digable Planets,Reachin' (A New Refutation of Time and Space) [25th Anniversary Edition],89
+Bobby Previte,Rhapsody,90
+Felt,A Decade In Music,90
+CLC,Black Dress,80
+Bbymutha,BbyShoe,75
+Pogo,Ascend,88
+B-Real,The Prescription,75
+Upsammy,Another Place,82
+Ex Comets,Life Is An Illusion,90
+WEIRD MAGIC,ULU,0
+Suburban Dinosaur,An Island Beneath The Waves,0
+True Blue,Edge Of,74
+Maripool,Adult Weakness,67
+Solstice,White Horse Hill,70
+Soft Kill,Let's Believe in Love,75
+Weki Meki,Lucky,80
+Various Artists,Field Recordings From the Sahel,0
+The Wisely Brothers,YAK,0
+Thousand Eyes,Day Of Salvation,0
+SpecialThanks,Heart Light,0
+A Flood Of Circle,A Flood of Circle,0
+Kero Kero Bonito,TOTEP,70
+Pale Waves,ALL THE THINGS I NEVER SAID,80
+Snoop Dogg,220,49
+BoA,One Shot Two Shot,74
+PNTHN,POTLUCK,76
+M.M. CRONE,M.M. CRONE,70
+Various Artists,Forth Vol. 1,80
+Goblin,Dawn of the Dead [OST],80
+Rezzett,Rezzett,72
+The Empire Line,Rave,66
+Anthony Linell,A Sense of Order,60
+John Mouse,Replica Figures,73
+Mahr,Antelux,82
+Various Artists,10YEARS09,0
+Oscar Mulero,Acceptance,0
+Annex,Melu,0
+Manny Mackens,Mind of Manny Mackens,0
+The International Nothing,In Doubt We Trust,90
+A.A.L. (Against All Logic),2012 - 2017,77
+Oliver Tree,Alien Boy - EP,33
+3 fragments,Mystere Observation Melancolie,60
+Lake Ruth,Birds of America,70
+Burning House,Tracer,77
+Car Seat Headrest,Twin Fantasy,82
+U.S. Girls,In a Poem Unlimited,84
+Ought,Room Inside the World,79
+ionnalee,EVERYONE AFRAID TO BE FORGOTTEN,57
+Rejjie Snow,Dear Annie,74
+Superchunk,What a Time to Be Alive,76
+Loma,Loma,72
+Everything Is Recorded,Everything Is Recorded by Richard Russell,75
+Laurie Anderson & Kronos Quartet,Landfall,81
+Marlon Williams,Make Way for Love,79
+Tyga,Kyoto,42
+Pianos Become The Teeth,Wait for Love,69
+Brandi Carlile,By the Way I Forgive You,82
+POLICA / s t a r g a z e,Music for the Long Emergency,72
+Nipsey Hussle,Victory Lap,76
+American Pleasure Club,A Whole Fucking Lifetime of This,75
+Alva Noto + Ryuichi Sakamoto,Glass,81
+The Orielles,Silver Dollar Moment,76
+Born Ruffians,Uncle Duke & The Chief,71
+Fischerspooner,SIR,64
+Shannon & The Clams,Onion,69
+Ride,Tomorrow's Shore,75
+Belle & Sebastian,How to Solve Our Human Problems (Part 3),74
+Ryuichi Sakamoto,async remodels,75
+Triathalon,Online,70
+Harakiri For The Sky,Arson,79
+Senses Fail,If There Is Light It Will Find You,53
+Hailu Mergia,Lala Belu,70
+Belle & Sebastian,How to Solve Our Human Problems (Parts 1-3),73
+Happy Accidents,Everything But the Here and Now,75
+Geowulf,Great Big Blue,65
+Dabrye,Three/Three,72
+American Nightmare,American Nightmare,64
+I'm With Her,See You Around,75
+Robert Earl Thomas,Another Age,70
+Lowtide,Southern Mind,70
+Cities Aviv,Raised for a Better View,80
+Onra,Nobody Has to Know,50
+Johanna Warren,Gemini II,68
+Wild Beasts,Last Night All My Dreams Came True,70
+Astrid Sonne,Human Lines,75
+Dita Von Teese,Dita Von Teese,57
+Spike Vincent,Spike Vincent,78
+Anelis Assumpcao,Taurina,76
+Young Dolph,Niggas Get Shot Everyday,73
+Tigran Hamasyan,For Gyumri,68
+Wei Zhongle,The Operators,63
+Grand Veymont,Route du vertige,83
+Recondite,Daemmerlicht,67
+CV & JAB,Zin Taylor 'Thoughts of a Dot as It Travels a Surface',70
+Painted Doll,Painted Doll,70
+Mark Renner,Few Traces,77
+Afterpartees,Life is Easy,60
+Runaway Brother,New Pocket,78
+Barren Womb,Old Money / New Lows,81
+The Temperance Movement,A Deeper Cut,78
+Hannah Epperson,Slowdown,73
+Frank Bretschneider,Lunik,75
+YFN Lucci,Freda's Son,40
+Bigott,Candy Valley,69
+Solomon Grey,Human Music,61
+Horizon Ablaze,The Weight Of A Thousand Suns,80
+Shinya Fukumori Trio,For 2 Akis,74
+Erick The Architect,Arcstrumentals Vol. 2,63
+Interpol,El Pintor Bonus Tracks,76
+Akwuar,Akwuar,71
+Axelle Red,Exil,65
+Megrim,Families,68
+Pete Astor,One for the Ghost,75
+Ducking Punches,Alamort,80
+C.A.R.,PINNED,71
+Maelstrom,ALPH4,71
+Andy Sheppard Quartet,Romaria,86
+Vee Tha Rula,Yet I Smile,71
+Ashley Tisdale,Music Sessions Vol.1 - EP,65
+Miracle,The Strife Of Love In A Dream,73
+Walter Martin,Reminisce Bar & Grill,56
+Angra,OMNI,71
+Naxatras,III,69
+Gurls,Run Boy Run,27
+Beans,Nights Without Smiles,50
+Lao Che,Wiedza o spoleczenstwie,75
+Onyx,Black Rock,60
+Helix,Greatest Hits Vol. 1,68
+No Babies,Someone to Watch Over Me,70
+Windhand & Satan's Satyrs,Split,70
+Ludwig Goransson,Black Panther (Original Motion Picture Soundtrack),78
+Endless Heights,Vicious Pleasure,80
+Jing,Adularescence,82
+Various Artists,15 Years Of The Bunker,86
+Linda Martini,Linda Martini,69
+The Plot In You,Dispose,57
+Letters From The Colony,Vignette,82
+Tanlines,Presents,56
+1 Trait Danger,1 Trait High,60
+Grand Corps Malade,Plan B,76
+Igor Salify,Vivendo o Agora,80
+Pop Evil,Pop Evil,78
+Ektomorf,Fury,63
+Romeo Elvis X Le Motel,Morale 2luxe,72
+Felix Jaehn,I,65
+Matt Talley,The In Between,95
+Feed The Rhino,The Silence,74
+Andris Nelsons & Gewandhausorchester Leipzig,Bruckner: Symphony No. 4 / Wagner: Lohengrin - Prelude to Act 1,55
+Lee DeWyze,Paranoia,70
+Sameer Gupta,A Circle Has No Beginning,80
+Eave,Eave,80
+Muyassar Kurdi & Nicholas Jozwiak,Intersections & Variations,70
+Daddy's Beemer,Pucker,65
+O.C.,A New Dawn,76
+Camila Costa,Mangas e Bananas para o Meu Amor,70
+38 Spesh & Benny,Stabbed & Shot,78
+Pauline Croze,Ne rien faire,53
+The Hanging Stars,Songs from Somewhere Else,73
+Extinction A.D.,Decimation Treaty,52
+DYE,Inside Out,70
+Arsonists,Lost In The Fire,75
+The Brahms,Me and my damn dreams,65
+Fucked And Bound,Suffrage,80
+Rebel Wizard,Great Addictions to Blindingly Dark Worldly Life,83
+S U P E R F L A T supahuratsuto,Midnight Ads,35
+Aaron Carter,LOVE,63
+Elephant9,Greatest Show on Earth,80
+Hour,Tiny Houses,0
+Romeo Monteiro / Ensemble Orchestral Contemporain / Daniel Kawka,Ondrej Adamek: Sinuous Voices,0
+Primitive World,White on White,0
+Mean Jeans,Jingles Collection,0
+Tale Of Us,Fabric 97,60
+Amyl & The Sniffers,Big Attraction/Giddy Up,60
+Jean Tonique,Well Mannered Frivolity,65
+Coffin Torture,Dismal Planet,70
+William Hooker Trio,Remembering,70
+Straya,Sobereyed,75
+Various Artists,Waves Of The Future,76
+Norma Winstone,Descansado - Songs for Films,78
+Bon Iver,For Emma Forever Ago [Reissue],100
+Johannes Falk,Von Mucken und Elefanten,0
+Broshuda,Jemi,0
+Banque De France,Ti Amo Diaries E,0
+Traitors,Anger Issues,0
+Loathe,This Is As One,0
+Give Up the Ghost,American Nightmare,0
+Mirror Organs,The Flesh Made World,0
+Zo,Born 2 Ball,43
+Kota The Friend,Anything,75
+Thundercat,Drank,60
+Itasca,Morning Flower,41
+Amelia Arsenic,Queen of Risk,75
+Bug Bus Piano,mMega macrobial wipe pad,64
+MIKE,resistance man,60
+The Lazys,Tropical Hazards,67
+Marijannah,Till Marijannah,0
+Dizayga,Anthrocide: Exit By Accented Figures,50
+Gigi Masin,Kite,80
+Kodak Black,Heart Break Kodak,63
+Moneybagg Yo,2 Heartless,72
+Pinky Pinky,Hot Tears,75
+Martyn Bootyspoon,Silk Eternity,74
+BoA,Si konomamadeiinokana,72
+Drae Da Skimask,Pistola,45
+Shiotaka Kazuyuki,Sa ra so ju 3,80
+Futuristic,Songs about Girls,43
+HEX,The Hill Temple,75
+Ling Tosite Sigure,#5,75
+Being A Living Thing,your inner living room,47
+Band-Maid,World Domination,0
+Resurrection Committee,Join!,0
+Various Artists,"""Emotional Too""",0
+Fuyufukiudon,No Drug,0
+Czecho No Republic,Tabinideru Junbi,0
+BoA,Watashi Kono Mama de Ii no Kana,0
+Mach-Hommy,Bulletproof Luh,74
+Cozz,Effected,74
+BOOTS,#DARKDAZE,61
+Basa Basa,Homowo,74
+Yoshi Thompkins,Black Jesus,65
+Geinst And Asmar,Gallery EP,85
+OPERANT,Harnessed To Flesh,75
+The Playbook,All I Am Is What You Left Behind,73
+Zombitches,Keep Happy,68
+Giuseppe Leonardi,TBC,68
+Clint Heidorn,Pasadena,70
+Jensen Interceptor & Assembler Code,Natural Control,90
+Tor Lundvall & John B. McLemore,Tor Lundvall Presents: Witness Marks - The Works of John B. McLemore,68
+Flow,Trine,84
+Welur,Caly Ten Senny Stuff,69
+Traumprinz & DJ Metatron,Traumprinz B2B DJ Metatron Live at Planet Uterus,0
+MGMT,Little Dark Age,75
+Various Artists,Black Panther: The Album,77
+Ezra Furman,Transangelic Exodus,85
+Franz Ferdinand,Always Ascending,67
+Son Lux,Brighter Wounds,75
+Palm,Rock Island,69
+Ravyn Lenae,Crush,79
+The Wombats,Beautiful People Will Ruin Your Life,65
+Hovvdy,Cranberry,75
+Natalia Lafourcade,Musas Vol. 2,80
+GoGo Penguin,A Humdrum Star,77
+Alela Diane,Cusp,84
+Joan As Police Woman,Damned Devotion,75
+Anenon,Tongue,76
+SHIRT,Pure Beauty,70
+Twin Peaks,Sweet '17 Singles,70
+Dashboard Confessional,Crooked Shadows,60
+Hockey Dad,Blend Inn,74
+Brigid Mae Power,The Two Worlds,79
+Wild Child,Expectations,40
+Susanna,Go Dig My Grave,70
+Various Artists,Fifty Shades Freed,35
+Gus Dapperton,You Think You're a Comic!,70
+Holy Motors,Slow Sundown,64
+Mija,How To Measure The Distance Between Lovers,70
+Brian Fallon,Sleepwalkers,69
+John Tejada,Dead Start Program,72
+Gliss,Strange Heaven,68
+David Duchovny,Every Third Thought,58
+Legend Of The Seagullmen,Legend of the Seagullmen,65
+Lea Bertucci,Metal Aether,68
+Cecil Frena,The Gridlock,80
+Bas Jan,Yes I Jan,80
+Various Artists,We Out Here,80
+Tal National,Tantabara,83
+Paper Dollhouse,The Sky Looks Different Here,57
+Chemtrails,Calf of the Sacred Cow,60
+Audio Push,Cloud 909,70
+Fu Manchu,Clone of the Universe,74
+Sunflowers,Castle Spell,80
+Gary War,Gaz Forth,72
+The Oh Hellos,Eurus,67
+Old Tower,Stellary Wisdom,80
+Jean-Luc Guionnet & Daichi Yoshikawa,Intervivos,80
+Visigoth,Conqueror's Oath,75
+Lauren Ruth Ward,Well Hell,73
+The Atlas Moth,Coma Noir,80
+Ewan Cruickshanks,A Glasgow Band,80
+Tres Oui,Poised to Flourish,80
+Dunes,Dunes,66
+VETO,16 Colors,62
+Oldsoul,Coy,56
+La Otra,Creciendo,72
+Erdve,Vaitojimas,73
+Good Tiger,We Will All Be Gone,70
+The Monochrome Set,Maisieworld,75
+Abhi The Nomad,Marbled,79
+Social Club Misfits,Into The Night,74
+Menagerie,The Arrow of Time,72
+Pendentif,Vertige Exhausse,78
+Emmelie De Forest,History,78
+CMX,Alkuteos,64
+Maria Faust,Machina,68
+Snowpoet,Thought You Knew,71
+Harm's Way,Posthuman,68
+Mark Battles,Vasi World,70
+The Wandering Hearts,Wild Silence,75
+Foreign Beggars,2 2 Karma,80
+Various Artists,Silk to Dry the Tears,69
+Ok Sweetheart,Far Away,60
+GTA,Death to Genres (vol. 3),12
+Curtish Roush,Cosmic Campfire Music,39
+Chine Laroche,Out Of The Dark,90
+Orph,The Pyramid Tears of Simba,52
+Murray Perahia,Piano Sonatas Nos. 14 & 29,40
+Daniel Hope,Journey to Mozart,50
+Gnaw Their Tongues,GENOCIDAL MAJESTY,65
+Giovanni Caccamo,Eterno,69
+Atentado Napalm,Explosivo,71
+Burnt Ones,Last Draft in Different Rooms,50
+Alice Ivy,I'm Dreaming,70
+Mind Over MattR,Divine Intervention,54
+NoCanDo,M.O.T.H.,10
+Madensuyu,Current,100
+Melody Gardot,Live In Europe,80
+Dirk.,Album,85
+Penguin Prison,Turn It Up,50
+LACHANE,Lachane,80
+Frozen Crown,The Fallen King,70
+The Third Eye Foundation,Wake the Dead,81
+Kid Dakota,Denervation,80
+Marie Modiano,Pauvre chanson,50
+RiFF RaFF & DJ Afterthought,Cool Blue Jewels,46
+Jerry David DeCicca,Time the Teacher,73
+Soft Riot,The Outsider in the Mirrors,80
+MIST,Diamond In The Dirt,80
+Vessels,Bathed in Sun,80
+Leif,Bluebird / Number 13,86
+Beth Nielsen Chapman,Hearts Of Glass,90
+Beatchild & The Slakadeliqs,Heavy Rockin' Steady,90
+Toto,Greatest Hits: 40 Trips Around The Sun,0
+David Fair,Ballets (Dance Like This),0
+Doc Watson,Live at Club 47,0
+Dwarves,Take Back the Night,0
+Banque De France,Ti Amo Diaries D,0
+Charles Trees,Light Sleep,0
+Problem of Pain,I Will Always Want To Let Go,0
+emamouse,Tiny orange slicker for birds,0
+yma,LIMINAL,0
+Zoo Brazil,Point of View,0
+The Wood Brothers,One Drop Of Truth,0
+Niklas Paschburg,Oceanic,0
+Eva-Maria Houben,Breath for Organ,0
+El Alfa,Disciplina (Puerto Rico Edition),0
+Nana,Nana no Estudio Showlivre (Ao Vivo),0
+R.Rose & Lucy,The Lotus Eaters II,60
+Various Artists,French Disco Boogie Sounds Vol.  3 (1977- 1987),60
+James Zabiela,Balance 029,66
+Monks Of Doom,The Bronte Pin,70
+Various Artists,Revolutionary Spirit: The Sound of Liverpool 1976-1988,80
+2 Chainz,The Play Don't Care Who Makes It,75
+Wolf Muller & Niklas Wandt,Instrumentalmusik von der Mitte der World,78
+Neon Lights,A Slice of Life,75
+3moonboys,Zawsze jest za krotko,61
+Wrinkle,A Kaleidoscope of Butterflies,71
+Golgothan Remains,Perverse Offerings to the Void,0
+Silent Poets,Dawn,76
+Winner,Our Twenty Four (Japanese Ver.),63
+Yasutaka Nakata,Digital Native,64
+Plain Dog,All My Friends,83
+Morning Musume.,Er Shi Sui nomoninguNiang . ,61
+Hitsujibungaku,A Short Trip to the Orange-Chocolate-House,77
+Suba,Wayang,80
+Shuudan Koudou,Chong Fen Wei Lai ,0
+Mashinomi,Pet Bottles Literacy,0
+Terri Terri,Attention,69
+Harmony Tividad,Arrival Captive to Divine,75
+S. English,Eris,65
+Mathias Delplanque,Temoins,69
+Vanessa Rossetto,Fashion Tape,64
+Sven,Seventeen,44
+AMNUTSEBA,Demo II,75
+Sundrifter,Visitations,62
+OJ Son,Holiday EP,0
+Snakepiss,Hell Shit,0
+Metrist,Spoils,0
+Seventeen,Director's Cut,78
+Robert Hood,Paradygm Shift Vol. 3,0
+Kap G,Real Migo Shit 4,0
+Florian Kupfer,Contact,0
+Michael Pisaro / Reinier van Houdt,Shades of Eternal Night,0
+Chris Joss,Misophonia,70
+Saevom,How I Love You,0
+Justin Timberlake,Man of the Woods,50
+Hookworms,Microshift,84
+Rae Morris,Someone Out There,84
+Rhye,Blood,73
+Rich Brian,Amen,65
+The Soft Moon,Criminal,77
+Anna Burch,Quit the Curse,74
+Field Music,Open Here,77
+Skyzoo,In Celebration of Us,89
+Efrim Manuel Menuck,Pissing Stars,74
+AWOLNATION,Here Come the Runts,72
+Kyle Craft,Full Circle Nightmare,68
+Madison Beer,As She Pleases,60
+Milk & Bone,Deception Bay,83
+Don Broco,Technology,55
+Bat Fangs,Bat Fangs,73
+Poppy Ackroyd,Resolve,78
+IAMX,Alive In New Light,69
+Pearl Charles,Sleepless Dreamer,65
+Steve Reich,Pulse / Quartet,75
+DZ Deathrays,Bloody Lovely,64
+Gunna,Drip Season 3,60
+EMA,Outtakes From Exile,60
+Simple Minds,Walk Between Worlds,67
+Storm{O},Ere,71
+Sunwatchers,II,80
+Ski Mask The Slump God,YouWillRegret (Reloaded),73
+Vox Low,Vox Low,75
+Russell Haswell,Respondent,65
+Dirty South,XV,69
+Montero,Performer,67
+Red River Dialect,Broken Stay Open Sky,75
+John Bramwell,Leave Alone the Empty Spaces,84
+Julie Bergan,Turn On the Lights,66
+The Sheepdogs,Changing Colours,74
+Shuttle358,Field,80
+The James Hunter Six,Whatever It Takes,83
+The Outfit,The Outfit,66
+Akira Sakata & Chikamorachi With Masahiko Satoh,Proton Pump,61
+Therapie TAXI,Hit Sale,82
+Vald,XEU,66
+Wolfgang Tillmans,Heute Will Ich Frei Sein,70
+Calibro 35,Decade,72
+B. Fleischmann,Stop Making Fans,70
+Greber,Cemetery Preston,80
+Marcus Marr,Familiar Five,67
+Paul Bergmann,Night Unfold,96
+Long Distance Calling,Boundless,72
+S>>D,Co Intel PRO,72
+Adan Jodorowsky,Esencia Solar,76
+Nightwave,Sanctuary,67
+PBR Streetgang,Late Night Party Line,70
+Death and Vanilla,The Tenant,75
+Keys N Krates,Cura,80
+Pale Grey,Waves,90
+The Future Sound Of London,Lifeforms,93
+Saxon,Thunderbolt,74
+Schluss,28,57
+Galaxie,Super Lynx Deluxe,78
+People Like Us Matmos & Wobbly,Wide Open Spaces,77
+Kat Frankie,Bad Behaviour,46
+LIGHTWASH,Half Hung,78
+R Beny,Saudade,81
+Albrecht La'Brooy,Tidal River,60
+Sara Renberg,Night Sands,66
+K.A.A.N.,Paradise / / Lost,76
+BIGYUKI,Reaching for Chiron,73
+Wet Leather,Present Lives,71
+Lando Chill & The Lasso,Maya. Maia. Mayu,79
+Hubert Lenoir,Darlene,85
+Key Glock,Glock Bond,64
+Dizzy Fae,Free Form Mixtape,69
+Caravela,Ski,67
+Bardo Pond,Volume 8,70
+Thea & The Wild,Ikaros,70
+Genocide Pact,Order of Torment,72
+Various Artists,Waystation Compilation: Sequence I,82
+Melissa Laveaux,Radyo Siwel,82
+Noah Creshevsky,Reanimator,90
+Why?,Moh Lhean - Expanded,65
+Docetism,Breast and Vulture,79
+Le Roi Angus,Est-ce que tu vois le tigre?,57
+Big Air,Inner Facing Outer Spacing,75
+Erik Phillips,One,75
+Olli Schulz,Scheiss Leben Gut Erzahlt,40
+Dominique Fils-Aime,Nameless,73
+Lisa Batiashvili Chamber Orchestra of Europe & Yannick Nezet-Seguin,Visions of Prokofiev,50
+Hidden Spheres,Wonders Of The Rainforest,74
+We Exist Even Dead,Eventide,50
+Richard Pinhas,Rhizosphere,68
+Montgomery Gentry,Here's to You,41
+Jeremy Zucker,Stripped,39
+Henri Texier,Sand Woman,70
+Talking Violet,Round Dreams,60
+And The Golden Choir,Breaking With Habits,80
+Macedo,Ghost Town,75
+Armada,Bandeira Negra,50
+Sneakbo,Brixton,65
+Reckling,Reckling,80
+Future Museums,Rosewater Ceremony,75
+The Spook School,The Spook School on Audiotree Live,81
+Cats Of Transnistria,Opium,49
+Young Echo,Young Echo,74
+Julian Lage,Modern Lore,77
+K15,Sunbeams,78
+2814,Pillar / New Sun,84
+Frank Zappa,The Roxy Performances,90
+Rick Ross,Port of Miami 2: Born to Kill,0
+U-God,Bring Back God II,0
+Ezra Feinberg,Pentimento And Others,0
+Turbonegro,RockNRoll Machine,0
+Wareika,Water Sky Sun Wood,0
+Inigo Kennedy,Magma / Mantle,0
+The Whips,City Wide Special,0
+Banque De France,Ti Amo Diaries C,0
+Kat Frankie,Gronland,0
+Radyo Siwel,Radyo Siwel,0
+Lunar Twin,Night Tide Remixes,0
+Tolcsvay Laszlo,'68,0
+Scarphase,The Big 10,0
+Vantage Point,Work Work Work,0
+Dan Patlansky,Perfection Kills,0
+Madman,Back Home,0
+Lostly,Outburst Presents Spotlight: Lostly,0
+LAXX,Fake Friends,0
+waterfront dining,Cologne,0
+Drekoty,Lub Maszyna Dzika Trawa,0
+Mezzanine Swimmers,Black Cat in Heat,60
+Pun Collins,Lunar Influence,60
+Letitia VanSant,Gut it to the Studs,70
+Francis MacDonald & Scottish Festival Orchestra Soloists,Hamilton Mausoleum Suite,75
+Various Artists,Infinite Loop Volume 01,80
+Sarah McQuaid,If We Dig Any Deeper It Could Get Dangerous,80
+Dream Troll,The Witch's Curse,84
+Roxy Music,Roxy Music [Deluxe Edition],90
+Kuniyuki Takahashi,Early Tape Works (1986-1993) Volume 1,73
+BB And The Blips,Demo,58
+Yung Beef,Adromicfms 4,67
+Thandi Ntuli,Exiled,74
+Road Hog,Spares,74
+Sex Park,Atrium,70
+Kal Marks,Idiot Troubadour,65
+Yves De Mey,Bleak Comfort,78
+The Chuck Norris Experiment,Hotter Stuff,0
+Dan Sirois,Blood & Wine,0
+Zs,NOTH,0
+Yudai Toda,Mabataki / Extra,0
+Kate McGarry Keith Ganz & Gary Versace,The Subject Tonight is Love,80
+SIT,Invisibility,82
+Ayalew Mesfin,Hasabe (My Worries),65
+John Dimas,One Against Time,76
+Dan Hartland,Great Novels,83
+Claudio PRC,TGP 012,0
+Omar S,Your Socially Awkward Criminal,0
+Taku Sugimoto,h,0
+SWR Experimentalstudio / WDR Symphony Orchestra Cologne / Peter Rundel / Leo Warinsky / Claudia Bar,Como una ola de fuerza y luz; .....sofferte onde serene... / unfolding waves... con luigi nono,0
+Leon Of Athens,Xenos,75
+Zaki Ibrahim,The Secret Life of Planets,79
+EXO,Countdown,71
+Yuko Yokoi,Verde,80
+Raison D'etre,Alchymeia,79
+Coil,Astral Disaster Sessions Un/Finished Musics,77
+Ex-Terrestrial,Portal Vision,80
+CY8ER,haroniyuzienereshiyon,65
+Aoud,SE MKII,50
+Caleb Giles,There Will Be Rain,70
+T.Y.,The Good Grind Young,0
+Perro Bravo,Case Pacific,0
+Young Roddy,Face The World,0
+Walter Gross,The Fra Mauro Highlands,0
+Ballista,Dress Drawn Aside to Reveal a Childhood Scar,0
+Yuki,Suteki na 15 Sai,0
+Conjoint,Earprints,80
+Glim Spanky,Orokamonotachi,73
+Various Artists,La Contra Ola - Synth Wave & Post Punk From Spain 1980-86,77
+Rejjie Snow,Dear Annie Pt. 2,57
+Arnaud Le Gouefflec,La Faveur de la Nuit,80
+Cuco,Cuco on Audiotree Live,82
+Shahmen,California is Cold,35
+Various Artists,Let's Dance Records: Mike Macharello & Duane Thamm Jr. Chicago 1983-85,0
+Luvjonez,Legends,0
+Miriam Cooke,Freefalling,60
+Red Velvet,The Perfect Red Velvet,70
+Strangejuice,Arctic Tundra,68
+MC Xuxu,Senzala,48
+Suzy,Faces of Love,73
+Aaron Martin,A Room Now Empty,83
+Sally Fowler,When I Left I Had Guts,57
+Golden Child,Qi Ji ,62
+VAV,Spotlight,69
+Matt Westin,Legacy,95
+PLOHO,Novostroiki (New Buildings),75
+Genesis Elijah,How To Lose Fans And Alienate Listeners,75
+Gunnar Haslam,KL01,78
+Nature Shots,Foreclosure,0
+Cute Heels Featuring Aga Wilk,State of Mind,0
+Mukqs,Qi kiShang gari,71
+ION,A Path Unknown,77
+Facechain,Accensor,76
+Neon Lies,II,79
+Slug Christ,Judas' Betrayal And The Three Day Burial of A Salted Slug,63
+Virginia Trance,Virginia Trance,0
+Laneve,Particolari,0
+Azusa Kobayashi,Pink no Margaret,0
+Relay Tapes,Semblance,89
+Ameel Brecht,Polygraph Heartbeat,84
+Dish-Is-Nein,Dish-Is-Nein,65
+La Misma Raiz,Un Dia Mas,70
+Migos,Culture II,67
+Nils Frahm,All Melody,80
+Dream Wife,Dream Wife,78
+Ty Segall,Freedom's Goblin,81
+Django Django,Marble Skies,74
+No Age,Snares Like a Haircut,78
+Khruangbin,Con Todo El Mundo,79
+The Spook School,Could It Be Different?,79
+Portal,Ion,82
+Tribulation,Down Below,78
+Calexico,The Thread That Keeps Us,70
+Evidence,Weather or Not,69
+Tiny Moving Parts,Swell,65
+LYLO,Post Era,90
+Johnny Jewel,Digital Rain,67
+HOLY,All These Worlds Are Yours,80
+Marmozets,Knowing What You Know Now,73
+NADINE,Oh My,68
+Hollie Cook,Vessel of Love,72
+********,The Drink,73
+Lil Wayne,D6: Reloaded,74
+Palmbomen II,Memories Of Cindy,56
+H.C. McEntire,Lionheart,72
+Craig David,The Time Is Now,56
+Mimicking Birds,Layers of Us,77
+Machine Head,Catharsis,47
+Payroll Giovanni & Cardo Got Wings,Big Bossin Vol. 2,80
+Nightmares On Wax,Shape The Future,66
+Waterparks,Entertainment,86
+Mary Gauthier,Rifles & Rosary Beads,93
+Club 8,Golden Island,70
+Silvia Kastel,Air Lows,76
+Graham Coxon,The End of the F*****g World (Original Songs and Score),80
+Stick In The Wheel,Follow Them True,79
+Wind Atlas,An Edible Body,73
+Leyya,Sauna,67
+Postcards,I'll Be Here in the Morning,75
+Helado Negro,Island Universe Story Four,74
+Orphaned Land,Unsung Prophets & Dead Messiahs,80
+EXEK,Ahead of Two Thoughts,81
+Ghostface Killah & Apollo Brown,The Brown Tape,60
+Chris Dave and the Drumhedz,Chris Dave and the Drumhedz,71
+Phobophobes,Miniature World,73
+Math and Physics Club,Lived Here Before,80
+Hooded Menace,Ossuarium Silhouettes Unhallowed,81
+Cucina Povera,Hilja,71
+Long Neck,Will This Do?,67
+Nick J.D. Hodgson,Tell Your Friends,55
+The Dangerous Summer,The Dangerous Summer,71
+Burna Boy,Outside,77
+Turin Brakes,Invisible Storm,58
+Dead!,The Golden Age of Not Even Trying,70
+Waelder,Non Places,70
+Various Artists,In Death's Dream Kingdom,77
+Beth Hart & Joe Bonamassa,Black Coffee,80
+Flying Horseman,Rooms / Ruins,73
+Tocotronic,Die Unendlichkeit,79
+Marly Luske,Five Fires,56
+Carpenter Brut,Leather Teeth,63
+Dommengang,Love Jail,70
+Mammoth Grinder,Cosmic Crypt,74
+Agrimonia,Awaken,80
+Jesse Marchant,Illusion of Love,71
+The Crab Apples,A Drastic Mistake,63
+We Are Temporary,Embers,76
+Kai Fish,Amen,65
+Dead Vibrations,Dead Vibrations,66
+FaltyDL,Three Rooms,70
+Fire!,The Hands,82
+Pestilence,Hadeon,73
+Mast,Thelonious Sphere Monk,66
+RANGEr,Portable Presents RANGEr,59
+Blushing,Weak,77
+Harrison Whitford,Afraid Of Everything,73
+Monolithe,Nebula Septem,72
+Jono McCleery,Seeds of a Dandelion,73
+Len Sander,The Future Of Lovers,59
+Phil Campbell & The Bastard Sons,The Age of Absurdity,40
+Primal Rite,Dirge of Escapism,70
+Andy Cooper,The Layered Effect,76
+Yoshinori Hayashi,Uncountable Set,50
+Joachim Kuhn,Love & Peace,63
+John Zorn,The Urmuz Epigrams,56
+Beach Combers,Beach Attack,69
+Above & Beyond,Common Ground,55
+Black Space Riders,Amoretum Vol. 1.,84
+Ocean Of Grief,Nightfall's Lament,79
+Kaviar Special,Vortex,80
+VHS Dreams,Lost World,68
+Howling Sycamore,Howling Sycamore,72
+In Vain,Currents,69
+Slimane,Solune,84
+Emma,Essere Qui,78
+Beechwood,Songs from the Land of Nod,73
+Mind Spiders,Furies,74
+Krzysztof Zalewski,Zalewski Spiewa Niemena,69
+The Me In You,Stuart Conroy: 1974-1978,82
+Orson Hentschel,Facades,50
+Collette Savard & The Savants,Collette Savard & the Savants,70
+Grand Analog,Survival,70
+The Fugitives,The Promise of Strangers,70
+Hollow Twin,The River Saw Everything,70
+Steep Canyon Rangers,Out in the Open,70
+K. Leimer,Mitteltoner,78
+Alvin Lucier,Criss-Cross / Hanover,80
+Leaving Thomas,Leaving Thomas,80
+High Rise,High Rise II,82
+Sleeping Giant,I Am,75
+Maria Rita,Amor e Musica,60
+Mike LePond's Silent Assassins,Pawn and Prophecy,60
+Raquel Sofia,2:00 AM,70
+Kyo Itachi,Genkidama,73
+DJ Trax,When Darkness Turns To Light,70
+A Pregnant Light,Lucky All My Life,73
+Nick Klein,Lowered Flaming Coffin,62
+Dagon,Back to the Sea,91
+Jonas Reinhardt,Conclave Surge,79
+Yasemin Mori,Estrella,55
+L I M,Higher Living,65
+Pop X,Musica Per Noi,60
+Patawawa,Bedroom,70
+Plad Fine$$e,PLAD Fine$$e,52
+Jamie Saft,Solo a Genova,50
+Young & Sick,Ojai,65
+Mediterranean Deconstruction Ensemble,Day De Senar,75
+Midnight Danger,Malignant Force,75
+Project Pitchfork,Akkretion,75
+Paletti,Super,70
+Keno,Around The Corner,81
+Kyo Itachi,Makkakosappo,56
+The Bunny Tylers,Chance Meetings,62
+Handsome Ghost,Welcome Back,36
+Dirtmusic,Bu Bir Ruya,80
+Oscar Jerome,Where Are Your Branches?,73
+Django Django,Marble Dubs,72
+Jose Gonzalez,& The Brite Lites at Svenska Grammofonstudion,64
+Cory Asbury,Reckless Love,22
+Tek.lun,ALLOW IT!,71
+Sergio Godinho,Nacao Valente,62
+Dumptruck,Wrecked,65
+Pony Face,Deja Vu,80
+Eric Benoit,Heartrender,71
+Humans,The Feels,5
+
+Question:
+Which album has the lowest rating among all the albums released by its artist, and the artist has at least one other album with a rating higher than 80?
+
+A. Money Changes Everything
+B. Back in the Jazz Coffin
+C. Road Trips Vol. 4 No. 5: Boston Music Hall June 9 1976
+D. He Chuang
+
+Select the correct answer.

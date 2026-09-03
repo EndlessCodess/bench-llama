@@ -1,0 +1,1 @@
+You are playing a game which requires you to roll two dice. Generate a sentence to describe the emotion of anticipation felt while waiting for the dice to stop rolling.

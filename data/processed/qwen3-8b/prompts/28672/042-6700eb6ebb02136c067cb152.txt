@@ -1,0 +1,3059 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+psutil
+sentencepiece  # Required for LLaMA tokenizer.
+numpy < 2.0.0
+requests >= 2.26.0
+tqdm
+py-cpuinfo
+transformers >= 4.45.0  # Required for Llama 3.2.
+tokenizers >= 0.19.1  # Required for Llama 3.
+protobuf # Required by LlamaTokenizer.
+fastapi >= 0.107.0, < 0.113.0; python_version < '3.9'
+fastapi >= 0.107.0, != 0.113.*, != 0.114.0; python_version >= '3.9'
+aiohttp
+openai >= 1.40.0 # Ensure modern openai package (ensure types module present)
+uvicorn[standard]
+pydantic >= 2.9  # Required for fastapi >= 0.113.0
+pillow  # Required for image processing
+prometheus_client >= 0.18.0
+prometheus-fastapi-instrumentator >= 7.0.0
+tiktoken >= 0.6.0  # Required for DBRX tokenizer
+lm-format-enforcer == 0.10.6
+outlines >= 0.0.43, < 0.1
+typing_extensions >= 4.10
+filelock >= 3.10.4 # filelock starts to support `mode` argument from 3.10.4
+partial-json-parser # used for parsing partial JSON outputs
+pyzmq
+msgspec
+gguf == 0.10.0
+importlib_metadata
+mistral_common[opencv] >= 1.4.4
+pyyaml
+six>=1.16.0; python_version > '3.11' # transitive dependency of pandas that needs to be the latest version for python 3.12
+setuptools>=74.1.1; python_version > '3.11' # Setuptools is used by triton, we need to ensure a modern version is installed for 3.12+ so that it does not try to import distutils, which was removed in 3.12
+einops # Required for Qwen2-VL.
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# Dependencies for AMD GPUs
+awscli
+boto3
+botocore
+ray >= 2.10.0
+peft
+pytest-asyncio
+tensorizer>=2.9.0
+
+cmake_minimum_required(VERSION 3.26)
+
+# When building directly using CMake, make sure you run the install step
+# (it places the .so files in the correct location).
+#
+# Example:
+# mkdir build && cd build
+# cmake -G Ninja -DVLLM_PYTHON_EXECUTABLE=`which python3` -DCMAKE_INSTALL_PREFIX=.. ..
+# cmake --build . --target install
+#
+# If you want to only build one target, make sure to install it manually:
+# cmake --build . --target _C
+# cmake --install . --component _C
+project(vllm_extensions LANGUAGES CXX)
+
+# CUDA by default, can be overridden by using -DVLLM_TARGET_DEVICE=... (used by setup.py)
+set(VLLM_TARGET_DEVICE "cuda" CACHE STRING "Target device backend for vLLM")
+
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Target device: ${VLLM_TARGET_DEVICE}")
+
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/utils.cmake)
+
+# Suppress potential warnings about unused manually-specified variables
+set(ignoreMe "${VLLM_PYTHON_PATH}")
+
+# Prevent installation of dependencies (cutlass) by default.
+install(CODE "set(CMAKE_INSTALL_LOCAL_ONLY TRUE)" ALL_COMPONENTS)
+
+#
+# Supported python versions.  These versions will be searched in order, the
+# first match will be selected.  These should be kept in sync with setup.py.
+#
+set(PYTHON_SUPPORTED_VERSIONS "3.8" "3.9" "3.10" "3.11" "3.12")
+
+# Supported NVIDIA architectures.
+set(CUDA_SUPPORTED_ARCHS "7.0;7.5;8.0;8.6;8.9;9.0")
+
+# Supported AMD GPU architectures.
+set(HIP_SUPPORTED_ARCHS "gfx906;gfx908;gfx90a;gfx940;gfx941;gfx942;gfx1030;gfx1100")
+
+#
+# Supported/expected torch versions for CUDA/ROCm.
+#
+# Currently, having an incorrect pytorch version results in a warning
+# rather than an error.
+#
+# Note: the CUDA torch version is derived from pyproject.toml and various
+# requirements.txt files and should be kept consistent.  The ROCm torch
+# versions are derived from Dockerfile.rocm
+#
+set(TORCH_SUPPORTED_VERSION_CUDA "2.4.0")
+set(TORCH_SUPPORTED_VERSION_ROCM "2.5.0")
+
+#
+# Try to find python package with an executable that exactly matches
+# `VLLM_PYTHON_EXECUTABLE` and is one of the supported versions.
+#
+if (VLLM_PYTHON_EXECUTABLE)
+  find_python_from_executable(${VLLM_PYTHON_EXECUTABLE} "${PYTHON_SUPPORTED_VERSIONS}")
+else()
+  message(FATAL_ERROR
+    "Please set VLLM_PYTHON_EXECUTABLE to the path of the desired python version"
+    " before running cmake configure.")
+endif()
+
+#
+# Update cmake's `CMAKE_PREFIX_PATH` with torch location.
+#
+append_cmake_prefix_path("torch" "torch.utils.cmake_prefix_path")
+
+# Ensure the 'nvcc' command is in the PATH
+find_program(NVCC_EXECUTABLE nvcc)
+if (CUDA_FOUND AND NOT NVCC_EXECUTABLE)
+    message(FATAL_ERROR "nvcc not found")
+endif()
+
+#
+# Import torch cmake configuration.
+# Torch also imports CUDA (and partially HIP) languages with some customizations,
+# so there is no need to do this explicitly with check_language/enable_language,
+# etc.
+#
+find_package(Torch REQUIRED)
+
+#
+message(STATUS "Enabling core extension.")
+
+# Define _core_C extension
+#  built for (almost) every target platform, (excludes TPU and Neuron)
+
+set(VLLM_EXT_SRC
+  "csrc/core/torch_bindings.cpp")
+
+define_gpu_extension_target(
+  _core_C
+  DESTINATION vllm
+  LANGUAGE CXX
+  SOURCES ${VLLM_EXT_SRC}
+  COMPILE_FLAGS ${CXX_COMPILE_FLAGS}
+  USE_SABI 3
+  WITH_SOABI)
+
+#
+# Forward the non-CUDA device extensions to external CMake scripts.
+#
+if (NOT VLLM_TARGET_DEVICE STREQUAL "cuda" AND
+    NOT VLLM_TARGET_DEVICE STREQUAL "rocm")
+    if (VLLM_TARGET_DEVICE STREQUAL "cpu")
+        include(${CMAKE_CURRENT_LIST_DIR}/cmake/cpu_extension.cmake)
+    else()
+        return()
+    endif()
+    return()
+endif()
+
+#
+# Set up GPU language and check the torch version and warn if it isn't
+# what is expected.
+#
+if (NOT HIP_FOUND AND CUDA_FOUND)
+  set(VLLM_GPU_LANG "CUDA")
+
+  if (NOT Torch_VERSION VERSION_EQUAL ${TORCH_SUPPORTED_VERSION_CUDA})
+    message(WARNING "Pytorch version ${TORCH_SUPPORTED_VERSION_CUDA} "
+      "expected for CUDA build, saw ${Torch_VERSION} instead.")
+  endif()
+elseif(HIP_FOUND)
+  set(VLLM_GPU_LANG "HIP")
+
+  # Importing torch recognizes and sets up some HIP/ROCm configuration but does
+  # not let cmake recognize .hip files. In order to get cmake to understand the
+  # .hip extension automatically, HIP must be enabled explicitly.
+  enable_language(HIP)
+
+  # ROCm 5.X and 6.X
+  if (ROCM_VERSION_DEV_MAJOR GREATER_EQUAL 5 AND
+      NOT Torch_VERSION VERSION_EQUAL ${TORCH_SUPPORTED_VERSION_ROCM})
+    message(WARNING "Pytorch version >= ${TORCH_SUPPORTED_VERSION_ROCM} "
+      "expected for ROCm build, saw ${Torch_VERSION} instead.")
+  endif()
+else()
+  message(FATAL_ERROR "Can't find CUDA or HIP installation.")
+endif()
+
+
+#
+# For cuda we want to be able to control which architectures we compile for on 
+# a per-file basis in order to cut down on compile time. So here we extract
+# the set of architectures we want to compile for and remove the from the 
+# CMAKE_CUDA_FLAGS so that they are not applied globally.
+#
+if(VLLM_GPU_LANG STREQUAL "CUDA")
+  clear_cuda_arches(CUDA_ARCH_FLAGS)
+  extract_unique_cuda_archs_ascending(CUDA_ARCHS "${CUDA_ARCH_FLAGS}")
+  message(STATUS "CUDA target architectures: ${CUDA_ARCHS}")
+endif()
+
+#
+# Override the GPU architectures detected by cmake/torch and filter them by
+# the supported versions for the current language.
+# The final set of arches is stored in `VLLM_GPU_ARCHES`.
+#
+override_gpu_arches(VLLM_GPU_ARCHES
+  ${VLLM_GPU_LANG}
+  "${${VLLM_GPU_LANG}_SUPPORTED_ARCHS}")
+
+#
+# Query torch for additional GPU compilation flags for the given
+# `VLLM_GPU_LANG`.
+# The final set of arches is stored in `VLLM_GPU_FLAGS`.
+#
+get_torch_gpu_compiler_flags(VLLM_GPU_FLAGS ${VLLM_GPU_LANG})
+
+#
+# Set nvcc parallelism.
+#
+if(NVCC_THREADS AND VLLM_GPU_LANG STREQUAL "CUDA")
+  list(APPEND VLLM_GPU_FLAGS "--threads=${NVCC_THREADS}")
+endif()
+
+
+#
+# Use FetchContent for C++ dependencies that are compiled as part of vLLM's build process.
+# Configure it to place files in vllm/.deps, in order to play nicely with sccache.
+#
+include(FetchContent)
+get_filename_component(PROJECT_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}" ABSOLUTE)
+file(MAKE_DIRECTORY "${FETCHCONTENT_BASE_DIR}")
+set(FETCHCONTENT_BASE_DIR "${PROJECT_ROOT_DIR}/.deps")
+message(STATUS "FetchContent base directory: ${FETCHCONTENT_BASE_DIR}")
+
+#
+# Define other extension targets
+#
+
+#
+# _C extension
+#
+
+set(VLLM_EXT_SRC
+  "csrc/cache_kernels.cu"
+  "csrc/attention/attention_kernels.cu"
+  "csrc/pos_encoding_kernels.cu"
+  "csrc/activation_kernels.cu"
+  "csrc/layernorm_kernels.cu"
+  "csrc/quantization/gptq/q_gemm.cu"
+  "csrc/quantization/compressed_tensors/int8_quant_kernels.cu"
+  "csrc/quantization/fp8/common.cu"
+  "csrc/cuda_utils_kernels.cu"
+  "csrc/moe_align_block_size_kernels.cu"
+  "csrc/prepare_inputs/advance_step.cu"
+  "csrc/torch_bindings.cpp")
+
+if(VLLM_GPU_LANG STREQUAL "CUDA")
+  SET(CUTLASS_ENABLE_HEADERS_ONLY ON CACHE BOOL "Enable only the header library")
+
+  # Set CUTLASS_REVISION manually -- its revision detection doesn't work in this case.
+  set(CUTLASS_REVISION "v3.5.1" CACHE STRING "CUTLASS revision to use")
+
+  FetchContent_Declare(
+        cutlass
+        GIT_REPOSITORY https://github.com/nvidia/cutlass.git
+        GIT_TAG v3.5.1
+        GIT_PROGRESS TRUE
+
+        # Speed up CUTLASS download by retrieving only the specified GIT_TAG instead of the history.
+        # Important: If GIT_SHALLOW is enabled then GIT_TAG works only with branch names and tags.
+        # So if the GIT_TAG above is updated to a commit hash, GIT_SHALLOW must be set to FALSE
+        GIT_SHALLOW TRUE
+  )
+  FetchContent_MakeAvailable(cutlass)
+
+  list(APPEND VLLM_EXT_SRC
+    "csrc/mamba/mamba_ssm/selective_scan_fwd.cu"
+    "csrc/mamba/causal_conv1d/causal_conv1d.cu"
+    "csrc/quantization/aqlm/gemm_kernels.cu"
+    "csrc/quantization/awq/gemm_kernels.cu"
+    "csrc/quantization/gguf/gguf_kernel.cu"
+    "csrc/custom_all_reduce.cu"
+    "csrc/permute_cols.cu"
+    "csrc/quantization/cutlass_w8a8/scaled_mm_entry.cu")
+
+  set_gencode_flags_for_srcs(
+    SRCS "${VLLM_EXT_SRC}"
+    CUDA_ARCHS "${CUDA_ARCHS}")
+
+  # Only build Marlin kernels if we are building for at least some compatible archs.
+  # Keep building Marlin for 9.0 as there are some group sizes and shapes that
+  # are not supported by Machete yet.
+  cuda_archs_loose_intersection(MARLIN_ARCHS "8.0;8.6;8.9;9.0" ${CUDA_ARCHS})
+  if (MARLIN_ARCHS)
+    set(MARLIN_SRCS 
+       "csrc/quantization/fp8/fp8_marlin.cu"
+       "csrc/quantization/marlin/dense/marlin_cuda_kernel.cu"
+       "csrc/quantization/marlin/sparse/marlin_24_cuda_kernel.cu"
+       "csrc/quantization/marlin/qqq/marlin_qqq_gemm_kernel.cu"
+       "csrc/quantization/gptq_marlin/gptq_marlin.cu"
+       "csrc/quantization/gptq_marlin/gptq_marlin_repack.cu"
+       "csrc/quantization/gptq_marlin/awq_marlin_repack.cu")
+    set_gencode_flags_for_srcs(
+      SRCS "${MARLIN_SRCS}"
+      CUDA_ARCHS "${MARLIN_ARCHS}")
+    list(APPEND VLLM_EXT_SRC "${MARLIN_SRCS}")
+    message(STATUS "Building Marlin kernels for archs: ${MARLIN_ARCHS}")
+  else()
+    message(STATUS "Not building Marlin kernels as no compatible archs found"
+                   "in CUDA target architectures")
+  endif()
+
+  #
+  # The cutlass_scaled_mm kernels for Hopper (c3x, i.e. CUTLASS 3.x) require
+  # CUDA 12.0 or later (and only work on Hopper, 9.0/9.0a for now).
+  cuda_archs_loose_intersection(SCALED_MM_3X_ARCHS "9.0;9.0a" "${CUDA_ARCHS}")
+  if(${CMAKE_CUDA_COMPILER_VERSION} VERSION_GREATER 12.0 AND SCALED_MM_3X_ARCHS)
+    set(SRCS "csrc/quantization/cutlass_w8a8/scaled_mm_c3x.cu")
+    set_gencode_flags_for_srcs(
+      SRCS "${SRCS}"
+      CUDA_ARCHS "${SCALED_MM_3X_ARCHS}")
+    list(APPEND VLLM_EXT_SRC "${SRCS}")
+    list(APPEND VLLM_GPU_FLAGS "-DENABLE_SCALED_MM_C3X=1")
+    message(STATUS "Building scaled_mm_c3x for archs: ${SCALED_MM_3X_ARCHS}")
+  else()
+    # clear SCALED_MM_3X_ARCHS so the scaled_mm_c2x kernels know we didn't 
+    # build any 3x kernels
+    set(SCALED_MM_3X_ARCHS)
+
+    if (NOT ${CMAKE_CUDA_COMPILER_VERSION} VERSION_GREATER 12.0 AND SCALED_MM_3X_ARCHS)
+      message(STATUS "Not building scaled_mm_c3x as CUDA Compiler version is "
+                     "not >= 12.0, we recommend upgrading to CUDA 12.0 or "
+                     "later if you intend on running FP8 quantized models on "
+                     "Hopper.")
+    else()
+      message(STATUS "Not building scaled_mm_c3x as no compatible archs found "
+                     "in CUDA target architectures")
+    endif()
+  endif()
+
+  #
+  # For the cutlass_scaled_mm kernels we want to build the c2x (CUTLASS 2.x)
+  # kernels for the remaining archs that are not already built for 3x.
+  cuda_archs_loose_intersection(SCALED_MM_2X_ARCHS 
+    "7.5;8.0;8.6;8.9;9.0;9.0a" "${CUDA_ARCHS}")
+  # subtract out the archs that are already built for 3x
+  list(REMOVE_ITEM SCALED_MM_2X_ARCHS ${SCALED_MM_3X_ARCHS})
+  if (SCALED_MM_2X_ARCHS)
+    set(SRCS "csrc/quantization/cutlass_w8a8/scaled_mm_c2x.cu")
+    set_gencode_flags_for_srcs(
+      SRCS "${SRCS}"
+      CUDA_ARCHS "${SCALED_MM_2X_ARCHS}")
+    list(APPEND VLLM_EXT_SRC "${SRCS}")
+    list(APPEND VLLM_GPU_FLAGS "-DENABLE_SCALED_MM_C2X=1")
+    message(STATUS "Building scaled_mm_c2x for archs: ${SCALED_MM_2X_ARCHS}")
+  else()
+    if (SCALED_MM_3X_ARCHS)
+      message(STATUS "Not building scaled_mm_c2x as all archs are already built"
+                     " for and covered by scaled_mm_c3x")
+    else()
+      message(STATUS "Not building scaled_mm_c2x as no compatible archs found "
+                    "in CUDA target architectures")
+    endif()
+  endif()
+
+
+  #
+  # Machete kernels
+
+  # The machete kernels only work on hopper and require CUDA 12.0 or later.
+  # Only build Machete kernels if we are building for something compatible with sm90a
+  cuda_archs_loose_intersection(MACHETE_ARCHS "9.0a" "${CUDA_ARCHS}")
+  if(${CMAKE_CUDA_COMPILER_VERSION} VERSION_GREATER 12.0 AND MACHETE_ARCHS)
+    #
+    # For the Machete kernels we automatically generate sources for various 
+    # preselected input type pairs and schedules.
+    # Generate sources:
+    set(MACHETE_GEN_SCRIPT 
+      ${CMAKE_CURRENT_SOURCE_DIR}/csrc/quantization/machete/generate.py)
+    file(MD5 ${MACHETE_GEN_SCRIPT} MACHETE_GEN_SCRIPT_HASH)
+
+    message(STATUS "Machete generation script hash: ${MACHETE_GEN_SCRIPT_HASH}")
+    message(STATUS "Last run machete generate script hash: $CACHE{MACHETE_GEN_SCRIPT_HASH}")
+
+    if (NOT DEFINED CACHE{MACHETE_GEN_SCRIPT_HASH}
+        OR NOT $CACHE{MACHETE_GEN_SCRIPT_HASH} STREQUAL ${MACHETE_GEN_SCRIPT_HASH})
+      execute_process(
+        COMMAND ${CMAKE_COMMAND} -E env 
+        PYTHONPATH=${CMAKE_CURRENT_SOURCE_DIR}/csrc/cutlass_extensions/:${CUTLASS_DIR}/python/:${VLLM_PYTHON_PATH}:$PYTHONPATH 
+          ${Python_EXECUTABLE} ${MACHETE_GEN_SCRIPT}
+        RESULT_VARIABLE machete_generation_result
+        OUTPUT_VARIABLE machete_generation_output
+        OUTPUT_FILE ${CMAKE_CURRENT_BINARY_DIR}/machete_generation.log
+        ERROR_FILE ${CMAKE_CURRENT_BINARY_DIR}/machete_generation.log
+      )
+
+      if (NOT machete_generation_result EQUAL 0)
+        message(FATAL_ERROR "Machete generation failed."
+                            " Result: \"${machete_generation_result}\"" 
+                            "\nCheck the log for details: "
+                            "${CMAKE_CURRENT_BINARY_DIR}/machete_generation.log")
+      else()
+        set(MACHETE_GEN_SCRIPT_HASH ${MACHETE_GEN_SCRIPT_HASH} 
+            CACHE STRING "Last run machete generate script hash" FORCE)
+        message(STATUS "Machete generation completed successfully.")
+      endif()
+    else()
+      message(STATUS "Machete generation script has not changed, skipping generation.")
+    endif()
+
+    # Add machete generated sources
+    file(GLOB MACHETE_GEN_SOURCES "csrc/quantization/machete/generated/*.cu")
+    list(APPEND VLLM_EXT_SRC ${MACHETE_GEN_SOURCES})
+
+    # forward compatible
+    set_gencode_flags_for_srcs(
+      SRCS "${MACHETE_GEN_SOURCES}"
+      CUDA_ARCHS "${MACHETE_ARCHS}")
+
+    list(APPEND VLLM_EXT_SRC
+      csrc/quantization/machete/machete_pytorch.cu)
+
+    message(STATUS "Building Machete kernels for archs: ${MACHETE_ARCHS}")
+  else()
+    if (NOT ${CMAKE_CUDA_COMPILER_VERSION} VERSION_GREATER 12.0 
+        AND MACHETE_ARCHS)
+      message(STATUS "Not building Machete kernels as CUDA Compiler version is "
+                     "not >= 12.0, we recommend upgrading to CUDA 12.0 or "
+                     "later if you intend on running w4a16 quantized models on "
+                     "Hopper.")
+    else()
+      message(STATUS "Not building Machete kernels as no compatible archs "
+                     "found in CUDA target architectures")
+    endif()
+  endif()
+# if CUDA endif
+endif()
+
+message(STATUS "Enabling C extension.")
+define_gpu_extension_target(
+  _C
+  DESTINATION vllm
+  LANGUAGE ${VLLM_GPU_LANG}
+  SOURCES ${VLLM_EXT_SRC}
+  COMPILE_FLAGS ${VLLM_GPU_FLAGS}
+  ARCHITECTURES ${VLLM_GPU_ARCHES}
+  INCLUDE_DIRECTORIES ${CUTLASS_INCLUDE_DIR}
+  USE_SABI 3
+  WITH_SOABI)
+
+# If CUTLASS is compiled on NVCC >= 12.5, it by default uses 
+# cudaGetDriverEntryPointByVersion as a wrapper to avoid directly calling the 
+# driver API. This causes problems when linking with earlier versions of CUDA.
+# Setting this variable sidesteps the issue by calling the driver directly.
+target_compile_definitions(_C PRIVATE CUTLASS_ENABLE_DIRECT_CUDA_DRIVER_CALL=1)
+
+#
+# _moe_C extension
+#
+
+set(VLLM_MOE_EXT_SRC
+  "csrc/moe/torch_bindings.cpp"
+  "csrc/moe/topk_softmax_kernels.cu")
+
+set_gencode_flags_for_srcs(
+  SRCS "${VLLM_MOE_EXT_SRC}"
+  CUDA_ARCHS "${CUDA_ARCHS}")
+
+if(VLLM_GPU_LANG STREQUAL "CUDA")
+  cuda_archs_loose_intersection(MARLIN_MOE_ARCHS "8.0;8.6;8.9;9.0" "${CUDA_ARCHS}")
+  if (MARLIN_MOE_ARCHS)
+    set(MARLIN_MOE_SRC
+        "csrc/moe/marlin_kernels/marlin_moe_kernel.h"
+        "csrc/moe/marlin_kernels/marlin_moe_kernel_ku4b8.h"
+        "csrc/moe/marlin_kernels/marlin_moe_kernel_ku4b8.cu"
+        "csrc/moe/marlin_kernels/marlin_moe_kernel_ku8b128.h"
+        "csrc/moe/marlin_kernels/marlin_moe_kernel_ku8b128.cu"
+        "csrc/moe/marlin_kernels/marlin_moe_kernel_ku4.h"
+        "csrc/moe/marlin_kernels/marlin_moe_kernel_ku4.cu"
+        "csrc/moe/marlin_moe_ops.cu")
+
+    set_gencode_flags_for_srcs(
+      SRCS "${MARLIN_MOE_SRC}"
+      CUDA_ARCHS "${MARLIN_MOE_ARCHS}")
+
+    list(APPEND VLLM_MOE_EXT_SRC "${MARLIN_MOE_SRC}")
+    message(STATUS "Building Marlin MOE kernels for archs: ${MARLIN_MOE_ARCHS}")
+  else()
+    message(STATUS "Not building Marlin MOE kernels as no compatible archs found"
+                   "in CUDA target architectures")
+  endif()
+endif()
+
+message(STATUS "Enabling moe extension.")
+define_gpu_extension_target(
+  _moe_C
+  DESTINATION vllm
+  LANGUAGE ${VLLM_GPU_LANG}
+  SOURCES ${VLLM_MOE_EXT_SRC}
+  COMPILE_FLAGS ${VLLM_GPU_FLAGS}
+  ARCHITECTURES ${VLLM_GPU_ARCHES}
+  USE_SABI 3
+  WITH_SOABI)
+
+if(VLLM_GPU_LANG STREQUAL "HIP")
+  #
+  # _rocm_C extension
+  #
+  set(VLLM_ROCM_EXT_SRC
+    "csrc/rocm/torch_bindings.cpp"
+    "csrc/rocm/attention.cu")
+
+  define_gpu_extension_target(
+    _rocm_C
+    DESTINATION vllm
+    LANGUAGE ${VLLM_GPU_LANG}
+    SOURCES ${VLLM_ROCM_EXT_SRC}
+    COMPILE_FLAGS ${VLLM_GPU_FLAGS}
+    ARCHITECTURES ${VLLM_GPU_ARCHES}
+    USE_SABI 3
+    WITH_SOABI)
+endif()
+
+# vllm-flash-attn currently only supported on CUDA
+if (NOT VLLM_TARGET_DEVICE STREQUAL "cuda")
+  return()
+endif ()
+
+# vLLM flash attention requires VLLM_GPU_ARCHES to contain the set of target  
+# arches in the CMake syntax (75-real, 89-virtual, etc), since we clear the 
+# arches in the CUDA case (and instead set the gencodes on a per file basis) 
+# we need to manually set VLLM_GPU_ARCHES here.
+if(VLLM_GPU_LANG STREQUAL "CUDA")
+  foreach(_ARCH ${CUDA_ARCHS})
+    string(REPLACE "." "" _ARCH "${_ARCH}")
+    list(APPEND VLLM_GPU_ARCHES "${_ARCH}-real")
+  endforeach()
+endif()
+
+#
+# Build vLLM flash attention from source
+#
+# IMPORTANT: This has to be the last thing we do, because vllm-flash-attn uses the same macros/functions as vLLM.
+# Because functions all belong to the global scope, vllm-flash-attn's functions overwrite vLLMs.
+# They should be identical but if they aren't, this is a massive footgun.
+#
+# The vllm-flash-attn install rules are nested under vllm to make sure the library gets installed in the correct place.
+# To only install vllm-flash-attn, use --component vllm_flash_attn_c.
+# If no component is specified, vllm-flash-attn is still installed.
+
+# If VLLM_FLASH_ATTN_SRC_DIR is set, vllm-flash-attn is installed from that directory instead of downloading.
+# This is to enable local development of vllm-flash-attn within vLLM.
+# It can be set as an environment variable or passed as a cmake argument.
+# The environment variable takes precedence.
+if (DEFINED ENV{VLLM_FLASH_ATTN_SRC_DIR})
+  set(VLLM_FLASH_ATTN_SRC_DIR $ENV{VLLM_FLASH_ATTN_SRC_DIR})
+endif()
+
+if(VLLM_FLASH_ATTN_SRC_DIR)
+  FetchContent_Declare(vllm-flash-attn SOURCE_DIR ${VLLM_FLASH_ATTN_SRC_DIR})
+else()
+  FetchContent_Declare(
+          vllm-flash-attn
+          GIT_REPOSITORY https://github.com/vllm-project/flash-attention.git
+          GIT_TAG 013f0c4fc47e6574060879d9734c1df8c5c273bd
+          GIT_PROGRESS TRUE
+  )
+endif()
+
+# Set the parent build flag so that the vllm-flash-attn library does not redo compile flag and arch initialization.
+set(VLLM_PARENT_BUILD ON)
+
+# Ensure the vllm/vllm_flash_attn directory exists before installation
+install(CODE "file(MAKE_DIRECTORY \"\${CMAKE_INSTALL_PREFIX}/vllm/vllm_flash_attn\")" COMPONENT vllm_flash_attn_c)
+
+# Make sure vllm-flash-attn install rules are nested under vllm/
+install(CODE "set(CMAKE_INSTALL_LOCAL_ONLY FALSE)" COMPONENT vllm_flash_attn_c)
+install(CODE "set(OLD_CMAKE_INSTALL_PREFIX \"\${CMAKE_INSTALL_PREFIX}\")" COMPONENT vllm_flash_attn_c)
+install(CODE "set(CMAKE_INSTALL_PREFIX \"\${CMAKE_INSTALL_PREFIX}/vllm/\")" COMPONENT vllm_flash_attn_c)
+
+# Fetch the vllm-flash-attn library
+FetchContent_MakeAvailable(vllm-flash-attn)
+message(STATUS "vllm-flash-attn is available at ${vllm-flash-attn_SOURCE_DIR}")
+
+# Restore the install prefix
+install(CODE "set(CMAKE_INSTALL_PREFIX \"\${OLD_CMAKE_INSTALL_PREFIX}\")" COMPONENT vllm_flash_attn_c)
+install(CODE "set(CMAKE_INSTALL_LOCAL_ONLY TRUE)" COMPONENT vllm_flash_attn_c)
+
+# Copy over the vllm-flash-attn python files
+install(
+        DIRECTORY ${vllm-flash-attn_SOURCE_DIR}/vllm_flash_attn/
+        DESTINATION vllm/vllm_flash_attn
+        COMPONENT vllm_flash_attn_c
+        FILES_MATCHING PATTERN "*.py"
+)
+
+# Nothing after vllm-flash-attn, see comment about macros above
+
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vllm-project/vllm/main/docs/source/assets/logos/vllm-logo-text-dark.png">
+    <img alt="vLLM" src="https://raw.githubusercontent.com/vllm-project/vllm/main/docs/source/assets/logos/vllm-logo-text-light.png" width=55%>
+  </picture>
+</p>
+
+<h3 align="center">
+Easy, fast, and cheap LLM serving for everyone
+</h3>
+
+<p align="center">
+| <a href="https://docs.vllm.ai"><b>Documentation</b></a> | <a href="https://vllm.ai"><b>Blog</b></a> | <a href="https://arxiv.org/abs/2309.06180"><b>Paper</b></a> | <a href="https://discord.gg/jz7wjKhh6g"><b>Discord</b></a> | <a href="https://x.com/vllm_project"><b>Twitter/X</b></a> |
+
+</p>
+
+
+*Latest News* 🔥
+- [2024/10] Ray Summit 2024 held a special track for vLLM! Please find the opening talk slides from the vLLM team [here](https://docs.google.com/presentation/d/1B_KQxpHBTRa_mDF-tR6i8rWdOU5QoTZNcEg2MKZxEHM/edit?usp=sharing). Learn more from the [talks](https://raysummit.anyscale.com/flow/anyscale/raysummit2024/landing/page/sessioncatalog?tab.day=20241001&search.sessiontracks=1719251906298001uzJ2) from other vLLM contributors and users!
+- [2024/09] We hosted [the sixth vLLM meetup](https://lu.ma/87q3nvnh) with NVIDIA! Please find the meetup slides [here](https://docs.google.com/presentation/d/1wrLGwytQfaOTd5wCGSPNhoaW3nq0E-9wqyP7ny93xRs/edit?usp=sharing).
+- [2024/07] We hosted [the fifth vLLM meetup](https://lu.ma/lp0gyjqr) with AWS! Please find the meetup slides [here](https://docs.google.com/presentation/d/1RgUD8aCfcHocghoP3zmXzck9vX3RCI9yfUAB2Bbcl4Y/edit?usp=sharing).
+- [2024/07] In partnership with Meta, vLLM officially supports Llama 3.1 with FP8 quantization and pipeline parallelism! Please check out our blog post [here](https://blog.vllm.ai/2024/07/23/llama31.html).
+- [2024/06] We hosted [the fourth vLLM meetup](https://lu.ma/agivllm) with Cloudflare and BentoML! Please find the meetup slides [here](https://docs.google.com/presentation/d/1iJ8o7V2bQEi0BFEljLTwc5G1S10_Rhv3beed5oB0NJ4/edit?usp=sharing).
+- [2024/04] We hosted [the third vLLM meetup](https://robloxandvllmmeetup2024.splashthat.com/) with Roblox! Please find the meetup slides [here](https://docs.google.com/presentation/d/1A--47JAK4BJ39t954HyTkvtfwn0fkqtsL8NGFuslReM/edit?usp=sharing).
+- [2024/01] We hosted [the second vLLM meetup](https://lu.ma/ygxbpzhl) with IBM! Please find the meetup slides [here](https://docs.google.com/presentation/d/12mI2sKABnUw5RBWXDYY-HtHth4iMSNcEoQ10jDQbxgA/edit?usp=sharing).
+- [2023/10] We hosted [the first vLLM meetup](https://lu.ma/first-vllm-meetup) with a16z! Please find the meetup slides [here](https://docs.google.com/presentation/d/1QL-XPFXiFpDBh86DbEegFXBXFXjix4v032GhShbKf3s/edit?usp=sharing).
+- [2023/08] We would like to express our sincere gratitude to [Andreessen Horowitz](https://a16z.com/2023/08/30/supporting-the-open-source-ai-community/) (a16z) for providing a generous grant to support the open-source development and research of vLLM.
+- [2023/06] We officially released vLLM! FastChat-vLLM integration has powered [LMSYS Vicuna and Chatbot Arena](https://chat.lmsys.org) since mid-April. Check out our [blog post](https://vllm.ai).
+
+---
+## About
+vLLM is a fast and easy-to-use library for LLM inference and serving.
+
+vLLM is fast with:
+
+- State-of-the-art serving throughput
+- Efficient management of attention key and value memory with **PagedAttention**
+- Continuous batching of incoming requests
+- Fast model execution with CUDA/HIP graph
+- Quantizations: [GPTQ](https://arxiv.org/abs/2210.17323), [AWQ](https://arxiv.org/abs/2306.00978), INT4, INT8, and FP8.
+- Optimized CUDA kernels, including integration with FlashAttention and FlashInfer.
+- Speculative decoding
+- Chunked prefill
+
+**Performance benchmark**: We include a [performance benchmark](https://buildkite.com/vllm/performance-benchmark/builds/4068) that compares the performance of vLLM against other LLM serving engines ([TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM), [text-generation-inference](https://github.com/huggingface/text-generation-inference) and [lmdeploy](https://github.com/InternLM/lmdeploy)).
+
+vLLM is flexible and easy to use with:
+
+- Seamless integration with popular Hugging Face models
+- High-throughput serving with various decoding algorithms, including *parallel sampling*, *beam search*, and more
+- Tensor parallelism and pipeline parallelism support for distributed inference
+- Streaming outputs
+- OpenAI-compatible API server
+- Support NVIDIA GPUs, AMD CPUs and GPUs, Intel CPUs and GPUs, PowerPC CPUs, TPU, and AWS Neuron.
+- Prefix caching support
+- Multi-lora support
+
+vLLM seamlessly supports most popular open-source models on HuggingFace, including:
+- Transformer-like LLMs (e.g., Llama)
+- Mixture-of-Expert LLMs (e.g., Mixtral)
+- Embedding Models (e.g. E5-Mistral)
+- Multi-modal LLMs (e.g., LLaVA)
+
+Find the full list of supported models [here](https://docs.vllm.ai/en/latest/models/supported_models.html).
+
+## Getting Started
+
+Install vLLM with `pip` or [from source](https://vllm.readthedocs.io/en/latest/getting_started/installation.html#build-from-source):
+
+```bash
+pip install vllm
+```
+
+Visit our [documentation](https://vllm.readthedocs.io/en/latest/) to learn more.
+- [Installation](https://vllm.readthedocs.io/en/latest/getting_started/installation.html)
+- [Quickstart](https://vllm.readthedocs.io/en/latest/getting_started/quickstart.html)
+- [Supported Models](https://vllm.readthedocs.io/en/latest/models/supported_models.html)
+
+## Contributing
+
+We welcome and value any contributions and collaborations.
+Please check out [CONTRIBUTING.md](./CONTRIBUTING.md) for how to get involved.
+
+## Sponsors
+
+vLLM is a community project. Our compute resources for development and testing are supported by the following organizations. Thank you for your support!
+
+<!-- Note: Please sort them in alphabetical order. -->
+<!-- Note: Please keep these consistent with docs/source/community/sponsors.md -->
+
+- a16z
+- AMD
+- Anyscale
+- AWS
+- Crusoe Cloud
+- Databricks
+- DeepInfra
+- Dropbox
+- Google Cloud
+- Lambda Lab
+- NVIDIA
+- Replicate
+- Roblox
+- RunPod
+- Sequoia Capital
+- Skywork AI
+- Trainy
+- UC Berkeley
+- UC San Diego
+- ZhenFund
+
+We also have an official fundraising venue through [OpenCollective](https://opencollective.com/vllm). We plan to use the fund to support the development, maintenance, and adoption of vLLM.
+
+## Citation
+
+If you use vLLM for your research, please cite our [paper](https://arxiv.org/abs/2309.06180):
+```bibtex
+@inproceedings{kwon2023efficient,
+  title={Efficient Memory Management for Large Language Model Serving with PagedAttention},
+  author={Woosuk Kwon and Zhuohan Li and Siyuan Zhuang and Ying Sheng and Lianmin Zheng and Cody Hao Yu and Joseph E. Gonzalez and Hao Zhang and Ion Stoica},
+  booktitle={Proceedings of the ACM SIGOPS 29th Symposium on Operating Systems Principles},
+  year={2023}
+}
+```
+
+## Contact Us
+
+* For technical questions and feature requests, please use Github issues or discussions.
+* For discussing with fellow users, please use Discord.
+* For security disclosures, please use Github's security advisory feature.
+* For collaborations and partnerships, please contact us at vllm-questions AT lists.berkeley.edu.
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# OpenVINO dependencies
+torch >= 2.1.2
+openvino ~= 2024.4.0
+openvino-tokenizers[transformers] ~= 2024.4.0
+optimum-intel[openvino] >= 1.19.0
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# Dependencies for NVIDIA GPUs
+ray >= 2.9
+nvidia-ml-py # for pynvml package
+torch == 2.4.0
+# These must be updated alongside torch
+torchvision == 0.19   # Required for phi3v processor. See https://github.com/pytorch/vision?tab=readme-ov-file#installation for corresponding version
+xformers == 0.0.27.post2; platform_system == 'Linux' and platform_machine == 'x86_64'  # Requires PyTorch 2.4.0
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# Dependencies for TPU
+# Currently, the TPU backend uses a nightly version of PyTorch XLA.
+# You can install the dependencies in Dockerfile.tpu.
+ray[default]
+
+
+# Contributing to vLLM
+
+Thank you for your interest in contributing to vLLM!
+Our community is open to everyone and welcomes all kinds of contributions, no matter how small or large.
+There are several ways you can contribute to the project:
+
+- Identify and report any issues or bugs.
+- Request or add a new model.
+- Suggest or implement new features.
+
+However, remember that contributions aren't just about code.
+We believe in the power of community support; thus, answering queries, assisting others, and enhancing the documentation are highly regarded and beneficial contributions.
+
+Finally, one of the most impactful ways to support us is by raising awareness about vLLM.
+Talk about it in your blog posts, highlighting how it's driving your incredible projects.
+Express your support on Twitter if vLLM aids you, or simply offer your appreciation by starring our repository.
+
+
+## Setup for development
+
+### Build from source
+
+```bash
+pip install -e .  # This may take several minutes.
+```
+
+### Testing
+
+```bash
+pip install -r requirements-dev.txt
+
+# linting and formatting
+bash format.sh
+# Static type checking
+mypy
+# Unit tests
+pytest tests/
+```
+**Note:** Currently, the repository does not pass the mypy tests.
+
+
+## Contributing Guidelines
+
+### Issue Reporting
+
+If you encounter a bug or have a feature request, please check our issues page first to see if someone else has already reported it.
+If not, please file a new issue, providing as much relevant information as possible.
+
+### Pull Requests & Code Reviews
+
+Please check the PR checklist in the [PR template](.github/PULL_REQUEST_TEMPLATE.md) for detailed guide for contribution.
+
+### Thank You
+
+Finally, thank you for taking the time to read these guidelines and for your interest in contributing to vLLM.
+Your contributions make vLLM a great tool for everyone!
+
+
+import importlib
+import traceback
+from typing import Callable
+from unittest.mock import patch
+
+
+def find_cuda_init(fn: Callable[[], object]) -> None:
+    """
+    Helper function to debug CUDA re-initialization errors.
+
+    If `fn` initializes CUDA, prints the stack trace of how this happens.
+    """
+    from torch.cuda import _lazy_init
+
+    stack = None
+
+    def wrapper():
+        nonlocal stack
+        stack = traceback.extract_stack()
+        return _lazy_init()
+
+    with patch("torch.cuda._lazy_init", wrapper):
+        fn()
+
+    if stack is not None:
+        print("==== CUDA Initialized ====")
+        print("".join(traceback.format_list(stack)).strip())
+        print("==========================")
+
+
+if __name__ == "__main__":
+    find_cuda_init(
+        lambda: importlib.import_module("vllm.model_executor.models.llava"))
+
+
+# Common dependencies
+-r requirements-common.txt
+
+ray >= 2.9
+cmake>=3.26
+ninja
+packaging
+setuptools-scm>=8
+wheel
+jinja2
+# Following pkgs retrieved from https://pytorch-extension.intel.com/release-whl/stable/xpu/us/
+torch == 2.3.1+cxx11.abi
+intel-extension-for-pytorch == 2.3.110+xpu
+oneccl_bind_pt == 2.3.100+xpu
+
+triton-xpu == 3.0.0b2
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# Dependencies for x86_64 CPUs
+torch == 2.4.0+cpu; platform_machine != "ppc64le"
+torchvision; platform_machine != "ppc64le"   # required for the image processor of phi3v, this must be updated alongside torch
+
+
+import glob
+
+requires_files = glob.glob('requirements*.txt')
+requires_files += ["pyproject.toml"]
+for file in requires_files:
+    print(f">>> cleaning {file}")
+    with open(file, 'r') as f:
+        lines = f.readlines()
+    if "torch" in "".join(lines).lower():
+        print("removed:")
+        with open(file, 'w') as f:
+            for line in lines:
+                if 'torch' not in line.lower():
+                    f.write(line)
+                else:
+                    print(line.strip())
+    print(f"<<< done cleaning {file}")
+    print()
+
+
+# Security Policy
+
+## Reporting a Vulnerability
+
+If you believe you have found a security vulnerability in vLLM, we encourage you to let us know right away. 
+We will investigate all legitimate reports and do our best to quickly fix the problem.
+
+Please report security issues using https://github.com/vllm-project/vllm/security/advisories/new
+
+---
+Please see PyTorch Security for more information how to securely interact with models: https://github.com/pytorch/pytorch/blob/main/SECURITY.md
+This document mostly references the recommendation from PyTorch, thank you! 
+
+
+# Common dependencies
+-r requirements-common.txt
+
+# Dependencies for Neuron devices
+transformers-neuronx >= 0.12.0
+torch-neuronx >= 2.1.2
+neuronx-cc
+
+
+# Should be mirrored in pyproject.toml
+cmake>=3.26
+ninja
+packaging
+setuptools>=61
+setuptools-scm>=8
+torch==2.4.0
+wheel
+jinja2
+
+
+# enable python only development
+# copy compiled files to the current directory directly
+
+import os
+import shutil
+import subprocess
+import sys
+
+# cannot directly `import vllm` , because it will try to
+# import from the current directory
+output = subprocess.run([sys.executable, "-m", "pip", "show", "vllm"],
+                        capture_output=True)
+
+assert output.returncode == 0, "vllm is not installed"
+
+text = output.stdout.decode("utf-8")
+
+package_path = None
+for line in text.split("\n"):
+    if line.startswith("Location: "):
+        package_path = line.split(": ")[1]
+        break
+
+assert package_path is not None, "could not find package path"
+
+cwd = os.getcwd()
+
+assert cwd != package_path, "should not import from the current directory"
+
+files_to_copy = [
+    "vllm/_C.abi3.so",
+    "vllm/_core_C.abi3.so",
+    "vllm/_moe_C.abi3.so",
+    "vllm/vllm_flash_attn/vllm_flash_attn_c.abi3.so",
+    "vllm/vllm_flash_attn/flash_attn_interface.py",
+    "vllm/vllm_flash_attn/__init__.py",
+    # "vllm/_version.py", # not available in nightly wheels yet
+]
+
+for file in files_to_copy:
+    src = os.path.join(package_path, file)
+    dst = file
+    print(f"Copying {src} to {dst}")
+    shutil.copyfile(src, dst)
+
+pre_built_vllm_path = os.path.join(package_path, "vllm")
+tmp_path = os.path.join(package_path, "vllm_pre_built")
+current_vllm_path = os.path.join(cwd, "vllm")
+
+print(f"Renaming {pre_built_vllm_path} to {tmp_path}")
+os.rename(pre_built_vllm_path, tmp_path)
+
+print(f"linking {current_vllm_path} to {pre_built_vllm_path}")
+os.symlink(current_vllm_path, pre_built_vllm_path)
+
+
+# ruff: noqa
+# code borrowed from https://github.com/pytorch/pytorch/blob/main/torch/utils/collect_env.py
+
+# Unlike the rest of the PyTorch this file must be python2 compliant.
+# This script outputs relevant system environment info
+# Run it with `python collect_env.py` or `python -m torch.utils.collect_env`
+import datetime
+import locale
+import os
+import re
+import subprocess
+import sys
+from collections import namedtuple
+
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except (ImportError, NameError, AttributeError, OSError):
+    TORCH_AVAILABLE = False
+
+# System Environment Information
+SystemEnv = namedtuple(
+    'SystemEnv',
+    [
+        'torch_version',
+        'is_debug_build',
+        'cuda_compiled_version',
+        'gcc_version',
+        'clang_version',
+        'cmake_version',
+        'os',
+        'libc_version',
+        'python_version',
+        'python_platform',
+        'is_cuda_available',
+        'cuda_runtime_version',
+        'cuda_module_loading',
+        'nvidia_driver_version',
+        'nvidia_gpu_models',
+        'cudnn_version',
+        'pip_version',  # 'pip' or 'pip3'
+        'pip_packages',
+        'conda_packages',
+        'hip_compiled_version',
+        'hip_runtime_version',
+        'miopen_runtime_version',
+        'caching_allocator_config',
+        'is_xnnpack_available',
+        'cpu_info',
+        'rocm_version',  # vllm specific field
+        'neuron_sdk_version',  # vllm specific field
+        'vllm_version',  # vllm specific field
+        'vllm_build_flags',  # vllm specific field
+        'gpu_topo',  # vllm specific field
+    ])
+
+DEFAULT_CONDA_PATTERNS = {
+    "torch",
+    "numpy",
+    "cudatoolkit",
+    "soumith",
+    "mkl",
+    "magma",
+    "triton",
+    "optree",
+    "nccl",
+    "transformers",
+    "zmq",
+    "nvidia",
+    "pynvml",
+}
+
+DEFAULT_PIP_PATTERNS = {
+    "torch",
+    "numpy",
+    "mypy",
+    "flake8",
+    "triton",
+    "optree",
+    "onnx",
+    "nccl",
+    "transformers",
+    "zmq",
+    "nvidia",
+    "pynvml",
+}
+
+
+def run(command):
+    """Return (return-code, stdout, stderr)."""
+    shell = True if type(command) is str else False
+    p = subprocess.Popen(command,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE,
+                         shell=shell)
+    raw_output, raw_err = p.communicate()
+    rc = p.returncode
+    if get_platform() == 'win32':
+        enc = 'oem'
+    else:
+        enc = locale.getpreferredencoding()
+    output = raw_output.decode(enc)
+    err = raw_err.decode(enc)
+    return rc, output.strip(), err.strip()
+
+
+def run_and_read_all(run_lambda, command):
+    """Run command using run_lambda; reads and returns entire output if rc is 0."""
+    rc, out, _ = run_lambda(command)
+    if rc != 0:
+        return None
+    return out
+
+
+def run_and_parse_first_match(run_lambda, command, regex):
+    """Run command using run_lambda, returns the first regex match if it exists."""
+    rc, out, _ = run_lambda(command)
+    if rc != 0:
+        return None
+    match = re.search(regex, out)
+    if match is None:
+        return None
+    return match.group(1)
+
+
+def run_and_return_first_line(run_lambda, command):
+    """Run command using run_lambda and returns first line if output is not empty."""
+    rc, out, _ = run_lambda(command)
+    if rc != 0:
+        return None
+    return out.split('\n')[0]
+
+
+def get_conda_packages(run_lambda, patterns=None):
+    if patterns is None:
+        patterns = DEFAULT_CONDA_PATTERNS
+    conda = os.environ.get('CONDA_EXE', 'conda')
+    out = run_and_read_all(run_lambda, "{} list".format(conda))
+    if out is None:
+        return out
+
+    return "\n".join(line for line in out.splitlines()
+                     if not line.startswith("#") and any(name in line
+                                                         for name in patterns))
+
+
+def get_gcc_version(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'gcc --version', r'gcc (.*)')
+
+
+def get_clang_version(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'clang --version',
+                                     r'clang version (.*)')
+
+
+def get_cmake_version(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'cmake --version',
+                                     r'cmake (.*)')
+
+
+def get_nvidia_driver_version(run_lambda):
+    if get_platform() == 'darwin':
+        cmd = 'kextstat | grep -i cuda'
+        return run_and_parse_first_match(run_lambda, cmd,
+                                         r'com[.]nvidia[.]CUDA [(](.*?)[)]')
+    smi = get_nvidia_smi()
+    return run_and_parse_first_match(run_lambda, smi,
+                                     r'Driver Version: (.*?) ')
+
+
+def get_gpu_info(run_lambda):
+    if get_platform() == 'darwin' or (TORCH_AVAILABLE and hasattr(
+            torch.version, 'hip') and torch.version.hip is not None):
+        if TORCH_AVAILABLE and torch.cuda.is_available():
+            if torch.version.hip is not None:
+                prop = torch.cuda.get_device_properties(0)
+                if hasattr(prop, "gcnArchName"):
+                    gcnArch = " ({})".format(prop.gcnArchName)
+                else:
+                    gcnArch = "NoGCNArchNameOnOldPyTorch"
+            else:
+                gcnArch = ""
+            return torch.cuda.get_device_name(None) + gcnArch
+        return None
+    smi = get_nvidia_smi()
+    uuid_regex = re.compile(r' \(UUID: .+?\)')
+    rc, out, _ = run_lambda(smi + ' -L')
+    if rc != 0:
+        return None
+    # Anonymize GPUs by removing their UUID
+    return re.sub(uuid_regex, '', out)
+
+
+def get_running_cuda_version(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'nvcc --version',
+                                     r'release .+ V(.*)')
+
+
+def get_cudnn_version(run_lambda):
+    """Return a list of libcudnn.so; it's hard to tell which one is being used."""
+    if get_platform() == 'win32':
+        system_root = os.environ.get('SYSTEMROOT', 'C:\\Windows')
+        cuda_path = os.environ.get('CUDA_PATH', "%CUDA_PATH%")
+        where_cmd = os.path.join(system_root, 'System32', 'where')
+        cudnn_cmd = '{} /R "{}\\bin" cudnn*.dll'.format(where_cmd, cuda_path)
+    elif get_platform() == 'darwin':
+        # CUDA libraries and drivers can be found in /usr/local/cuda/. See
+        # https://docs.nvidia.com/cuda/cuda-installation-guide-mac-os-x/index.html#install
+        # https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installmac
+        # Use CUDNN_LIBRARY when cudnn library is installed elsewhere.
+        cudnn_cmd = 'ls /usr/local/cuda/lib/libcudnn*'
+    else:
+        cudnn_cmd = 'ldconfig -p | grep libcudnn | rev | cut -d" " -f1 | rev'
+    rc, out, _ = run_lambda(cudnn_cmd)
+    # find will return 1 if there are permission errors or if not found
+    if len(out) == 0 or (rc != 1 and rc != 0):
+        l = os.environ.get('CUDNN_LIBRARY')
+        if l is not None and os.path.isfile(l):
+            return os.path.realpath(l)
+        return None
+    files_set = set()
+    for fn in out.split('\n'):
+        fn = os.path.realpath(fn)  # eliminate symbolic links
+        if os.path.isfile(fn):
+            files_set.add(fn)
+    if not files_set:
+        return None
+    # Alphabetize the result because the order is non-deterministic otherwise
+    files = sorted(files_set)
+    if len(files) == 1:
+        return files[0]
+    result = '\n'.join(files)
+    return 'Probably one of the following:\n{}'.format(result)
+
+
+def get_nvidia_smi():
+    # Note: nvidia-smi is currently available only on Windows and Linux
+    smi = 'nvidia-smi'
+    if get_platform() == 'win32':
+        system_root = os.environ.get('SYSTEMROOT', 'C:\\Windows')
+        program_files_root = os.environ.get('PROGRAMFILES',
+                                            'C:\\Program Files')
+        legacy_path = os.path.join(program_files_root, 'NVIDIA Corporation',
+                                   'NVSMI', smi)
+        new_path = os.path.join(system_root, 'System32', smi)
+        smis = [new_path, legacy_path]
+        for candidate_smi in smis:
+            if os.path.exists(candidate_smi):
+                smi = '"{}"'.format(candidate_smi)
+                break
+    return smi
+
+
+def get_rocm_version(run_lambda):
+    """Returns the ROCm version if available, otherwise 'N/A'."""
+    return run_and_parse_first_match(run_lambda, 'hipcc --version',
+                                     r'HIP version: (\S+)')
+
+
+def get_neuron_sdk_version(run_lambda):
+    # Adapted from your install script
+    try:
+        result = run_lambda(["neuron-ls"])
+        return result if result[0] == 0 else 'N/A'
+    except Exception:
+        return 'N/A'
+
+
+def get_vllm_version():
+    version = ""
+    try:
+        import vllm
+        version = vllm.__version__
+    except Exception:
+        pass
+    commit = ""
+    try:
+        import vllm
+        commit = vllm.__commit__
+    except Exception:
+        pass
+    if version != "" and commit != "":
+        return f"{version}@{commit}"
+    if version == "" and commit == "":
+        return "N/A"
+    return version or commit
+
+def summarize_vllm_build_flags():
+    # This could be a static method if the flags are constant, or dynamic if you need to check environment variables, etc.
+    return 'CUDA Archs: {}; ROCm: {}; Neuron: {}'.format(
+        os.environ.get('TORCH_CUDA_ARCH_LIST', 'Not Set'),
+        'Enabled' if os.environ.get('ROCM_HOME') else 'Disabled',
+        'Enabled' if os.environ.get('NEURON_CORES') else 'Disabled',
+    )
+
+
+def get_gpu_topo(run_lambda):
+    output = None
+
+    if get_platform() == 'linux':
+        output = run_and_read_all(run_lambda, 'nvidia-smi topo -m')
+        if output is None:
+            output = run_and_read_all(run_lambda, 'rocm-smi --showtopo')
+
+    return output
+
+
+# example outputs of CPU infos
+#  * linux
+#    Architecture:            x86_64
+#      CPU op-mode(s):        32-bit, 64-bit
+#      Address sizes:         46 bits physical, 48 bits virtual
+#      Byte Order:            Little Endian
+#    CPU(s):                  128
+#      On-line CPU(s) list:   0-127
+#    Vendor ID:               GenuineIntel
+#      Model name:            Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+#        CPU family:          6
+#        Model:               106
+#        Thread(s) per core:  2
+#        Core(s) per socket:  32
+#        Socket(s):           2
+#        Stepping:            6
+#        BogoMIPS:            5799.78
+#        Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr
+#                             sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon rep_good nopl
+#                             xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq monitor ssse3 fma cx16
+#                             pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand
+#                             hypervisor lahf_lm abm 3dnowprefetch invpcid_single ssbd ibrs ibpb stibp ibrs_enhanced
+#                             fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap
+#                             avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1
+#                             xsaves wbnoinvd ida arat avx512vbmi pku ospke avx512_vbmi2 gfni vaes vpclmulqdq
+#                             avx512_vnni avx512_bitalg tme avx512_vpopcntdq rdpid md_clear flush_l1d arch_capabilities
+#    Virtualization features:
+#      Hypervisor vendor:     KVM
+#      Virtualization type:   full
+#    Caches (sum of all):
+#      L1d:                   3 MiB (64 instances)
+#      L1i:                   2 MiB (64 instances)
+#      L2:                    80 MiB (64 instances)
+#      L3:                    108 MiB (2 instances)
+#    NUMA:
+#      NUMA node(s):          2
+#      NUMA node0 CPU(s):     0-31,64-95
+#      NUMA node1 CPU(s):     32-63,96-127
+#    Vulnerabilities:
+#      Itlb multihit:         Not affected
+#      L1tf:                  Not affected
+#      Mds:                   Not affected
+#      Meltdown:              Not affected
+#      Mmio stale data:       Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+#      Retbleed:              Not affected
+#      Spec store bypass:     Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+#      Spectre v1:            Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+#      Spectre v2:            Mitigation; Enhanced IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence
+#      Srbds:                 Not affected
+#      Tsx async abort:       Not affected
+#  * win32
+#    Architecture=9
+#    CurrentClockSpeed=2900
+#    DeviceID=CPU0
+#    Family=179
+#    L2CacheSize=40960
+#    L2CacheSpeed=
+#    Manufacturer=GenuineIntel
+#    MaxClockSpeed=2900
+#    Name=Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+#    ProcessorType=3
+#    Revision=27142
+#
+#    Architecture=9
+#    CurrentClockSpeed=2900
+#    DeviceID=CPU1
+#    Family=179
+#    L2CacheSize=40960
+#    L2CacheSpeed=
+#    Manufacturer=GenuineIntel
+#    MaxClockSpeed=2900
+#    Name=Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+#    ProcessorType=3
+#    Revision=27142
+
+
+def get_cpu_info(run_lambda):
+    rc, out, err = 0, '', ''
+    if get_platform() == 'linux':
+        rc, out, err = run_lambda('lscpu')
+    elif get_platform() == 'win32':
+        rc, out, err = run_lambda(
+            'wmic cpu get Name,Manufacturer,Family,Architecture,ProcessorType,DeviceID, \
+        CurrentClockSpeed,MaxClockSpeed,L2CacheSize,L2CacheSpeed,Revision /VALUE'
+        )
+    elif get_platform() == 'darwin':
+        rc, out, err = run_lambda("sysctl -n machdep.cpu.brand_string")
+    cpu_info = 'None'
+    if rc == 0:
+        cpu_info = out
+    else:
+        cpu_info = err
+    return cpu_info
+
+
+def get_platform():
+    if sys.platform.startswith('linux'):
+        return 'linux'
+    elif sys.platform.startswith('win32'):
+        return 'win32'
+    elif sys.platform.startswith('cygwin'):
+        return 'cygwin'
+    elif sys.platform.startswith('darwin'):
+        return 'darwin'
+    else:
+        return sys.platform
+
+
+def get_mac_version(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'sw_vers -productVersion',
+                                     r'(.*)')
+
+
+def get_windows_version(run_lambda):
+    system_root = os.environ.get('SYSTEMROOT', 'C:\\Windows')
+    wmic_cmd = os.path.join(system_root, 'System32', 'Wbem', 'wmic')
+    findstr_cmd = os.path.join(system_root, 'System32', 'findstr')
+    return run_and_read_all(
+        run_lambda,
+        '{} os get Caption | {} /v Caption'.format(wmic_cmd, findstr_cmd))
+
+
+def get_lsb_version(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'lsb_release -a',
+                                     r'Description:\t(.*)')
+
+
+def check_release_file(run_lambda):
+    return run_and_parse_first_match(run_lambda, 'cat /etc/*-release',
+                                     r'PRETTY_NAME="(.*)"')
+
+
+def get_os(run_lambda):
+    from platform import machine
+    platform = get_platform()
+
+    if platform == 'win32' or platform == 'cygwin':
+        return get_windows_version(run_lambda)
+
+    if platform == 'darwin':
+        version = get_mac_version(run_lambda)
+        if version is None:
+            return None
+        return 'macOS {} ({})'.format(version, machine())
+
+    if platform == 'linux':
+        # Ubuntu/Debian based
+        desc = get_lsb_version(run_lambda)
+        if desc is not None:
+            return '{} ({})'.format(desc, machine())
+
+        # Try reading /etc/*-release
+        desc = check_release_file(run_lambda)
+        if desc is not None:
+            return '{} ({})'.format(desc, machine())
+
+        return '{} ({})'.format(platform, machine())
+
+    # Unknown platform
+    return platform
+
+
+def get_python_platform():
+    import platform
+    return platform.platform()
+
+
+def get_libc_version():
+    import platform
+    if get_platform() != 'linux':
+        return 'N/A'
+    return '-'.join(platform.libc_ver())
+
+
+def get_pip_packages(run_lambda, patterns=None):
+    """Return `pip list` output. Note: will also find conda-installed pytorch and numpy packages."""
+    if patterns is None:
+        patterns = DEFAULT_PIP_PATTERNS
+
+    # People generally have `pip` as `pip` or `pip3`
+    # But here it is invoked as `python -mpip`
+    def run_with_pip(pip):
+        out = run_and_read_all(run_lambda, pip + ["list", "--format=freeze"])
+        return "\n".join(line for line in out.splitlines()
+                         if any(name in line for name in patterns))
+
+    pip_version = 'pip3' if sys.version[0] == '3' else 'pip'
+    out = run_with_pip([sys.executable, '-mpip'])
+
+    return pip_version, out
+
+
+def get_cachingallocator_config():
+    ca_config = os.environ.get('PYTORCH_CUDA_ALLOC_CONF', '')
+    return ca_config
+
+
+def get_cuda_module_loading_config():
+    if TORCH_AVAILABLE and torch.cuda.is_available():
+        torch.cuda.init()
+        config = os.environ.get('CUDA_MODULE_LOADING', '')
+        return config
+    else:
+        return "N/A"
+
+
+def is_xnnpack_available():
+    if TORCH_AVAILABLE:
+        import torch.backends.xnnpack
+        return str(
+            torch.backends.xnnpack.enabled)  # type: ignore[attr-defined]
+    else:
+        return "N/A"
+
+
+def get_env_info():
+    run_lambda = run
+    pip_version, pip_list_output = get_pip_packages(run_lambda)
+
+    if TORCH_AVAILABLE:
+        version_str = torch.__version__
+        debug_mode_str = str(torch.version.debug)
+        cuda_available_str = str(torch.cuda.is_available())
+        cuda_version_str = torch.version.cuda
+        if not hasattr(torch.version,
+                       'hip') or torch.version.hip is None:  # cuda version
+            hip_compiled_version = hip_runtime_version = miopen_runtime_version = 'N/A'
+        else:  # HIP version
+
+            def get_version_or_na(cfg, prefix):
+                _lst = [s.rsplit(None, 1)[-1] for s in cfg if prefix in s]
+                return _lst[0] if _lst else 'N/A'
+
+            cfg = torch._C._show_config().split('\n')
+            hip_runtime_version = get_version_or_na(cfg, 'HIP Runtime')
+            miopen_runtime_version = get_version_or_na(cfg, 'MIOpen')
+            cuda_version_str = 'N/A'
+            hip_compiled_version = torch.version.hip
+    else:
+        version_str = debug_mode_str = cuda_available_str = cuda_version_str = 'N/A'
+        hip_compiled_version = hip_runtime_version = miopen_runtime_version = 'N/A'
+
+    sys_version = sys.version.replace("\n", " ")
+
+    conda_packages = get_conda_packages(run_lambda)
+
+    rocm_version = get_rocm_version(run_lambda)
+    neuron_sdk_version = get_neuron_sdk_version(run_lambda)
+    vllm_version = get_vllm_version()
+    vllm_build_flags = summarize_vllm_build_flags()
+    gpu_topo = get_gpu_topo(run_lambda)
+
+    return SystemEnv(
+        torch_version=version_str,
+        is_debug_build=debug_mode_str,
+        python_version='{} ({}-bit runtime)'.format(
+            sys_version,
+            sys.maxsize.bit_length() + 1),
+        python_platform=get_python_platform(),
+        is_cuda_available=cuda_available_str,
+        cuda_compiled_version=cuda_version_str,
+        cuda_runtime_version=get_running_cuda_version(run_lambda),
+        cuda_module_loading=get_cuda_module_loading_config(),
+        nvidia_gpu_models=get_gpu_info(run_lambda),
+        nvidia_driver_version=get_nvidia_driver_version(run_lambda),
+        cudnn_version=get_cudnn_version(run_lambda),
+        hip_compiled_version=hip_compiled_version,
+        hip_runtime_version=hip_runtime_version,
+        miopen_runtime_version=miopen_runtime_version,
+        pip_version=pip_version,
+        pip_packages=pip_list_output,
+        conda_packages=conda_packages,
+        os=get_os(run_lambda),
+        libc_version=get_libc_version(),
+        gcc_version=get_gcc_version(run_lambda),
+        clang_version=get_clang_version(run_lambda),
+        cmake_version=get_cmake_version(run_lambda),
+        caching_allocator_config=get_cachingallocator_config(),
+        is_xnnpack_available=is_xnnpack_available(),
+        cpu_info=get_cpu_info(run_lambda),
+        rocm_version=rocm_version,
+        neuron_sdk_version=neuron_sdk_version,
+        vllm_version=vllm_version,
+        vllm_build_flags=vllm_build_flags,
+        gpu_topo=gpu_topo,
+    )
+
+
+env_info_fmt = """
+PyTorch version: {torch_version}
+Is debug build: {is_debug_build}
+CUDA used to build PyTorch: {cuda_compiled_version}
+ROCM used to build PyTorch: {hip_compiled_version}
+
+OS: {os}
+GCC version: {gcc_version}
+Clang version: {clang_version}
+CMake version: {cmake_version}
+Libc version: {libc_version}
+
+Python version: {python_version}
+Python platform: {python_platform}
+Is CUDA available: {is_cuda_available}
+CUDA runtime version: {cuda_runtime_version}
+CUDA_MODULE_LOADING set to: {cuda_module_loading}
+GPU models and configuration: {nvidia_gpu_models}
+Nvidia driver version: {nvidia_driver_version}
+cuDNN version: {cudnn_version}
+HIP runtime version: {hip_runtime_version}
+MIOpen runtime version: {miopen_runtime_version}
+Is XNNPACK available: {is_xnnpack_available}
+
+CPU:
+{cpu_info}
+
+Versions of relevant libraries:
+{pip_packages}
+{conda_packages}
+""".strip()
+
+# both the above code and the following code use `strip()` to
+# remove leading/trailing whitespaces, so we need to add a newline
+# in between to separate the two sections
+env_info_fmt += "\n"
+
+env_info_fmt += """
+ROCM Version: {rocm_version}
+Neuron SDK Version: {neuron_sdk_version}
+vLLM Version: {vllm_version}
+vLLM Build Flags:
+{vllm_build_flags}
+GPU Topology:
+{gpu_topo}
+""".strip()
+
+
+def pretty_str(envinfo):
+
+    def replace_nones(dct, replacement='Could not collect'):
+        for key in dct.keys():
+            if dct[key] is not None:
+                continue
+            dct[key] = replacement
+        return dct
+
+    def replace_bools(dct, true='Yes', false='No'):
+        for key in dct.keys():
+            if dct[key] is True:
+                dct[key] = true
+            elif dct[key] is False:
+                dct[key] = false
+        return dct
+
+    def prepend(text, tag='[prepend]'):
+        lines = text.split('\n')
+        updated_lines = [tag + line for line in lines]
+        return '\n'.join(updated_lines)
+
+    def replace_if_empty(text, replacement='No relevant packages'):
+        if text is not None and len(text) == 0:
+            return replacement
+        return text
+
+    def maybe_start_on_next_line(string):
+        # If `string` is multiline, prepend a \n to it.
+        if string is not None and len(string.split('\n')) > 1:
+            return '\n{}\n'.format(string)
+        return string
+
+    mutable_dict = envinfo._asdict()
+
+    # If nvidia_gpu_models is multiline, start on the next line
+    mutable_dict['nvidia_gpu_models'] = \
+        maybe_start_on_next_line(envinfo.nvidia_gpu_models)
+
+    # If the machine doesn't have CUDA, report some fields as 'No CUDA'
+    dynamic_cuda_fields = [
+        'cuda_runtime_version',
+        'nvidia_gpu_models',
+        'nvidia_driver_version',
+    ]
+    all_cuda_fields = dynamic_cuda_fields + ['cudnn_version']
+    all_dynamic_cuda_fields_missing = all(mutable_dict[field] is None
+                                          for field in dynamic_cuda_fields)
+    if TORCH_AVAILABLE and not torch.cuda.is_available(
+    ) and all_dynamic_cuda_fields_missing:
+        for field in all_cuda_fields:
+            mutable_dict[field] = 'No CUDA'
+        if envinfo.cuda_compiled_version is None:
+            mutable_dict['cuda_compiled_version'] = 'None'
+
+    # Replace True with Yes, False with No
+    mutable_dict = replace_bools(mutable_dict)
+
+    # Replace all None objects with 'Could not collect'
+    mutable_dict = replace_nones(mutable_dict)
+
+    # If either of these are '', replace with 'No relevant packages'
+    mutable_dict['pip_packages'] = replace_if_empty(
+        mutable_dict['pip_packages'])
+    mutable_dict['conda_packages'] = replace_if_empty(
+        mutable_dict['conda_packages'])
+
+    # Tag conda and pip packages with a prefix
+    # If they were previously None, they'll show up as ie '[conda] Could not collect'
+    if mutable_dict['pip_packages']:
+        mutable_dict['pip_packages'] = prepend(
+            mutable_dict['pip_packages'], '[{}] '.format(envinfo.pip_version))
+    if mutable_dict['conda_packages']:
+        mutable_dict['conda_packages'] = prepend(
+            mutable_dict['conda_packages'], '[conda] ')
+    mutable_dict['cpu_info'] = envinfo.cpu_info
+    return env_info_fmt.format(**mutable_dict)
+
+
+def get_pretty_env_info():
+    return pretty_str(get_env_info())
+
+
+def main():
+    print("Collecting environment information...")
+    output = get_pretty_env_info()
+    print(output)
+
+    if TORCH_AVAILABLE and hasattr(torch, 'utils') and hasattr(
+            torch.utils, '_crash_handler'):
+        minidump_dir = torch.utils._crash_handler.DEFAULT_MINIDUMP_DIR
+        if sys.platform == "linux" and os.path.exists(minidump_dir):
+            dumps = [
+                os.path.join(minidump_dir, dump)
+                for dump in os.listdir(minidump_dir)
+            ]
+            latest = max(dumps, key=os.path.getctime)
+            ctime = os.path.getctime(latest)
+            creation_time = datetime.datetime.fromtimestamp(ctime).strftime(
+                '%Y-%m-%d %H:%M:%S')
+            msg = "\n*** Detected a minidump at {} created on {}, ".format(latest, creation_time) + \
+                  "if this is related to your bug please include it when you file a report ***"
+            print(msg, file=sys.stderr)
+
+
+if __name__ == '__main__':
+    main()
+
+
+import importlib.util
+import io
+import logging
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+from shutil import which
+from typing import Dict, List
+
+import torch
+from packaging.version import Version, parse
+from setuptools import Extension, find_packages, setup
+from setuptools.command.build_ext import build_ext
+from setuptools_scm import get_version
+from torch.utils.cpp_extension import CUDA_HOME
+
+
+def load_module_from_path(module_name, path):
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+ROOT_DIR = os.path.dirname(__file__)
+logger = logging.getLogger(__name__)
+
+# cannot import envs directly because it depends on vllm,
+#  which is not installed yet
+envs = load_module_from_path('envs', os.path.join(ROOT_DIR, 'vllm', 'envs.py'))
+
+VLLM_TARGET_DEVICE = envs.VLLM_TARGET_DEVICE
+
+if not sys.platform.startswith("linux"):
+    logger.warning(
+        "vLLM only supports Linux platform (including WSL). "
+        "Building on %s, "
+        "so vLLM may not be able to run correctly", sys.platform)
+    VLLM_TARGET_DEVICE = "empty"
+
+MAIN_CUDA_VERSION = "12.1"
+
+
+def is_sccache_available() -> bool:
+    return which("sccache") is not None
+
+
+def is_ccache_available() -> bool:
+    return which("ccache") is not None
+
+
+def is_ninja_available() -> bool:
+    return which("ninja") is not None
+
+
+def remove_prefix(text, prefix):
+    if text.startswith(prefix):
+        return text[len(prefix):]
+    return text
+
+
+class CMakeExtension(Extension):
+
+    def __init__(self, name: str, cmake_lists_dir: str = '.', **kwa) -> None:
+        super().__init__(name, sources=[], py_limited_api=True, **kwa)
+        self.cmake_lists_dir = os.path.abspath(cmake_lists_dir)
+
+
+class cmake_build_ext(build_ext):
+    # A dict of extension directories that have been configured.
+    did_config: Dict[str, bool] = {}
+
+    #
+    # Determine number of compilation jobs and optionally nvcc compile threads.
+    #
+    def compute_num_jobs(self):
+        # `num_jobs` is either the value of the MAX_JOBS environment variable
+        # (if defined) or the number of CPUs available.
+        num_jobs = envs.MAX_JOBS
+        if num_jobs is not None:
+            num_jobs = int(num_jobs)
+            logger.info("Using MAX_JOBS=%d as the number of jobs.", num_jobs)
+        else:
+            try:
+                # os.sched_getaffinity() isn't universally available, so fall
+                #  back to os.cpu_count() if we get an error here.
+                num_jobs = len(os.sched_getaffinity(0))
+            except AttributeError:
+                num_jobs = os.cpu_count()
+
+        nvcc_threads = None
+        if _is_cuda() and get_nvcc_cuda_version() >= Version("11.2"):
+            # `nvcc_threads` is either the value of the NVCC_THREADS
+            # environment variable (if defined) or 1.
+            # when it is set, we reduce `num_jobs` to avoid
+            # overloading the system.
+            nvcc_threads = envs.NVCC_THREADS
+            if nvcc_threads is not None:
+                nvcc_threads = int(nvcc_threads)
+                logger.info(
+                    "Using NVCC_THREADS=%d as the number of nvcc threads.",
+                    nvcc_threads)
+            else:
+                nvcc_threads = 1
+            num_jobs = max(1, num_jobs // nvcc_threads)
+
+        return num_jobs, nvcc_threads
+
+    #
+    # Perform cmake configuration for a single extension.
+    #
+    def configure(self, ext: CMakeExtension) -> None:
+        # If we've already configured using the CMakeLists.txt for
+        # this extension, exit early.
+        if ext.cmake_lists_dir in cmake_build_ext.did_config:
+            return
+
+        cmake_build_ext.did_config[ext.cmake_lists_dir] = True
+
+        # Select the build type.
+        # Note: optimization level + debug info are set by the build type
+        default_cfg = "Debug" if self.debug else "RelWithDebInfo"
+        cfg = envs.CMAKE_BUILD_TYPE or default_cfg
+
+        cmake_args = [
+            '-DCMAKE_BUILD_TYPE={}'.format(cfg),
+            '-DVLLM_TARGET_DEVICE={}'.format(VLLM_TARGET_DEVICE),
+        ]
+
+        verbose = envs.VERBOSE
+        if verbose:
+            cmake_args += ['-DCMAKE_VERBOSE_MAKEFILE=ON']
+
+        if is_sccache_available():
+            cmake_args += [
+                '-DCMAKE_C_COMPILER_LAUNCHER=sccache',
+                '-DCMAKE_CXX_COMPILER_LAUNCHER=sccache',
+                '-DCMAKE_CUDA_COMPILER_LAUNCHER=sccache',
+                '-DCMAKE_HIP_COMPILER_LAUNCHER=sccache',
+            ]
+        elif is_ccache_available():
+            cmake_args += [
+                '-DCMAKE_C_COMPILER_LAUNCHER=ccache',
+                '-DCMAKE_CXX_COMPILER_LAUNCHER=ccache',
+                '-DCMAKE_CUDA_COMPILER_LAUNCHER=ccache',
+                '-DCMAKE_HIP_COMPILER_LAUNCHER=ccache',
+            ]
+
+        # Pass the python executable to cmake so it can find an exact
+        # match.
+        cmake_args += ['-DVLLM_PYTHON_EXECUTABLE={}'.format(sys.executable)]
+
+        # Pass the python path to cmake so it can reuse the build dependencies
+        # on subsequent calls to python.
+        cmake_args += ['-DVLLM_PYTHON_PATH={}'.format(":".join(sys.path))]
+
+        #
+        # Setup parallelism and build tool
+        #
+        num_jobs, nvcc_threads = self.compute_num_jobs()
+
+        if nvcc_threads:
+            cmake_args += ['-DNVCC_THREADS={}'.format(nvcc_threads)]
+
+        if is_ninja_available():
+            build_tool = ['-G', 'Ninja']
+            cmake_args += [
+                '-DCMAKE_JOB_POOL_COMPILE:STRING=compile',
+                '-DCMAKE_JOB_POOLS:STRING=compile={}'.format(num_jobs),
+            ]
+        else:
+            # Default build tool to whatever cmake picks.
+            build_tool = []
+        subprocess.check_call(
+            ['cmake', ext.cmake_lists_dir, *build_tool, *cmake_args],
+            cwd=self.build_temp)
+
+    def build_extensions(self) -> None:
+        # Ensure that CMake is present and working
+        try:
+            subprocess.check_output(['cmake', '--version'])
+        except OSError as e:
+            raise RuntimeError('Cannot find CMake executable') from e
+
+        # Create build directory if it does not exist.
+        if not os.path.exists(self.build_temp):
+            os.makedirs(self.build_temp)
+
+        targets = []
+        target_name = lambda s: remove_prefix(remove_prefix(s, "vllm."),
+                                              "vllm_flash_attn.")
+        # Build all the extensions
+        for ext in self.extensions:
+            self.configure(ext)
+            targets.append(target_name(ext.name))
+
+        num_jobs, _ = self.compute_num_jobs()
+
+        build_args = [
+            "--build",
+            ".",
+            f"-j={num_jobs}",
+            *[f"--target={name}" for name in targets],
+        ]
+
+        subprocess.check_call(["cmake", *build_args], cwd=self.build_temp)
+
+        # Install the libraries
+        for ext in self.extensions:
+            # Install the extension into the proper location
+            outdir = Path(self.get_ext_fullpath(ext.name)).parent.absolute()
+
+            # Skip if the install directory is the same as the build directory
+            if outdir == self.build_temp:
+                continue
+
+            # CMake appends the extension prefix to the install path,
+            # and outdir already contains that prefix, so we need to remove it.
+            prefix = outdir
+            for i in range(ext.name.count('.')):
+                prefix = prefix.parent
+
+            # prefix here should actually be the same for all components
+            install_args = [
+                "cmake", "--install", ".", "--prefix", prefix, "--component",
+                target_name(ext.name)
+            ]
+            subprocess.check_call(install_args, cwd=self.build_temp)
+
+    def run(self):
+        # First, run the standard build_ext command to compile the extensions
+        super().run()
+
+        # copy vllm/vllm_flash_attn/*.py from self.build_lib to current
+        # directory so that they can be included in the editable build
+        import glob
+        files = glob.glob(
+            os.path.join(self.build_lib, "vllm", "vllm_flash_attn", "*.py"))
+        for file in files:
+            dst_file = os.path.join("vllm/vllm_flash_attn",
+                                    os.path.basename(file))
+            print(f"Copying {file} to {dst_file}")
+            self.copy_file(file, dst_file)
+
+
+def _no_device() -> bool:
+    return VLLM_TARGET_DEVICE == "empty"
+
+
+def _is_cuda() -> bool:
+    has_cuda = torch.version.cuda is not None
+    return (VLLM_TARGET_DEVICE == "cuda" and has_cuda
+            and not (_is_neuron() or _is_tpu()))
+
+
+def _is_hip() -> bool:
+    return (VLLM_TARGET_DEVICE == "cuda"
+            or VLLM_TARGET_DEVICE == "rocm") and torch.version.hip is not None
+
+
+def _is_neuron() -> bool:
+    torch_neuronx_installed = True
+    try:
+        subprocess.run(["neuron-ls"], capture_output=True, check=True)
+    except (FileNotFoundError, PermissionError, subprocess.CalledProcessError):
+        torch_neuronx_installed = False
+    return torch_neuronx_installed or VLLM_TARGET_DEVICE == "neuron"
+
+
+def _is_tpu() -> bool:
+    return VLLM_TARGET_DEVICE == "tpu"
+
+
+def _is_cpu() -> bool:
+    return VLLM_TARGET_DEVICE == "cpu"
+
+
+def _is_openvino() -> bool:
+    return VLLM_TARGET_DEVICE == "openvino"
+
+
+def _is_xpu() -> bool:
+    return VLLM_TARGET_DEVICE == "xpu"
+
+
+def _build_custom_ops() -> bool:
+    return _is_cuda() or _is_hip() or _is_cpu()
+
+
+def _build_core_ext() -> bool:
+    return not (_is_neuron() or _is_tpu() or _is_openvino() or _is_xpu())
+
+
+def get_hipcc_rocm_version():
+    # Run the hipcc --version command
+    result = subprocess.run(['hipcc', '--version'],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,
+                            text=True)
+
+    # Check if the command was executed successfully
+    if result.returncode != 0:
+        print("Error running 'hipcc --version'")
+        return None
+
+    # Extract the version using a regular expression
+    match = re.search(r'HIP version: (\S+)', result.stdout)
+    if match:
+        # Return the version string
+        return match.group(1)
+    else:
+        print("Could not find HIP version in the output")
+        return None
+
+
+def get_neuronxcc_version():
+    import sysconfig
+    site_dir = sysconfig.get_paths()["purelib"]
+    version_file = os.path.join(site_dir, "neuronxcc", "version",
+                                "__init__.py")
+
+    # Check if the command was executed successfully
+    with open(version_file, "rt") as fp:
+        content = fp.read()
+
+    # Extract the version using a regular expression
+    match = re.search(r"__version__ = '(\S+)'", content)
+    if match:
+        # Return the version string
+        return match.group(1)
+    else:
+        raise RuntimeError("Could not find HIP version in the output")
+
+
+def get_nvcc_cuda_version() -> Version:
+    """Get the CUDA version from nvcc.
+
+    Adapted from https://github.com/NVIDIA/apex/blob/8b7a1ff183741dd8f9b87e7bafd04cfde99cea28/setup.py
+    """
+    assert CUDA_HOME is not None, "CUDA_HOME is not set"
+    nvcc_output = subprocess.check_output([CUDA_HOME + "/bin/nvcc", "-V"],
+                                          universal_newlines=True)
+    output = nvcc_output.split()
+    release_idx = output.index("release") + 1
+    nvcc_cuda_version = parse(output[release_idx].split(",")[0])
+    return nvcc_cuda_version
+
+
+def get_path(*filepath) -> str:
+    return os.path.join(ROOT_DIR, *filepath)
+
+
+def get_vllm_version() -> str:
+    version = get_version(
+        write_to="vllm/_version.py",  # TODO: move this to pyproject.toml
+    )
+
+    sep = "+" if "+" not in version else "."  # dev versions might contain +
+
+    if _no_device():
+        if envs.VLLM_TARGET_DEVICE == "empty":
+            version += f"{sep}empty"
+    elif _is_cuda():
+        cuda_version = str(get_nvcc_cuda_version())
+        if cuda_version != MAIN_CUDA_VERSION:
+            cuda_version_str = cuda_version.replace(".", "")[:3]
+            # skip this for source tarball, required for pypi
+            if "sdist" not in sys.argv:
+                version += f"{sep}cu{cuda_version_str}"
+    elif _is_hip():
+        # Get the HIP version
+        hipcc_version = get_hipcc_rocm_version()
+        if hipcc_version != MAIN_CUDA_VERSION:
+            rocm_version_str = hipcc_version.replace(".", "")[:3]
+            version += f"{sep}rocm{rocm_version_str}"
+    elif _is_neuron():
+        # Get the Neuron version
+        neuron_version = str(get_neuronxcc_version())
+        if neuron_version != MAIN_CUDA_VERSION:
+            neuron_version_str = neuron_version.replace(".", "")[:3]
+            version += f"{sep}neuron{neuron_version_str}"
+    elif _is_openvino():
+        version += f"{sep}openvino"
+    elif _is_tpu():
+        version += f"{sep}tpu"
+    elif _is_cpu():
+        version += f"{sep}cpu"
+    elif _is_xpu():
+        version += f"{sep}xpu"
+    else:
+        raise RuntimeError("Unknown runtime environment")
+
+    return version
+
+
+def read_readme() -> str:
+    """Read the README file if present."""
+    p = get_path("README.md")
+    if os.path.isfile(p):
+        return io.open(get_path("README.md"), "r", encoding="utf-8").read()
+    else:
+        return ""
+
+
+def get_requirements() -> List[str]:
+    """Get Python package dependencies from requirements.txt."""
+
+    def _read_requirements(filename: str) -> List[str]:
+        with open(get_path(filename)) as f:
+            requirements = f.read().strip().split("\n")
+        resolved_requirements = []
+        for line in requirements:
+            if line.startswith("-r "):
+                resolved_requirements += _read_requirements(line.split()[1])
+            elif line.startswith("--"):
+                continue
+            else:
+                resolved_requirements.append(line)
+        return resolved_requirements
+
+    if _no_device():
+        requirements = _read_requirements("requirements-cuda.txt")
+    elif _is_cuda():
+        requirements = _read_requirements("requirements-cuda.txt")
+        cuda_major, cuda_minor = torch.version.cuda.split(".")
+        modified_requirements = []
+        for req in requirements:
+            if ("vllm-flash-attn" in req
+                    and not (cuda_major == "12" and cuda_minor == "1")):
+                # vllm-flash-attn is built only for CUDA 12.1.
+                # Skip for other versions.
+                continue
+            modified_requirements.append(req)
+        requirements = modified_requirements
+    elif _is_hip():
+        requirements = _read_requirements("requirements-rocm.txt")
+    elif _is_neuron():
+        requirements = _read_requirements("requirements-neuron.txt")
+    elif _is_openvino():
+        requirements = _read_requirements("requirements-openvino.txt")
+    elif _is_tpu():
+        requirements = _read_requirements("requirements-tpu.txt")
+    elif _is_cpu():
+        requirements = _read_requirements("requirements-cpu.txt")
+    elif _is_xpu():
+        requirements = _read_requirements("requirements-xpu.txt")
+    else:
+        raise ValueError(
+            "Unsupported platform, please use CUDA, ROCm, Neuron, "
+            "OpenVINO, or CPU.")
+    return requirements
+
+
+ext_modules = []
+
+if _build_core_ext():
+    ext_modules.append(CMakeExtension(name="vllm._core_C"))
+
+if _is_cuda() or _is_hip():
+    ext_modules.append(CMakeExtension(name="vllm._moe_C"))
+
+if _is_hip():
+    ext_modules.append(CMakeExtension(name="vllm._rocm_C"))
+
+if _is_cuda():
+    ext_modules.append(
+        CMakeExtension(name="vllm.vllm_flash_attn.vllm_flash_attn_c"))
+
+if _build_custom_ops():
+    ext_modules.append(CMakeExtension(name="vllm._C"))
+
+package_data = {
+    "vllm": ["py.typed", "model_executor/layers/fused_moe/configs/*.json"]
+}
+if envs.VLLM_USE_PRECOMPILED:
+    ext_modules = []
+    package_data["vllm"].append("*.so")
+
+if _no_device():
+    ext_modules = []
+
+setup(
+    name="vllm",
+    version=get_vllm_version(),
+    author="vLLM Team",
+    license="Apache 2.0",
+    description=("A high-throughput and memory-efficient inference and "
+                 "serving engine for LLMs"),
+    long_description=read_readme(),
+    long_description_content_type="text/markdown",
+    url="https://github.com/vllm-project/vllm",
+    project_urls={
+        "Homepage": "https://github.com/vllm-project/vllm",
+        "Documentation": "https://vllm.readthedocs.io/en/latest/",
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "License :: OSI Approved :: Apache Software License",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    ],
+    packages=find_packages(exclude=("benchmarks", "csrc", "docs", "examples",
+                                    "tests*")),
+    python_requires=">=3.8",
+    install_requires=get_requirements(),
+    ext_modules=ext_modules,
+    extras_require={
+        "tensorizer": ["tensorizer>=2.9.0"],
+        "audio": ["librosa", "soundfile"]  # Required for audio processing
+    },
+    cmdclass={"build_ext": cmake_build_ext} if len(ext_modules) > 0 else {},
+    package_data=package_data,
+    entry_points={
+        "console_scripts": [
+            "vllm=vllm.scripts:main",
+        ],
+    },
+)
+
+
+-r requirements-lint.txt
+-r requirements-test.txt
+
+# Avoid adding requirements directly to this file.
+# Instead, modify the two files referenced above.
+
+
+# formatting
+yapf==0.32.0
+toml==0.10.2
+tomli==2.0.1
+ruff==0.6.5
+codespell==2.3.0
+isort==5.13.2
+clang-format==18.1.5
+
+# type checking
+mypy==1.11.1
+types-PyYAML
+types-requests
+types-setuptools
+
+
+
+# vLLM Code of Conduct
+
+## Our Pledge
+
+We as members, contributors, and leaders pledge to make participation in our
+community a harassment-free experience for everyone, regardless of age, body
+size, visible or invisible disability, ethnicity, sex characteristics, gender
+identity and expression, level of experience, education, socioeconomic status,
+nationality, personal appearance, race, caste, color, religion, or sexual
+identity and orientation.
+
+We pledge to act and interact in ways that contribute to an open, welcoming,
+diverse, inclusive, and healthy community.
+
+## Our Standards
+
+Examples of behavior that contributes to a positive environment for our
+community include:
+
+* Demonstrating empathy and kindness toward other people
+* Being respectful of differing opinions, viewpoints, and experiences
+* Giving and gracefully accepting constructive feedback
+* Accepting responsibility and apologizing to those affected by our mistakes,
+  and learning from the experience
+* Focusing on what is best not just for us as individuals, but for the overall
+  community
+
+Examples of unacceptable behavior include:
+
+* The use of sexualized language or imagery, and sexual attention or advances of
+  any kind
+* Trolling, insulting or derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or email address,
+  without their explicit permission
+* Other conduct which could reasonably be considered inappropriate in a
+  professional setting
+
+## Enforcement Responsibilities
+
+Community leaders are responsible for clarifying and enforcing our standards of
+acceptable behavior and will take appropriate and fair corrective action in
+response to any behavior that they deem inappropriate, threatening, offensive,
+or harmful.
+
+Community leaders have the right and responsibility to remove, edit, or reject
+comments, commits, code, wiki edits, issues, and other contributions that are
+not aligned to this Code of Conduct, and will communicate reasons for moderation
+decisions when appropriate.
+
+## Scope
+
+This Code of Conduct applies within all community spaces, and also applies when
+an individual is officially representing the community in public spaces.
+Examples of representing our community include using an official email address,
+posting via an official social media account, or acting as an appointed
+representative at an online or offline/IRL event.
+
+## Enforcement
+
+Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported to the community leaders responsible for enforcement in the #code-of-conduct
+channel in the [vLLM Discord](https://discord.com/invite/jz7wjKhh6g).
+All complaints will be reviewed and investigated promptly and fairly.
+
+All community leaders are obligated to respect the privacy and security of the
+reporter of any incident.
+
+## Enforcement Guidelines
+
+Community leaders will follow these Community Impact Guidelines in determining
+the consequences for any action they deem in violation of this Code of Conduct:
+
+### 1. Correction
+
+**Community Impact**: Use of inappropriate language or other behavior deemed
+unprofessional or unwelcome in the community.
+
+**Consequence**: A private, written warning from community leaders, providing
+clarity around the nature of the violation and an explanation of why the
+behavior was inappropriate. A public apology may be requested.
+
+### 2. Warning
+
+**Community Impact**: A violation through a single incident or series of
+actions.
+
+**Consequence**: A warning with consequences for continued behavior. No
+interaction with the people involved, including unsolicited interaction with
+those enforcing the Code of Conduct, for a specified period of time. This
+includes avoiding interactions in community spaces as well as external channels
+like social media. Violating these terms may lead to a temporary or permanent
+ban.
+
+### 3. Temporary Ban
+
+**Community Impact**: A serious violation of community standards, including
+sustained inappropriate behavior.
+
+**Consequence**: A temporary ban from any sort of interaction or public
+communication with the community for a specified period of time. No public or
+private interaction with the people involved, including unsolicited interaction
+with those enforcing the Code of Conduct, is allowed during this period.
+Violating these terms may lead to a permanent ban.
+
+### 4. Permanent Ban
+
+**Community Impact**: Demonstrating a pattern of violation of community
+standards, including sustained inappropriate behavior, harassment of an
+individual, or aggression toward or disparagement of classes of individuals.
+
+**Consequence**: A permanent ban from any sort of public interaction within the
+community.
+
+## Attribution
+
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/),
+version 2.1, available at
+[v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).
+
+Community Impact Guidelines were inspired by
+[Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/inclusion).
+
+For answers to common questions about this code of conduct, see the
+[Contributor Covenant FAQ](https://www.contributor-covenant.org/faq). Translations are available at
+[Contributor Covenant translations](https://www.contributor-covenant.org/translations).
+
+
+
+# testing
+pytest
+tensorizer>=2.9.0
+pytest-forked
+pytest-asyncio
+pytest-rerunfailures
+pytest-shard
+
+# testing utils
+awscli
+einops # required for MPT, qwen-vl and Mamba
+httpx
+librosa # required for audio tests
+opencv-python # required for video tests
+peft
+requests
+ray[adag]==2.35
+sentence-transformers # required for embedding
+soundfile # required for audio test
+compressed-tensors==0.4.0 # required for compressed-tensors
+timm # required for internvl test
+transformers_stream_generator # required for qwen-vl test
+matplotlib # required for qwen-vl test
+datamodel_code_generator # required for minicpm3 test
+
+# TODO: Add this after fully implementing llava(mantis)
+# git+https://github.com/TIGER-AI-Lab/Mantis.git # required for llava(mantis) test
+
+# Benchmarking
+aiohttp
+
+# quantization
+bitsandbytes>=0.44.0
+buildkite-test-collector==0.1.8
+
+
+#include "cache.h"
+#include "cuda_utils.h"
+#include "ops.h"
+#include "core/registration.h"
+
+#include <torch/library.h>
+
+// Note on op signatures:
+// The X_meta signatures are for the meta functions corresponding to op X.
+// They must be kept in sync with the signature for X. Generally, only
+// functions that return Tensors require a meta function.
+//
+// See the following links for detailed docs on op registration and function
+// schemas.
+// https://docs.google.com/document/d/1_W62p8WJOQQUzPsJYa7s701JXt0qf2OfLub2sbkHOaU/edit#heading=h.ptttacy8y1u9
+// https://github.com/pytorch/pytorch/blob/main/aten/src/ATen/native/README.md#annotations
+
+TORCH_LIBRARY_EXPAND(TORCH_EXTENSION_NAME, ops) {
+  // vLLM custom ops
+
+  // Attention ops
+  // Compute the attention between an input query and the cached
+  // keys/values using PagedAttention.
+  ops.def(
+      "paged_attention_v1("
+      "    Tensor! out, Tensor query, Tensor key_cache,"
+      "    Tensor value_cache, int num_kv_heads, float scale,"
+      "    Tensor block_tables, Tensor seq_lens, int block_size,"
+      "    int max_seq_len, Tensor? alibi_slopes,"
+      "    str kv_cache_dtype, float k_scale, float v_scale,"
+      "    int tp_rank, int blocksparse_local_blocks,"
+      "    int blocksparse_vert_stride, int blocksparse_block_size,"
+      "    int blocksparse_head_sliding_step) -> ()");
+  ops.impl("paged_attention_v1", torch::kCUDA, &paged_attention_v1);
+
+  // PagedAttention V2.
+  ops.def(
+      "paged_attention_v2("
+      "    Tensor! out, Tensor! exp_sums, Tensor! max_logits,"
+      "    Tensor! tmp_out, Tensor query, Tensor key_cache,"
+      "    Tensor value_cache, int num_kv_heads, float scale,"
+      "    Tensor block_tables, Tensor seq_lens, int block_size,"
+      "    int max_seq_len, Tensor? alibi_slopes,"
+      "    str kv_cache_dtype, float k_scale, float v_scale,"
+      "    int tp_rank, int blocksparse_local_blocks,"
+      "    int blocksparse_vert_stride, int blocksparse_block_size,"
+      "    int blocksparse_head_sliding_step) -> ()");
+  ops.impl("paged_attention_v2", torch::kCUDA, &paged_attention_v2);
+
+  // Activation ops
+  // Activation function used in SwiGLU.
+  ops.def("silu_and_mul(Tensor! out, Tensor input) -> ()");
+  ops.impl("silu_and_mul", torch::kCUDA, &silu_and_mul);
+
+  // Activation function used in GeGLU with `none` approximation.
+  ops.def("gelu_and_mul(Tensor! out, Tensor input) -> ()");
+  ops.impl("gelu_and_mul", torch::kCUDA, &gelu_and_mul);
+
+  // Activation function used in GeGLU with `tanh` approximation.
+  ops.def("gelu_tanh_and_mul(Tensor! out, Tensor input) -> ()");
+  ops.impl("gelu_tanh_and_mul", torch::kCUDA, &gelu_tanh_and_mul);
+
+  // GELU implementation used in GPT-2.
+  ops.def("gelu_new(Tensor! out, Tensor input) -> ()");
+  ops.impl("gelu_new", torch::kCUDA, &gelu_new);
+
+  // Approximate GELU implementation.
+  ops.def("gelu_fast(Tensor! out, Tensor input) -> ()");
+  ops.impl("gelu_fast", torch::kCUDA, &gelu_fast);
+
+  // Quick GELU implementation.
+  ops.def("gelu_quick(Tensor! out, Tensor input) -> ()");
+  ops.impl("gelu_quick", torch::kCUDA, &gelu_quick);
+
+  // prepare_inputs advance_step
+  ops.def(
+      "advance_step_flashattn(int num_seqs, int num_queries, int block_size, "
+      "Tensor! input_tokens, Tensor sampled_token_ids, "
+      "Tensor! input_positions, Tensor! seq_lens, Tensor! slot_mapping, "
+      "Tensor block_tables) -> ()");
+  ops.impl("advance_step_flashattn", torch::kCUDA, &advance_step_flashattn);
+
+  ops.def(
+      "advance_step_flashinfer("
+      "    int num_seqs, int num_queries, int block_size,"
+      "    Tensor! input_tokens, Tensor sampled_token_ids,"
+      "    Tensor! input_positions, Tensor! seq_lens, Tensor! slot_mapping,"
+      "    Tensor block_tables, Tensor! paged_kv_indices,"
+      "    Tensor! paged_kv_indptr, Tensor! paged_kv_last_page_len,"
+      "    Tensor! block_table_bounds"
+      ") -> ()");
+  ops.impl("advance_step_flashinfer", torch::kCUDA, &advance_step_flashinfer);
+
+  // Layernorm
+  // Apply Root Mean Square (RMS) Normalization to the input tensor.
+  ops.def(
+      "rms_norm(Tensor! out, Tensor input, Tensor weight, float epsilon) -> "
+      "()");
+  ops.impl("rms_norm", torch::kCUDA, &rms_norm);
+
+  // In-place fused Add and RMS Normalization.
+  ops.def(
+      "fused_add_rms_norm(Tensor! input, Tensor! residual, Tensor weight, "
+      "float epsilon) -> ()");
+  ops.impl("fused_add_rms_norm", torch::kCUDA, &fused_add_rms_norm);
+
+  // Rotary embedding
+  // Apply GPT-NeoX or GPT-J style rotary embedding to query and key.
+  ops.def(
+      "rotary_embedding(Tensor positions, Tensor! query,"
+      "                 Tensor! key, int head_size,"
+      "                 Tensor cos_sin_cache, bool is_neox) -> ()");
+  ops.impl("rotary_embedding", torch::kCUDA, &rotary_embedding);
+
+  // Apply GPT-NeoX or GPT-J style rotary embedding to query and key
+  // (supports multiple loras).
+  ops.def(
+      "batched_rotary_embedding(Tensor positions, Tensor! query,"
+      "                         Tensor! key, int head_size,"
+      "                         Tensor cos_sin_cache, bool is_neox,"
+      "                         int rot_dim,"
+      "                         Tensor cos_sin_cache_offsets) -> ()");
+  ops.impl("batched_rotary_embedding", torch::kCUDA, &batched_rotary_embedding);
+
+  // Quantization ops
+#ifndef USE_ROCM
+  // Quantized GEMM for AQLM.
+  ops.def(
+      "aqlm_gemm(Tensor input, Tensor codes, Tensor codebooks, "
+      "Tensor scales, int[] codebook_partition_sizes, Tensor? bias) "
+      "-> Tensor");
+  ops.impl("aqlm_gemm", torch::kCUDA, &aqlm_gemm);
+
+  // Decompression method for AQLM.
+  ops.def(
+      "aqlm_dequant(Tensor codes, Tensor codebooks, "
+      "int[] codebook_partition_sizes) -> Tensor");
+  ops.impl("aqlm_dequant", torch::kCUDA, &aqlm_dequant);
+
+  // Quantized GEMM for AWQ.
+  ops.def(
+      "awq_gemm(Tensor _in_feats, Tensor _kernel, Tensor _scaling_factors, "
+      "Tensor _zeros, int split_k_iters) -> Tensor");
+  ops.impl("awq_gemm", torch::kCUDA, &awq_gemm);
+
+  // Dequantization for AWQ.
+  ops.def(
+      "awq_dequantize(Tensor _kernel, Tensor _scaling_factors, "
+      "Tensor _zeros, int split_k_iters, int thx, int thy) -> Tensor");
+  ops.impl("awq_dequantize", torch::kCUDA, &awq_dequantize);
+
+  // Note about marlin kernel 'workspace' arguments:
+  // Technically these should be mutable since they are modified by the kernel.
+  // But since they are set back to zero once the kernel is finished we can
+  // hand wave and say that they have no net effect.
+  //
+  // The reason to mark 'workspace' as immutable is so that they don't interfere
+  // with using ScalarType arguments in the ops. If they are marked as mutable,
+  // pytorch throws an assert in
+  // 'torch._higher_order_ops._register_effectful_op' that prevents these
+  // kernels from being torch.compile'd.
+  // See the following document for more info on custom types and ops that use
+  // custom types:
+  // https://docs.google.com/document/d/18fBMPuOJ0fY5ZQ6YyrHUppw9FA332CpNtgB6SOIgyuA
+
+  // Marlin (Dense) Optimized Quantized GEMM for GPTQ.
+  ops.def(
+      "marlin_gemm(Tensor a, Tensor b_q_weight, Tensor b_scales, "
+      "Tensor! workspace, int size_m, int size_n, int size_k) -> Tensor");
+  // conditionally compiled so impl in source file
+
+  // Marlin_24 (Sparse) Optimized Quantized GEMM for GPTQ.
+  ops.def(
+      "gptq_marlin_24_gemm(Tensor a, Tensor b_q_weight, Tensor b_meta, "
+      "Tensor b_scales, Tensor workspace, "
+      "__torch__.torch.classes._core_C.ScalarType b_q_type, "
+      "int size_m, int size_n, int size_k) -> Tensor");
+  //  conditionally compiled so impl in source file
+
+  // Machete (Dense) Optimized Mixed Precision GEMM for Hopper.
+  ops.def(
+      "machete_supported_schedules("
+      "   __torch__.torch.classes._core_C.ScalarType btype"
+      ") -> str[]");
+  ops.def(
+      "machete_gemm(Tensor A, Tensor B,"
+      "             __torch__.torch.classes._core_C.ScalarType btype,"
+      "             Tensor? scales, Tensor? zeros, int? group_size,"
+      "             Tensor? C, float? alpha, float? beta, str? schedule)"
+      "-> Tensor");
+  ops.def(
+      "machete_prepack_B(Tensor B,"
+      "                  __torch__.torch.classes._core_C.ScalarType btype)"
+      "-> Tensor");
+  // conditionally compiled so impl registration is in source file
+
+  ops.def("permute_cols(Tensor A, Tensor perm) -> Tensor");
+  ops.impl("permute_cols", torch::kCUDA, &permute_cols);
+
+  // gptq_marlin Optimized Quantized GEMM for GPTQ.
+  ops.def(
+      "gptq_marlin_gemm(Tensor a, Tensor b_q_weight, Tensor b_scales, "
+      "Tensor b_zeros, Tensor g_idx, Tensor perm, Tensor workspace, "
+      "__torch__.torch.classes._core_C.ScalarType b_q_type, "
+      "int size_m, int size_n, int size_k, bool is_k_full, "
+      "bool has_zp, bool use_fp32_reduce) -> Tensor");
+  // conditionally compiled so impl registration is in source file
+
+  // gptq_marlin repack from GPTQ.
+  ops.def(
+      "gptq_marlin_repack(Tensor b_q_weight, Tensor perm, "
+      "SymInt size_k, SymInt size_n, int num_bits) -> Tensor");
+  // conditionally compiled so impl registrations are in source file
+
+  // awq_marlin repack from AWQ.
+  ops.def(
+      "awq_marlin_repack(Tensor b_q_weight, SymInt size_k, "
+      "SymInt size_n, int num_bits) -> Tensor");
+  // conditionally compiled so impl registrations are in source file
+
+  // Dequantization for GGML.
+  ops.def("ggml_dequantize(Tensor W, int type, int m, int n) -> Tensor");
+  ops.impl("ggml_dequantize", torch::kCUDA, &ggml_dequantize);
+
+  // mmvq kernel for GGML.
+  ops.def(
+      "ggml_mul_mat_vec_a8(Tensor W, Tensor X, int type, int row) "
+      "-> Tensor");
+  ops.impl("ggml_mul_mat_vec_a8", torch::kCUDA, &ggml_mul_mat_vec_a8);
+
+  // mmq kernel for GGML.
+  ops.def("ggml_mul_mat_a8(Tensor W, Tensor X, int type, int row) -> Tensor");
+  ops.impl("ggml_mul_mat_a8", torch::kCUDA, &ggml_mul_mat_a8);
+
+  // fp8_marlin Optimized Quantized GEMM for FP8 weight-only.
+  ops.def(
+      "fp8_marlin_gemm(Tensor a, Tensor b_q_weight, Tensor b_scales, "
+      "Tensor! workspace, int num_bits, int size_m, int size_n, "
+      "int size_k) -> Tensor");
+  // conditionally compiled so impl registration is in source file
+
+  // marlin_qqq_gemm for QQQ.
+  ops.def(
+      "marlin_qqq_gemm(Tensor a, Tensor b_q_weight, "
+      "Tensor s_tok, Tensor s_ch, Tensor s_group, "
+      "Tensor! workspace, int size_m, int size_n, "
+      "int size_k) -> Tensor");
+  // conditionally compiled so impl registration is in source file
+
+  // CUTLASS w8a8 GEMM, supporting symmetric per-tensor or per-row/column
+  // quantization, as well as bias
+  ops.def(
+      "cutlass_scaled_mm(Tensor! out, Tensor a,"
+      "                  Tensor b, Tensor a_scales,"
+      "                  Tensor b_scales, Tensor? bias) -> ()");
+  ops.impl("cutlass_scaled_mm", torch::kCUDA, &cutlass_scaled_mm);
+
+  // CUTLASS w8a8 GEMM, supporting asymmetric per-tensor or per-row/column
+  // quantization.
+  ops.def(
+      "cutlass_scaled_mm_azp(Tensor! out, Tensor a,"
+      "                  Tensor b, Tensor a_scales,"
+      "                  Tensor b_scales, Tensor azp_adj,"
+      "                  Tensor? azp, Tensor? bias) -> ()");
+  ops.impl("cutlass_scaled_mm_azp", torch::kCUDA, &cutlass_scaled_mm_azp);
+
+  // Check if cutlass scaled_mm is supported for CUDA devices of the given
+  // capability
+  ops.def("cutlass_scaled_mm_supports_fp8(int cuda_device_capability) -> bool");
+  ops.impl("cutlass_scaled_mm_supports_fp8", &cutlass_scaled_mm_supports_fp8);
+
+  // Mamba selective scan kernel
+  ops.def(
+      "selective_scan_fwd(Tensor! u, Tensor! delta,"
+      "Tensor! A, Tensor! B, Tensor! C,"
+      "Tensor? D_, Tensor!? z_, Tensor? delta_bias_,"
+      "bool delta_softplus,"
+      "Tensor? query_start_loc,"
+      "Tensor? cache_indices,"
+      "Tensor? has_initial_state,"
+      "Tensor! ssm_states) -> ()");
+  ops.impl("selective_scan_fwd", torch::kCUDA, &selective_scan_fwd);
+
+  ops.def(
+      "causal_conv1d_update(Tensor! x,"
+      "Tensor! conv_state,"
+      "Tensor! weight,"
+      "Tensor? bias_,"
+      "bool silu_activation,"
+      "Tensor? cache_seqlens_,"
+      "Tensor? conv_state_indices) -> Tensor");
+  ops.impl("causal_conv1d_update", torch::kCUDA, &causal_conv1d_update);
+
+  ops.def(
+      "causal_conv1d_fwd(Tensor! x, Tensor! weight,"
+      "Tensor? bias_,"
+      "Tensor!? conv_states,"
+      "Tensor? query_start_loc,"
+      "Tensor? cache_indices,"
+      "Tensor? has_initial_state,"
+      "bool silu_activation) -> Tensor");
+  ops.impl("causal_conv1d_fwd", torch::kCUDA, &causal_conv1d_fwd);
+#endif
+
+  // Quantized GEMM for GPTQ.
+  // Note: even though the C++ inferred schema is correct for this op, it seems
+  // to prevent the meta function registry.
+  ops.def(
+      "gptq_gemm(Tensor a, Tensor b_q_weight, Tensor b_gptq_qzeros, "
+      "Tensor b_gptq_scales, Tensor b_g_idx, bool use_exllama, int bit) "
+      "-> Tensor");
+  ops.impl("gptq_gemm", torch::kCUDA, &gptq_gemm);
+
+  // Post processing for GPTQ.
+  ops.def("gptq_shuffle(Tensor! q_weight, Tensor q_perm, int bit) -> ()");
+  ops.impl("gptq_shuffle", torch::kCUDA, &gptq_shuffle);
+
+  // Compute FP8 quantized tensor for given scaling factor.
+  ops.def(
+      "static_scaled_fp8_quant(Tensor! out, Tensor input, Tensor scale) -> ()");
+  ops.impl("static_scaled_fp8_quant", torch::kCUDA, &static_scaled_fp8_quant);
+
+  // Compute dynamic-per-tensor FP8 quantized tensor and scaling factor.
+  ops.def(
+      "dynamic_scaled_fp8_quant(Tensor! out, Tensor input, Tensor! scale) -> "
+      "()");
+  ops.impl("dynamic_scaled_fp8_quant", torch::kCUDA, &dynamic_scaled_fp8_quant);
+
+  // Compute dynamic-per-token FP8 quantized tensor and scaling factor.
+  ops.def(
+      "dynamic_per_token_scaled_fp8_quant(Tensor! out, Tensor input, "
+      "Tensor! scale, Tensor? scale_ub) -> "
+      "()");
+  ops.impl("dynamic_per_token_scaled_fp8_quant", torch::kCUDA,
+           &dynamic_per_token_scaled_fp8_quant);
+
+  // Aligning the number of tokens to be processed by each expert such
+  // that it is divisible by the block size.
+  ops.def(
+      "moe_align_block_size(Tensor topk_ids, int num_experts,"
+      "                     int block_size, Tensor! sorted_token_ids,"
+      "                     Tensor! experts_ids,"
+      "                     Tensor! num_tokens_post_pad) -> ()");
+  ops.impl("moe_align_block_size", torch::kCUDA, &moe_align_block_size);
+
+  // Compute int8 quantized tensor for given scaling factor.
+  ops.def(
+      "static_scaled_int8_quant(Tensor! out, Tensor input, Tensor scale,"
+      "Tensor? azp) -> ()");
+  ops.impl("static_scaled_int8_quant", torch::kCUDA, &static_scaled_int8_quant);
+
+  // Compute int8 quantized tensor and scaling factor
+  ops.def(
+      "dynamic_scaled_int8_quant(Tensor! out, Tensor input, Tensor! scale, "
+      "Tensor!? azp) -> ()");
+  ops.impl("dynamic_scaled_int8_quant", torch::kCUDA,
+           &dynamic_scaled_int8_quant);
+}
+
+TORCH_LIBRARY_EXPAND(CONCAT(TORCH_EXTENSION_NAME, _cache_ops), cache_ops) {
+  // Cache ops
+  // Swap in (out) the cache blocks from src to dst.
+  cache_ops.def(
+      "swap_blocks(Tensor src, Tensor! dst, Tensor block_mapping) -> ()");
+  cache_ops.impl("swap_blocks", torch::kCUDA, &swap_blocks);
+
+  // Copy the cache blocks from src to dst.
+  cache_ops.def(
+      "copy_blocks(Tensor(a!)[] key_caches, Tensor[](b!) value_caches, "
+      "Tensor block_mapping) -> ()");
+  cache_ops.impl("copy_blocks", torch::kCUDA, &copy_blocks);
+
+  // Reshape the key and value tensors and cache them.
+  cache_ops.def(
+      "reshape_and_cache(Tensor key, Tensor value,"
+      "                  Tensor! key_cache, Tensor! value_cache,"
+      "                  Tensor slot_mapping,"
+      "                  str kv_cache_dtype,"
+      "                  float k_scale, float v_scale) -> ()");
+  cache_ops.impl("reshape_and_cache", torch::kCUDA, &reshape_and_cache);
+
+  // Reshape the key and value tensors and cache them.
+  cache_ops.def(
+      "reshape_and_cache_flash(Tensor key, Tensor value,"
+      "                        Tensor! key_cache,"
+      "                        Tensor! value_cache,"
+      "                        Tensor slot_mapping,"
+      "                        str kv_cache_dtype,"
+      "                        float k_scale, float v_scale) -> ()");
+  cache_ops.impl("reshape_and_cache_flash", torch::kCUDA,
+                 &reshape_and_cache_flash);
+
+  // Convert the key and value cache to fp8 data type.
+  cache_ops.def(
+      "convert_fp8(Tensor! dst_cache, Tensor src_cache, float scale, "
+      "str kv_cache_dtype) -> ()");
+  cache_ops.impl("convert_fp8", torch::kCUDA, &convert_fp8);
+}
+
+TORCH_LIBRARY_EXPAND(CONCAT(TORCH_EXTENSION_NAME, _cuda_utils), cuda_utils) {
+  // Cuda utils
+
+  // Gets the specified device attribute.
+  cuda_utils.def("get_device_attribute(int attribute, int device_id) -> int");
+  cuda_utils.impl("get_device_attribute", &get_device_attribute);
+
+  // Gets the maximum shared memory per block device attribute.
+  cuda_utils.def(
+      "get_max_shared_memory_per_block_device_attribute(int device_id) -> int");
+  cuda_utils.impl("get_max_shared_memory_per_block_device_attribute",
+                  &get_max_shared_memory_per_block_device_attribute);
+}
+
+#ifndef USE_ROCM
+TORCH_LIBRARY_EXPAND(CONCAT(TORCH_EXTENSION_NAME, _custom_ar), custom_ar) {
+  // Custom all-reduce kernels
+  custom_ar.def(
+      "init_custom_ar(Tensor meta, Tensor rank_data, "
+      "str[] handles, int[] offsets, int rank, "
+      "bool full_nvlink) -> int");
+  custom_ar.impl("init_custom_ar", torch::kCUDA, &init_custom_ar);
+
+  custom_ar.def("all_reduce_reg(int fa, Tensor inp, Tensor! out) -> ()");
+  custom_ar.impl("all_reduce_reg", torch::kCUDA, &all_reduce_reg);
+
+  custom_ar.def(
+      "all_reduce_unreg(int fa, Tensor inp, Tensor reg_buffer, Tensor! out) -> "
+      "()");
+  custom_ar.impl("all_reduce_unreg", torch::kCUDA, &all_reduce_unreg);
+
+  custom_ar.def("dispose", &dispose);
+  custom_ar.def("meta_size", &meta_size);
+
+  custom_ar.def(
+      "register_buffer(int fa, Tensor t, str[] handles, "
+      "int[] offsets) -> ()");
+  custom_ar.impl("register_buffer", torch::kCUDA, &register_buffer);
+
+  custom_ar.def("get_graph_buffer_ipc_meta", &get_graph_buffer_ipc_meta);
+  custom_ar.def("register_graph_buffers", &register_graph_buffers);
+}
+#endif
+
+REGISTER_EXTENSION(TORCH_EXTENSION_NAME)
+
+
+#include "core/registration.h"
+#include "rocm/ops.h"
+
+// Note on op signatures:
+// The X_meta signatures are for the meta functions corresponding to op X.
+// They must be kept in sync with the signature for X. Generally, only
+// functions that return Tensors require a meta function.
+//
+// See the following links for detailed docs on op registration and function
+// schemas.
+// https://docs.google.com/document/d/1_W62p8WJOQQUzPsJYa7s701JXt0qf2OfLub2sbkHOaU/edit#heading=h.ptttacy8y1u9
+// https://github.com/pytorch/pytorch/blob/main/aten/src/ATen/native/README.md#annotations
+
+TORCH_LIBRARY_EXPAND(TORCH_EXTENSION_NAME, rocm_ops) {
+  // vLLM custom ops for rocm
+
+  // Custom attention op
+  // Compute the attention between an input query and the cached
+  // keys/values using PagedAttention.
+  rocm_ops.def(
+      "paged_attention(Tensor! out, Tensor exp_sums,"
+      "                Tensor max_logits, Tensor tmp_out,"
+      "                Tensor query, Tensor key_cache,"
+      "                Tensor value_cache, int num_kv_heads,"
+      "                float scale, Tensor block_tables,"
+      "                Tensor context_lens, int block_size,"
+      "                int max_context_len,"
+      "                Tensor? alibi_slopes,"
+      "                str kv_cache_dtype,"
+      "                float k_scale, float v_scale) -> ()");
+  rocm_ops.impl("paged_attention", torch::kCUDA, &paged_attention);
+}
+
+REGISTER_EXTENSION(TORCH_EXTENSION_NAME)
+
+
+import itertools
+import math
+import os
+import shutil
+from collections.abc import Iterable
+from dataclasses import dataclass
+from typing import List, Optional, Tuple, Union
+
+import jinja2
+# yapf conflicts with isort for this block
+# yapf: disable
+from vllm_cutlass_library_extension import (DataType, EpilogueScheduleTag,
+                                            EpilogueScheduleType,
+                                            MixedInputKernelScheduleType,
+                                            TileSchedulerTag,
+                                            TileSchedulerType, VLLMDataType,
+                                            VLLMDataTypeNames, VLLMDataTypeTag,
+                                            VLLMKernelScheduleTag)
+
+# yapf: enable
+
+#
+#   Generator templating
+#
+
+DISPATCH_TEMPLATE = """
+#include "../machete_mm_launcher.cuh"
+
+namespace machete {
+using GemmDispatcher_ = GemmDispatcher<
+    {{DataTypeTag[type_config.element_a]}},  // ElementA
+    {{DataTypeTag[type_config.element_b]}},  // ElementB
+    {{DataTypeTag[type_config.element_d]}},  // ElementD
+    {{DataTypeTag[type_config.accumulator]}}, // Accumulator
+    {{DataTypeTag[type_config.element_b_scale]}}, // Scales
+    {{DataTypeTag[type_config.element_b_zeropoint]}}>; // Zeropoints
+
+{% for s in schedules %}extern torch::Tensor 
+impl_{{type_name}}_sch_{{ gen_sch_name(s) }}(PyTorchArguments args);
+{% endfor %}
+template <>
+torch::Tensor GemmDispatcher_::dispatch(PyTorchArguments args) {
+  [[maybe_unused]] auto M = args.A.size(0);
+  [[maybe_unused]] auto N = args.B.size(1);
+  [[maybe_unused]] auto K = args.A.size(1);
+    
+  if (!args.schedule) {
+    {%- for cond, s in heuristic %}
+    {%if cond is not none%}if ({{cond}})
+    {%- else %}else
+    {%- endif %}
+        return impl_{{ type_name }}_sch_{{ gen_sch_name(s) }}(args);{% endfor %}
+  }
+
+  {% for s in schedules %}
+  if (*args.schedule == "{{ gen_sch_name(s) }}") {
+    return impl_{{ type_name }}_sch_{{ gen_sch_name(s) }}(args);
+  }
+  {% endfor %}
+  TORCH_CHECK_NOT_IMPLEMENTED(false, "machete_gemm(..) is not implemented for "
+                                     "schedule = ", *args.schedule);
+}
+
+template <>
+std::vector<std::string> GemmDispatcher_::supported_schedules() {
+  return { 
+    {% for s in schedules -%}
+    "{{ gen_sch_name(s) }}"{{ ",
+    " if not loop.last }}{%- endfor %}
+  };
+}
+
+}; // namespace machete
+"""
+
+IMPL_TEMPLATE = """
+#include "../machete_mm_launcher.cuh"
+
+namespace machete {
+template <typename Config, bool with_C, bool with_scales, bool with_zeropoints>
+using Kernel = MacheteKernelTemplate<
+    {{DataTypeTag[type_config.element_a]}},  // ElementA
+    {{DataTypeTag[type_config.element_b]}},  // ElementB
+    {{DataTypeTag[type_config.element_d]}},  // ElementD
+    {{DataTypeTag[type_config.accumulator]}}, // Accumulator
+    {{DataTypeTag[type_config.element_b_scale]}}, // Scales
+    {{DataTypeTag[type_config.element_b_zeropoint]}}, // Zeropoints
+    cutlass::gemm::KernelTmaWarpSpecializedCooperativeMixedInput,
+    Config, with_C, with_scales, with_zeropoints>;
+
+{% for sch in schedules %}
+{% set schedule_name = gen_sch_name(sch) -%}
+struct sch_{{schedule_name}} {
+  using TileShapeNM = Shape<{{
+      to_cute_constant(sch.tile_shape_mn)|join(', ')}}>;
+  using ClusterShape = Shape<{{
+      to_cute_constant(sch.cluster_shape_mnk)|join(', ')}}>;
+  // TODO: Reimplement
+  // using KernelSchedule   = {{KernelScheduleTag[sch.kernel_schedule]}};
+  
+
+Question:
+What is the difference between chunked-prefill scheduling and default scheduling in the code?
+
+A. Chunked-prefill scheduling prioritize decoding requests when updating waiting requests.
+B. Chunked-prefill scheduling prioritize prefill requests when updating waiting requests.
+C. Chunked-prefill scheduling prioritize prefill requests when updating running requests.
+D. Chunked-prefill scheduling split prefill requests according to remaining budget.
+
+Select the correct answer.

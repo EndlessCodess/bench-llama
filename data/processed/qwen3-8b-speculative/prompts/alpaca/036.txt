@@ -1,0 +1,4 @@
+Adapt the given slogan for a cat food brand.
+
+Input:
+"Supercharge your energy"

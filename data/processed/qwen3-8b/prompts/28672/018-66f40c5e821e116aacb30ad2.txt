@@ -1,0 +1,1973 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+#!/usr/bin/env python
+
+"""
+PETSc: Portable, Extensible Toolkit for Scientific Computation
+==============================================================
+
+The Portable, Extensible Toolkit for Scientific Computation (PETSc),
+is a suite of data structures and routines for the scalable (parallel)
+solution of scientific applications modeled by partial differential
+equations. It employs the Message Passing Interface (MPI) standard for
+all message-passing communication.
+
+.. tip::
+
+  You can also install `petsc-dev`_ with::
+
+    $ pip install petsc==dev
+
+  .. _petsc-dev: https://bitbucket.org/petsc/
+                 petsc-dev/get/tip.tar.gz#egg=petsc-dev
+"""
+
+import sys, os
+from distutils.core import setup
+from distutils.util import get_platform, split_quoted
+from distutils.spawn import find_executable
+from distutils.command.build import build as _build
+if 'setuptools' in sys.modules:
+    from setuptools.command.install import install as _install
+else:
+    from distutils.command.install import install as _install
+from distutils.command.sdist import sdist as _sdist
+from distutils import log
+
+init_py = """\
+# Author:  PETSc Team
+# Contact: petsc-maint@mcs.anl.gov
+
+def get_petsc_dir():
+    import os
+    return os.path.dirname(__file__)
+
+def get_config():
+    conf = {}
+    conf['PETSC_DIR'] = get_petsc_dir()
+    return conf
+"""
+
+metadata = {
+    'provides' : ['petsc'],
+    'requires' : [],
+}
+
+def bootstrap():
+    # Set PETSC_DIR and PETSC_ARCH
+    PETSC_DIR  = os.path.abspath(os.getcwd())
+    PETSC_ARCH = get_platform() + '-python'
+    os.environ['PETSC_DIR']  = PETSC_DIR
+    os.environ['PETSC_ARCH'] = PETSC_ARCH
+    sys.path.insert(0, os.path.join(PETSC_DIR, 'config'))
+    # Generate package __init__.py file
+    from distutils.dir_util import mkpath
+    pkgdir = os.path.join('config', 'pypi')
+    if not os.path.exists(pkgdir): mkpath(pkgdir)
+    pkgfile = os.path.join(pkgdir, '__init__.py')
+    fh = open(pkgfile, 'wt')
+    fh.write(init_py)
+    fh.close()
+    # Simple-minded lookup for MPI and mpi4py
+    mpi4py = mpicc = None
+    try:
+        import mpi4py
+        conf = mpi4py.get_config()
+        mpicc = conf.get('mpicc')
+    except ImportError: # mpi4py is not installed
+        mpi4py = None
+        mpicc = os.environ.get('MPICC') or find_executable('mpicc')
+    except AttributeError: # mpi4py is too old
+        pass
+    if ('setuptools' in sys.modules):
+        metadata['zip_safe'] = False
+        if not mpi4py and mpicc:
+            metadata['install_requires']= ['mpi4py>=1.2.2']
+
+def config(dry_run=False):
+    log.info('PETSc: configure')
+    options = [
+        'PETSC_ARCH='+os.environ['PETSC_ARCH'],
+        '--with-shared-libraries=1',
+        '--with-debugging=0',
+        '--with-c2html=0', # not needed
+        #'--with-sowing=0',
+        #'--with-cmake=0',
+        ]
+    # MPI
+    try:
+        import mpi4py
+        conf = mpi4py.get_config()
+        mpicc  = conf.get('mpicc')
+        mpicxx = conf.get('mpicxx')
+        mpif90 = conf.get('mpif90')
+    except (ImportError, AttributeError):
+        mpicc  = os.environ.get('MPICC')  or find_executable('mpicc')
+        mpicxx = os.environ.get('MPICXX') or find_executable('mpicxx')
+        mpif90 = os.environ.get('MPIF90') or find_executable('mpif90')
+    if mpicc:
+        options.append('--with-cc='+mpicc)
+        if mpicxx:
+            options.append('--with-cxx='+mpicxx)
+        if mpif90:
+            options.append('--with-fc='+mpif90)
+    else:
+        options.append('--with-mpi=0')
+    # Extra configure options
+    config_opts = os.environ.get('PETSC_CONFIGURE_OPTIONS', '')
+    config_opts = split_quoted(config_opts)
+    options.extend(config_opts)
+    log.info('configure options:')
+    for opt in options:
+        log.info(' '*4 + opt)
+    # Run PETSc configure
+    if dry_run: return
+    import configure
+    configure.petsc_configure(options)
+    import logger
+    logger.Logger.defaultLog = None
+
+def build(dry_run=False):
+    log.info('PETSc: build')
+    # Run PETSc build
+    if dry_run: return
+    use_builder_py = False
+    if use_builder_py:
+        import builder
+        builder.PETScMaker().run()
+        import logger
+        logger.Logger.defaultLog = None
+    else:
+        make = find_executable('make')
+        status = os.system(" ".join(
+                [make, 'all']
+                ))
+        if status != 0: raise RuntimeError(status)
+
+def install(dest_dir, prefix=None, dry_run=False):
+    log.info('PETSc: install')
+    if prefix is None:
+        prefix = dest_dir
+    options = [
+        '--destDir=' + dest_dir,
+        '--prefix='  + prefix,
+        ]
+    log.info('install options:')
+    for opt in options:
+        log.info(' '*4 + opt)
+    # Run PETSc installer
+    if dry_run: return
+    use_install_py = True
+    if use_install_py:
+        import install
+        install.Installer(options).run()
+        import logger
+        logger.Logger.defaultLog = None
+    else:
+        make = find_executable('make')
+        status = os.system(" ".join(
+                [make, 'install', 'DESTDIR='+dest_dir]
+                ))
+        if status != 0: raise RuntimeError(status)
+
+class context:
+    def __init__(self):
+        self.sys_argv = sys.argv[:]
+        self.wdir = os.getcwd()
+    def enter(self):
+        del sys.argv[1:]
+        pdir = os.environ['PETSC_DIR']
+        os.chdir(pdir)
+        return self
+    def exit(self):
+        sys.argv[:] = self.sys_argv
+        os.chdir(self.wdir)
+
+class cmd_build(_build):
+
+    def initialize_options(self):
+        _build.initialize_options(self)
+        PETSC_ARCH = os.environ.get('PETSC_ARCH', '')
+        self.build_base = os.path.join(PETSC_ARCH, 'build-python')
+
+    def run(self):
+        _build.run(self)
+        ctx = context().enter()
+        try:
+            config(self.dry_run)
+            build(self.dry_run)
+        finally:
+            ctx.exit()
+
+class cmd_install(_install):
+
+    def initialize_options(self):
+        _install.initialize_options(self)
+        self.optimize = 1
+
+    def run(self):
+        root_dir = self.install_platlib
+        dest_dir = os.path.join(root_dir, 'petsc')
+        bdist_base = self.get_finalized_command('bdist').bdist_base
+        if dest_dir.startswith(bdist_base):
+            prefix = dest_dir[len(bdist_base)+1:]
+            prefix = prefix[prefix.index(os.path.sep):]
+        else:
+            prefix = dest_dir
+        dest_dir = os.path.abspath(dest_dir)
+        prefix   = os.path.abspath(prefix)
+        #
+        _install.run(self)
+        ctx = context().enter()
+        try:
+            install(dest_dir, prefix, self.dry_run)
+        finally:
+            ctx.exit()
+
+class cmd_sdist(_sdist):
+
+    def initialize_options(self):
+        _sdist.initialize_options(self)
+        self.force_manifest = 1
+        self.template = os.path.join('config', 'manifest.in')
+
+def version():
+    import re
+    version_re = {
+        'major'  : re.compile(r"#define\s+PETSC_VERSION_MAJOR\s+(\d+)"),
+        'minor'  : re.compile(r"#define\s+PETSC_VERSION_MINOR\s+(\d+)"),
+        'micro'  : re.compile(r"#define\s+PETSC_VERSION_SUBMINOR\s+(\d+)"),
+        'patch'  : re.compile(r"#define\s+PETSC_VERSION_PATCH\s+(\d+)"),
+        'release': re.compile(r"#define\s+PETSC_VERSION_RELEASE\s+(\d+)"),
+        }
+    petscversion_h = os.path.join('include','petscversion.h')
+    data = open(petscversion_h, 'rt').read()
+    major = int(version_re['major'].search(data).groups()[0])
+    minor = int(version_re['minor'].search(data).groups()[0])
+    micro = int(version_re['micro'].search(data).groups()[0])
+    patch = int(version_re['patch'].search(data).groups()[0])
+    release = int(version_re['release'].search(data).groups()[0])
+    if release:
+        v = "%d.%d" % (major, minor)
+        if micro > 0:
+            v += ".%d" % micro
+        if patch > 0:
+            v += ".%d" % patch
+    else:
+        v = "%d.%d.dev%d" % (major, minor+1, 0)
+    return v
+
+def tarball():
+    VERSION = version()
+    if '.dev' in VERSION:
+        return None
+    bits = VERSION.split('.')
+    if len(bits) == 2: bits.append('0')
+    PETSC_VERSION = '.'.join(bits[:-1]) + '-p' + bits[-1]
+    return ('http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/'
+            'petsc-lite-%s.tar.gz#egg=petsc-%s' % (PETSC_VERSION, VERSION))
+
+description = __doc__.split('\n')[1:-1]; del description[1:3]
+classifiers = """
+License :: Public Domain
+Operating System :: POSIX
+Intended Audience :: Developers
+Intended Audience :: Science/Research
+Programming Language :: C
+Programming Language :: C++
+Programming Language :: Fortran
+Programming Language :: Python
+Topic :: Scientific/Engineering
+Topic :: Software Development :: Libraries
+"""
+
+bootstrap()
+setup(name='petsc',
+      version=version(),
+      description=description.pop(0),
+      long_description='\n'.join(description),
+      classifiers= classifiers.split('\n')[1:-1],
+      keywords = ['PETSc', 'MPI'],
+      platforms=['POSIX'],
+      license='PETSc',
+
+      url='http://www.mcs.anl.gov/petsc/',
+      download_url=tarball(),
+
+      author='PETSc Team',
+      author_email='petsc-maint@mcs.anl.gov',
+      maintainer='Lisandro Dalcin',
+      maintainer_email='dalcinl@gmail.com',
+
+      packages = ['petsc'],
+      package_dir = {'petsc': 'config/pypi'},
+      cmdclass={
+        'build': cmd_build,
+        'install': cmd_install,
+        'sdist': cmd_sdist,
+        },
+      **metadata)
+
+
+//
+//  main.c
+//  PETSc command line example
+//
+//  Created by Barry Smith on 8/2/12.
+//  Copyright (c) 2012 Barry Smith. All rights reserved.
+//
+
+#define PETSC_APPLE_FRAMEWORK
+
+#include "../../../../../../src/snes/examples/tutorials/ex19.c"
+
+
+
+#!/usr/bin/python
+if __name__ == '__main__':
+  import sys
+  import os
+  sys.path.insert(0, os.path.abspath('config'))
+  import configure
+  configure_options = [
+    '--download-mpich',
+    '--with-fc=0',
+    '--with-shared-libraries',
+    '--download-mpich-shared=0',
+    '--with-valgrind=0',            # valgrind is ok but then must also provide -I/opt/local/include to compiler
+    'PETSC_ARCH=arch-osx',
+  ]
+  configure.petsc_configure(configure_options)
+
+
+#!/usr/bin/env python
+# See iosbuilder.py for instructions
+# Note that this "cheats" and runs all the ./configure tests on the Mac NOT on the iPhone
+#     but this is ok because the answers are the same.
+# Force a 32 bit compile because that is what ARM supports.
+# No need to provide BLAS/LAPACK because Mac and iOS support the same Accelerate framework
+#
+if __name__ == '__main__':
+  import sys
+  import os
+  sys.path.insert(0, os.path.abspath('config'))
+  import configure
+  configure_options = [
+    '--with-cc=gcc -m32',
+    '--with-mpi=0',
+    '--with-ios=1',
+    '--with-valgrind=0',
+    '--with-x=0',
+    '--with-fc=0',
+    '--known-blaslapack-mangling=underscore',   # ios only supports this mangling
+    'PETSC_ARCH=arch-ios',
+  ]
+  configure.petsc_configure(configure_options)
+
+
+#!/usr/bin/env python
+#
+#   Builds a iPhone/iPad static library of PETSc
+#
+#   Before using removed /usr/include/mpi.h and /Developer/SDKs/MacOSX10.5.sdk/usr/include/mpi.h or
+#      Xcode will use those instead of the MPIuni one we point to
+#
+#   export PETSC_ARCH=arch-ios
+
+#   ./systems/Apple/iOS/bin/arch-ios.py [use --with-debugging=0 to get iPhone/iPad version, otherwise creates simulator version]
+#      this sets up the appropriate configuration file
+#
+#   ./systems/Apple/iOS/bin/iosbuilder.py
+#      this creates the PETSc iPhone/iPad library
+#      this will open Xcode and give you directions to follow
+#
+#   open xcode/examples/examples.xcodeproj
+#       Project -> Edit Project Setting  -> Configuration (make sure it is Release or Debug depending on if you used --with-debugging=0)
+#       Build -> Build and Debug
+#
+import os, sys
+
+sys.path.insert(0, os.path.join(os.environ['PETSC_DIR'], 'config'))
+sys.path.insert(0, os.path.join(os.environ['PETSC_DIR'], 'config', 'BuildSystem'))
+
+import script
+
+class PETScMaker(script.Script):
+ def __init__(self):
+   import RDict
+   import os
+
+   argDB = RDict.RDict(None, None, 0, 0, readonly = True)
+   argDB.saveFilename = os.path.join(os.environ['PETSC_DIR'], os.environ['PETSC_ARCH'], 'conf', 'RDict.db')
+   argDB.load()
+   script.Script.__init__(self, argDB = argDB)
+   self.log = sys.stdout
+   return
+
+ def setupModules(self):
+   self.mpi           = self.framework.require('config.packages.MPI',         None)
+   self.base          = self.framework.require('config.base',                 None)
+   self.setCompilers  = self.framework.require('config.setCompilers',         None)   
+   self.arch          = self.framework.require('PETSc.utilities.arch',        None)
+   self.petscdir      = self.framework.require('PETSc.utilities.petscdir',    None)
+   self.languages     = self.framework.require('PETSc.utilities.languages',   None)
+   self.debugging     = self.framework.require('PETSc.utilities.debugging',   None)
+   self.make          = self.framework.require('config.programs',             None)
+   self.compilers     = self.framework.require('config.compilers',            None)
+   self.types         = self.framework.require('config.types',                None)
+   self.headers       = self.framework.require('config.headers',              None)
+   self.functions     = self.framework.require('config.functions',            None)
+   self.libraries     = self.framework.require('config.libraries',            None)
+   self.scalarType    = self.framework.require('PETSc.utilities.scalarTypes', None)
+   self.memAlign      = self.framework.require('PETSc.utilities.memAlign',    None)
+   self.libraryOptions= self.framework.require('PETSc.utilities.libraryOptions', None)      
+   self.compilerFlags = self.framework.require('config.compilerFlags', self)
+   return
+
+ def setupHelp(self, help):
+   import nargs
+
+   help = script.Script.setupHelp(self, help)
+   help.addArgument('RepManager', '-rootDir', nargs.ArgDir(None, os.environ['PETSC_DIR'], 'The root directory for this build', isTemporary = 1))
+   help.addArgument('RepManager', '-dryRun',  nargs.ArgBool(None, False, 'Only output what would be run', isTemporary = 1))
+   help.addArgument('RepManager', '-skipXCode',  nargs.ArgBool(None, False, 'Do not run XCode application/files have not been added/removed', isTemporary = 1))
+   help.addArgument('RepManager', '-verbose', nargs.ArgInt(None, 0, 'The verbosity level', min = 0, isTemporary = 1))
+   return help
+
+ def setup(self):
+   script.Script.setup(self)
+   self.framework = self.loadConfigure()
+   self.setupModules()
+   return
+
+ @property
+ def verbose(self):
+   '''The verbosity level'''
+   return self.argDB['verbose']
+
+ @property
+ def skipXCode(self):
+   '''Skip XCode application'''
+   return self.argDB['skipXCode']
+
+ @property
+ def dryRun(self):
+   '''Flag for only output of what would be run'''
+   return self.argDB['dryRun']
+
+ def getPackageInfo(self):
+   packageIncludes = []
+   packageLibs     = []
+   for p in self.framework.packages:
+     # Could put on compile line, self.addDefine('HAVE_'+i.PACKAGE, 1)
+     if hasattr(p, 'lib'):
+       if not isinstance(p.lib, list):
+         packageLibs.append(p.lib)
+       else:
+         packageLibs.extend(p.lib)
+     if hasattr(p, 'include'):
+       if not isinstance(p.include, list):
+         packageIncludes.append(p.include)
+       else:
+         packageIncludes.extend(p.include)
+   packageLibs     = self.libraries.toStringNoDupes(packageLibs+self.libraries.math)
+   packageIncludes = self.headers.toStringNoDupes(packageIncludes)
+   return packageIncludes, packageLibs
+
+ def buildDir(self, dirname):
+   ''' This is run in a PETSc source directory'''
+   if self.verbose: print 'Entering '+dirname
+   os.chdir(dirname)
+   l = len(os.environ['PETSC_DIR'])
+   basedir = os.path.join(os.environ['PETSC_DIR'],os.environ['PETSC_ARCH'],'xcode-links')
+   #newdirname = os.path.join(basedir,dirname[l+1:])
+   #os.mkdir(newdirname)
+
+
+   # Get list of source files in the directory 
+   cnames = []
+   onames = []
+   fnames = []
+   hnames = []
+   for f in os.listdir(dirname):
+     ext = os.path.splitext(f)[1]
+     if ext == '.c':
+       cnames.append(f)
+       onames.append(f.replace('.c', '.o'))
+     if ext == '.h':
+       hnames.append(f)
+   if cnames:
+     if self.verbose: print 'Linking C files',cnames
+     for i in cnames:
+       j = i[l+1:]
+       if not os.path.islink(os.path.join(basedir,i)) and not i.startswith('.'):
+         if i.endswith('openglops.c') and not os.path.islink(os.path.join(basedir,'openglops.m')):
+           os.symlink(os.path.join(dirname,i),os.path.join(basedir,'openglops.m'))
+         else:
+           os.symlink(os.path.join(dirname,i),os.path.join(basedir,i))
+   # do not need to link these because xcode project points to original source code directory
+   #if hnames:
+   #  if self.verbose: print 'Linking h files',hnames
+   #  for i in hnames:
+   #    if not os.path.islink(os.path.join(basedir,i)):
+   #      os.symlink(os.path.join(dirname,i),os.path.join(basedir,i))
+   return
+
+ def checkDir(self, dirname):
+   '''Checks whether we should recurse into this directory
+   - Excludes projects directory
+   - Excludes examples directory
+   - Excludes contrib directory
+   - Excludes tutorials directory
+   - Excludes benchmarks directory
+   - Checks makefile to see if compiler is allowed to visit this directory for this configuration'''
+#   print self.functions.functions
+#   print self.base.defines
+   base = os.path.basename(dirname)
+
+   if base == 'examples': return False
+   if base == 'projects': return False
+   if base.startswith('ftn-') or base.startswith('f90-'): return False
+   if base == 'contrib':  return False
+   if base == 'tutorials':  return False
+   if base == 'benchmarks':  return False
+   if base == 'systems':  return False
+   if base.startswith('arch-'):  return False     
+
+   import re
+   reg   = re.compile(' [ ]*')
+   fname = os.path.join(dirname, 'makefile')
+   if not os.path.isfile(fname):
+     if os.path.isfile(os.path.join(dirname, 'Makefile')): print 'ERROR: Change Makefile to makefile in',dirname
+     return False
+   fd = open(fname)
+   text = fd.readline()
+   while text:
+     if text.startswith('#requires'):
+       text = text[9:-1].strip()
+       text = reg.sub(' ',text)
+       rtype = text.split(' ')[0]
+       rvalue = text.split(' ')[1]
+
+       if rvalue == "'"+'PETSC_HAVE_FORTRAN'+"'" or rvalue == "'"+'PETSC_USING_F90'+"'" or rvalue == "'"+'PETSC_USING_F2003'+"'":
+         if not hasattr(self.compilers, 'FC'):
+           if self.verbose: print 'Rejecting',dirname,'because fortran is not being used'
+           return 0
+       elif rvalue == "'"+'PETSC_USE_LOG'+"'":
+         if not self.libraryOptions.useLog:
+           if self.verbose: print 'Rejecting',dirname,'because logging is turned off'
+           return 0
+       elif rvalue == "'"+'PETSC_USE_FORTRAN_KERNELS'+"'":
+         if not self.libraryOptions.useFortranKernels:
+           if self.verbose: print 'Rejecting',dirname,'because fortran kernels are turned off'
+           return 0
+       elif rtype == 'scalar' and not self.scalarType.scalartype == rvalue:
+         if self.verbose: print 'Rejecting',dirname,'because scalar type '+self.scalarType.scalartype+' is not '+rvalue
+         return 0
+       elif rtype == 'language':
+         if rvalue == 'CXXONLY' and self.languages.clanguage == 'C':
+           if self.verbose: print 'Rejecting',dirname,'because language is '+self.languages.clanguage+' is not C++'
+           return 0
+       elif rtype == 'precision' and not rvalue == self.scalarType.precision:
+         if self.verbose: print 'Rejecting',dirname,'because precision '+self.scalarType.precision+' is not '+rvalue
+         return 0
+       elif rtype == 'package':
+         found = 0
+         if self.mpi.usingMPIUni:
+           pname = 'PETSC_HAVE_MPIUNI'
+           pname = "'"+pname+"'"
+           if pname == rvalue: found = 1
+         for i in self.framework.packages:
+           pname = 'PETSC_HAVE_'+i.PACKAGE
+           pname = "'"+pname+"'"
+           if pname == rvalue: found = 1
+         if not found:
+           if self.verbose: print 'Rejecting',dirname,'because package '+rvalue+' does not exist'
+           return 0
+       elif rtype == 'define':
+         found = 0
+         for i in self.base.defines:
+           pname = 'PETSC_'+i.upper()
+           pname = "'"+pname+"'"
+           if pname == rvalue: found = 1
+         if not found:
+           if self.verbose: print 'Rejecting',dirname,'because define '+rvalue+' does not exist'
+           return 0
+       elif rtype == 'function':
+         found = 0
+         for i in self.functions.functions:
+           pname = 'PETSC_HAVE_'+i.upper()
+           pname = "'"+pname+"'"
+#           print pname
+#           print rvalue
+           if pname == rvalue: found = 1
+         if not found:
+           if self.verbose: print 'Rejecting',dirname,'because function '+rvalue+' does not exist'
+           return 0
+         
+     text = fd.readline()
+   fd.close()
+   return True
+
+ def buildAll(self, rootDir = None):
+   import shutil
+   self.setup()
+   if rootDir is None:
+     rootDir = self.argDB['rootDir']
+   if not self.checkDir(rootDir):
+     print 'Nothing to be done'
+   if rootDir == os.environ['PETSC_DIR']:
+     basedir = os.path.join(self.petscdir.dir, self.arch.arch, 'xcode-links')
+     if os.path.isdir(basedir):
+       if self.verbose: print 'Removing '+basedir
+       shutil.rmtree(basedir)
+   os.mkdir(basedir)       
+   for root, dirs, files in os.walk(rootDir):
+     self.buildDir(root)
+     for badDir in [d for d in dirs if not self.checkDir(os.path.join(root, d))]:
+       dirs.remove(badDir)
+
+   if not self.skipXCode:
+
+     print 'In Xcode mouse click on xcode-links and the delete key, then'
+     print 'control mouse click on "Other Sources" and select "Add files to PETSc ...", then'
+     print 'in the finder window locate ${PETSC_DIR}/arch-ios/xcode-links and select it. Now'
+     print 'exit Xcode'
+
+     try:
+       import subprocess
+       subprocess.call('cd '+os.path.join(os.environ['PETSC_DIR'],'systems','Apple','iOS','PETSc')+';open -W PETSc.xcodeproj', shell=True)
+     except RuntimeError, e:
+       raise RuntimeError('Error opening xcode project '+str(e))
+
+
+   sdk         = ' -sdk iphonesimulator5.1 '
+   destination = 'iphonesimulator'
+   debug       = 'Debug'
+   debugdir    = 'Debug-'+destination
+   if not self.compilerFlags.debugging:
+     debug = 'Release'
+     debugdir = 'Release-'+destination
+   try:
+     output,err,ret  = self.executeShellCommand('cd '+os.path.join(os.environ['PETSC_DIR'],'systems','Apple','iOS','PETSc')+';xcodebuild -configuration '+debug+sdk, timeout=3000, log = self.log)
+   except RuntimeError, e:
+     raise RuntimeError('Error making iPhone/iPad version of PETSc libraries: '+str(e))
+
+   liblocation = os.path.join(os.environ['PETSC_DIR'],'systems','Apple','iOS','PETSc','build',debugdir,'libPETSc.a')
+   if not os.path.exists(liblocation):
+     raise RuntimeError('Error library '+liblocation+' not created')
+   try:
+     output,err,ret  = self.executeShellCommand('mv -f '+liblocation+' '+os.path.join(os.environ['PETSC_DIR'],os.environ['PETSC_ARCH'],'lib'), timeout=30, log = self.log)
+   except RuntimeError, e:
+     raise RuntimeError('Error copying iPhone/iPad version of PETSc libraries: '+str(e))
+
+   return
+
+def noCheckCommand(command, status, output, error):
+  ''' Do no check result'''
+  return 
+  noCheckCommand = staticmethod(noCheckCommand)
+  
+if __name__ == '__main__':
+  PETScMaker().buildAll()
+
+
+#
+#   Run python pyjsbuild --output . AMSOptions.py to generate the needed HTML and Javascript
+#
+
+import pyjd
+
+import AMSJavascript.AMS_Comm as AMS_Comm
+import AMSJavascript.AMS_Memory as AMS_Memory
+import AMSJavascript
+import AMSJavascript
+
+from pyjamas.ui.RootPanel import RootPanel
+from pyjamas.ui.TextArea import TextArea
+from pyjamas.ui.Label import Label
+from pyjamas.ui.Button import Button
+from pyjamas.ui.HTML import HTML
+from pyjamas.ui.VerticalPanel import VerticalPanel
+from pyjamas.ui.HorizontalPanel import HorizontalPanel
+from pyjamas.ui.ListBox import ListBox
+from pyjamas.JSONService import JSONProxy
+from pyjamas.ui.Tree import Tree
+from pyjamas.ui.TreeItem import TreeItem
+
+
+class AMSJavascriptExample:
+    def onModuleLoad(self):
+        self.status=Label()
+        self.button = Button("Display list of all published memories and fields", self)
+        self.buttonupdate = Button("Update data from AMS publisher", self)
+
+        buttons = HorizontalPanel()
+        buttons.add(self.button)
+        buttons.add(self.buttonupdate)
+        buttons.setSpacing(8)
+
+        info = """<p>This example demonstrates the calling of the Memory Snooper in PETSc with Pyjamas and <a href="http://json-rpc.org/">JSON-RPC</a>.</p>"""
+
+        self.panel = VerticalPanel()
+        self.panel.add(HTML(info))
+        self.panel.add(buttons)
+        self.panel.add(self.status)
+        RootPanel().add(self.panel)
+        self.commobj = AMS_Comm()
+        self.tree = None
+        if AMSJavascript.sent > AMSJavascript.recv:
+           self.status.setText('Press button again: AMSJavascript.sent '+str(AMSJavascript.sent)+' AMSJavascript.recv '+str(AMSJavascript.recv))
+           return
+        if self.commobj.commname == 'No AMS publisher running':
+           self.status.setText(self.commobj.commname)
+        else:
+           self.status.setText('Memories for AMS Comm: '+str(AMSJavascript.sent)+str(AMSJavascript.recv)+self.commobj.commname)
+           result = self.commobj.get_memory_list()
+           if self.tree: self.panel.remove(self.tree)
+           self.tree = Tree()
+           for i in result:
+              subtree = TreeItem(i)
+              memory = self.commobj.memory_attach(i)
+              fields = memory.get_field_list()
+              for j in fields:
+                 field = memory.get_field_info(j)
+                 subtree.addItem(j+' = '+str(field[4]))
+              self.tree.addItem(subtree)
+              self.panel.add(self.tree)
+
+    def onClick(self, sender):
+        self.status.setText('Button pressed')
+        if sender == self.buttonupdate:
+            self.commobj = AMS_Comm()
+            self.status.setText('Updating data: Press Display list button to refesh')
+        if sender == self.button:
+            if AMSJavascript.sent > AMSJavascript.recv:
+               self.status.setText('Press button again: AMSJavascript.sent '+str(AMSJavascript.sent)+' AMSJavascript.recv '+str(AMSJavascript.recv))
+               return
+            if self.commobj.commname == 'No AMS publisher running':
+               self.status.setText(self.commobj.commname)
+            else:
+               self.status.setText('Memories for AMS Comm: '+str(AMSJavascript.sent)+str(AMSJavascript.recv)+self.commobj.commname)
+               result = self.commobj.get_memory_list()
+               if self.tree: self.panel.remove(self.tree)
+               self.tree = Tree()
+               for i in result:
+                  subtree = TreeItem(i)
+                  memory = self.commobj.memory_attach(i)
+                  fields = memory.get_field_list()
+                  for j in fields:
+                     field = memory.get_field_info(j)
+                     subtree.addItem(j+' = '+str(field[4]))
+                  self.tree.addItem(subtree)
+                  self.panel.add(self.tree)
+
+
+if __name__ == '__main__':
+    pyjd.setup()
+    app = AMSJavascriptExample()
+    app.onModuleLoad()
+    pyjd.run()
+
+
+
+#
+#   Run python pyjsbuild --output . AMSJavascript.py to generate the needed HTML and Javascript
+#
+
+import pyjd
+
+from pyjamas.ui.RootPanel import RootPanel
+from pyjamas.ui.TextArea import TextArea
+from pyjamas.ui.Label import Label
+from pyjamas.ui.Button import Button
+from pyjamas.ui.HTML import HTML
+from pyjamas.ui.VerticalPanel import VerticalPanel
+from pyjamas.ui.HorizontalPanel import HorizontalPanel
+from pyjamas.ui.ListBox import ListBox
+from pyjamas.JSONService import JSONProxy
+from pyjamas.ui.Tree import Tree
+from pyjamas.ui.TreeItem import TreeItem
+
+
+comm   = -1  # Currently attached AMS communicator; only one is supported at a time
+args   = {}  # Arguments to each remote call
+sent   = 0   # Number of calls sent to server
+recv   = 0   # Number of calls received from server
+
+class AMSJavascriptExample:
+    def onModuleLoad(self):
+        self.status=Label()
+        self.button = Button("Display list of all published memories and fields", self)
+        self.buttonupdate = Button("Update data from AMS publisher", self)
+
+        buttons = HorizontalPanel()
+        buttons.add(self.button)
+        buttons.add(self.buttonupdate)
+        buttons.setSpacing(8)
+
+        info = """<p>This example demonstrates the calling of the Memory Snooper in PETSc with Pyjamas and <a href="http://json-rpc.org/">JSON-RPC</a>.</p>"""
+
+        self.panel = VerticalPanel()
+        self.panel.add(HTML(info))
+        self.panel.add(buttons)
+        self.panel.add(self.status)
+        RootPanel().add(self.panel)
+        self.commobj = AMS_Comm()
+        self.tree = None
+
+    def onClick(self, sender):
+        global sent,recv
+        self.status.setText('Button pressed')
+        if sender == self.buttonupdate:
+            self.commobj = AMS_Comm()
+            self.status.setText('Updating data: Press Display list button to refesh')
+        if sender == self.button:
+            if sent > recv:
+               self.status.setText('Press button again: sent '+str(sent)+' recv '+str(recv))
+            if self.commobj.commname == 'No AMS publisher running':
+               self.status.setText(self.commobj.commname)
+            else:
+               self.status.setText('Memories for AMS Comm: '+self.commobj.commname)
+               result = self.commobj.get_memory_list()
+               if self.tree: self.panel.remove(self.tree)
+               self.tree = Tree()
+               for i in result:
+                  subtree = TreeItem(i)
+                  memory = self.commobj.memory_attach(i)
+                  fields = memory.get_field_list()
+                  for j in fields:
+                     field = memory.get_field_info(j)
+                     subtree.addItem(j+' = '+str(field[4]))
+                  self.tree.addItem(subtree)
+                  self.panel.add(self.tree)
+
+class ServicePython(JSONProxy):
+    def __init__(self):
+        JSONProxy.__init__(self, "No service name", ["YAML_echo", "YAML_AMS_Connect", "YAML_AMS_Comm_attach", "YAML_AMS_Comm_get_memory_list","YAML_AMS_Memory_attach","YAML_AMS_Memory_get_field_list","YAML_AMS_Memory_get_field_info"])
+
+# ---------------------------------------------------------
+class AMS_Memory(JSONProxy):
+    def __init__(self,comm,memory):
+        global args,sent,recv
+        self.comm             = comm
+        self.name             = memory   # string name of memory
+        self.fieldlist        = []
+        self.fields           = {}
+        self.remote           = ServicePython()
+        id = self.remote.YAML_AMS_Memory_attach(comm,memory,self)
+        args[id] = ['YAML_AMS_Memory_attach',comm,memory]
+        sent += 1
+
+    def get_field_list(self,func = null):
+        '''If called with func (net yet supported) then calls func asynchronously with latest memory list;
+           otherwise returns current (possibly out-dated) memory list'''
+        return self.fieldlist
+
+    def get_field_info(self,field, func = null):
+        '''Pass in string name of AMS field
+           If called with func (not yet done) then first updates comm with latest field list and then calls func with field'''
+        if not self.fields.has_key(field):
+            return 'Memory does not have field named '+field
+        return self.fields[field]
+
+    def onRemoteResponse(self, response, request_info):
+        global args,sent,recv
+        recv += 1
+        method = str(request_info.method)
+        rid    = request_info.id
+        if method == "YAML_AMS_Memory_attach":
+            self.memory = response[0]
+            id = self.remote.YAML_AMS_Memory_get_field_list(self.memory,self)
+            args[id] = ['YAML_AMS_Memory_get_field_list',self.memory]
+            sent += 1
+        elif method == "YAML_AMS_Memory_get_field_list":
+            self.fieldlist = response
+            for i in self.fieldlist:
+                id = self.remote.YAML_AMS_Memory_get_field_info(self.memory,i,self)
+                args[id] = ['YAML_AMS_Memory_get_field_info',self.memory,i]
+                sent += 1
+        elif method == "YAML_AMS_Memory_get_field_info":
+            self.fields[args[rid][2]] = response
+
+
+    def onRemoteError(self, code, errobj, request_info):
+        pass
+
+# ---------------------------------------------------------
+class AMS_Comm(JSONProxy):
+    def __init__(self):
+        global args,sent,recv
+        self.comm             = -1
+        self.commname         = ''
+        self.memlist          = []
+        self.memories         = {}
+        self.memory_list_func = null
+        self.remote           = ServicePython()
+        id = self.remote.YAML_AMS_Connect('No argument', self)
+        args[id] = ['YAML_AMS_Connect']
+        sent += 1
+
+    def get_memory_list(self,func = null):
+        '''If called with func then calls func asynchronously with latest memory list;
+           otherwise returns current (possibly out-dated) memory list'''
+        if func:
+            self.memory_list_func = func
+            id = self.remote.YAML_AMS_Comm_get_memory_list(self.comm,self)
+            args[id] = ['YAML_AMS_Comm_get_memory_list',self.comm]
+            sent += 1
+        else:
+            return self.memlist
+
+    def memory_attach(self,memory,func = null):
+        '''Pass in string name of AMS memory object
+           If called with func (not yet done) then first updates comm with latest memory list and then calls func with memory'''
+        return self.memories[memory]
+
+    def onRemoteResponse(self, response, request_info):
+        global args,sent,recv
+        global comm
+        recv += 1
+        method = str(request_info.method)
+        rid    = request_info.id
+        if method == "YAML_AMS_Connect":
+            self.commname = str(response)
+            if self.commname == 'No AMS publisher running':
+                 pass
+            else:
+                 id = self.remote.YAML_AMS_Comm_attach(self.commname,self)
+                 args[id] = ['YAML_AMS_Comm_attach',self.commname]
+                 sent += 1
+        elif method == "YAML_AMS_Comm_attach":
+            self.comm = str(response)
+            id = self.remote.YAML_AMS_Comm_get_memory_list(self.comm,self)
+            args[id] = ['YAML_AMS_Comm_get_memory_list',self.comm]
+            sent += 1
+        elif method == "YAML_AMS_Comm_get_memory_list":
+            if not isinstance(response,list):response = [response]
+            self.memlist = response
+            for i in self.memlist:
+                self.memories[i] = AMS_Memory(comm,i)
+            if self.memory_list_func:
+                self.memory_list_func(response)
+                self.memory_list_func = null
+
+    def onRemoteError(self, code, errobj, request_info):
+        pass
+
+if __name__ == '__main__':
+    pyjd.setup()
+    app = AMSJavascriptExample()
+    app.onModuleLoad()
+    pyjd.run()
+
+
+
+#!/usr/bin/env python
+
+# This file initializes a CMake build in $PETSC_DIR/$PETSC_ARCH using
+# the compilers and flags determined by BuildSystem. It is imported and
+# called by Configure.py during configures in which CMake was detected,
+# but it can also be run as a stand-alone program. The library paths and
+# flags should have been written to
+#
+#     $PETSC_DIR/$PETSC_ARCH/conf/PETScConfig.cmake
+#
+# by configure before running this script.
+
+from __future__ import with_statement  # For python-2.5
+
+import os,sys,string
+from collections import deque
+sys.path.insert(0, os.path.join(os.path.abspath('config')))
+sys.path.insert(0, os.path.join(os.path.abspath('config'),'BuildSystem'))
+import script
+
+def noCheck(command, status, output, error):
+  return
+
+def quoteIfNeeded(path):
+  "Don't need quotes unless the path has bits that would confuse the shell"
+  safe = string.letters + string.digits + os.path.sep + os.path.pardir + '-_'
+  if set(path).issubset(safe):
+    return path
+  else:
+    return '"' + path + '"'
+
+class StdoutLogger(object):
+  def write(self,str):
+    print(str)
+
+class PETScMaker(script.Script):
+ def __init__(self, petscdir, petscarch, argDB = None, framework = None):
+   import RDict
+
+   if not argDB:
+     argDB = RDict.RDict(None, None, 0, 0, readonly = True)
+     argDB.saveFilename = os.path.join(petscdir,petscarch,'conf','RDict.db')
+     argDB.load()
+   script.Script.__init__(self, argDB = argDB)
+   self.framework = framework
+
+ def __str__(self):
+   return ''
+
+ def setupModules(self):
+   self.mpi           = self.framework.require('config.packages.MPI',         None)
+   self.base          = self.framework.require('config.base',                 None)
+   self.setCompilers  = self.framework.require('config.setCompilers',         None)
+   self.arch          = self.framework.require('PETSc.utilities.arch',        None)
+   self.petscdir      = self.framework.require('PETSc.utilities.petscdir',    None)
+   self.languages     = self.framework.require('PETSc.utilities.languages',   None)
+   self.debugging     = self.framework.require('PETSc.utilities.debugging',   None)
+   self.make          = self.framework.require('config.programs',        None)
+   self.cmake         = self.framework.require('PETSc.packages.cmake',       None)
+   self.CHUD          = self.framework.require('PETSc.utilities.CHUD',        None)
+   self.compilers     = self.framework.require('config.compilers',            None)
+   self.types         = self.framework.require('config.types',                None)
+   self.headers       = self.framework.require('config.headers',              None)
+   self.functions     = self.framework.require('config.functions',            None)
+   self.libraries     = self.framework.require('config.libraries',            None)
+   self.scalarType    = self.framework.require('PETSc.utilities.scalarTypes', None)
+   self.memAlign      = self.framework.require('PETSc.utilities.memAlign',    None)
+   self.libraryOptions= self.framework.require('PETSc.utilities.libraryOptions', None)
+   self.compilerFlags = self.framework.require('config.compilerFlags', self)
+   return
+
+ def setup(self):
+   script.Script.setup(self)
+   if not self.framework:
+     self.framework = self.loadConfigure()
+   self.setupModules()
+
+ def cmakeboot(self, args, log):
+   import shlex
+   self.setup()
+   options = deque()
+
+   output,error,retcode = self.executeShellCommand([self.cmake.cmake, '--version'], checkCommand=noCheck, log=log)
+   import re
+   m = re.match(r'cmake version (.+)$', output)
+   if not m:
+       self.logPrintBox('Could not parse CMake version: %s, falling back to legacy build' % output)
+       return False
+   from distutils.version import LooseVersion
+   version = LooseVersion(m.groups()[0])
+   if version < LooseVersion('2.6.2'):
+       self.logPrintBox('CMake version %s < 2.6.2, falling back to legacy build' % version.vstring)
+       return False
+   if self.languages.clanguage == 'Cxx' and version < LooseVersion('2.8'):
+       self.logPrintBox('Cannot use --with-clanguage=C++ with CMake version %s < 2.8, falling back to legacy build' % version.vstring)
+       return False # no support for: set_source_files_properties(${file} PROPERTIES LANGUAGE CXX)
+
+   langlist = [('C','C')]
+   if hasattr(self.compilers,'FC'):
+     langlist.append(('FC','Fortran'))
+   if (self.languages.clanguage == 'Cxx'):
+     langlist.append(('Cxx','CXX'))
+   win32fe = None
+   for petsclanguage,cmakelanguage in langlist:
+     self.setCompilers.pushLanguage(petsclanguage)
+     compiler = self.setCompilers.getCompiler()
+     flags = [self.setCompilers.getCompilerFlags(),
+              self.setCompilers.CPPFLAGS,
+              self.CHUD.CPPFLAGS]
+     if compiler.split()[0].endswith('win32fe'): # Hack to support win32fe without changing the rest of configure
+       win32fe = compiler.split()[0] + '.exe'
+       compiler = ' '.join(compiler.split()[1:])
+     options.append('-DCMAKE_'+cmakelanguage+'_COMPILER:FILEPATH=' + compiler)
+     options.append('-DCMAKE_'+cmakelanguage+'_FLAGS:STRING=' + ''.join(flags))
+     self.setCompilers.popLanguage()
+   options.append('-DCMAKE_AR='+self.setCompilers.AR)
+   ranlib = shlex.split(self.setCompilers.RANLIB)[0]
+   options.append('-DCMAKE_RANLIB='+ranlib)
+   if win32fe:
+     options.append('-DPETSC_WIN32FE:FILEPATH=%s'%win32fe)
+     # Default on Windows is to generate Visual Studio project files, but
+     # 1. the build process for those is different, need to give different build instructions
+     # 2. the current WIN32FE workaround does not work with VS project files
+     options.append('-GUnix Makefiles')
+   cmd = [self.cmake.cmake, '--trace', '--debug-output', self.petscdir.dir] + map(lambda x:x.strip(), options) + args
+   archdir = os.path.join(self.petscdir.dir, self.arch.arch)
+   try:
+     # Try to remove the old cache because some versions of CMake lose CMAKE_C_FLAGS when reconfiguring this way
+     os.remove(os.path.join(archdir, 'CMakeCache.txt'))
+   except OSError:
+     pass
+   import shutil
+   # Try to remove all the old CMake files to avoid infinite loop (CMake-2.8.10.2, maybe other versions)
+   # http://www.mail-archive.com/cmake@cmake.org/msg44765.html
+   self.logPrint('Removing: %s' % os.path.join(archdir, 'CMakeFiles', version.vstring))
+   shutil.rmtree(os.path.join(archdir, 'CMakeFiles', version.vstring), ignore_errors=True)
+   log.write('Invoking: %s\n' % cmd)
+   output,error,retcode = self.executeShellCommand(cmd, checkCommand = noCheck, log=log, cwd=archdir,timeout=30)
+   if retcode:
+     self.logPrintBox('CMake setup incomplete (status %d), falling back to legacy build' % (retcode,))
+     self.logPrint('Output: '+output+'\nError: '+error)
+     cachetxt = os.path.join(archdir, 'CMakeCache.txt')
+     try:
+       with open(cachetxt, 'r') as f:
+         log.write('Contents of %s:\n' % cachetxt)
+         log.write(f.read())
+     except IOError, e:
+       log.write('Could not read file %s: %r\n' % (cachetxt, e))
+     return False
+   else:
+     return True # Configure successful
+
+def main(petscdir, petscarch, argDB=None, framework=None, log=StdoutLogger(), args=[]):
+  # This can be called as a stand-alone program, or by importing it from
+  # python.  The latter functionality is needed because argDB does not
+  # get written until the very end of configure, but we want to run this
+  # automatically during configure (if CMake is available).
+  #
+  # Strangely, we can't store log in the PETScMaker because
+  # (somewhere) it creeps into framework (which I don't want to modify)
+  # and makes the result unpickleable.  This is not a problem when run
+  # as a standalone program (because the database is read-only), but is
+  # not okay when called from configure.
+  return PETScMaker(petscdir,petscarch,argDB,framework).cmakeboot(args,log)
+
+if __name__ == "__main__":
+  main(petscdir=os.environ['PETSC_DIR'], petscarch=os.environ['PETSC_ARCH'], args=sys.argv[1:])
+
+
+#!/usr/bin/env python
+import builder
+import os, sys
+
+# Find PETSc/BuildSystem
+if 'PETSC_DIR' in os.environ:
+  configDir = os.path.join(os.environ['PETSC_DIR'], 'config')
+  bsDir     = os.path.join(configDir, 'BuildSystem')
+  sys.path.insert(0, bsDir)
+  sys.path.insert(0, configDir)
+
+def build(args):
+  '''Compile all out of date source and generate a new shared library
+  Any files specified will be added to the source database if not already present'''
+  # TODO: Make rootDir an option (this should really be a filter for sourceDB)
+  maker = builder.PETScMaker()
+  maker.setup()
+  maker.updateDependencies('libpetsc', maker.rootDir)
+  for p in args.files:
+    filename = os.path.abspath(p)
+    if not maker.sourceDatabase.hasNode(filename):
+      maker.logPrint('Adding %s to the source database' % filename)
+      maker.sourceDatabase.setNode(filename, [])
+  if maker.buildLibraries('libpetsc', maker.rootDir, args.parallel) and args.rebuildDep:
+    # This is overkill, but right now it is cheap
+    maker.rebuildDependencies('libpetsc', maker.rootDir)
+  maker.cleanup()
+  return 0
+
+def buildSingleExample(maker, ex):
+  import shutil
+
+  if isinstance(ex, list):
+    exampleName = os.path.splitext(os.path.basename(ex[0]))[0]
+    exampleDir  = os.path.dirname(ex[0])
+  else:
+    exampleName = os.path.splitext(os.path.basename(ex))[0]
+    exampleDir  = os.path.dirname(ex)
+  objDir        = maker.getObjDir(exampleName)
+  if os.path.isdir(objDir): shutil.rmtree(objDir)
+  os.mkdir(objDir)
+  executable = os.path.join(objDir, exampleName)
+  objects    = maker.buildFile(ex, objDir)
+  if not len(objects):
+    print('EXAMPLE BUILD FAILED (check make.log for details)')
+    return 1
+  maker.link(executable, objects, maker.configInfo.languages.clanguage)
+  return 0
+
+def buildExample(args):
+  '''Build and link an example'''
+  ret   = 0
+  maker = builder.PETScMaker()
+  maker.setup()
+  examples = []
+  for f in args.files:
+    if f[0] == '[':
+      examples.append(map(os.path.abspath, f[1:-1].split(',')))
+    else:
+      examples.append(os.path.abspath(f))
+  for ex in examples:
+    ret = buildSingleExample(maker, ex)
+    if ret: break
+  maker.cleanup()
+  return ret
+
+def checkSingleRun(maker, ex, replace, extraArgs = ''):
+  import shutil
+
+  if isinstance(ex, list):
+    exampleName = os.path.splitext(os.path.basename(ex[0]))[0]
+    exampleDir  = os.path.dirname(ex[0])
+  else:
+    exampleName = os.path.splitext(os.path.basename(ex))[0]
+    exampleDir  = os.path.dirname(ex)
+  objDir        = maker.getObjDir(exampleName)
+  if os.path.isdir(objDir): shutil.rmtree(objDir)
+  os.mkdir(objDir)
+  executable  = os.path.join(objDir, exampleName)
+  paramKey    = os.path.join(os.path.relpath(exampleDir, maker.petscDir), os.path.basename(executable))
+  if paramKey in builder.regressionRequirements:
+    if not builder.regressionRequirements[paramKey].issubset(packageNames):
+      raise RuntimeError('This test requires packages: %s' % builder.regressionRequirements[paramKey])
+  params = builder.regressionParameters.get(paramKey, {})
+  if not params:
+    params = builder.getRegressionParameters(maker, exampleDir).get(paramKey, {})
+    print 'Makefile params',params
+  if not isinstance(params, list):
+    params = [params]
+  # NOTE: testnum will be wrong for single tests, just push fixes to PETSc
+  rebuildTest = True
+  numtests = 1 if args.testnum is not None else len(params)
+  maker.logPrint('Running %d tests\n' % (numtests,), debugSection='screen', forceScroll=True)
+  for testnum, param in enumerate(params):
+    if 'num' in param: testnum = param['num']
+    if not args.testnum is None and testnum != args.testnum: continue
+    if 'setup' in param:
+      print(param['setup'])
+      os.system('python '+param['setup'])
+      rebuildTest = True
+    if 'source' in param:
+      if not isinstance(ex, list):
+        ex = [ex]+param['source']
+      else:
+        ex = ex+param['source']
+    if rebuildTest:
+      objects = maker.buildFile(ex, objDir)
+      if not len(objects):
+        print('TEST BUILD FAILED (check make.log for details)')
+        return 1
+      maker.link(executable, objects, maker.configInfo.languages.clanguage)
+    if not 'args' in param: param['args'] = ''
+    param['args'] += extraArgs
+    if maker.runTest(exampleDir, executable, testnum, replace, **param):
+      print('TEST RUN FAILED (check make.log for details)')
+      return 1
+    rebuildTest = False
+  if not args.retain and os.path.isdir(objDir): shutil.rmtree(objDir)
+  return 0
+
+def check(args):
+  '''Check that build is functional'''
+  ret       = 0
+  extraArgs = ' '+' '.join(args.args)
+  maker     = builder.PETScMaker()
+  maker.setup()
+  # C test
+  if len(args.files):
+    examples = []
+    for f in args.files:
+      if f[0] == '[':
+        examples.append(map(os.path.abspath, f[1:-1].split(',')))
+      else:
+        examples.append(os.path.abspath(f))
+  else:
+    examples = [os.path.join(maker.petscDir, 'src', 'snes', 'examples', 'tutorials', 'ex5.c')]
+  # Fortran test
+  if not len(args.files):
+    if hasattr(maker.configInfo.compilers, 'FC'):
+      if maker.configInfo.fortrancpp.fortranDatatypes:
+        examples.append(os.path.join(maker.petscDir, 'src', 'snes', 'examples', 'tutorials', 'ex5f90t.F'))
+      elif maker.configInfo.compilers.fortranIsF90:
+        examples.append(os.path.join(maker.petscDir, 'src', 'snes', 'examples', 'tutorials', 'ex5f90.F'))
+      else:
+        examples.append(os.path.join(maker.petscDir, 'src', 'snes', 'examples', 'tutorials', 'ex5f.F'))
+  for ex in examples:
+    ret = checkSingleRun(maker, ex, args.replace, extraArgs)
+    if ret: break
+  if not ret:
+    print('All tests pass')
+  maker.cleanup()
+  return ret
+
+def regression(args):
+  '''Run complete regression suite'''
+  ret   = 0
+  maker = builder.PETScMaker()
+  maker.setup()
+
+  args.retain  = False
+  args.testnum = None
+  walker = builder.DirectoryTreeWalker(maker.argDB, maker.log, maker.configInfo, allowExamples = True)
+  #dirs = map(lambda d: os.path.join(maker.petscDir, 'src', d), ['inline', 'sys', 'vec', 'mat', 'dm', 'ksp', 'snes', 'ts', 'docs', 'tops'])
+  dirs = map(lambda d: os.path.join(maker.petscDir, 'src', d), ['vec'])
+  for d in dirs:
+    print 'Dir',d
+    for root, files in walker.walk(d):
+      baseDir = os.path.basename(root)
+      if not baseDir == 'tests' and not baseDir == 'tutorials': continue
+      for f in files:
+        basename, ext = os.path.splitext(f)
+        if not basename.startswith('ex'): continue
+        if not ext in ['.c', '.F']: continue
+        ex  = os.path.join(root, f)
+        ret = checkSingleRun(maker, ex)
+        if ret: break
+      if ret: break
+    if ret: break
+  if not ret:
+    print('All regression tests pass')
+  maker.cleanup()
+  return ret
+
+def clean(args):
+  '''Remove source database and all objects'''
+  maker = builder.PETScMaker()
+  maker.setup()
+  maker.clean('libpetsc')
+  maker.cleanup()
+  return 0
+
+def purge(args):
+  '''Remove a sets of files from the source database'''
+  maker = builder.PETScMaker()
+  maker.setup()
+  maker.updateDependencies('libpetsc', maker.rootDir)
+  for p in args.files:
+    filename = os.path.abspath(p)
+    maker.logPrint('Removing %s from the source database' % filename)
+    maker.sourceDatabase.removeNode(filename)
+  maker.cleanup()
+  return 0
+
+def stubs(args):
+  '''Build stubs for certain languages'''
+  maker = builder.PETScMaker()
+  maker.setup()
+  for language in args.languages:
+    print(language)
+    getattr(maker, 'build'+language.capitalize()+'Stubs')()
+  maker.cleanup()
+  return 0
+
+def showSingleRun(maker, ex, extraArgs = ''):
+  if isinstance(ex, list):
+    exampleName = os.path.splitext(os.path.basename(ex[0]))[0]
+    exampleDir  = os.path.dirname(ex[0])
+  else:
+    exampleName = os.path.splitext(os.path.basename(ex))[0]
+    exampleDir  = os.path.dirname(ex)
+  objDir        = maker.getObjDir(exampleName)
+  executable    = os.path.join(objDir, exampleName)
+  paramKey      = os.path.join(os.path.relpath(exampleDir, maker.petscDir), os.path.basename(executable))
+  if paramKey in builder.regressionRequirements:
+    if not builder.regressionRequirements[paramKey].issubset(packageNames):
+      raise RuntimeError('This test requires packages: %s' % builder.regressionRequirements[paramKey])
+  params = builder.regressionParameters.get(paramKey, {})
+  if not params:
+    params = builder.getRegressionParameters(maker, exampleDir).get(paramKey, {})
+    maker.logPrint('Makefile params '+strparams)
+  if not isinstance(params, list):
+    params = [params]
+  for testnum, param in enumerate(params):
+    if 'num' in param: testnum = param['num']
+    if not args.testnum is None and testnum != args.testnum: continue
+    if not 'args' in param: param['args'] = ''
+    param['args'] += extraArgs
+    print(str(testnum)+':  '+maker.getTestCommand(executable, **param))
+  return 0
+
+def show(args):
+  '''Show run information'''
+  ret       = 0
+  extraArgs = ' '+' '.join(args.args)
+  maker     = builder.PETScMaker()
+  maker.setup()
+  # C test
+  examples = []
+  for f in args.files:
+    if f[0] == '[':
+      examples.append(map(os.path.abspath, f[1:-1].split(',')))
+    else:
+      examples.append(os.path.abspath(f))
+  for ex in examples:
+    ret = showSingleRun(maker, ex, extraArgs)
+    if ret: break
+  maker.cleanup()
+  return ret
+
+if __name__ == '__main__':
+  # Argumnt parsing
+  import argparse
+
+  parser = argparse.ArgumentParser(description     = 'PETSc BuildSystem',
+                                   epilog          = 'For more information, visit http://www.mcs.anl.gov/petsc',
+                                   formatter_class = argparse.ArgumentDefaultsHelpFormatter)
+  parser.add_argument('--version', action='version', version='PETSc BuildSystem 0.1')
+  subparsers = parser.add_subparsers(help='build actions')
+
+  parser_build = subparsers.add_parser('build', help='Compile all out of date source and generate a new shared library')
+  parser_build.add_argument('files', nargs='*', help='Extra files to incorporate into the build')
+  parser_build.add_argument('--parallel',   action='store_true',  default=False, help='Execute the build in parallel')
+  parser_build.add_argument('--rebuildDep', action='store_false', default=True,  help='Rebuild dependencies')
+  parser_build.set_defaults(func=build)
+  parser_check = subparsers.add_parser('buildExample', help='Compile and link an example')
+  parser_check.add_argument('files', nargs='+', help='The example files')
+  parser_check.set_defaults(func=buildExample)
+  parser_check = subparsers.add_parser('check', help='Check that build is functional')
+  parser_check.add_argument('files', nargs='*', help='Extra examples to test')
+  parser_check.add_argument('--args', action='append', default=[], help='Extra execution arguments for test')
+  parser_check.add_argument('--retain', action='store_true', default=False, help='Retain the executable after testing')
+  parser_check.add_argument('--testnum', type=int, help='The test number to execute')
+  parser_check.add_argument('--replace', action='store_true', default=False, help='Replace stored output with test output')
+  parser_check.set_defaults(func=check)
+  parser_regression = subparsers.add_parser('regression', help='Execute regression tests')
+  parser_regression.set_defaults(func=regression)
+  parser_clean = subparsers.add_parser('clean', help='Remove source database and all objects')
+  parser_clean.set_defaults(func=clean)
+  parser_purge = subparsers.add_parser('purge', help='Remove a set of files from the source database')
+  parser_purge.add_argument('files', nargs='+', help='Files to remove from the source database')
+  parser_purge.set_defaults(func=purge)
+  parser_stubs = subparsers.add_parser('stubs', help='Build stubs for certain languages')
+  parser_stubs.add_argument('languages', nargs='+', help='Stub languages')
+  parser_stubs.set_defaults(func=stubs)
+  parser_show = subparsers.add_parser('show', help='Print run information')
+  parser_show.add_argument('files', nargs='+', help='Examples to display run info for')
+  parser_show.add_argument('--args', action='append', default=[], help='Extra execution arguments for test')
+  parser_show.add_argument('--testnum', type=int, help='The test number to execute')
+  parser_show.set_defaults(func=show)
+
+  args = parser.parse_args()
+  print(args)
+  args.func(args)
+
+
+#!/usr/bin/env python
+
+# This file generates $PETSC_DIR/CMakeLists.txt by parsing the makefiles
+# throughout the source tree, reading their constraints and included
+# sources, and encoding the rules through CMake conditionals. When CMake
+# runs, it will use the conditionals written to
+#
+#     $PETSC_DIR/$PETSC_ARCH/conf/PETScConfig.cmake
+#
+# by BuildSystem after a successful configure.
+#
+# The generated CMakeLists.txt is independent of PETSC_ARCH.
+#
+# This script supports one option:
+#   --verbose : Show mismatches between makefiles and the filesystem
+
+from __future__ import with_statement  # For python-2.5
+
+import os
+from collections import defaultdict, deque
+
+# Run with --verbose
+VERBOSE = False
+MISTAKES = []
+
+class StdoutLogger(object):
+  def write(self,str):
+    print(str)
+
+def cmakeconditional(key,val):
+  def unexpected():
+    raise RuntimeError('Unexpected')
+  if key in ['package', 'function', 'define']:
+    return val
+  if key == 'precision':
+    if val == 'double':
+      return 'PETSC_USE_REAL_DOUBLE'
+    elif val == 'single':
+      return 'PETSC_USE_REAL_SINGLE'
+    raise RuntimeError('Unexpected precision: %r'%val)
+  if key == 'scalar':
+    if val == 'real':
+      return 'NOT PETSC_USE_COMPLEX'
+    if val == 'complex':
+      return 'PETSC_USE_COMPLEX'
+    raise RuntimeError('Unexpected scalar: %r'%val)
+  if key == 'language':
+    if val == 'CXXONLY':
+      return 'PETSC_CLANGUAGE_Cxx'
+    if val == 'CONLY':
+      return 'PETSC_CLANGUAGE_C'
+    raise RuntimeError('Unexpected language: %r'%val)
+  raise RuntimeError('Unhandled case: %r=%r'%(key,val))
+
+def pkgsources(pkg):
+  '''
+  Walks the source tree associated with 'pkg', analyzes the conditional written into the makefiles,
+  and returns a list of sources associated with each unique conditional (as a dictionary).
+  '''
+  from distutils.sysconfig import parse_makefile
+  autodirs = set('ftn-auto ftn-custom f90-custom'.split()) # Automatically recurse into these, if they exist
+  skipdirs = set('examples benchmarks'.split())            # Skip these during the build
+  def compareDirLists(mdirs,dirs):
+    smdirs = set(mdirs)
+    sdirs  = set(dirs).difference(autodirs)
+    if not smdirs.issubset(sdirs):
+      MISTAKES.append('Makefile contains directory not on filesystem: %s: %r' % (root, sorted(smdirs - sdirs)))
+    if not VERBOSE: return
+    if smdirs != sdirs:
+      from sys import stderr
+      print >>stderr, ('Directory mismatch at %s:\n\t%s: %r\n\t%s: %r\n\t%s: %r'
+                       % (root,
+                          'in makefile   ',sorted(smdirs),
+                          'on filesystem ',sorted(sdirs),
+                          'symmetric diff',sorted(smdirs.symmetric_difference(sdirs))))
+  def compareSourceLists(msources, files):
+    smsources = set(msources)
+    ssources  = set(f for f in files if os.path.splitext(f)[1] in ['.c', '.cxx', '.cc', '.cpp', '.F'])
+    if not smsources.issubset(ssources):
+      MISTAKES.append('Makefile contains file not on filesystem: %s: %r' % (root, sorted(smsources - ssources)))
+    if not VERBOSE: return
+    if smsources != ssources:
+      from sys import stderr
+      print >>stderr, ('Source mismatch at %s:\n\t%s: %r\n\t%s: %r\n\t%s: %r'
+                       % (root,
+                          'in makefile   ',sorted(smsources),
+                          'on filesystem ',sorted(ssources),
+                          'symmetric diff',sorted(smsources.symmetric_difference(ssources))))
+  allconditions = defaultdict(set)
+  sources = defaultdict(deque)
+  for root,dirs,files in os.walk(os.path.join('src',pkg)):
+    conditions = allconditions[os.path.dirname(root)].copy()
+    makefile = os.path.join(root,'makefile')
+    if not os.path.exists(makefile):
+      continue
+    makevars = parse_makefile(makefile)
+    mdirs = makevars.get('DIRS','').split() # Directories specified in the makefile
+    compareDirLists(mdirs,dirs) # diagnostic output to find unused directories
+    candidates = set(mdirs).union(autodirs).difference(skipdirs)
+    dirs[:] = list(candidates.intersection(dirs))
+    with open(makefile) as lines:
+      def stripsplit(line):
+        return filter(lambda c: c!="'", line[len('#requires'):]).split()
+      conditions.update(set(tuple(stripsplit(line)) for line in lines if line.startswith('#requires')))
+    def relpath(filename):
+      return os.path.join(root,filename)
+    sourcec = makevars.get('SOURCEC','').split()
+    sourcef = makevars.get('SOURCEF','').split()
+    compareSourceLists(sourcec+sourcef, files) # Diagnostic output about unused source files
+    sources[repr(sorted(conditions))].extend(relpath(f) for f in sourcec + sourcef)
+    allconditions[root] = conditions
+  return sources
+
+def writeRoot(f):
+  f.write(r'''cmake_minimum_required (VERSION 2.6.2)
+project (PETSc C)
+
+include (${PETSc_BINARY_DIR}/conf/PETScConfig.cmake)
+
+if (PETSC_HAVE_FORTRAN)
+  enable_language (Fortran)
+endif ()
+if (PETSC_CLANGUAGE_Cxx OR PETSC_HAVE_CXX)
+  enable_language (CXX)
+endif ()
+
+if (APPLE)
+  SET(CMAKE_C_ARCHIVE_FINISH "<CMAKE_RANLIB> -c <TARGET> ")
+  SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -c <TARGET> ")
+  SET(CMAKE_Fortran_ARCHIVE_FINISH "<CMAKE_RANLIB> -c <TARGET> ")
+endif ()
+
+include_directories ("${PETSc_SOURCE_DIR}/include" "${PETSc_BINARY_DIR}/include")
+
+add_definitions (-D__INSDIR__= ) # CMake always uses the absolute path
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PETSc_BINARY_DIR}/lib" CACHE PATH "Output directory for PETSc archives")
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PETSc_BINARY_DIR}/lib" CACHE PATH "Output directory for PETSc libraries")
+set (CMAKE_Fortran_MODULE_DIRECTORY "${PETSc_BINARY_DIR}/include" CACHE PATH "Output directory for fortran *.mod files")
+mark_as_advanced (CMAKE_ARCHIVE_OUTPUT_DIRECTORY CMAKE_LIBRARY_OUTPUT_DIRECTORY CMAKE_Fortran_MODULE_DIRECTORY)
+set (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+###################  The following describes the build  ####################
+
+''')
+
+def writePackage(f,pkg,pkgdeps):
+  for conds, srcs in pkgsources(pkg).items():
+    conds = eval(conds)
+    def body(indentlevel):
+      indent = ' '*(indentlevel+2)
+      lfindent = '\n'+indent
+      return ' '*indentlevel + 'list (APPEND PETSC' + pkg.upper() + '_SRCS' + lfindent + lfindent.join(srcs) + lfindent + ')\n'
+    if conds:
+      f.write('if (%s)\n%sendif ()\n' % (' AND '.join(cmakeconditional(*c) for c in conds), body(2)))
+    else:
+      f.write(body(0))
+  f.write('''
+if (NOT PETSC_USE_SINGLE_LIBRARY)
+  add_library (petsc%(pkg)s ${PETSC%(PKG)s_SRCS})
+  target_link_libraries (petsc%(pkg)s %(pkgdeps)s ${PETSC_PACKAGE_LIBS})
+  if (PETSC_WIN32FE)
+    set_target_properties (petsc%(pkg)s PROPERTIES RULE_LAUNCH_COMPILE "${PETSC_WIN32FE}")
+    set_target_properties (petsc%(pkg)s PROPERTIES RULE_LAUNCH_LINK "${PETSC_WIN32FE}")
+  endif ()
+endif ()
+''' % dict(pkg=pkg, PKG=pkg.upper(), pkgdeps=' '.join('petsc%s'%p for p in pkgdeps)))
+
+def main(petscdir, log=StdoutLogger()):
+  import tempfile, shutil
+  written = False               # We delete the temporary file if it wasn't finished, otherwise rename (atomic)
+  fd,tmplists = tempfile.mkstemp(prefix='CMakeLists.txt.',dir=petscdir,text=True)
+  try:
+    with os.fdopen(fd,'w') as f:
+      writeRoot(f)
+      f.write('include_directories (${PETSC_PACKAGE_INCLUDES})\n')
+      pkglist = [('sys'            , ''),
+                 ('vec'            , 'sys'),
+                 ('mat'            , 'vec sys'),
+                 ('dm'             , 'mat vec sys'),
+                 ('ksp'            , 'dm mat vec sys'),
+                 ('snes'           , 'ksp dm mat vec sys'),
+                 ('ts'             , 'snes ksp dm mat vec sys')]
+      for pkg,deps in pkglist:
+        writePackage(f,pkg,deps.split())
+      f.write ('''
+if (PETSC_USE_SINGLE_LIBRARY)
+  add_library (petsc %s)
+  target_link_libraries (petsc ${PETSC_PACKAGE_LIBS})
+  if (PETSC_WIN32FE)
+    set_target_properties (petsc PROPERTIES RULE_LAUNCH_COMPILE "${PETSC_WIN32FE}")
+    set_target_properties (petsc PROPERTIES RULE_LAUNCH_LINK "${PETSC_WIN32FE}")
+  endif ()
+
+endif ()
+''' % (' '.join([r'${PETSC' + pkg.upper() + r'_SRCS}' for pkg,deps in pkglist]),))
+      f.write('''
+if (PETSC_CLANGUAGE_Cxx)
+  foreach (file IN LISTS %s)
+    if (file MATCHES "^.*\\\\.c$")
+      set_source_files_properties(${file} PROPERTIES LANGUAGE CXX)
+    endif ()
+  endforeach ()
+endif()''' % ('\n  '.join([r'PETSC' + pkg.upper() + r'_SRCS' for (pkg,_) in pkglist])))
+    written = True
+  finally:
+    if written:
+      shutil.move(tmplists,os.path.join(petscdir,'CMakeLists.txt'))
+    else:
+      os.remove(tmplists)
+  if MISTAKES:
+    for m in MISTAKES:
+      log.write(m + '\n')
+    raise RuntimeError('PETSc makefiles contain mistakes or files are missing on filesystem.\n%s\nPossible reasons:\n\t1. Files were deleted locally, try "hg update".\n\t2. Files were deleted from mercurial, but were not removed from makefile. Send mail to petsc-maint@mcs.anl.gov.\n\t3. Someone forgot "hg add" new files. Send mail to petsc-maint@mcs.anl.gov.' % ('\n'.join(MISTAKES)))
+
+if __name__ == "__main__":
+  import optparse
+  parser = optparse.OptionParser()
+  parser.add_option('--verbose', help='Show mismatches between makefiles and the filesystem', dest='verbose', action='store_true', default=False)
+  (opts, extra_args) = parser.parse_args()
+  if opts.verbose:
+    VERBOSE = True
+  main(petscdir=os.environ['PETSC_DIR'])
+
+
+#!/usr/bin/env python
+
+from __future__ import with_statement  # For python-2.5
+
+import os, sys
+import shutil
+import tempfile
+
+sys.path.insert(0, os.path.join(os.environ['PETSC_DIR'], 'config'))
+sys.path.insert(0, os.path.join(os.environ['PETSC_DIR'], 'config', 'BuildSystem'))
+
+import logger, script
+
+regressionRequirements = {'src/vec/vec/examples/tests/ex31':  set(['Matlab'])
+                          }
+
+regressionParameters = {'src/sys/comm/examples/tests/ex1':    [{'numProcs': 2},
+                                                               {'numProcs': 5}],
+                        'src/vec/vec/examples/tests/ex1_2':    {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex3':      {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex4':      {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex5':      {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex9':      {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex10':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex11':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex12':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex13':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex14':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex16':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex17':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex17f':    {'numProcs': 3},
+                        'src/vec/vec/examples/tests/ex21_2':   {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex22':     {'numProcs': 4},
+                        'src/vec/vec/examples/tests/ex23':     {'numProcs': 2},
+                        'src/vec/vec/examples/tests/ex24':     {'numProcs': 3},
+                        'src/vec/vec/examples/tests/ex25':     {'numProcs': 3},
+                        'src/vec/vec/examples/tests/ex26':     {'numProcs': 4},
+                        'src/vec/vec/examples/tests/ex28':     {'numProcs': 3},
+                        'src/vec/vec/examples/tests/ex29':     {'numProcs': 3, 'args': '-n 126'},
+                        'src/vec/vec/examples/tests/ex30f':    {'numProcs': 4},
+                        'src/vec/vec/examples/tests/ex33':     {'numProcs': 4},
+                        'src/vec/vec/examples/tests/ex36':     {'numProcs': 2, 'args': '-set_option_negidx -set_values_negidx -get_values_negidx'},
+                        'src/vec/vec/examples/tutorials/ex10':  [{'numProcs': 1, 'args': '-hdf5'},
+                                                                 {'numProcs': 2, 'args': '-binary'},
+                                                                 {'numProcs': 3, 'args': '-binary'},
+                                                                 {'numProcs': 5, 'args': '-binary'}],
+                        'src/dm/impls/patch/examples/tests/ex1': [{'numProcs': 1, 'args': '-patch_size 2 -grid_size 6'},
+                                                                  {'numProcs': 4, 'args': '-patch_size 2 -grid_size 4'},
+                                                                  {'numProcs': 4, 'args': '-patch_size 2 -grid_size 4 -comm_size 1'},
+                                                                  {'numProcs': 4, 'args': '-patch_size 2 -grid_size 4 -comm_size 2'},
+                                                                  {'numProcs': 16, 'args': '-patch_size 2 -grid_size 8 -comm_size 2'}],
+                        'src/dm/impls/plex/examples/tests/ex1': [{'numProcs': 1, 'args': '-dim 3 -ctetgen_verbose 4 -dm_view ::ascii_info_detail -info -info_exclude null'},
+                                                                 {'numProcs': 1, 'args': '-dim 3 -ctetgen_verbose 4 -refinement_limit 0.0625 -dm_view ::ascii_info_detail -info -info_exclude null'},
+                                                                 {'numProcs': 1, 'args': '-dim 2 -dm_view ::ascii_latex'},
+                                                                 {'numProcs': 1, 'args': '-dim 2 -refinement_uniform 1 -interpolate 1 -dm_view ::ascii_info_detail'},
+                                                                 {'numProcs': 2, 'args': '-dim 2 -refinement_uniform 1 -interpolate 1 -dm_view ::ascii_info_detail -sf_type window'},
+                                                                 {'numProcs': 2, 'args': '-dim 2 -refinement_uniform 1 -interpolate 1 -dm_view ::ascii_latex -sf_type window'},
+                                                                 {'numProcs': 1, 'args': '-dim 2 -cell_simplex 0 -dm_view ::ascii_info_detail'},
+                                                                 {'numProcs': 1, 'args': '-dim 2 -cell_simplex 0 -refinement_uniform 1 -dm_view ::ascii_info_detail'},
+                                                                 {'numProcs': 2, 'args': '-dim 2 -cell_simplex 0 -refinement_uniform 1 -interpolate 1 -dm_view ::ascii_info_detail -sf_type window'},
+                                                                 {'numProcs': 2, 'args': '-dim 2 -cell_simplex 0 -refinement_uniform 1 -interpolate 1 -dm_view ::ascii_latex -sf_type window'}],
+                        'src/dm/impls/plex/examples/tests/ex3': [{'numProcs': 1, 'args': '',
+                                                                  'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 1 2 1 identity src/dm/impls/plex/examples/tests/ex3.h'},
+                                                                 {'numProcs': 1, 'args': '-order 1'},
+                                                                 {'numProcs': 1, 'args': '-order 2'},
+                                                                 {'numProcs': 1, 'args': '-dim 3',
+                                                                  'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 3 1 3 1 identity src/dm/impls/plex/examples/tests/ex3.h'},
+                                                                 {'numProcs': 1, 'args': '-dim 3 -order 1'},
+                                                                 {'numProcs': 1, 'args': '-dim 3 -order 2'},
+                                                                 {'numProcs': 1, 'args': '-interpolate 1',
+                                                                  'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 identity src/dm/impls/plex/examples/tests/ex3.h'},
+                                                                 {'numProcs': 1, 'args': '-interpolate 1 -order 1'},
+                                                                 {'numProcs': 1, 'args': '-interpolate 1 -order 2'}],
+                        'src/dm/impls/plex/examples/tests/ex4': [{'numProcs': 1, 'args': '-dim 2 -dm_view ::ascii_info_detail'},
+                                                                 {'numProcs': 1, 'args': '-dim 2 -refinement_uniform 1 -dm_view ::ascii_info_detail'},
+                                                                 {'numProcs': 2, 'args': '-dim 2 -dm_view ::ascii_info_detail'},
+                                                                 {'numProcs': 2, 'args': '-dim 2 -refinement_uniform 1 -dm_view ::ascii_info_detail'}],
+                        'src/dm/impls/plex/examples/tests/ex1f90': [{'numProcs': 1, 'args': ''}],
+                        'src/dm/impls/plex/examples/tests/ex2f90': [{'numProcs': 1, 'args': ''}],
+                        'src/dm/impls/mesh/examples/tests/ex1': [{'numProcs': 1, 'args': '-dim 2 -dm_view'},
+                                                                 {'numProcs': 1, 'args': '-dim 2 -dm_view -interpolate'},
+                                                                 {'numProcs': 1, 'args': '-dim 3 -dm_view'},
+                                                                 {'numProcs': 1, 'args': '-dim 3 -dm_view -interpolate'},
+                                                                 {'numProcs': 3, 'args': '-dim 2 -dm_view'},
+                                                                 {'numProcs': 3, 'args': '-dim 2 -dm_view -interpolate'},
+                                                                 {'numProcs': 8, 'args': '-dim 2 -dm_view'},
+                                                                 {'numProcs': 8, 'args': '-dim 2 -dm_view -interpolate'},
+                                                                 {'numProcs': 6, 'args': '-dim 3 -dm_view'},
+                                                                 {'numProcs': 6, 'args': '-dim 3 -dm_view -interpolate'},
+                                                                 {'numProcs': 10, 'args': '-dim 2 -dm_view -refinement_limit 7.63e-6'},
+                                                                 {'numProcs': 10, 'args': '-dim 3 -dm_view -refinement_limit 1.00e-7'},
+                                                                 {'numProcs': 50, 'args': '-dim 2 -dm_view -refinement_limit 7.63e-6'},
+                                                                 {'numProcs': 50, 'args': '-dim 3 -dm_view -refinement_limit 1.00e-7'}],
+                        'src/dm/impls/mesh/examples/tutorials/ex1': [{'numProcs': 1},
+                                                                     {'numProcs': 2, 'args': '-base_file src/dm/impls/mesh/examples/tutorials/data/ex1_3d_big -dim 3'}],
+                        'src/dm/impls/mesh/examples/tests/ex3': [{'numProcs': 1, 'args': '-malloc_dump -dm_mesh_view -dm_mesh_new_impl'},
+                                                                 {'numProcs': 2, 'args': '-malloc_dump -dm_mesh_view -dm_mesh_new_impl'},
+                                                                 {'numProcs': 3, 'args': '-malloc_dump -dm_mesh_view -dm_mesh_new_impl'},
+                                                                 {'numProcs': 5, 'args': '-malloc_dump -dm_mesh_view -dm_mesh_new_impl'}],
+                        'src/dm/impls/mesh/examples/tests/ex4': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                 {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex5f90': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                    {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex6': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                 {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex7f90': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                    {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex8': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                 {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex9f90': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                    {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex10': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                  {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/ex11f90': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                     {'numProcs': 2, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'}],
+                        'src/dm/impls/mesh/examples/tests/TestMeshExodus': [{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri.gen'},
+                                                                            {'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-tri2.gen'},
+                                                                            {'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-quad.gen'},
+                                                                           #{'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Square-mixed.gen'},
+                                                                            {'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Tet.gen'},
+                                                                            {'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Hex.gen'},
+                                                                            {'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Tet.gen -interpolate'},
+                                                                            {'numProcs': 1, 'args': '-i src/dm/impls/mesh/examples/tests/meshes/Hex.gen -interpolate'}],
+                        'src/ksp/ksp/examples/tests/ex10':    [{'numProcs': 1, 'args': '-m 3 -matconvert_type seqaij -ksp_monitor_short'}],
+                        'src/ksp/ksp/examples/tutorials/ex4': [{'numProcs': 1, 'args': '-info -info_exclude null,vec'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 10 -da_grid_y 10 -solve -ksp_monitor'},
+                                                               {'numProcs': 2, 'args': '-da_grid_x 10 -da_grid_y 10'}],
+                                                               #{'numProcs': 1, 'args': '-info'}],
+                        'src/ksp/ksp/examples/tutorials/ex12': {'numProcs': 2, 'args': '-ksp_gmres_cgs_refinement_type refine_always'},
+                        'src/ksp/ksp/examples/tutorials/ex40': {'numProcs': 1, 'args': '-mat_no_inode -ksp_monitor_short'},
+                        'src/ksp/ksp/examples/tutorials/ex54':[{'numProcs': 4, 'args': '-ne 40 -alpha 1.e-3 -ksp_monitor_short -ksp_type cg -ksp_norm_type unpreconditioned'},
+                                                               {'numProcs': 4, 'args': '-ne 40 -alpha 1.e-3 -ksp_monitor_short -ksp_type cg -ksp_norm_type unpreconditioned -pc_gamg_type sa'}],
+                        'src/ksp/ksp/examples/tutorials/ex55':[{'numProcs': 4, 'args': '-ne 40 -alpha 1.e-3 -ksp_monitor_short -ksp_type cg -ksp_norm_type unpreconditioned'},
+                                                               {'numProcs': 4, 'args': '-ne 40 -alpha 1.e-3 -ksp_monitor_short -ksp_type cg -ksp_norm_type unpreconditioned -pc_gamg_type sa'}],
+                        'src/ksp/ksp/examples/tutorials/ex56':[{'numProcs': 8, 'args': '-ne 11 -alpha 1.e-3 -ksp_monitor_short -ksp_type cg -ksp_norm_type unpreconditioned -pc_gamg_type sa'}],
+                        'src/snes/examples/tutorials/ex5':    [{'numProcs': 4, 'args': '-snes_mf -da_processors_x 4 -da_processors_y 1 -snes_monitor_short -ksp_gmres_cgs_refinement_type refine_always'},
+                                                               {'numProcs': 1, 'args': '-pc_type mg -ksp_monitor_short  -snes_view -pc_mg_levels 3 -pc_mg_galerkin -da_grid_x 17 -da_grid_y 17 -mg_levels_ksp_monitor_short -snes_monitor_short -mg_levels_pc_type sor -pc_mg_type full'},
+                                                               {'numProcs': 1, 'args': '-pc_type mg -ksp_monitor_short  -snes_view -pc_mg_galerkin -snes_grid_sequence 3 -mg_levels_ksp_monitor_short -snes_monitor_short -mg_levels_pc_type sor -pc_mg_type full'},
+                                                               {'numProcs': 2, 'args': '-snes_grid_sequence 2 -snes_mf_operator -snes_converged_reason -snes_view -pc_type mg'},
+                                                               {'numProcs': 2, 'args': '-snes_grid_sequence 2 -snes_monitor_short -ksp_monitor_short -ksp_converged_reason -snes_converged_reason -snes_view -pc_type mg'}],
+                        'src/snes/examples/tutorials/ex5f90':  {'numProcs': 4, 'args': '-snes_mf -da_processors_x 4 -da_processors_y 1 -snes_monitor_short -ksp_gmres_cgs_refinement_type refine_always'},
+                        'src/snes/examples/tutorials/ex5f90t': {'numProcs': 4, 'args': '-snes_mf -da_processors_x 4 -da_processors_y 1 -snes_monitor_short -ksp_gmres_cgs_refinement_type refine_always'},
+                        'src/snes/examples/tutorials/ex9':    [{'numProcs': 1, 'args': '-snes_mf -snes_monitor_short -ksp_gmres_cgs_refinement_type refine_always'}],
+#                        'src/snes/examples/tutorials/ex19':    {'numProcs': 2, 'args': '-dmmg_nlevels 4 -snes_monitor_short'},
+                        'src/snes/examples/tutorials/ex19':   [{'numProcs': 1, 'args': '-dm_vec_type seq     -dm_mat_type seqaij     -pc_type none -dmmg_nlevels 1 -da_grid_x 200 -da_grid_y 200 -mat_no_inode -preload off -log_summary -log_summary_py'},
+                                                               {'numProcs': 1, 'args': '-dm_vec_type seqcusp -dm_mat_type seqaijcusp -pc_type none -dmmg_nlevels 1 -da_grid_x 200 -da_grid_y 200 -mat_no_inode -preload off -log_summary -log_summary_py'}],
+                        'src/snes/examples/tutorials/ex11':   [{'numProcs': 1, 'args': '-snes_mf -snes_monitor_short -snes_converged_reason'}],
+                        'src/snes/examples/tutorials/ex12':   [{'numProcs': 1, 'args': '-lambda 0.0 -snes_monitor -ksp_monitor -snes_converged_reason'},
+                                                               {'numProcs': 1, 'args': '-lambda 0.0 -snes_monitor -ksp_monitor -snes_converged_reason -refinement_limit 0.0625'},
+                                                               {'numProcs': 2, 'args': '-lambda 0.0 -snes_monitor -ksp_monitor -snes_converged_reason'},
+                                                               {'numProcs': 2, 'args': '-lambda 0.0 -snes_monitor -ksp_monitor -snes_converged_reason -refinement_limit 0.0625'},
+                                                               {'numProcs': 1, 'args': '-lambda 0.0 -snes_monitor -ksp_monitor -snes_converged_reason -bc_type neumann'},
+                                                               {'numProcs': 2, 'args': '-lambda 0.0 -snes_monitor -ksp_monitor -snes_converged_reason -bc_type neumann'}],
+                                                               #{'numProcs': 1, 'args': '-dim 3 -lambda 0.0 -ksp_rtol 1.0e-9 -snes_monitor -ksp_monitor -snes_converged_reason -refinement_limit 0.0625'},
+                                                               #{'numProcs': 2, 'args': '-dim 3 -lambda 0.0 -ksp_rtol 1.0e-9 -snes_monitor -ksp_monitor -snes_converged_reason -refinement_limit 0.005'}],
+                        'src/snes/examples/tutorials/ex10':   [{'numProcs': 2, 'args': '-da_grid_x 5 -snes_converged_reason -snes_monitor_short -problem_type 0'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -problem_type 1'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -problem_type 2'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -ksp_monitor_short -problem_type 2 \
+-snes_mf_operator -pack_dm_mat_type aij -pc_type fieldsplit -pc_fieldsplit_type additive -fieldsplit_u_ksp_type gmres -fieldsplit_k_pc_type jacobi'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -ksp_monitor_short -problem_type 2 \
+-snes_mf_operator -pack_dm_mat_type nest -pc_type fieldsplit -pc_fieldsplit_type additive -fieldsplit_u_ksp_type gmres -fieldsplit_k_pc_type jacobi'}],
+                        'src/snes/examples/tutorials/ex28':   [{'numProcs': 3, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -problem_type 0'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -problem_type 1'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -problem_type 2'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -ksp_monitor_short -problem_type 2 \
+-snes_mf_operator -pack_dm_mat_type aij -pc_type fieldsplit -pc_fieldsplit_type additive -fieldsplit_u_ksp_type gmres -fieldsplit_k_pc_type jacobi'},
+                                                               {'numProcs': 1, 'args': '-da_grid_x 20 -snes_converged_reason -snes_monitor_short -ksp_monitor_short -problem_type 2 \
+-snes_mf_operator -pack_dm_mat_type nest -pc_type fieldsplit -pc_fieldsplit_type additive -fieldsplit_u_ksp_type gmres -fieldsplit_k_pc_type jacobi'}],
+                        'src/snes/examples/tutorials/ex31':   [# Decoupled field Dirichlet tests 0-6
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0     -forcing_type constant -bc_type dirichlet -interpolate 1 -show_initial -dm_plex_print_fem 1',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 laplacian 2 1 1 1 gradient 2 1 1 1 identity src/snes/examples/tutorials/ex31.h'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0     -forcing_type constant -bc_type dirichlet -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.00625 -forcing_type constant -bc_type dirichlet -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0     -forcing_type linear   -bc_type dirichlet -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.00625 -forcing_type linear   -bc_type dirichlet -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0     -forcing_type cubic    -bc_type dirichlet -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.00625 -forcing_type cubic    -bc_type dirichlet -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               # 2D serial freeslip tests 7-9
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0     -forcing_type cubic    -bc_type freeslip  -interpolate 1 -show_initial -dm_plex_print_fem 1',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 laplacian 2 1 1 1 gradient 2 1 1 1 identity src/snes/examples/tutorials/ex31.h'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0     -forcing_type cubic    -bc_type freeslip  -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.00625 -forcing_type cubic    -bc_type freeslip  -interpolate 1 -ksp_type fgmres -ksp_gmres_restart 100 -ksp_rtol 1.0e-9 -pc_type fieldsplit -pc_fieldsplit_0_fields 0,1 -pc_fieldsplit_1_fields 2 -pc_fieldsplit_type additive -fieldsplit_0_ksp_type fgmres -fieldsplit_0_pc_type fieldsplit -fieldsplit_0_pc_fieldsplit_type schur -fieldsplit_0_pc_fieldsplit_schur_factorization_type full -fieldsplit_0_fieldsplit_velocity_ksp_type preonly -fieldsplit_0_fieldsplit_velocity_pc_type lu -fieldsplit_0_fieldsplit_pressure_ksp_rtol 1e-10 -fieldsplit_0_fieldsplit_pressure_pc_type jacobi -fieldsplit_temperature_ksp_type preonly -fieldsplit_temperature_pc_type lu -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0'}],
+                        'src/snes/examples/tutorials/ex33':   [{'numProcs': 1, 'args': '-snes_converged_reason -snes_monitor_short'}],
+                        'src/snes/examples/tutorials/ex52':   [# 2D Laplacian 0-3
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 1 1 1 laplacian src/snes/examples/tutorials/ex52.h',
+                                                                'source': ['src/snes/examples/tutorials/ex52_integrateElement.cu']},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -batch'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -batch -gpu'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -batch -gpu -gpu_batches 2'},
+                                                               # 2D Laplacian refined 4-8
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -batch'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -batch -gpu'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -batch -gpu -gpu_batches 2'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -batch -gpu -gpu_batches 4'},
+                                                               # 2D Elasticity 9-12
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -op_type elasticity',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 1 2 1 elasticity src/snes/examples/tutorials/ex52.h'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -op_type elasticity -batch'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -op_type elasticity -batch -gpu'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0 -compute_function -op_type elasticity -batch -gpu -gpu_batches 2'},
+                                                               # 2D Elasticity refined 13-17
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -op_type elasticity'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -op_type elasticity -batch'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -op_type elasticity -batch -gpu'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -op_type elasticity -batch -gpu -gpu_batches 2'},
+                                                               {'numProcs': 1, 'args': '-dm_view -refinement_limit 0.0625 -compute_function -op_type elasticity -batch -gpu -gpu_batches 4'},
+                                                               # 3D Laplacian 18-20
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0 -compute_function',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 3 1 1 1 laplacian src/snes/examples/tutorials/ex52.h'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0 -compute_function -batch'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0 -compute_function -batch -gpu'},
+                                                               # 3D Laplacian refined 21-24
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -batch'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -batch -gpu'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -batch -gpu -gpu_batches 2'},
+                                                               # 3D Elasticity 25-27
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0 -compute_function -op_type elasticity',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 3 1 3 1 elasticity src/snes/examples/tutorials/ex52.h'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0 -compute_function -op_type elasticity -batch'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0 -compute_function -op_type elasticity -batch -gpu'},
+                                                               # 3D Elasticity 28-31
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -op_type elasticity'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -op_type elasticity -batch'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -op_type elasticity -batch -gpu'},
+                                                               {'numProcs': 1, 'args': '-dim 3 -dm_view -refinement_limit 0.0125 -compute_function -op_type elasticity -batch -gpu -gpu_batches 2'},
+                                                               # 'source': ['src/snes/examples/tutorials/ex52_integrateElement.cu']},
+                                                               ],
+                        'src/snes/examples/tutorials/ex56':   [{'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0 -bc_type dirichlet -interpolate 0 -show_initial -show_residual -show_jacobian',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 1 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex56.h'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex56.h'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -refinement_limit 0.0 -bc_type dirichlet -interpolate 0 -show_initial -show_residual -show_jacobian',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 3 1 3 1 laplacian 3 1 1 1 gradient src/snes/examples/tutorials/ex56.h'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -refinement_limit 0.0 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -refinement_limit 0.1 -bc_type dirichlet -interpolate 0 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -refinement_limit 0.1 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -refinement_limit 0.0 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 3 2 3 1 laplacian 3 1 1 1 gradient src/snes/examples/tutorials/ex56.h'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -refinement_limit 0.1 -bc_type dirichlet -interpolate 1 -show_initial -show_residual -show_jacobian'}
+],
+                        'src/snes/examples/tutorials/ex57':   [{'numProcs': 1, 'args': '-run_type test -bc_type dirichlet -interpolate 0 -show_initial -show_residual -show_jacobian',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadratureTensorProduct.py 2 1 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex57.h'},
+                                                               {'numProcs': 1, 'args': '-run_type test -dim 3 -bc_type dirichlet -interpolate 0 -show_initial -show_residual -show_jacobian',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadratureTensorProduct.py 3 1 3 1 laplacian 3 1 1 1 gradient src/snes/examples/tutorials/ex57.h'}],
+                        'src/snes/examples/tutorials/ex62':   [# 2D serial P1 tests 0-3
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 0 -show_initial -dm_plex_print_fem 1',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 1 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex62.h'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 1 -show_initial -dm_plex_print_fem 1'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -show_initial -dm_plex_print_fem 1'},
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -show_initial -dm_plex_print_fem 1'},
+                                                               # 2D serial P2 tests 4-5
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 1 -show_initial -dm_plex_print_fem 1',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex62.h'},
+
+                                                               {'numProcs': 1, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -show_initial -dm_plex_print_fem 1'},
+                                                               # Parallel tests 6-17
+                                                               {'numProcs': 2, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 0 -dm_plex_print_fem 1',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 1 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex62.h'},
+                                                               {'numProcs': 3, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 0 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 5, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 0 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 2, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 1 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 3, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 1 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 5, 'args': '-run_type test -refinement_limit 0.0    -bc_type dirichlet -interpolate 1 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 2, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 3, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 5, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 2, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 3, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -dm_plex_print_fem 1'},
+                                                               {'numProcs': 5, 'args': '-run_type test -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -dm_plex_print_fem 1'},
+                                                               # Full solutions 18-29
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 2, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 3, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 5, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 0 -pc_type jacobi -ksp_rtol 1.0e-10 -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 2, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 3, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 5, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex62.h'},
+                                                               {'numProcs': 2, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 3, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_converged_reason -snes_view'},
+                                                               {'numProcs': 5, 'args': '-run_type full -refinement_limit 0.0625 -bc_type dirichlet -interpolate 1 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_converged_reason -snes_view'},
+                                                               # Stokes preconditioners 30-36
+                                                               #   Jacobi
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.00625 -bc_type dirichlet -interpolate 1 -ksp_gmres_restart 100 -pc_type jacobi -ksp_rtol 1.0e-9 -snes_monitor_short -ksp_monitor_short -snes_converged_reason -snes_view -show_solution 0',
+                                                                'setup': './bin/pythonscripts/PetscGenerateFEMQuadrature.py 2 2 2 1 laplacian 2 1 1 1 gradient src/snes/examples/tutorials/ex62.h'},
+                                                               #  Block diagonal \begin{pmatrix} A & 0 \\ 0 & I \end{pmatrix}
+                                                               {'numProcs': 1, 'args': '-run_type full -refinement_limit 0.
+
+Question:
+Which Krylov subspace solver is not supported in PETSc software?
+
+A. Biconjugate Gradient Stabilized
+B. Conjugate Residual
+C. Generalized Conjugate Residual
+D. Generalized Minimum Residual
+
+Select the correct answer.

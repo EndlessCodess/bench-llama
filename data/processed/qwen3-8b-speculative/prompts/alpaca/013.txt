@@ -1,0 +1,4 @@
+Using the given data, calculate the average annual return
+
+Input:
+Returns: 2%, 5%, 8%, 3%, 2%

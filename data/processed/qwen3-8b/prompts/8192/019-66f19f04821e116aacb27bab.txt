@@ -1,0 +1,833 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+Introduction
+1
+Safety notes
+2
+Description
+3
+Functions
+4
+Mounting and dismantling
+5
+Connecting
+6
+Parameter setting
+7
+Planning/configuring
+8
+Maintenance and service
+9
+Messages and diagnostics
+10
+Technical data
+11
+Dimensional drawings
+12
+Process data and data sets
+13
+Connection examples
+14
+Coordination types
+A
+References
+B
+
+
+Legal information
+Warning notice system
+This manual contains notices you have to observe in order to ensure your personal safety, as well as to prevent 
+damage to property. The notices referring to your personal safety are highlighted in the manual by a safety alert 
+symbol, notices referring only to property damage have no safety alert symbol. These notices shown below are 
+graded according to the degree of danger.
+DANGER
+indicates that death or severe personal injury will result if proper precautions are not taken.
+WARNING
+indicates that death or severe personal injury may result if proper precautions are not taken.
+CAUTION
+indicates that minor personal injury can result if proper precautions are not taken.
+NOTICE
+indicates that property damage can result if proper precautions are not taken.
+If more than one degree of danger is present, the warning notice representing the highest degree of danger will 
+be used. A notice warning of injury to persons with a safety alert symbol may also include a warning relating to 
+property damage.
+Qualified Personnel
+The product/system described in this documentation may be operated only by personnel qualified for the specific 
+task in accordance with the relevant documentation, in particular its warning notices and safety instructions. 
+Qualified personnel are those who, based on their training and experience, are capable of identifying risks and 
+avoiding potential hazards when working with these products/systems.
+Proper use of Siemens products
+Note the following:
+WARNING
+Siemens products may only be used for the applications described in the catalog and in the relevant technical 
+documentation. If products and components from other manufacturers are used, these must be recommended or 
+approved by Siemens. Proper transport, storage, installation, assembly, commissioning, operation and maintenance 
+are required to ensure that the products operate safely and without any problems. The permissible ambient 
+conditions must be complied with. The information in the relevant documentation must be observed.
+Trademarks
+All names identified by ® are registered trademarks of Siemens Aktiengesellschaft. The remaining trademarks in 
+this publication may be trademarks whose use by third parties for their own purposes could violate the rights of 
+the owner.
+Disclaimer of Liability
+We have reviewed the contents of this publication to ensure consistency with the hardware and software 
+described. Since variance cannot be precluded entirely, we cannot guarantee full consistency.  However, the 
+information in this publication is reviewed regularly and any necessary corrections are included in subsequent 
+editions.
+Siemens Aktiengesellschaft
+Smart Infrastructure
+Electrical Products
+Postfach 10 09 53
+93009 Regensburg
+GERMANY
+A5E50183188002A/RS-AA/001
+Ⓟ 09/2024 Subject to change
+Copyright © Siemens 2024.
+All rights reserved
+
+
+Table of contents
+1
+Introduction........................................................................................................................................... 9
+1.1
+Responsibility of the user for system configuration and functionality..................................... 9
+1.2
+Purpose of the manual......................................................................................................... 9
+1.3
+Required basic knowledge.................................................................................................. 10
+1.4
+Scope of the manual.......................................................................................................... 10
+1.5
+Additional documentation ................................................................................................. 10
+1.6
+Siemens Industry Online Support ....................................................................................... 11
+1.7
+Siemens Industry Online Support app................................................................................. 12
+1.8
+Support Request ................................................................................................................ 13
+1.9
+History............................................................................................................................... 13
+2
+Safety notes ......................................................................................................................................... 15
+2.1
+General safety notes .......................................................................................................... 15
+2.2
+Qualified personnel required .............................................................................................. 16
+2.3
+Current information about operational safety ..................................................................... 16
+2.4
+Intended use...................................................................................................................... 16
+2.5
+Declaration of conformity .................................................................................................. 17
+2.6
+Five safety rules for working in or on electrical systems....................................................... 17
+2.7
+ESD Guidelines................................................................................................................... 18
+2.8
+Cybersecurity information.................................................................................................. 19
+2.9
+Data security in automation ............................................................................................... 20
+2.10
+Approvals, test certificates, characteristics .......................................................................... 22
+2.11
+Requirements for switching high-efficiency motors............................................................. 22
+2.12
+Voltages ............................................................................................................................ 23
+2.13
+Notes on the protection of device connections ................................................................... 23
+2.14
+Recycling and disposal ....................................................................................................... 23
+3
+Description........................................................................................................................................... 25
+3.1
+System overview................................................................................................................ 25
+3.1.1
+Product description............................................................................................................ 25
+3.1.2
+Applications....................................................................................................................... 29
+3.1.2.1
+ATEX.................................................................................................................................. 30
+3.1.3
+Operating principle............................................................................................................ 31
+3.2
+SIRIUS 3RC7 ILM (intelligent link module)........................................................................... 32
+3.2.1
+Product description............................................................................................................ 32
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+3
+
+
+3.2.2
+Article numbers ................................................................................................................. 33
+3.2.3
+Monitoring switching elements.......................................................................................... 34
+3.2.4
+Interfaces .......................................................................................................................... 34
+3.3
+SIRIUS 3RA8 ILF intelligent load feeder ............................................................................... 35
+3.3.1
+Overview........................................................................................................................... 35
+3.3.2
+Intelligent load feeders for self-assembly with a 3RC7 ILM .................................................. 36
+3.3.2.1
+Recommended combinations............................................................................................. 37
+3.3.2.2
+Possible combinations for 400 V AC, Class 10E.................................................................... 39
+3.3.3
+Pre-assembled SIRIUS 3RA8 ILF intelligent load feeders ....................................................... 40
+3.3.4
+Application environment.................................................................................................... 41
+3.4
+Accessories/ spare parts ..................................................................................................... 42
+3.4.1
+Accessories for 3RC7 ILM and 3RA8 ILF............................................................................... 42
+3.4.2
+Kits for setting up intelligent load feeders for reversing starting .......................................... 42
+4
+Functions ............................................................................................................................................. 43
+4.1
+Overview of functions........................................................................................................ 44
+4.2
+Basic configuration............................................................................................................. 45
+4.2.1
+Rated operational current Ie............................................................................................... 46
+4.2.2
+Load type .......................................................................................................................... 46
+4.2.3
+Interlock time .................................................................................................................... 47
+4.3
+Load protection.................................................................................................................. 48
+4.3.1
+Electronic motor overload protection.................................................................................. 48
+4.3.1.1
+Trip class............................................................................................................................ 49
+4.3.1.2
+Response to overload thermal motor model........................................................................ 50
+4.3.1.3
+Recovery time.................................................................................................................... 51
+4.3.1.4
+Motor heating limit – maintenance demanded ................................................................... 51
+4.3.1.5
+Non-volatile tripping status................................................................................................ 51
+4.3.2
+Current asymmetry ............................................................................................................ 52
+4.3.3
+Mains voltage .................................................................................................................... 52
+4.3.3.1
+Response to faulty main voltage......................................................................................... 53
+4.3.3.2
+Reset mode at faulty main voltage ..................................................................................... 53
+4.3.3.3
+Rotation direction monitoring ........................................................................................... 53
+4.3.3.4
+Rated mains voltage and operating range (only for high feature variants) ........................... 54
+4.4
+Condition monitoring......................................................................................................... 54
+4.4.1
+Current monitoring............................................................................................................ 54
+4.4.1.1
+Prospective locked rotor current (blocking current) ............................................................. 56
+4.4.1.2
+Prospective locked rotor time ............................................................................................. 56
+4.4.1.3
+Operational current monitoring.......................................................................................... 56
+4.4.2
+Starting time monitoring.................................................................................................... 57
+4.5
+Miscellaneous.................................................................................................................... 59
+4.5.1
+Reaction to communication loss......................................................................................... 59
+4.5.2
+Group diagnostics.............................................................................................................. 60
+4.6
+Additional functions........................................................................................................... 61
+4.6.1
+Control (switching elements) ............................................................................................. 61
+4.6.2
+Current measurement (load current) .................................................................................. 62
+4.6.3
+Mains voltage detection..................................................................................................... 62
+4.6.4
+Mains voltage measurement .............................................................................................. 62
+4.6.5
+Supply voltage monitoring ................................................................................................. 63
+4.6.5.1
+Supply voltage monitoring for electronics (PWR)................................................................. 63
+Table of contents
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+4
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+
+
+4.6.5.2
+Auxiliary voltage monitoring for the switching element (AUX-PWR)..................................... 63
+4.6.6
+Power measurement.......................................................................................................... 64
+4.6.7
+Device temperature measurement ..................................................................................... 65
+4.6.8
+Statistics............................................................................................................................ 65
+4.6.9
+Emergency start................................................................................................................. 65
+4.6.10
+Trip Reset........................................................................................................................... 66
+4.6.11
+Cold start........................................................................................................................... 66
+4.6.12
+Zero current detection ....................................................................................................... 67
+4.6.13
+Firmware update................................................................................................................ 67
+5
+Mounting and dismantling.................................................................................................................. 71
+5.1
+Warning notice .................................................................................................................. 71
+5.2
+Installation guidelines........................................................................................................ 71
+5.2.1
+Minimum clearances (AC 230 / 400 V // 440 V // 500 V // 400 V / 690 V)............................... 71
+5.2.2
+Installation guidelines for 3RV29 infeed system.................................................................. 73
+5.2.3
+Derating for different installation variants and operating conditions.................................... 74
+5.2.3.1
+Derating for intelligent load feeders for direct starting (size S00) ........................................ 74
+5.2.3.2
+Derating for intelligent load feeders for direct starting (size S0) .......................................... 75
+5.3
+Mounting and disassembling the load feeders .................................................................... 76
+5.3.1
+Overview........................................................................................................................... 76
+5.3.2
+Mounting the intelligent load feeder for direct starting (size S00) ....................................... 77
+5.3.3
+Disassembly of the intelligent load feeder for direct starting (size S00) ............................... 81
+5.3.4
+Mounting the intelligent load feeder for direct starting (size S0) ......................................... 85
+5.3.5
+Disassembly of the intelligent load feeder for direct starting (size S0) ................................. 89
+5.3.6
+Mounting and disassembly of the intelligent load feeder for reversing starting (size S00), 
+including mounting set 3RA2913-2LA2 .............................................................................. 92
+5.3.6.1
+Mounting the reversing contactor assembly (size S00)........................................................ 92
+5.3.6.2
+Mounting the intelligent load feeder for reversing starting (size S00).................................. 95
+5.3.6.3
+Disassembly of the intelligent load feeder for reversing starting (size S00) .......................... 99
+5.3.7
+Mounting and disassembly of the intelligent load feeder for reversing starting (size S0), 
+including mounting set 3RA2923-2LB2 with DIN rail adapter ............................................ 105
+5.3.7.1
+Mounting the reversing contactor assemblies (size S0) ..................................................... 105
+5.3.7.2
+Mounting the intelligent load feeder for reversing starting (size S0).................................. 108
+5.3.7.3
+Disassembly of the intelligent load feeder for reversing starting (size S0) .......................... 114
+5.3.8
+Installation and removal of the intelligent load feeder for reversing start (size S0) incl. 
+mounting set 3RA2923-2MB2 for installation on the 8US busbar system and the 3RV29 
+infeed system .................................................................................................................. 120
+5.3.8.1
+Mounting the reversing contactor assembly (size S0)........................................................ 120
+5.3.8.2
+Mounting the intelligent load feeder for reversing starting (size S0).................................. 123
+5.3.8.3
+Disassembly of the intelligent load feeder for reversing starting (size S0) .......................... 127
+5.4
+Mounting and disassembly with different mounting systems ............................................ 133
+5.4.1
+Mounting with 3RC7 ILM Standalone Adapter................................................................... 134
+5.4.1.1
+Mounting with 3RC7 ILM Standalone Adapter (size S00, mounting on DIN rail) ................. 134
+5.4.1.2
+Mounting with 3RC7 ILM Standalone Adapter (size S0, mounting on DIN rail) ................... 135
+5.4.2
+Mounting on and removal from DIN rail............................................................................ 136
+5.4.2.1
+Assembly and dismantling on DIN rail without DIN rail adapter ......................................... 136
+5.4.2.2
+Mounting on and removal from DIN rail with DIN rail adapter ........................................... 141
+5.4.3
+Mounting on base plate ................................................................................................... 147
+5.4.3.1
+Mounting on and removal from base plate without DIN rail adapter.................................. 147
+5.4.3.2
+Mounting on and removal from base plate with DIN rail adapter ...................................... 153
+5.4.4
+Mounting on the 8US busbar system................................................................................ 158
+Table of contents
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+5
+
+
+5.4.4.1
+Mounting of 3RA8 ILF on the 8US busbar adapter............................................................. 167
+5.4.4.2
+Removal of the 3RA8 ILF from the 8US busbar adapter...................................................... 171
+5.4.5
+Mounting on 3RV29 infeed system................................................................................... 174
+6
+Connecting ........................................................................................................................................ 177
+6.1
+Overview of all connections of the 3RC7 ILM .................................................................... 177
+6.1.1
+Connections 3RC7140-1.E.0 ILM (direct starter S00)......................................................... 177
+6.1.2
+Connections 3RC7140-4EE.1 ILM (direct starter S0).......................................................... 178
+6.1.3
+Connections 3RC7141-1.E.0 ILM (reversing starter S00) ................................................... 179
+6.1.4
+Connections 3RC7141-4EE.1 ILM (reversing starter S0)..................................................... 180
+6.2
+Overview of all connections of the 3RA8 ILF ..................................................................... 181
+6.2.1
+Connections 3RA841.-1.E.0 ILF (incl. 3RC7140-1.E.0 ILM), direct starter S00..................... 181
+6.2.2
+Connections 3RA8422-4EE.0 ILF (incl. 3RC7140-4EE.1 ILM), direct starter S0.................... 182
+6.2.3
+Connections 3RA851.-1.E.0 (incl. 3RC7141-1.E.0 ILM), reversing starter S00 .................... 183
+6.2.4
+Connections 3RA8522-4EE.0 (incl. 3RC7141-4EE.1 ILM), reversing starter S0.................... 184
+6.3
+Connecting and disconnecting 3RC7 ILM and 3RA8 ILF ..................................................... 185
+6.3.1
+Connect 3RA8 ILF to main circuit connection (line/load).................................................... 185
+6.3.2
+Connecting and disconnecting 3RC7 ILM Power Cable ...................................................... 190
+6.3.2.1
+Connecting 3RC7 ILM Power Cable ................................................................................... 190
+6.3.2.2
+Disconnecting 3RC7 ILM Power Cable............................................................................... 194
+6.3.3
+Connecting and disconnecting 3RC7 ILM Communication Cable ....................................... 197
+6.3.3.1
+Connecting 3RC7 ILM Communication Cable .................................................................... 197
+6.3.3.2
+Disconnecting 3RC7 ILM Communication Cable................................................................ 202
+7
+Parameter setting .............................................................................................................................. 207
+7.1
+Parameter assignment ..................................................................................................... 207
+7.2
+Commissioning................................................................................................................ 208
+7.3
+Parameterization with a GSD and MDD............................................................................. 208
+7.4
+Slot rules ......................................................................................................................... 208
+7.5
+Data plausibility check ..................................................................................................... 208
+7.6
+Declaration of parameters................................................................................................ 209
+7.7
+Process image input (PII) and process image output (PIQ) ................................................. 212
+8
+Planning/configuring ......................................................................................................................... 215
+8.1
+Configuration .................................................................................................................. 215
+8.2
+TIA Selection Tool ............................................................................................................ 215
+8.3
+Using the 3RA8 load feeders with high-efficiency motors .................................................. 215
+8.3.1
+General information on the startup behavior of highly energy-efficient motors ................. 215
+9
+Maintenance and service .................................................................................................................. 217
+9.1
+Warning notice ................................................................................................................ 217
+9.2
+Overview......................................................................................................................... 217
+9.3
+Replacing parts of the load feeder .................................................................................... 218
+9.3.1
+Replacing the 3RC7 ILM Communication Cable (3RC7940-0TE..) ....................................... 218
+9.3.2
+Replacing the 3RC7 ILM Power Cable (3RC7940-1TE0.)..................................................... 219
+9.4
+Replacing hardware ......................................................................................................... 219
+Table of contents
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+6
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+
+
+9.4.1
+Removing the load feeder from the control cabinet .......................................................... 219
+9.4.2
+Replacing the contactor ................................................................................................... 219
+9.4.3
+Replacement of the motor starter protector...................................................................... 219
+9.4.4
+Replacing the 3RC7 ILM.................................................................................................... 219
+9.4.5
+Reinstalling the load feeder in the control cabinet ............................................................ 220
+10
+Messages and diagnostics ................................................................................................................. 221
+10.1
+Status and error displays .................................................................................................. 221
+10.2
+Meaning of the LED displays............................................................................................. 224
+10.3
+Reset button .................................................................................................................... 227
+10.4
+Interrupts ........................................................................................................................ 228
+10.5
+Diagnostic messages........................................................................................................ 228
+11
+Technical data.................................................................................................................................... 233
+11.1
+3RC7 ILM ......................................................................................................................... 233
+11.1.1
+Technical data in Siemens Industry Online Support........................................................... 233
+11.1.2
+CAx data.......................................................................................................................... 233
+11.1.3
+Overview tables .............................................................................................................. 234
+11.2
+3RA8 ILF .......................................................................................................................... 234
+11.2.1
+Technical data in Siemens Industry Online Support........................................................... 234
+11.2.2
+CAx data.......................................................................................................................... 235
+11.2.3
+Overview tables .............................................................................................................. 235
+11.3
+Motor starter protector..................................................................................................... 236
+11.3.1
+Technical data in Siemens Industry Online Support........................................................... 236
+11.3.2
+CAx data.......................................................................................................................... 236
+11.4
+Contactors....................................................................................................................... 237
+11.4.1
+Technical data in Siemens Industry Online Support........................................................... 237
+11.4.2
+CAx data.......................................................................................................................... 237
+12
+Dimensional drawings ....................................................................................................................... 239
+12.1
+Intelligent load feeder with standalone adapter 3RC7940-2TE00 (size S00)....................... 239
+12.2
+Intelligent load feeder with standalone adapter 3RC7940-2TE01 (size S0)......................... 240
+13
+Process data and data sets................................................................................................................. 241
+13.1
+Reading and writing of data records ................................................................................. 241
+13.2
+Byte arrangements........................................................................................................... 241
+13.3
+Object number................................................................................................................. 241
+13.4
+Starting datasets.............................................................................................................. 242
+13.5
+DS3 commands with additional values ............................................................................. 242
+13.6
+DS68 Read/write process image output............................................................................. 243
+13.7
+DS69 Read process image input........................................................................................ 244
+13.8
+DS92 device diagnostics................................................................................................... 245
+13.9
+DS93 Write command ...................................................................................................... 248
+13.10
+DS94 Read measured values............................................................................................. 249
+Table of contents
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+7
+
+
+13.11
+DS95 Read statistics......................................................................................................... 250
+13.12
+DS96 Read maximum pointer........................................................................................... 251
+13.13
+DS131 General Parameters 1............................................................................................ 252
+13.14
+DS132 General Parameters 2............................................................................................ 256
+13.15
+DS222 commands (access via object number) .................................................................. 258
+13.16
+ Direct starter FAQ link ..................................................................................................... 259
+13.17
+I&M data.......................................................................................................................... 259
+13.17.1
+I&M data.......................................................................................................................... 259
+13.17.2
+I&M 0: Read device identification...................................................................................... 259
+13.17.3
+I&M 1: Read/write equipment identifier ............................................................................ 260
+13.17.4
+I&M 2: Read/write installation........................................................................................... 260
+13.17.5
+I&M 3: Read/write description........................................................................................... 261
+14
+Connection examples ........................................................................................................................ 263
+14.1
+Asynchronous motor........................................................................................................ 263
+14.2
+Single-phase motor.......................................................................................................... 265
+A
+Coordination types ............................................................................................................................ 267
+B
+References ......................................................................................................................................... 269
+B.1
+References....................................................................................................................... 269
+B.2
+Manuals - SIRIUS Modular System..................................................................................... 269
+Index.................................................................................................................................................. 271
+Table of contents
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+8
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+
+
+Introduction
+1
+1.1
+Responsibility of the user for system configuration and 
+functionality
+Intelligent load feeders are device combinations comprising a SIRIUS 3RV2 motor starter 
+protector, a SIRIUS 3RC7 ILM (Intelligent Link Module), and a SIRIUS 3RT2 contactor for normal 
+switching.
+The SIRIUS portfolio features two different configuration options for fuseless intelligent load 
+feeders:
+•
+Tested pre-assembled complete units SIRIUS 3RA8 ILF (Intelligent Load Feeder) 
+•
+Tested combinations of individual devices for self-assembly
+Siemens AG, its subsidiaries, and associated companies (hereinafter referred to as "Siemens") 
+are not in a position to guarantee every characteristic of a complete plant or machine not 
+designed by Siemens.
+Nor can Siemens assume liability for recommendations that appear or are implied in the 
+following description. No new guarantee, warranty, or liability claims beyond the scope 
+of the SIEMENS general terms of supply are to be derived or inferred from the following 
+description.
+Note
+When designing a system, comply with all valid national installation specifications and 
+standards.
+1.2
+Purpose of the manual
+This Equipment Manual describes the SIRIUS 3RC7 ILM (Intelligent Link Module) and the 
+SIRIUS 3RA8 ILF (Intelligent Load Feeder) as of firmware version V1.0 and provides the following 
+information:
+•
+Information on different setup variants of the 3RC7 ILM and the 3RA8 ILF.
+•
+Information on necessary hardware components.
+•
+Information on installing, connecting and operating the 3RC7 ILM and the 3RA8 ILF.
+•
+Technical information such as dimension drawings and unit wiring diagrams.
+The information in this Equipment Manual enables you to configure and commission the 
+3RC7 ILM and the 3RA8 ILF.
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+9
+
+
+1.3
+Required basic knowledge
+To understand these operating instructions you should have a general knowledge of automation 
+engineering and low-voltage switchgear. 
+A general knowledge of the following areas is needed in order to understand this manual:
+•
+Low-voltage controls and distribution
+•
+Digital circuit logic
+•
+Automation technology
+•
+TIA Portal
+1.4
+Scope of the manual
+This Equipment Manual is valid for the 3RC7 ILM and the 3RA8 ILF. It contains a description of the 
+devices that is valid at the time of publication. 
+1.5
+Additional documentation
+Manuals / online help
+At this point, you will find further manuals and online help that may be of interest to you for your 
+automation system. They are available to download from the Internet free of charge. You can 
+create your own individual system documentation in mySupport.
+•
+Equipment Manual "SIRIUS - SIRIUS 3RT contactors/contactor assemblies" (https://
+support.industry.siemens.com/cs/ww/en/view/60306557)
+•
+Equipment Manual "SIRIUS 3RV motor starter protectors" (https://
+support.industry.siemens.com/cs/ww/en/view/60279172)
+•
+Equipment Manual "SIMATIC ET 200SP Distributed I/O System" (https://
+support.industry.siemens.com/cs/us/en/view/58649293)
+•
+Equipment Manual "SIMATIC ET 200SP/ET 200AL Mixed configuration" (https://
+support.industry.siemens.com/cs/us/en/view/109784488)
+•
+Online help for STEP 7
+•
+The EMC Directive 2014/30/EU in practice (http://www.siemens.com/emc-guideline)
+•
+Industrial Control Panels and Electronic Equipment of Industrial Machinery for North 
+America (http://www.siemens.com/UL508A)
+•
+Control Panels compliant with IEC Standards and European Directives (http://
+www.siemens.com/iec60204)
+Introduction
+1.5 Additional documentation
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+10
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+
+
+Interesting links
+•
+Manuals in Siemens Industry Online Support (https://
+support.industry.siemens.com/cs/ww/en/ps/man)
+•
+Catalog IC 10 (https://support.industry.siemens.com/cs/ww/en/view/109771990)
+•
+Product support for STEP 7 (TIA Portal) (https://support.industry.siemens.com/cs/ww/en/ps/
+14672)
+•
+Information on Open Source Software (https://support.industry.siemens.com/cs/us/en/view/
+109822657)
+1.6
+Siemens Industry Online Support
+Information and service
+At Siemens Industry Online Support you can obtain up-to-date information from our global 
+support database:
+•
+Product support
+•
+Application examples
+•
+Forum
+•
+mySupport
+Link: Siemens Industry Online Support  (https://support.industry.siemens.com/cs/de/en)
+Product support
+You can find information and comprehensive know-how covering all aspects of your product 
+here:
+•
+FAQs 
+Answers to frequently asked questions
+•
+Manuals/operating instructions
+Read online or download, available as PDF or individually configurable.
+•
+Certificates
+Clearly sorted according to approving authority, type and country.
+•
+Characteristics
+For support in planning and configuring your system.
+•
+Product announcements 
+The latest information and news concerning our products.
+•
+Downloads 
+Here you will find updates, service packs, HSPs and much more for your product.
+Introduction
+1.6 Siemens Industry Online Support
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+11
+
+
+•
+Application examples
+Function blocks, background and system descriptions, performance statements, 
+demonstration systems, and application examples, clearly explained and represented.
+•
+Technical data
+Technical product data for support in planning and implementing your project
+Link: Product support (https://support.industry.siemens.com/cs/ww/en/ps)
+mySupport
+The following functions are available in your personal work area "mySupport":
+•
+Support Request
+Search for request number, product or subject
+•
+My filters
+With filters, you limit the content of the online support to different focal points.
+•
+My favorites
+With favorites you bookmark articles and products that you need frequently.
+•
+My notifications
+Your personal mailbox for exchanging information and managing your contacts. You can 
+compile your own individual newsletter in the "Notifications" section.
+•
+My products
+With product lists you can virtually map your control cabinet, your system or your entire 
+automation project.
+•
+My documentation
+Configure your individual documentation from different manuals.
+•
+CAx data 
+Easy access to CAx data, e.g. 3D models, 2D dimension drawings, EPLAN macros, device 
+circuit diagrams
+•
+My IBase registrations
+Register your Siemens products, systems and software.
+1.7
+Siemens Industry Online Support app
+Siemens Industry Online Support app
+The Siemens Industry Online Support app provides you access to all the device-specific 
+information available on the Siemens Industry Online Support portal for a particular article 
+number, such as operating instructions, manuals, data sheets, FAQs etc.
+Introduction
+1.7 Siemens Industry Online Support app
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+12
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+
+
+The Siemens Industry Online Support app is available for Android and iOS:
+Android
+iOS
+1.8
+Support Request
+After you have registered, you can use the Support Request form in the online support to send 
+your question directly to Technical Support:
+Support Request:
+Internet (https://support.industry.siemens.com/My/ww/en/requests)
+1.9
+History
+Release number
+New features
+08/2024
+•
+Initial release
+Introduction
+1.9 History
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+13
+
+
+Introduction
+1.9 History
+SIRIUS 3RC7 intelligent link module / SIRIUS 3RA8 intelligent load feeder
+14
+Equipment Manual, 08/2024, A5E50183188002A/RS-AA/001
+
+
+Safety notes
+2
+2.1
+General safety notes
+DANGER
+Hazardous voltage. 
+Will cause death or serious injury.
+Turn 
+
+Question:
+Which of the following is incorrect according to the handbook?
+
+A. When the contactor opens and the device stops working, I should check the ER LED for error messages. Such thing may happen when the current is below a set lower limit.
+B. Whether I want to mount the load feeder of size S0 for direct or reversing starting, I should lock the 3RC7 ILM on the contactor by pulling the locking slide downwards.
+C. A DIN rail adapter is a must if I mount size S0 load feeders for reversing starting. The DIN adapter is mounted in the same way as the motor starter protector.
+D. If I only have 3RC7 ILM Power Cable, I must install the 3RA8 ILF device group side by side with a maximum distance of 4.5 centimeters.
+
+Select the correct answer.

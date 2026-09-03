@@ -1,0 +1,132 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+import argparse
+import os
+
+from Cython import Tempita
+
+
+def process_tempita(pxifile, outfile) -> None:
+    with open(pxifile, encoding="utf-8") as f:
+        tmpl = f.read()
+    pyxcontent = Tempita.sub(tmpl)
+
+    with open(outfile, "w", encoding="utf-8") as f:
+        f.write(pyxcontent)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("infile", type=str, help="Path to the input file")
+    parser.add_argument("-o", "--outdir", type=str, help="Path to the output directory")
+    args = parser.parse_args()
+
+    if not args.infile.endswith(".in"):
+        raise ValueError(f"Unexpected extension: {args.infile}")
+
+    outdir_abs = os.path.join(os.getcwd(), args.outdir)
+    outfile = os.path.join(
+        outdir_abs, os.path.splitext(os.path.split(args.infile)[1])[0]
+    )
+
+    process_tempita(args.infile, outfile)
+
+
+main()
+
+
+<picture align="center">
+  <source media="(prefers-color-scheme: dark)" srcset="https://pandas.pydata.org/static/img/pandas_white.svg">
+  <img alt="Pandas Logo" src="https://pandas.pydata.org/static/img/pandas.svg">
+</picture>
+
+-----------------
+
+# pandas: powerful Python data analysis toolkit
+
+| | |
+| --- | --- |
+| Testing | [![CI - Test](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml) [![Coverage](https://codecov.io/github/pandas-dev/pandas/coverage.svg?branch=main)](https://codecov.io/gh/pandas-dev/pandas) |
+| Package | [![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/pandas/) [![PyPI Downloads](https://img.shields.io/pypi/dm/pandas.svg?label=PyPI%20downloads)](https://pypi.org/project/pandas/) [![Conda Latest Release](https://anaconda.org/conda-forge/pandas/badges/version.svg)](https://anaconda.org/conda-forge/pandas) [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pandas.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/pandas) |
+| Meta | [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](https://numfocus.org) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3509134.svg)](https://doi.org/10.5281/zenodo.3509134) [![License - BSD 3-Clause](https://img.shields.io/pypi/l/pandas.svg)](https://github.com/pandas-dev/pandas/blob/main/LICENSE) [![Slack](https://img.shields.io/badge/join_Slack-information-brightgreen.svg?logo=slack)](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) |
+
+
+## What is it?
+
+**pandas** is a Python package that provides fast, flexible, and expressive data
+structures designed to make working with "relational" or "labeled" data both
+easy and intuitive. It aims to be the fundamental high-level building block for
+doing practical, **real world** data analysis in Python. Additionally, it has
+the broader goal of becoming **the most powerful and flexible open source data
+analysis / manipulation tool available in any language**. It is already well on
+its way towards this goal.
+
+## Table of Contents
+
+- [Main Features](#main-features)
+- [Where to get it](#where-to-get-it)
+- [Dependencies](#dependencies)
+- [Installation from sources](#installation-from-sources)
+- [License](#license)
+- [Documentation](#documentation)
+- [Background](#background)
+- [Getting Help](#getting-help)
+- [Discussion and Development](#discussion-and-development)
+- [Contributing to pandas](#contributing-to-pandas)
+
+## Main Features
+Here are just a few of the things that pandas does well:
+
+  - Easy handling of [**missing data**][missing-data] (represented as
+    `NaN`, `NA`, or `NaT`) in floating point as well as non-floating point data
+  - Size mutability: columns can be [**inserted and
+    deleted**][insertion-deletion] from DataFrame and higher dimensional
+    objects
+  - Automatic and explicit [**data alignment**][alignment]: objects can
+    be explicitly aligned to a set of labels, or the user can simply
+    ignore the labels and let `Series`, `DataFrame`, etc. automatically
+    align the data for you in computations
+  - Powerful, flexible [**group by**][groupby] functionality to perform
+    split-apply-combine operations on data sets, for both aggregating
+    and transforming data
+  - Make it [**easy to convert**][conversion] ragged,
+    differently-indexed data in other Python and NumPy data structures
+    into DataFrame objects
+  - Intelligent label-based [**slicing**][slicing], [**fancy
+    indexing**][fancy-indexing], and [**subsetting**][subsetting] of
+    large data sets
+  - Intuitive [**merging**][merging] and [**joining**][joining] data
+    sets
+  - Flexible [**reshaping**][reshape] and [**pivoting**][pivot-table] of
+    data sets
+  - [**Hierarchical**][mi] labeling of axes (possible to have multiple
+    labels per tick)
+  - Robust IO tools for loading data from [**flat files**][flat-files]
+    (CSV and delimited), [**Excel files**][excel], [**databases**][db],
+    and saving/loading data from the ultrafast [**HDF5 format**][hdfstore]
+  - [**Time series**][timeseries]-specific functionality: date range
+    generation and frequency conversion, moving window statistics,
+    date shifting and lagging
+
+
+   [missing-data]: https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html
+   [insertion-deletion]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#column-selection-addition-deletion
+   [alignment]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html?highlight=alignment#intro-to-data-structures
+   [groupby]: https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html#group-by-split-apply-combine
+   [conversion]: https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#dataframe
+   [slicing]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#slicing-ranges
+   [fancy-indexing]: https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html#advanced
+   [subsetting]: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#boolean-indexing
+   [merging]: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html#database-style-dataframe-or-named-series-joining-merging
+   [joining]: https://pandas.pydata.org/pandas-docs/st
+
+Question:
+Suppose you are analyzing the results of chimeric RNA events (RNA transcribed from different DNA fused together) by STAR_fusion with a group of samples. The result file named chimeric.tsv is a tsv file containing four columns (chimeric_events, counts, and samples, types). If you want to transform the tsv file into a matrix with rowname being the chimeric events, column name being the samples and the values of the matrix being the counts. How would use pandas to do this in python? Just list the functions flow (Hints: a sample could be identified with multiple chimeric events and same events with different types, and a chimeric event may happen in different samples; Assume you have typed the following code:Import pandas as pd)
+
+A. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) -> matrix=Chimeric.pivot(index='chimeric_events', columns='samples', values='counts')
+B. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) ->matrix= chimeric.groupby(["chimeric_events", "samples"]).first().unstack()
+C. Chimeric=pd.read_csv(“chimeric.tsv”, sep=”\t”) ->matrix= chimeric.groupby(["chimeric_events", "samples"]).counts.first().unstack()
+D. Chimeric=pd.read_csv(“chimeric.tsv”) ->matrix= Chimeric.pivot(index='chimeric_events', columns='samples', values='counts')
+
+Select the correct answer.

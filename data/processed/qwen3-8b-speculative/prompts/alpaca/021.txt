@@ -1,0 +1,4 @@
+Generate a list of five recommendations related to the following topic: "how to reduce carbon emissions"
+
+Input:
+NoInput

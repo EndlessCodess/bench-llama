@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+If $a+b=8$, $b+c=-3$, and $a+c= -5$, what is the value of the product $abc$?

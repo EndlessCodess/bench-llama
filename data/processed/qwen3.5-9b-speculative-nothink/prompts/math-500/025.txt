@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+Compute $a+b+c,$ given that $a,$ $b,$ and $c$ are the roots of \[\frac{1}{x} + 5x^2 = 6x - 24.\]

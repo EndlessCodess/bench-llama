@@ -1,0 +1,4 @@
+Rewrite this sentence in complex grammar.
+
+Input:
+Today is Wednesday.

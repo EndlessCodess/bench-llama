@@ -1,0 +1,203 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+A grammar of
+Kalamang
+Eline Visser
+language
+science
+press
+Comprehensive Grammar Library 4
+
+
+Comprehensive Grammar Library
+Editor: Martin Haspelmath
+In this series:
+1. Jacques, Guillaume. A grammar of Japhug.
+2. Grimm, Nadine. A grammar of Gyeli.
+3. Maurer-Cecchini, Philippe. A grammar of Tuatschin: A Sursilvan Romansh dialect.
+4. Visser, Eline. A grammar of Kalamang.
+This series grew out of the grammars published in Studies in Diversity Linguistics, which are
+proudly mentioned:
+4. Berghäll, Liisa. A grammar of Mauwake.
+5. Wilbur, Joshua. A grammar of Pite Saami.
+7. Schackow, Diana. A grammar of Yakkha.
+8. Liljegren, Henrik. A grammar of Palula.
+9. Shimelman, Aviva. A grammar of Yauyos Quechua.
+11. Kluge, Angela. A grammar of Papuan Malay.
+12. Kieviet, Paulus. A grammar of Rapa Nui.
+22. Döhler, Christian. A grammar of Komnzo.
+23. Yakpo, Kofi. A grammar of Pichi.
+ISSN (print): 2748-971X
+ISSN (electronic): 2749-7798
+
+
+A grammar of
+Kalamang
+Eline Visser
+language
+science
+press
+
+
+Eline Visser. 2022. A grammar of Kalamang (Comprehensive Grammar Library
+4). Berlin: Language Science Press.
+This title can be downloaded at:
+http://langsci-press.org/catalog/book/344
+© 2022, Eline Visser
+Published under the Creative Commons Attribution 4.0 Licence (CC BY 4.0):
+http://creativecommons.org/licenses/by/4.0/
+ISBN: 978-3-96110-343-0 (Digital)
+978-3-98554-039-6 (Hardcover)
+ISSN (print): 2748-971X
+ISSN (electronic): 2749-7798
+DOI: 10.5281/zenodo.6499927
+Source code available from www.github.com/langsci/344
+Collaborative reading: paperhive.org/documents/remote?type=langsci&id=344
+Cover and concept of design: Ulrike Harbort
+Typesetting: Eline Visser, Sebastian Nordhoff
+Proofreading: Amir Ghorbanpour, Amy Amoakuh, Andi Hölzl, Heriberto
+Avelino, Bev Erasmus, Bianca Prandi, Cesar Perez Guarda, Christopher
+Straughn, Craevschi Alexandru, Fahad Almalki, Jeroen van de Weijer, Katja
+Politt, Liam McKnight, Ludger Paschen, Maša Beslin, Matthew Windsor,
+Neneng Sri, Jean Nitzke, Phil Duncan, Siva Kalyan, Sune Gregersen, Thera
+Crane, Tihomir Rangelov, Yvonne Treis
+Fonts: Libertinus, Arimo, DejaVu Sans Mono
+Typesetting software: XƎL
+A
+T
+EX
+Language Science Press
+xHain
+Grünberger Str. 16
+10243 Berlin, Germany
+langsci-press.org
+Storage and cataloguing done by FU Berlin
+
+
+Contents
+Acknowledgments
+ix
+Abbreviations
+xi
+Ringkasan Bahasa Indonesia [Indonesian summary]
+xv
+1
+Introduction
+1
+1.1
+Local setting . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1
+1.1.1
+Physical geography . . . . . . . . . . . . . . . . . . . . .
+1
+1.1.2
+Linguistic geography . . . . . . . . . . . . . . . . . . . .
+4
+1.2
+History of settlement and contact . . . . . . . . . . . . . . . . .
+5
+1.3
+Ethnographic and socio-economic remarks . . . . . . . . . . . .
+7
+1.4
+Sociolinguistic situation . . . . . . . . . . . . . . . . . . . . . . .
+13
+1.5
+Previous accounts of Kalamang and its genealogical affiliations .
+17
+1.6
+This study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+1.6.1
+Background to this study . . . . . . . . . . . . . . . . . .
+19
+1.6.2
+Aims and theoretical framework
+. . . . . . . . . . . . .
+19
+1.6.3
+Relation with consultants, other speakers and the
+community
+. . . . . . . . . . . . . . . . . . . . . . . . .
+21
+1.6.4
+Data and research methods
+. . . . . . . . . . . . . . . .
+25
+1.6.5
+Recording and data management . . . . . . . . . . . . .
+31
+1.6.6
+Notation systems . . . . . . . . . . . . . . . . . . . . . .
+32
+1.6.7
+Malay and Indonesian . . . . . . . . . . . . . . . . . . .
+34
+2
+Short grammatical overview of Kalamang
+37
+2.1
+Phonology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+37
+2.2
+Morphophonology . . . . . . . . . . . . . . . . . . . . . . . . . .
+38
+2.3
+Nouns, noun phrases and postpositional phrases . . . . . . . . .
+39
+2.4
+Pronouns . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+41
+2.5
+Demonstratives
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+43
+2.6
+Verbs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+2.7
+Simple clauses . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+46
+
+
+Contents
+2.8
+Complex predicates . . . . . . . . . . . . . . . . . . . . . . . . .
+48
+2.9
+Clausal modification . . . . . . . . . . . . . . . . . . . . . . . . .
+48
+2.10 Topic and focus
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+49
+2.11 Areal linguistic context . . . . . . . . . . . . . . . . . . . . . . .
+50
+3
+Phonetics, phonology and morphophonology
+55
+3.1
+Phoneme inventory . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+3.1.1
+Consonants . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+3.1.2
+Vowels . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+65
+3.2
+Phonotactics and syllable structure
+. . . . . . . . . . . . . . . .
+69
+3.2.1
+Syllable structure . . . . . . . . . . . . . . . . . . . . . .
+
+Question:
+Translate the following kalamang into english: terus ter-nan koyet inier tamu kon misis wis. Which of the following translations is correct?
+
+A. Then we finished drinking coffee, me and a guest, miss, yesterday morning.
+B. Then we finished drinking tea, me and a guest, miss, yesterday morning.
+C. Then we finished drinking coffee, me and a guest, miss, today morning.
+D. Then we finished drinking coffee, me and a guest, mrs, today morning.
+
+Select the correct answer.

@@ -15,7 +15,7 @@ The current target platforms are:
 
 ## Methodology: single-turn requests on a persistent process
 
-The formal benchmark runs each case (5 warmup + 10 formal runs) inside **one
+The formal benchmark runs each case (5 warmup + 100 formal runs) inside **one
 `bench_run` process**: the model is loaded once, and every run is an
 independent **single-turn** request in the same `llama_context` with the KV
 cache cleared between runs (`llama_memory_clear`), so context never accumulates.
@@ -183,7 +183,7 @@ Use `--smoke --continue-on-error` for one invocation of the first case in every 
 all 28 cases. Conversion commands, sizes, hashes, and the absence of an imatrix
 for the current Q4_K_M conversion are recorded in `configs/model-recipes.json`.
 
-The worksheet test matrix is divided into five categories; `--group` runs one
+The worksheet test matrix is divided into seven categories; `--group` runs one
 category at a time (repeatable or comma-separated, combined with `--job`):
 
 ```text
@@ -192,6 +192,8 @@ category at a time (repeatable or comma-separated, combined with `--job`):
 --group 2   KV cache precision     (LC-013..020)
 --group 3   attention backend      (LC-021..024)
 --group 4   polling                (LC-025..028)
+--group 5   backend graph off      (LC-029..032)
+--group 6   DFlash speculation     (LC-033..038)
 ```
 
 For example, run only the weight-quantization block:
@@ -205,6 +207,59 @@ For example, run only the weight-quantization block:
 ```
 
 Without `--group` or `--job`, the whole suite runs.
+
+### DFlash speculative decoding (LC-033 through LC-038)
+
+The six cases form three controlled pairs: Alpaca (LC-033 off / LC-034 on), MATH-500 (LC-035 / LC-036), and HumanEval (LC-037 / LC-038). Each pair reuses the same prompts and runtime settings; only the DFlash draft is changed. Inputs retain their natural dataset lengths. Generation stops at EOS with a maximum of 512 tokens. One round contains 5 warmups and 100 formal requests, so `--rounds 10` produces 1000 formal requests per case. These cases use the official `llama-server` speculative path; the adapter records the same JSONL events consumed by the common benchmark orchestrator.
+
+Prepare the deterministic 50-prompt pools once:
+
+```bash
+python3 prepare_speculative_datasets.py \
+  --model /path/to/Qwen3.5-9B-F16.gguf \
+  --output data/processed/qwen3.5-9b-speculative-nothink \
+  --llama-server /path/to/llama-server
+```
+
+Run all six cases with the target and DFlash GGUF files:
+
+```bash
+./run_suite.py --bench-run /path/to/bench_run \
+  --llama-server /path/to/llama-server \
+  --suite configs/lc-001-038-suite.json \
+  --model-profile qwen3.5-9b \
+  --model f16=/path/to/Qwen3.5-9B-F16.gguf \
+  --model dflash_f16=/path/to/Qwen3.5-9B-DFlash-F16.gguf \
+  --platform cuda --device-index 6 --group 6 --rounds 10
+```
+
+The enabled rows record draft acceptance. Suite summaries also add generation and end-to-end speedup relative to the paired disabled row.
+
+### Model profiles
+
+Model profiles keep tokenizer-specific data and model runtime limits out of the benchmark logic. Select a profile by name and provide paths using the resolved model keys:
+
+```bash
+./run_suite.py --bench-run /path/to/bench_run \
+  --suite configs/lc-001-038-suite.json \
+  --model-profile qwen3-8b --job dflash-on \
+  --processed-dir data/processed/qwen3-8b-speculative \
+  --model bf16=/path/to/Qwen3-8B-BF16.gguf \
+  --model dflash_bf16=/path/to/dflash-Qwen3-8B-BF16.gguf \
+  --platform cuda --device-index 0
+```
+
+The Qwen3-8B profile selects `data/processed/qwen3-8b`, maps the suite's 16-bit target role to BF16, and uses its native 40960-token context limit. Prepare the tokenizer-specific prompts before the first run:
+
+```bash
+python3 prepare_dataset.py \
+  --model /path/to/Qwen3-8B-BF16.gguf \
+  --llama-server /path/to/llama-server \
+  --output data/processed/qwen3-8b \
+  --pool-size 50 --warmup-runs 5 --formal-runs 100
+```
+
+An explicit `--processed-dir` overrides the profile. Commands without `--model-profile` retain the previous Qwen3.5-9B defaults.
 
 Because context never accumulates, every case fits on a 32 GiB single GPU even
 in the F16 fair-baseline configuration. The exact Flash-Attention-off
@@ -390,7 +445,7 @@ Run one case as a smoke test:
 
 `BENCH_RUN` and `LLAMA_MODEL` can be used instead of the corresponding path
 arguments. Each case runs as one `bench_run` process: the model is loaded once,
-and all 15 prompts (5 warmup + 10 formal) run sequentially as independent
+and all 105 prompts (5 warmup + 100 formal) run sequentially as independent
 single-turn requests with the KV cache cleared between runs. `--parallel` must
 be 1. The plan file (`plan.tsv`) written under each case directory carries the
 prompt path, phase, manifest run, source ID, output length, and expected token

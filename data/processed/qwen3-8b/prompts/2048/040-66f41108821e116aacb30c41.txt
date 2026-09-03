@@ -1,0 +1,239 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+FORM 10-K 
+(Mark One)
+☑ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(D) OF THE SECURITIES EXCHANGE ACT OF 1934
+FOR THE FISCAL YEAR ENDED MAY 31, 2023 
+OR
+☐TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(D) OF THE SECURITIES EXCHANGE ACT OF 1934
+FOR THE TRANSITION PERIOD FROM
+TO
+.
+Commission File No. 1-10635 
+NIKE, Inc. 
+(Exact name of Registrant as specified in its charter)
+Oregon
+93-0584541
+(State or other jurisdiction of incorporation)
+(IRS Employer Identification No.)
+One Bowerman Drive, Beaverton, Oregon 97005-6453 
+(Address of principal executive offices and zip code)
+(503) 671-6453 
+(Registrant's telephone number, including area code)
+SECURITIES REGISTERED PURSUANT TO SECTION 12(B) OF THE ACT:
+Class B Common Stock
+NKE
+New York Stock Exchange
+(Title of each class)
+(Trading symbol)
+(Name of each exchange on which registered)
+SECURITIES REGISTERED PURSUANT TO SECTION 12(G) OF THE ACT:
+NONE
+Indicate by check mark:
+YES
+NO
+• if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act.
+þ
+¨
+• if the registrant is not required to file reports pursuant to Section 13 or Section 15(d) of the Act.
+¨
+þ
+• whether the registrant (1) has filed all reports required to be filed by Section 13 or 15(d) of the Securities 
+Exchange Act of 1934 during the preceding 12 months (or for such shorter period that the registrant was required 
+to file such reports), and (2) has been subject to such filing requirements for the past 90 days.
+þ
+¨
+• whether the registrant has submitted electronically every Interactive Data File required to be submitted pursuant to 
+Rule 405 of Regulation S-T (§232.405 of this chapter) during the preceding 12 months (or for such shorter period 
+that the registrant was required to submit such files).
+þ
+¨
+• whether the registrant is a large accelerated filer, an accelerated filer, a non-accelerated filer, a smaller reporting company or an emerging growth 
+company. See the definitions of “large accelerated filer,” “accelerated filer,” “smaller reporting company,” and “emerging growth company” in Rule 12b-2 of 
+the Exchange Act.
+Large accelerated filer
+þ
+Accelerated filer ☐
+Non-accelerated filer ☐
+Smaller reporting company ☐
+Emerging growth company ☐
+• if an emerging growth company, if the registrant has elected not to use the extended transition period for 
+complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the 
+Exchange Act.
+¨
+• whether the registrant has filed a report on and attestation to its management's assessment of the effectiveness of 
+its internal control over financial reporting under Section 404(b) of the Sarbanes-Oxley Act (15 U.S.C. 7262(b)) by 
+the registered public accounting firm that prepared or issued its audit report.
+þ
+• if securities are registered pursuant to Section 12(b) of the Act, whether the financial statements of the registrant 
+included in the filing reflect the correction of an error to previously issued financial statements. 
+¨
+• whether any of those error corrections are restatements that required a recovery analysis of incentive-based 
+compensation received by any of the registrant's executive officers during the relevant recovery period pursuant to 
+§ 240.10D-1(b). 
+¨
+• whether the registrant is a shell company (as defined in Rule 12b-2 of the Act).
+☐
+þ
+As of November 30, 2022, the aggregate market values of the Registrant's Common Stock held by non-affiliates were:
+Class A
+$ 
+7,831,564,572 
+Class B
+136,467,702,472 
+$ 
+144,299,267,044 
+
+
+As of July 12, 2023, the number of shares of the Registrant's Common Stock outstanding were:
+Class A
+ 
+304,897,252 
+Class B
+ 
+1,225,074,356 
+ 
+1,529,971,608 
+DOCUMENTS INCORPORATED BY REFERENCE:
+Parts of Registrant's Proxy Statement for the Annual Meeting of Shareholders to be held on September 12, 2023, are incorporated by reference into Part III 
+of this report.
+
+
+NIKE, INC.
+ANNUAL REPORT ON FORM 10-K
+TABLE OF CONTENTS
+PAGE
+PART I
+1
+ITEM 1.
+Business
+1
+General
+1
+Products
+1
+Sales and Marketing
+2
+Our Markets
+2
+Significant Customer
+3
+Product Research, Design and Development
+3
+Manufacturing
+3
+International Operations and Trade
+4
+Competition
+5
+Trademarks and Patents
+5
+Human Capital Resources
+6
+Available Information and Websites
+7
+Information about our Executive Officers
+8
+ITEM 1A.
+Risk Factors
+9
+ITEM 1B.
+Unresolved Staff Comments
+24
+ITEM 2.
+Properties
+24
+ITEM 3.
+Legal Proceedings
+24
+ITEM 4.
+Mine Safety Disclosures
+24
+PART II
+25
+ITEM 5.
+Market for Registrant's Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities
+25
+ITEM 6.
+Reserved
+27
+ITEM 7.
+Management's Discussion and Analysis of Financial Condition and Results of Operations
+28
+ITEM 7A.
+Quantitative and Qualitative Disclosures about Market Risk
+49
+ITEM 8.
+Financial Statements and Supplementary Data
+51
+ITEM 9.
+Changes in and Disagreements with Accountants on Accounting and Financial Disclosure
+91
+ITEM 9A.
+Controls and Procedures
+91
+ITEM 9B.
+Other Information
+91
+ITEM 9C.
+Disclosure Regarding Foreign Jurisdictions that Prevent Inspections
+91
+PART III
+92
+(Except for the information set forth under “Information about our Executive Officers” in Item 1 above, Part III is 
+incorporated by reference from the Proxy Statement for the NIKE, Inc. 2023 Annual Meeting of Shareholders.)
+ITEM 10.
+Directors, Executive Officers and Corporate Governance
+92
+ITEM 11.
+Executive Compensation
+92
+ITEM 12.
+Security Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters
+92
+ITEM 13.
+Certain Relationships and Related Transactions and Director Independence
+92
+ITEM 14.
+Principal Accountant Fees and Services
+92
+PART IV
+93
+ITEM 15.
+Exhibits and Financial Statement Schedules
+93
+ITEM 16.
+Form 10-K Summary
+97
+Signatures
+99
+  
+
+
+PART I
+ITEM 1. BUSINESS
+GENERAL
+NIKE, Inc. was incorporated in 1967 under the laws of the State of Oregon. As used in this Annual Report on Form 10-K (this 
+"Annual Report"), the terms "we," "us," "our," "NIKE" and the "Company" refer to NIKE, Inc. and its predecessors, subsidiaries 
+and affiliates, collectively, unless the context indicates otherwise.
+Our principal business activity is the design, development and worldwide marketing and selling of athletic footwear, apparel, 
+equipment, accessories and services. NIKE is the largest seller of athletic footwear and apparel in the world. We sell our products 
+through NIKE Direct operations, which are comprised of both NIKE-owned retail stores and sales through our digital platforms 
+(also referred to as "NIKE Brand Digital"), to retail accounts and to a mix of independent distributors, licensees and sales 
+representatives in nearly all countries around the world. We also offer interactive consumer services and experiences through our 
+digital platforms. Nearly all of our products are manufactured by independent contractors. Nearly all footwear and apparel 
+products are manufactured outside the United States, while equipment products are manufactured both in the United States and 
+abroad.
+All references to fiscal 2023, 2022, 2021 and 2020 are to NIKE, Inc.'s fiscal years ended May 31, 2023, 2022, 2021 and 2020, 
+respectively. Any references to other fiscal years refer 
+
+Question:
+Compared to 2023, how has the percentage of finished goods apparel factories from countries other than Vietnam, China, and Cambodia changed in 2024?
+
+A. 2%
+B. 1%
+C. 3%
+D. 4%
+
+Select the correct answer.

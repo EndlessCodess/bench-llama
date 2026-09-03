@@ -366,7 +366,7 @@ MODEL_DIR=/path/to/Qwen3.5-9B-GGUF
 
 删除 `--smoke --skip-model-hash --continue-on-error` 即执行全部 28 个场景，每个场景 5 次预热和 10 次正式运行。正式运行默认只对三个唯一模型各计算一次 SHA-256，再把结果传给各子任务，不会重复扫描 F16 文件。
 
-v6.1 表格按测试类别分成五块，`--group` 可以一块一块跑（可重复使用或用逗号分隔，也可与 `--job` 叠加）：
+测试表按类别分成七块，`--group` 可以一块一块跑（可重复使用或用逗号分隔，也可与 `--job` 叠加）：
 
 ```text
 --group 0   公平基线        (LC-001..004)
@@ -374,6 +374,8 @@ v6.1 表格按测试类别分成五块，`--group` 可以一块一块跑（可�
 --group 2   KV Cache 精度   (LC-013..020)
 --group 3   Attention 后端  (LC-021..024)
 --group 4   Polling         (LC-025..028)
+--group 5   关闭后端图执行   (LC-029..032)
+--group 6   DFlash 投机采样  (LC-033..038)
 ```
 
 例如只跑权重量化块：
@@ -388,6 +390,59 @@ v6.1 表格按测试类别分成五块，`--group` 可以一块一块跑（可�
 ```
 
 不指定 `--group` 或 `--job` 时执行整份套件。
+
+### DFlash 投机采样（LC-033 至 LC-038）
+
+六个用例组成三组严格对照：Alpaca（LC-033 关闭 / LC-034 开启）、MATH-500（LC-035 / LC-036）和 HumanEval（LC-037 / LC-038）。同组复用完全相同的 prompt 和运行参数，只改变 DFlash 开关；输入保留数据集的自然长度，输出遇到 EOS 正常结束，最多生成 512 token。每轮包含 5 次预热和 100 次正式请求，因此 `--rounds 10` 后每个用例得到 1000 次正式请求。这组六个用例使用官方 `llama-server` 投机推理路径，适配器将服务端指标转换成测试编排器统一使用的 JSONL 事件。
+
+先生成三套数据的固定 50 条 prompt 池：
+
+```bash
+python3 prepare_speculative_datasets.py \
+  --model /path/to/Qwen3.5-9B-F16.gguf \
+  --output data/processed/qwen3.5-9b-speculative-nothink \
+  --llama-server /path/to/llama-server
+```
+
+然后运行六个用例：
+
+```bash
+./run_suite.py --bench-run /path/to/bench_run \
+  --llama-server /path/to/llama-server \
+  --suite configs/lc-001-038-suite.json \
+  --model-profile qwen3.5-9b \
+  --model f16=/path/to/Qwen3.5-9B-F16.gguf \
+  --model dflash_f16=/path/to/Qwen3.5-9B-DFlash-F16.gguf \
+  --platform cuda --device-index 6 --group 6 --rounds 10
+```
+
+开启组会记录草稿提议数、接受数和汇总接受率；套件汇总还会自动写入相对于对应关闭组的生成加速比和端到端加速比。
+
+### 模型 profile
+
+模型 profile 用来承载 tokenizer 数据目录、模型键映射和模型自身的运行限制，测试逻辑不再写死具体模型。按名称选择 profile，并使用解析后的模型键提供本机路径：
+
+```bash
+./run_suite.py --bench-run /path/to/bench_run \
+  --suite configs/lc-001-038-suite.json \
+  --model-profile qwen3-8b --job dflash-on \
+  --processed-dir data/processed/qwen3-8b-speculative \
+  --model bf16=/path/to/Qwen3-8B-BF16.gguf \
+  --model dflash_bf16=/path/to/dflash-Qwen3-8B-BF16.gguf \
+  --platform cuda --device-index 0
+```
+
+Qwen3-8B profile 会选择 `data/processed/qwen3-8b`，把套件里的 16 位目标模型映射为 BF16，并使用模型原生的 40960 token 上下文。第一次测试前需生成该 tokenizer 专属的 prompt：
+
+```bash
+python3 prepare_dataset.py \
+  --model /path/to/Qwen3-8B-BF16.gguf \
+  --llama-server /path/to/llama-server \
+  --output data/processed/qwen3-8b \
+  --pool-size 50 --warmup-runs 5 --formal-runs 100
+```
+
+显式传入的 `--processed-dir` 优先于 profile。不传 `--model-profile` 时继续使用原来的 Qwen3.5-9B 默认行为。
 
 由于上下文永不累积，F16 公平基线配置的全部用例在 32 GiB 单卡上都能跑。当前 RTX 5090 上仍无法执行严格的 LC-021 至 LC-024 配置：F16 权重、256K context、batch 2048 且关闭 Flash Attention 时，仅 prompt-processing 计算缓冲区还需约 8.54 GiB。配置仍保留原规范，方便在大显存设备上直接执行。不要静默降低 context/batch、关闭 KV offload 或换成 Q8 权重，否则结果不再属于同一单变量实验。
 

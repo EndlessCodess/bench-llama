@@ -1,0 +1,25 @@
+{
+  "model": "/data1/xuyang/models/Qwen3-8B-DFlash-GGUF/Qwen3-8B-BF16.gguf",
+  "model_size": 16388044096,
+  "llama_server": "/data1/xuyang/projects/llama.cpp/build-cuda13/bin/llama-server",
+  "pool_size_per_dataset": 50,
+  "warmup_runs_per_round": 5,
+  "formal_runs_per_round": 100,
+  "recommended_rounds": 10,
+  "formal_runs_per_case_total": 1000,
+  "seed": 20260831,
+  "datasets": {
+    "alpaca": {
+      "path": "/data1/xuyang/projects/bench_test_llama/data/alpaca/data/train-00000-of-00001-a09b74b3ef9c3b56.parquet",
+      "sha256": "06391b656a06fd3fb9d213160ef2398796c3b7f3dc75ef1e3ced30d461517073"
+    },
+    "math-500": {
+      "path": "/data1/xuyang/projects/bench_test_llama/data/math-500/test.jsonl",
+      "sha256": "35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132"
+    },
+    "humaneval": {
+      "path": "/data1/xuyang/projects/bench_test_llama/data/humaneval/openai_humaneval/test-00000-of-00001.parquet",
+      "sha256": "2f2871a15fbc95b6c683043359f4ed8e144c5a1c4f24f25f66bc51f598dfcfb6"
+    }
+  }
+}

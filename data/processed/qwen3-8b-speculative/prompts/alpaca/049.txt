@@ -1,0 +1,4 @@
+Summarize what the essay is about
+
+Input:
+This essay argues that understanding the origins and causes of climate change is essential to effective policymaking, and that good policies can help reduce the risks posed to society by the global climate crisis.

@@ -1,0 +1,2024 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+The Impact of Large Language Models on Scientific Discovery:
+a Preliminary Study using GPT-4
+Microsoft Research AI4Science
+Microsoft Azure Quantum
+llm4sciencediscovery@microsoft.com
+November, 2023
+Abstract
+In recent years, groundbreaking advancements in natural language processing have culminated in the
+emergence of powerful large language models (LLMs), which have showcased remarkable capabilities across a
+vast array of domains, including the understanding, generation, and translation of natural language, and even
+tasks that extend beyond language processing. In this report, we delve into the performance of LLMs within
+the context of scientific discovery/research, focusing on GPT-4, the state-of-the-art language model. Our
+investigation spans a diverse range of scientific areas encompassing drug discovery, biology, computational
+chemistry (density functional theory (DFT) and molecular dynamics (MD)), materials design, and partial
+differential equations (PDE).
+Evaluating GPT-4 on scientific tasks is crucial for uncovering its potential across various research domains,
+validating its domain-specific expertise, accelerating scientific progress, optimizing resource allocation, guiding
+future model development, and fostering interdisciplinary research. Our exploration methodology primarily
+consists of expert-driven case assessments, which offer qualitative insights into the model’s comprehension
+of intricate scientific concepts and relationships, and occasionally benchmark testing, which quantitatively
+evaluates the model’s capacity to solve well-defined domain-specific problems.
+Our preliminary exploration indicates that GPT-4 exhibits promising potential for a variety of scientific
+applications, demonstrating its aptitude for handling complex problem-solving and knowledge integration
+tasks. We present an analysis of GPT-4’s performance in the aforementioned domains (e.g., drug discovery,
+biology, computational chemistry, materials design, etc.), emphasizing its strengths and limitations. Broadly
+speaking, we evaluate GPT-4’s knowledge base, scientific understanding, scientific numerical calculation abil-
+ities, and various scientific prediction capabilities.
+In biology and materials design, GPT-4 possesses extensive domain knowledge that can help address
+specific requirements. In other fields, like drug discovery, GPT-4 displays a strong ability to predict properties.
+However, in research areas like computational chemistry and PDE, while GPT-4 shows promise for aiding
+researchers with predictions and calculations, further efforts are required to enhance its accuracy. Despite its
+impressive capabilities, GPT-4 can be improved for quantitative calculation tasks, e.g., fine-tuning is needed
+to achieve better accuracy.1
+We hope this report serves as a valuable resource for researchers and practitioners seeking to harness the
+power of LLMs for scientific research and applications, as well as for those interested in advancing natural
+language processing for domain-specific scientific tasks. It’s important to emphasize that the field of LLMs
+and large-scale machine learning is progressing rapidly, and future generations of this technology may possess
+additional capabilities beyond those highlighted in this report. Notably, the integration of LLMs with spe-
+cialized scientific tools and models, along with the development of foundational scientific models, represent
+two promising avenues for exploration.
+1Please note that GPT-4’s capabilities can be greatly enhanced by integrating with specialized scientific tools and models, as
+demonstrated in AutoGPT and ChemCrow. However, the focus of this paper is to study the intrinsic capabilities of LLMs in
+tackling scientific tasks, and the integration of LLMs with other tools/models is largely out of our scope. We only had some brief
+discussions on this topic in the last chapter.
+1
+arXiv:2311.07361v2  [cs.CL]  8 Dec 2023
+
+
+Contents
+1
+Introduction
+4
+1.1
+Scientific areas
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.2
+Capabilities to evaluate
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.3
+Our methodologies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.4
+Our observations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.5
+Limitations of this study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2
+Drug Discovery
+9
+2.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+2.2
+Understanding key concepts in drug discovery . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.2.1
+Entity translation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+2.2.2
+Knowledge/information memorization . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+2.2.3
+Molecule manipulation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+2.2.4
+Macroscopic questions about drug discovery . . . . . . . . . . . . . . . . . . . . . . . .
+18
+2.3
+Drug-target binding
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.3.1
+Drug-target affinity prediction
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+2.3.2
+Drug-target interaction prediction
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+26
+2.4
+Molecular property prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+29
+2.5
+Retrosynthesis
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+2.5.1
+Understanding chemical reactions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+2.5.2
+Predicting retrosynthesis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+32
+2.6
+Novel molecule generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+37
+2.7
+Coding assistance for data processing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+39
+3
+Biology
+42
+3.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+3.2
+Understanding biological sequences . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+3.2.1
+Sequence notations vs. text notations
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+43
+3.2.2
+Performing sequence-related tasks with GPT-4 . . . . . . . . . . . . . . . . . . . . . .
+44
+3.2.3
+Processing files in domain-specific formats . . . . . . . . . . . . . . . . . . . . . . . . .
+49
+3.2.4
+Pitfalls with biological sequence handling
+. . . . . . . . . . . . . . . . . . . . . . . . .
+53
+3.3
+Reasoning with built-in biological knowledge
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+3.3.1
+Predicting protein-protein interactions (PPI)
+. . . . . . . . . . . . . . . . . . . . . . .
+55
+3.3.2
+Understanding gene regulation and signaling pathways . . . . . . . . . . . . . . . . . .
+57
+3.3.3
+Understanding concepts of evolution . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+61
+3.4
+Designing biomolecules and bio-experiments . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+63
+3.4.1
+Designing DNA sequences for biological tasks . . . . . . . . . . . . . . . . . . . . . . .
+63
+3.4.2
+Designing biological experiments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+66
+4
+Computational Chemistry
+68
+4.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+68
+4.2
+Electronic structure: theories and practices
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+69
+4.2.1
+Understanding of quantum chemistry and physics . . . . . . . . . . . . . . . . . . . . .
+69
+4.2.2
+Quantitative calculation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+73
+4.2.3
+Simulation and implementation assistant . . . . . . . . . . . . . . . . . . . . . . . . . .
+75
+4.3
+Molecular dynamics simulation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+84
+4.3.1
+Fundamental knowledge of concepts and methods . . . . . . . . . . . . . . . . . . . . .
+85
+4.3.2
+Assistance with simulation protocol design and MD software usage . . . . . . . . . . .
+91
+4.3.3
+Development of new computational chemistry methods . . . . . . . . . . . . . . . . . .
+95
+4.3.4
+Chemical reaction optimization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+103
+4.3.5
+Sampling bypass MD simulation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+108
+4.4
+Practical examples with GPT-4 evaluations from different chemistry perspectives . . . . . . .
+118
+4.4.1
+NMR spectrum modeling for Tamiflu . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+119
+4.4.2
+Polymerization reaction kinetics determination of Tetramethyl Orthosilicate (TMOS)
+122
+2
+
+
+5
+Materials Design
+126
+5.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+126
+5.2
+Knowledge memorization and designing principle summarization
+. . . . . . . . . . . . . . . .
+126
+5.3
+Candidate proposal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+129
+5.4
+Structure generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+132
+5.5
+Property prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+134
+5.5.1
+MatBench evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+134
+5.5.2
+Polymer property . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+136
+5.6
+Synthesis planning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+140
+5.6.1
+Synthesis of known materials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+140
+5.6.2
+Synthesis of new materials . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+142
+5.7
+Coding assistance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+143
+6
+Partial Differential Equations
+145
+6.1
+Summary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+145
+6.2
+Knowing basic concepts about PDEs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+145
+6.3
+Solving PDEs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+152
+6.3.1
+Analytical solutions
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+152
+6.3.2
+Numerical solutions
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+158
+6.4
+AI for PDEs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+163
+7
+Looking Forward
+170
+7.1
+Improving LLMs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+170
+7.2
+New directions
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+171
+7.2.1
+Integration of LLMs and scientific tools
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+171
+7.2.2
+Building a unified scientific foundation model . . . . . . . . . . . . . . . . . . . . . . .
+172
+A Appendix of Drug Discovery
+182
+B Appendix of Computational Chemistry
+183
+C Appendix of Materials Design
+192
+C.1 Knowledge memorization for materials with negative Poisson Ratio . . . . . . . . . . . . . . .
+192
+C.2 Knowledge memorization and design principle summarization for polymers
+. . . . . . . . . .
+193
+C.3 Candidate proposal for inorganic compounds
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+196
+C.4 Representing polymer structures with BigSMILES
+. . . . . . . . . . . . . . . . . . . . . . . .
+198
+C.5 Evaluating the capability of generating atomic coordinates and predicting structures using a
+novel crystal identified by crystal structure prediction. . . . . . . . . . . . . . . . . . . . . . .
+201
+C.6 Property prediction for polymers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+205
+C.7 Evaluation of GPT-4 ’s capability on synthesis planning for novel inorganic materials . . . . .
+207
+C.8 Polymer synthesis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+209
+C.9 Plotting stress vs. strain for several materials . . . . . . . . . . . . . . . . . . . . . . . . . . .
+213
+C.10 Prompts and evaluation pipelines of synthesizing route prediction of known inorganic materials 220
+C.11 Evaluating candidate proposal for Metal-Organic frameworks (MOFs)
+. . . . . . . . . . . . .
+224
+3
+
+
+1
+Introduction
+The rapid development of artificial intelligence (AI) has led to the emergence of sophisticated large language
+models (LLMs), such as GPT-4 [62] from OpenAI, PaLM 2 [4] from Google, Claude from Anthropic, LLaMA
+2 [85] from Meta, etc.
+LLMs are capable of transforming the way we generate and process information
+across various domains and have demonstrated exceptional performance in a wide array of tasks, including
+abstraction, comprehension [23], vision [29, 89], coding [66], mathematics [97], law [41], understanding of
+human motives and emotions, and more. In addition to the prowess in the realm of text, they have also
+been successfully integrated into other domains, such as image processing [114], speech recognition [38], and
+even reinforcement learning, showcasing its adaptability and potential for a broad range of applications.
+Furthermore, LLMs have been used as controllers/orchestrators [76, 83, 94, 106, 34, 48] to coordinate other
+machine learning models for complex tasks.
+Among these LLMs, GPT-4 has gained substantial attention for its remarkable capabilities. A recent
+paper has even indicated that GPT-4 may be exhibiting early indications of artificial general intelligence
+(AGI) [11]. Because of its extraordinary capabilities in general AI tasks, GPT-4 is also garnering significant
+attention in the scientific community [71], especially in domains such as medicine [45, 87], healthcare [61, 91],
+engineering [67, 66], and social sciences [28, 5].
+In this study, our primary goal is to examine the capabilities of LLMs within the context of natural science
+research. Due to the extensive scope of the natural sciences, covering all sub-disciplines is infeasible; as such,
+we focus on a select set of areas, including drug discovery, biology, computational chemistry, materials design,
+and partial differential equations (PDE). Our aim is to provide a broad overview of LLMs’ performance and
+their potential applicability in these specific scientific fields, with GPT-4, the state-of-the-art LLM, as our
+central focus. A summary of this report can be found in Fig. 1.1.
+GPT-4 for 
+Scientific 
+Discovery
+Drug Discovery
+Understanding concepts 
+in drug discovery 
+Drug-target binding
+Molecular property 
+prediction
+Retrosynthesis
+Novel molecule 
+generation
+Coding assistance for 
+data processing
+Biology
+Understanding biological 
+sequences
+Reasoning with built-in 
+biological knowledge
+Designing biomolecules 
+and bio-experiments
+Computational 
+Chemistry
+Electronic structure: 
+theories and practices
+Molecular dynamics 
+simulation
+Practical examples
+Materials Design
+Memorization and 
+designing principle
+Candidate proposal
+Structure generation
+Property prediction
+Synthesis planning
+Coding assistance
+Partial Differential 
+Equations
+Knowing basic concepts 
+about PDEs
+Solving PDEs
+AI for PDEs
+Figure 1.1: Overview of this report.
+1.1
+Scientific areas
+Natural science is dedicated to understanding the natural world through systematic observation, experimen-
+tation, and the formulation of testable hypotheses. These strive to uncover the fundamental principles and
+4
+
+
+laws governing the universe, spanning from the smallest subatomic particles to the largest galaxies and be-
+yond. Natural science is an incredibly diverse field, encompassing a wide array of disciplines, including both
+physical sciences, which focus on non-living systems, and life sciences, which investigate living organisms. In
+this study, we have opted to concentrate on a subset of natural science areas, selected from both physical and
+life sciences. It is important to note that these areas are not mutually exclusive; for example, drug discovery
+substantially overlaps with biology, and they do not all fall within the same hierarchical level in the taxonomy
+of natural science.
+Drug discovery is the process by which new candidate medications are identified and developed to treat or
+prevent specific diseases and medical conditions. This complex and multifaceted field aims to improve human
+health and well-being by creating safe, effective, and targeted therapeutic agents. In this report, we explore
+how GPT-4 can help drug discovery research (Sec. 2) and study several key tasks in drug discovery: knowledge
+understanding (Sec. 2.2), molecular property prediction (Sec. 2.4), molecular manipulation (Sec. 2.2.3), drug-
+target binding prediction (Sec. 2.3), and retrosynthesis (Sec. 2.5).
+Biology is a branch of life sciences that studies life and living organisms, including their structure, func-
+tion, growth, origin, evolution, distribution, and taxonomy. As a broad and diverse field, biology encompasses
+various sub-disciplines that focus on specific aspects of life, such as genetics, ecology, anatomy, physiology,
+and molecular biology, among others. In this report, we explore how LLMs can help biology research (Sec. 3),
+mainly understanding biological sequences (Sec. 3.2), reasoning with built-in biological knowledge (Sec. 3.3),
+and designing biomolecules and bio-experiments (Sec. 3.4).
+Computational chemistry is a branch of chemistry (and also physical sciences) that uses computer
+simulations and mathematical models to study the structure, properties, and behavior of molecules, as well
+as their interactions and reactions. By leveraging the power of computational techniques, this field aims to
+enhance our understanding of chemical processes, predict the behavior of molecular systems, and assist in the
+design of new materials and drugs. In this report, we explore how LLMs can help research in computational
+chemistry (Sec. 4), mainly focusing on electronic structure modeling (Sec. 4.2) and molecular dynamics
+simulation (Sec. 4.3).
+Materials design is an interdisciplinary field that investigates (1) the relationship between the structure,
+properties, processing, and performance of materials, and (2) the discovery of new materials. It combines
+elements of physics, chemistry, and engineering. This field encompasses a wide range of natural and synthetic
+materials, including metals, ceramics, polymers, composites, and biomaterials. The primary goal of materials
+design is to understand how the atomic and molecular arrangement of a material affects its properties and to
+develop new materials with tailored characteristics for various applications. In this report, we explore how
+GPT-4 can help research in materials design (Sec. 5), e.g., understanding materials knowledge (Sec. 5.2),
+proposing candidate compositions (Sec. 5.3), generating materials structure (Sec. 5.4), predicting materials
+properties (Sec. 5.5), planning synthesis routes (Sec. 5.6), and assisting code development (Sec. 5.7).
+Partial Differential Equations (PDEs) represent a category of mathematical equations that delineate
+the relationship between an unknown function and its partial derivatives concerning multiple independent
+variables. PDEs have applications in modeling significant phenomena across various fields such as physics,
+engineering, biology, economics, and finance. Examples of these applications include fluid dynamics, elec-
+tromagnetism, acoustics, heat transfer, diffusion, financial models, population dynamics, reaction-diffusion
+systems, and more.
+In this study, we investigate how GPT-4 can contribute to PDE research (Sec. 6),
+emphasizing its understanding of fundamental concepts and AI techniques related to PDEs, theorem-proof
+capabilities, and PDE-solving abilities.
+1.2
+Capabilities to evaluate
+We aim to understand how GPT-4 can help natural science research and its potential limitations in scientific
+domains. In particular, we study the following capabilities:
+• Accessing and analyzing scientific literature. Can GPT-4 suggest relevant research papers, extract key
+information, and summarize insights for researchers?
+• Concept clarification. Is GPT-4 capable of explaining and providing definitions for scientific terms,
+concepts, and principles, helping researchers better understand the subject matter?
+• Data analysis. Can GPT-4 process, analyze, and visualize large datasets from experiments, simulations,
+and field observations, and uncover non-obvious trends and relationships in complex data?
+5
+
+
+• Theoretical modeling. Can GPT-4 assist in developing mathematical/computational models of physical
+systems, which would be useful for fields like physics, chemistry, climatology, systems biology, etc.?
+• Methodology guidance. Could GPT-4 help researchers choose the right experimental/computational
+methods and statistical tests for their research by analyzing prior literature or running simulations on
+synthetic data?
+• Prediction. Is GPT-4 able to analyze prior experimental data to make predictions on new hypothetical
+scenarios and experiments (e.g., in-context few-shot learning), allowing for a focus on the most promising
+avenues?
+• Experimental design. Can GPT-4 leverage knowledge in the field to suggest useful experimental param-
+eters, setups, and techniques that researchers may not have considered, thereby improving experimental
+efficiency?
+• Code development.
+Could GPT-4 assist in developing code for data analysis, simulations, and ma-
+chine learning across a wide range of scientific applications by generating code from natural language
+descriptions or suggesting code snippets from a library of prior code?
+• Hypothesis generation. By connecting disparate pieces of information across subfields, can GPT-4 come
+up with novel hypotheses (e.g., compounds, proteins, materials, etc.) for researchers to test in their lab,
+expanding the scope of their research?
+1.3
+Our methodologies
+In this report, we choose the best LLM to date, GPT-4, to study and evaluate the capabilities of LLMs across
+scientific domains. We use the GPT-4 model2 available through the Azure OpenAI Service.3.
+We employ a combination of qualitative4 and quantitative approaches, ensuring a good understanding of
+its proficiency in scientific research.
+In the case of most capabilities, we primarily adopt a qualitative approach, carefully designing tasks and
+questions that not only showcase GPT-4’s capabilities in terms of its scientific expertise but also address the
+fundamental inquiry: the extent of GPT-4’s proficiency in scientific research. Our objective is to elucidate
+the depth and flexibility of its understanding of diverse concepts, skills, and fields, thereby demonstrating its
+versatility and potential as a powerful tool in scientific research. Moreover, we scrutinize GPT-4’s responses
+and actions, evaluating their consistency, coherence, and accuracy, while simultaneously identifying potential
+limitations and biases. This examination allows us to gain a deeper understanding of the system’s potential
+weaknesses, paving the way for future improvements and refinements. Throughout our study, we present
+numerous intriguing cases spanning each scientific domain, illustrating the diverse capabilities of GPT-4 in
+areas such as concept capture, knowledge comprehension, and task assistance.
+For certain capabilities, particularly predictive ones, we also employ a quantitative approach, utilizing
+public benchmark datasets to evaluate GPT-4’s performance on well-defined tasks, in addition to presenting
+a wide array of case studies. By incorporating quantitative evaluations, we can objectively assess the model’s
+performance in specific tasks, allowing for a more robust and reliable understanding of its strengths and
+limitations in scientific research applications.
+In summary, our methodologies for investigating GPT-4’s performance in scientific domains involve a blend
+of qualitative and quantitative approaches, offering a holistic and systematic understanding of its capabilities
+and limitations.
+1.4
+Our observations
+GPT-4 demonstrates considerable potential in various scientific domains, including drug discovery, biology,
+computational chemistry, materials design, and PDEs. Its capabilities span a wide range of tasks and it
+exhibits an impressive understanding of key concepts in each domain.
+2The output of GPT-4 depends on several variables such as the model version, system messages, and hyperparameters like the
+decoding temperature. Thus, one might observe different responses for the same cases examined in this report. For the majority of
+this report, we primarily utilized GPT-4 version 0314, with a few cases employing version 0613.
+3https://azure.microsoft.com/en-us/products/ai-services/openai-service/
+4The qualitative approach used in this report mainly refers to case studies. It is related to but not identical to qualitative
+methods in social science research.
+6
+
+
+In drug discovery, GPT-4 shows a comprehensive grasp of the field, enabling it to provide useful insights
+and suggestions across a wide range of tasks. It is helpful in predicting drug-target binding affinity, molecular
+properties, and retrosynthesis routes.
+It also has the potential to generate novel molecules with desired
+properties, which can lead to the discovery of new drug candidates with the potential to address unmet
+medical needs. However, it is important to be aware of GPT-4’s limitations, such as challenges in processing
+SMILES sequences and limitations in quantitative tasks.
+In the field of biology, GPT-4 exhibits substantial potential in understanding and processing complex
+biological language, executing bioinformatics tasks, and serving as a scientific assistant for biology design. Its
+extensive grasp of biological concepts and its ability to perform various tasks, such as processing specialized
+files, predicting signaling peptides, and reasoning about plausible mechanisms from observations, benefit it
+to be a valuable tool in advancing biological research. However, GPT-4 has limitations when it comes to
+processing biological sequences (e.g., DNA and FASTA sequences) and its performance on tasks related to
+under-studied entities.
+In computational chemistry, GPT-4 demonstrates remarkable potential across various subdomains, in-
+cluding electronic structure methods and molecular dynamics simulations. It is able to retrieve information,
+suggest design principles, recommend suitable computational methods and software packages, generate code
+for various programming languages, and propose further research directions or potential extensions. However,
+GPT-4 may struggle with generating accurate atomic coordinates of complex molecules, handling raw atomic
+coordinates, and performing precise calculations.
+In materials design, GPT-4 shows promise in aiding materials design tasks by retrieving information, sug-
+gesting design principles, generating novel and feasible chemical compositions, recommending analytical and
+numerical methods, and generating code for different programming languages. However, it encounters chal-
+lenges in representing and proposing more complex structures, e.g., organic polymers and MOFs, generating
+accurate atomic coordinates, and providing precise quantitative predictions.
+In the realm of PDEs, GPT-4 exhibits its ability to understand the fundamental concepts, discern relation-
+ships between concepts, and provide accurate proof approaches. It is able to recommend appropriate analytical
+and numerical methods for addressing various types of PDEs and generate code in different programming lan-
+guages to numerically solve PDEs. However, GPT-4’s proficiency in mathematical theorem proving still has
+room for growth, and its capacity for independently discovering and validating novel mathematical theories
+remains limited in scope.
+In summary, GPT-4 exhibits both significant potential and certain limitations for scientific discovery.
+To better leverage GPT-4, researchers should be cautious and verify the model’s outputs, experiment with
+different prompts, and combine its capabilities with dedicated AI models or computational tools to ensure
+reliable conclusions and optimal performance in their respective research domains:
+• Interpretability and Trust: It is crucial to maintain a healthy skepticism when interpreting GPT-4’s
+output. Researchers should always critically assess the generated results and cross-check them with
+existing knowledge or expert opinions to ensure the validity of the conclusions.
+• Iterative Questioning and Refinement: GPT-4’s performance can be improved by asking questions in an
+iterative manner or providing additional context. If the initial response from GPT-4 is not satisfactory,
+researchers can refine their questions or provide more information to guide the model toward a more
+accurate and relevant answer.
+• Combining GPT-4 with Domain-Specific Tools: In many cases, it may be beneficial to combine GPT-4’s
+capabilities with more specialized tools and models designed specifically for scientific discovery tasks,
+such as molecular docking software, or protein folding algorithms. This combination can help researchers
+leverage the strengths of both GPT-4 and domain-specific tools to achieve more reliable and accurate
+results. Although we do not extensively investigate the integration of LLMs and domain-specific tool-
+s/models in this report, a few examples are briefly discussed in Section 7.2.1.
+1.5
+Limitations of this study
+First, a large part of our assessment of GPT-4’s capabilities utilizes case studies. We acknowledge that this
+approach is somewhat subjective, informal, and lacking in rigor per formal scientific standards. However,
+we believe that this report is useful and helpful for researchers interested in leveraging LLMs for scientific
+discovery. We look forward to the development of more formal and comprehensive methods for testing and
+analyzing LLMs and potentially more complex AI systems in the future for scientific intelligence.
+7
+
+
+Second, in this study, we primarily focus on the scientific intelligence of GPT-4 and its applications in
+various scientific domains. There are several important aspects, mainly responsible AI, beyond the scope of
+this work that warrant further exploration for GPT-4 and all LLMs:
+• Safety Concerns: Our analysis does not address the ability of GPT-4 to safely respond to hazardous
+chemistry or drug-related situations. Future studies should investigate whether these models provide
+appropriate safety warnings and precautions when suggesting potentially dangerous chemical reactions,
+laboratory practices, or drug interactions. This could involve evaluating the accuracy and relevance
+of safety information generated by LLMs and determining if they account for the risks and hazards
+associated with specific scientific procedures.
+• Malicious Usage: Our research does not assess the potential for GPT-4 to be manipulated for malicious
+purposes. It is crucial to examine whether it has built-in filters or content-monitoring mechanisms that
+prevent it from disclosing harmful information, even when explicitly requested. Future research should
+explore the potential vulnerabilities of LLMs to misuse and develop strategies to mitigate risks, such as
+generating false or dangerous information.
+• Data Privacy and Security: We do not investigate the data privacy and security implications of using
+GPT-4 in scientific research. Future studies should address potential risks, such as the unintentional
+leakage of sensitive information, data breaches, or unauthorized access to proprietary research data.
+• Bias and Fairness: Our research does not examine the potential biases present in LLM-generated content
+or the fairness of their outputs. It is essential to assess whether these models perpetuate existing biases,
+stereotypes, or inaccuracies in scientific knowledge and develop strategies to mitigate such issues.
+• Impact on the Scientific Workforce: We do not analyze the potential effects of LLMs on employment and
+job opportunities within the scientific community. Further research should consider how the widespread
+adoption of LLMs may impact the demand for various scientific roles and explore strategies for workforce
+development, training, and skill-building in the context of AI-driven research.
+• Ethics and Legal Compliance: We do not test the extent to which LLMs adhere to ethical guidelines
+and legal compliance requirements related to scientific use. Further investigation is needed to determine
+if LLM-generated content complies with established ethical standards, data privacy regulations, and
+intellectual property laws. This may involve evaluating the transparency, accountability, and fairness of
+LLMs and examining their potential biases or discriminatory outputs in scientific research contexts.
+By addressing these concerns in future studies, we can develop a more holistic understanding of the
+potential benefits, challenges, and implications of LLMs in the scientific domain, paving the way for more
+responsible and effective use of these advanced AI technologies.
+8
+
+
+2
+Drug Discovery
+2.1
+Summary
+Drug discovery is the process by which new candidate medications are identified and developed to treat or
+prevent specific diseases and medical conditions. This complex and multifaceted field aims to improve human
+health and well-being by creating safe, effective, and targeted therapeutic agents. The importance of drug
+discovery lies in its ability to identify and develop new therapeutics for treating diseases, alleviating suffering,
+and improving human health [72]. It is a vital part of the pharmaceutical industry and plays a crucial role in
+advancing medical science [64]. Drug discovery involves a complex and multidisciplinary process, including
+target identification, lead optimization, and preclinical testing, ultimately leading to the development of safe
+and effective drugs [35].
+Assessing GPT-4’s capabilities in drug discovery has significant potential, such as accelerating the discov-
+ery process [86], reducing the search and design cost [73], enhancing creativity, and so on. In this chapter,
+we first study GPT-4’s knowledge about drug discovery through qualitative tests (Sec. 2.2), and then study
+its predictive capabilities through quantitative tests on multiple crucial tasks, including drug-target inter-
+action/binding affinity prediction (Sec. 2.3), molecular property prediction (Sec. 2.4), and retrosynthesis
+prediction (Sec. 2.5).
+We observe the considerable potential of GPT-4 for drug discovery:5
+• Broad Knowledge: GPT-4 demonstrates a wide-ranging understanding of key concepts in drug discovery,
+including individual drugs (Fig. 2.4), target proteins (Fig. 2.6), general principles for small-molecule
+drugs (Fig. 2.8), and the challenges faced in various stages of the drug discovery process (Fig. 2.9). This
+broad knowledge base allows GPT-4 to provide useful insights and suggestions across a wide range of
+drug discovery tasks.
+• Versatility in Key Tasks: LLMs, such as GPT-4, can help in several essential tasks in drug discovery,
+including:
+– Molecule Manipulation: GPT-4 is able to generate new molecular structures by modifying existing
+ones (Fig. 2.7), potentially leading to the discovery of novel drug candidates.
+– Drug-Target Binding Prediction: GPT-4 is able to predict the interaction between of a molecule to
+a target protein (Table 4), which can help in identifying promising drug candidates and optimizing
+their binding properties.
+– Molecule Property Prediction: GPT-4 is able to predict various physicochemical and biological
+properties of molecules (Table 5), which can guide the selection and optimization of drug candidates.
+– Retrosynthesis Prediction: GPT-4 is able to predict synthetic routes for target molecules, helping
+chemists design efficient and cost-effective strategies for the synthesis of potential drug candidates
+(Fig. 2.23).
+• Novel Molecule Generation: GPT-4 can be used to generate novel molecules following text instruction.
+This de novo molecule generation capability can be a valuable tool for identifying new drug candidates
+with the potential to address unmet medical needs (Sec. 2.6).
+• Coding capability: GPT-4 can provide help in coding for drug discovery, offering large benefits in data
+downloading, processing, and so on (Fig. 2.27, Fig 2.28). The strong coding capability of GPT-4 can
+greatly ease human efforts in the future.
+While GPT-4 is a useful tool for assisting research in drug discovery, it’s important to be aware of its
+limitations and potential errors. To better leverage GPT-4, we provide several tips for researchers:
+• SMILES Sequence Processing Challenges: GPT-4 may struggle with directly processing SMILES se-
+quences. To improve the model’s understanding and output, it is better to provide the names of drug
+molecules along with their descriptions, if possible. This will give the model more context and improve
+its ability to generate relevant and accurate responses.
+• Limitations in Quantitative Tasks: While GPT-4 excels in qualitative tasks and questions, it may
+face limitations when it comes to quantitative tasks, such as predicting numerical values for molecular
+5In this chapter, we employ a color-coding scheme to illustrate the results of GPT-4. We use green to highlight both (1) the
+crucial information in the user prompts and (2) significant or accurate elements in GPT-4’s output. Conversely, we use yellow to
+indicate incorrect or inaccurate responses from GPT-4.
+9
+
+
+properties and drug-target binding in our evaluated datasets. Researchers are advised to take GPT-4’s
+output as a reference in these cases and perform verification using dedicated AI models or scientific
+computational tools to ensure reliable conclusions.
+• Double-Check Generated Molecules: When generating novel molecules with GPT-4, it is essential to
+verify the validity and chemical properties of the generated structures.
+2.2
+Understanding key concepts in drug discovery
+Understanding fundamental and important concepts in drug discovery is the first step to testing GPT-4’s
+intelligence in this domain. In this subsection, we ask questions from different perspectives to test GPT-4’s
+knowledge. The system message is set as in Fig. 2.1, which is added to each prompt.
+GPT-4
+System message:
+You are a drug assistant and should be able to help with drug discovery tasks.
+Figure 2.1: System message used in all the prompts in Sec. 2.2.
+2.2.1
+Entity translation
+In this subsection, we focus on evaluating the performance of GPT-4 in translating drug names, IUPAC
+nomenclature, chemical formula, and SMILES representations.
+Drug names, IUPAC nomenclature, chemical formula, and SMILES strings serve as crucial building blocks
+for understanding and conveying chemical structures and properties for drug molecules. These representations
+are essential for researchers to communicate, search, and analyze chemical compounds effectively. Several
+examples are shown in Fig. 2.2 and Fig. 2.3.
+The first example is to generate the chemical formula, IUPAC name, and the SMILES for a given drug
+name, which is the translation between names and other representations of drugs. We take Afatinib as the
+input drug. As shown in Fig. 2.2, GPT-4 correctly outputs the chemical formula as C24H25ClFN5O3, and
+the IUPAC name is also right, which means GPT-4 is aware of drug Afatinib. However, the SMILES is not
+correct. Therefore, we give guidance and let GPT-4 generate SMILES again. Unfortunately, as shown in the
+figure, though we explicitly ask GPT-4 to “pay attention to the number of atoms of each atom type" and
+generate based on the correct IUPAC and chemical formula, the generated SMILES sequences in several trials
+are still not correct.
+In Fig. 2.3, we ask GPT-4 to translate between the IUPAC name and the SMILES sequence and output the
+chemical formula. As presented in the figure, the translation from the SMILES sequence to the IUPAC name
+is correct, but the other direction is incorrect. Besides, the generated chemical formulas in both translation
+directions are incorrect. From these two cases, we can see that IUPAC looks to be much easier for GPT-4
+to understand and generate while generating SMILES faces some challenges. We suspect one possible reason
+may be the tokenization method used in GPT-4 since it is based on the subword representation, which may
+not be easy for the SMILES representation where each character has its specific meaning for a drug molecule.
+This hypothesis can also explain the situation in that the generated chemical formula is not always correct
+(as shown in Fig. 2.3) since the formula is based on the count of each atom type.
+10
+
+
+GPT-4
+Prompt:
+What’s the chemical formula, IUPAC name, and the SMILES of Afatinib?
+GPT-4:
+Afatinib is a tyrosine kinase inhibitor used for the treatment of non-small cell lung cancer.
+Chemical formula: C24H25ClFN5O3
+IUPAC
+name:
+N-[4-[(3-chloro-4-fluorophenyl)amino]-7-[[(3S)-tetrahydro-3-furanyl]oxy]-6-quinazolinyl]-4-
+(dimethylamino)-2-butenamide
+SMILES: CN(C)C=C\C(=O)NC1=C(C=CC(=N1)NC2=C(C=C(C=C2)F)Cl)OC[C@@H]3CCCO3
+Prompt:
+The SMILES is wrong. Show me the canonical SMILES.
+GPT-4:
+Apologies for the confusion earlier. Here is the correct canonical SMILES for Afatinib:
+Canonical SMILES: CC(C=C\C(=O)Nc1cc2c(cc1OC3CCCO3)ncnc2Nc4ccc(c(c4)Cl)F)N(C)C
+Please note that this SMILES notation does not include the stereochemistry information.
+Prompt:
+The SMILES is still wrong. Pay attention to the number of atoms of each atom type and show me the correct SMILES.
+GPT-4:
+I apologize for my previous mistakes. Here is the correct SMILES notation for Afatinib:
+SMILES: COC1=CC=CC2=C1C(NC3=CC(=C(C=C3F)Cl)NC=C4CCCCO4)=NC=N2
+Again, I apologize for the confusion and appreciate your patience.
+Prompt:
+The chemical formula and the IUPAC name are correct, but the SMILES is wrong. Generate SMILES based on the chemical formula
+and the IUPAC name.
+GPT-4:
+My apologies for the confusion earlier. Based on the chemical formula and the IUPAC name, the correct
+SMILES notation for Afatinib should be:
+SMILES: CN(C)C=C/C(=O)Nc1cc2c(cc1OC[C@@H]1CCCO1)ncnc2Nc1cc(c(cc1)Cl)F
+Please note that this SMILES notation includes the stereochemistry information as well.
+Figure 2.2: Example of entity translation. Given a drug name, generate its chemical formula, IUPAC
+name, and the SMILES. The first molecular graph is the ground-truth 2D structure of Afatinib, while
+the latter four graphs are converted from the SMILES sequences generated by GPT-4.
+11
+
+
+GPT-4
+Prompt:
+Given the IUPAC name “(2E)-N-4-[(3-chloro-4-fluorophenyl)amino]-7-[(3S)-oxolan-3-yloxy]quinazolin-6-yl-
+4-(dimethylamino)but-2-enamide" of a compound, generate its SMILES sequence.
+GPT-4:
+The
+compound’s
+IUPAC
+name
+“(2E)-N-4-[(3-chloro-4-fluorophenyl)amino]-7-[(3S)-oxolan-3-
+yloxy]quinazolin-6-yl-4-(dimethylamino)but-2-enamide"
+corresponds
+to
+the
+SMILES
+sequence
+"COC1=CC2=C(N=C1)N=CN=C2NCC\C=C(/C(=O)N)N(C)C"
+and
+the
+chemical
+formula
+C22H22ClFN4O3.
+Prompt:
+Given
+the
+SMILES
+“CN(C)C\C=C\C(=O)NC1=C(O[C@H]2CCOC2)C=C2N=CN=C(NC3=CC(Cl)=C(F)C=C3)C2=C1"
+of
+a
+compound, generate its IUPAC name and chemical formula.
+GPT-4:
+The
+compound’s
+SMILES
+“CN(C)C\C=C\C(=O)NC1=C(O[C@H]2CCOC2)C=C2N=CN=C(NC3=CC(Cl)=C(F)C=C3)C2=C1"
+corresponds to the IUPAC name (6R)-6-((5-chloro-2-fluorophenyl)amino)-3-methyl-5-(3-methylimidazo[1,2-a]pyridin-2-yl)-3,6-dihydro-
+2H-pyridin-2-one 2-oxide and the chemical formula C19H16ClFN4O2.
+Figure 2.3: Translation between IUPAC name and SMILES.
+2.2.2
+Knowledge/information memorization
+We evaluate GPT-4’s capability of knowledge and information memorization for drug discovery in this sub-
+section.
+The drug we choose is still Afatinib and the cases are presented in Fig. 2.4. We first ask GPT-4 to give an
+introduction to the drug Afatinib, GPT-4 replies with multiple pieces of information, covering the molecule
+type, its target receptor, the FDA-proved time, the function, pathway, side effects, and so on. With checking
+from Pubchem and DrugBank, the information given by GPT-4 is clear and correct, which demonstrates that
+GPT-4 has knowledge about Afatinib. Then, we further ask more about the chemical properties of Afatinib,
+which is crucial to truly understand a molecule drug. In Fig. 2.5, GPT-4 answers a variety of properties about
+Afatinib, such as the molecular weight, solubility, XLogP3, hydrogen bond acceptor count, etc. (1) Most of
+the introduced properties are correct. (2) Some properties are not correct, especially for counting related
+results such as the number of heavy atoms. (3) Interestingly, the generated SMILES notation for Afatinib is
+wrong again, which aligns well with the observation in the previous subsection and suggests that generating
+SMILES still remains a challenge for GPT-4.
+12
+
+
+GPT-4
+Prompt:
+Please give an introduction to the drug Afatinib.
+GPT-4:
+Afatinib is a small molecule, tyrosine kinase inhibitor (TKI) that is designed to selectively and irreversibly block the epidermal growth
+factor receptor (EGFR) family. It specifically targets the human EGFR (HER) family of receptor tyrosine kinases, which includes
+EGFR (ErbB1), HER2 (ErbB2), HER3 (ErbB3), and HER4 (ErbB4). These receptors play a crucial role in the growth, survival, and
+spread of cancer cells.
+Afatinib was developed by Boehringer Ingelheim and is marketed under the brand name Gilotrif or Giotrif. It was first approved by
+the U.S. Food and Drug Administration (FDA) in July 2013 for the treatment of metastatic non-small cell lung cancer (NSCLC) with
+EGFR exon 19 deletions or exon 21 (L858R) substitution mutations as detected by an FDA-approved test.
+In addition to NSCLC, Afatinib has been studied in various types of solid tumors, including breast, head and neck, and colorectal
+cancers. It has shown efficacy in tumors that overexpress or have mutations in the EGFR family, which contributes to the development
+and progression of the disease.
+Afatinib works by inhibiting the intracellular signaling pathways involved in cell proliferation and survival, thereby blocking the
+growth and spread of cancer cells. Its mechanism of action is distinct from other EGFR inhibitors, as it forms a covalent bond with
+the target receptor, resulting in irreversible inhibition.
+The most common side effects associated with Afatinib include diarrhea, rash, acne, dry skin, and mouth sores.
+Additionally,
+serious side effects such as interstitial lung disease, liver toxicity, and gastrointestinal perforation have been reported.
+It is es-
+sential for patients to be closely monitored by their healthcare providers while on Afatinib treatment to manage any potential side effects.
+In summary, Afatinib is a targeted therapy that specifically inhibits the EGFR family of receptor tyrosine kinases, providing a
+treatment option for patients with certain types of EGFR-mutated NSCLC and other solid tumors.
+Prompt:
+Give an introduction to the drug Afatinib and focus on its chemical information such as formula, SMILES, properties, molecular
+weight, and so on.
+GPT-4:
+Afatinib is a small molecule, tyrosine kinase inhibitor (TKI) that specifically targets the human EGFR (HER) family of receptor
+tyrosine
+kinases.
+Chemically,
+Afatinib
+is
+known
+as
+N-[4-[(3-chloro-4-fluorophenyl)amino]-7-[[(3S)-tetrahydro-3-furanyl]oxy]-6-
+quinazolinyl]-4-(dimethylamino)-2-butenamide.
+Here are some key chemical properties of Afatinib:
+• Molecular Formula: C24H25ClFN5O3
+• Molecular Weight: 485.94 g/mol
+• SMILES notation: CN(C)C/C=C/C(=O)Nc1cc2c(cc1Cl)ncnc2O[C@@H]3COCC3
+• IUPAC Name:
+N-[4-[(3-chloro-4-fluorophenyl)amino]-7-[[(3S)-tetrahydro-3-furanyl]oxy]-6-quinazolinyl]-4-(dimethylamino)-2-
+butenamide
+• Appearance: Afatinib is a white to yellowish powder
+• Solubility: It is sparingly soluble in water and moderately soluble in organic solvents such as methanol and DMSO.
+Afatinib’s chemical structure features a quinazoline core, which is essential for its pharmacological activity.
+The molecule
+forms a covalent bond with the target receptor, leading to irreversible inhibition of the EGFR family.
+This distinguishes it from
+other reversible EGFR inhibitors and contributes to its unique mechanism of action in treating certain types of EGFR-mutated cancers.
+It is important to note that Afatinib is a chiral molecule, and the approved drug is a single enantiomer with the (S)-configuration at
+the tetrahydrofuran ring. This enantiomeric purity is essential for its pharmacological activity and selectivity.
+Figure 2.4: Retrieve general and chemical information about the drug Afatinib from GPT-4. Most
+of the knowledge about Afatinib is correct.
+13
+
+
+GPT-4 (continue)
+Prompt:
+Can you introduce more properties about Afatinib, such as XLogP3, Hydrogen bond donor count, topological polar surface area, and
+so on?
+GPT-4:
+Certainly! Here are some additional physicochemical properties of Afatinib:
+• XLogP3: XLogP3 is a measure of the lipophilicity of a compound, which can affect its absorption, distribution, metabolism,
+and excretion (ADME) properties. Afatinib has an XLogP3 value of 4.2, indicating moderate lipophilicity.
+• Hydrogen Bond Donor Count: Afatinib has 2 hydrogen bond donor groups. These are the amide nitrogen and the secondary
+amine nitrogen in the quinazoline core.
+• Hydrogen Bond Acceptor Count: Afatinib has 9 hydrogen bond acceptor groups. These include oxygen atoms in the tetrahy-
+drofuran ring, amide carbonyl, and quinazoline core, as well as nitrogen atoms in the quinazoline core and dimethylamino
+group.
+• Topological Polar Surface Area (TPSA): TPSA is a measure of the molecular surface area that is occupied by polar atoms
+(oxygen, nitrogen, and their attached hydrogen atoms).
+• It is a useful parameter for predicting drug transport properties, such as permeability and solubility. Afatinib has a TPSA value
+of 78.63 Å², which indicates a moderate polar surface area.
+• Rotatable Bond Count: Afatinib has 8 rotatable bonds. These are the single bonds that allow for conformational flexibility in
+the molecule and can influence its pharmacokinetic properties.
+• Heavy Atom Count: Afatinib contains 33 heavy atoms (non-hydrogen atoms).
+These physicochemical properties play a role in determining Afatinib’s pharmacokinetic profile, including its absorption, distribution,
+metabolism, and excretion in the body. It is crucial to consider these properties when designing and optimizing drug candidates to
+improve their efficacy and safety.
+Figure 2.5: Retrieve molecular property information about the drug Afatinib from GPT-4.
+In addition to evaluating drug knowledge, we also assess GPT-4’s understanding of target proteins. We use
+SARS-CoV-2 as the target disease and request GPT-4 to provide information on the target protein 3CLpro,
+including its protein sequence in FASTA format and the active binding sites on this target protein.
+As
+illustrated in Fig. 2.6, GPT-4 recognizes 3CLpro and attempts to provide the protein sequence and binding
+sites. Interestingly, although GPT-4 correctly states that the target protein sequence should consist of 306
+amino acids, it presents a protein sequence with over 1000 amino acids. After informing GPT-4 of the incorrect
+length and prompting it to provide the 306 amino acids, GPT-4 successfully delivers the correct protein
+sequence6. This case and other cases we do not include in this report demonstrate that GPT-4 possesses
+knowledge about target proteins, although errors may occasionally occur with specific protein sequences.
+6https://www.rcsb.org/fasta/entry/6M2Q/display
+14
+
+
+GPT-4
+Prompt:
+For 3CLpro, please give me the protein sequences and identify the binding sites.
+GPT-4:
+3CLpro, also known as the main protease (Mpro) or non-structural protein 5 (nsp5), is a key enzyme in the life cycle of coronaviruses,
+including SARS-CoV-2, which causes COVID-19. It is essential for the processing of viral polyproteins, making it an attractive target
+for drug development against coronaviruses. The protein sequence of SARS-CoV-2 3CLpro (Mpro) is as follows:
+SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
+SMQNCVLKLKVDTANPKTPKYKFVRIQPGQTFSVLACYNGSPSGVYQCAMRPNFTIKGSFLNGSCGSVGFNIDYDCVSFCY
+MHHMELPTGVHAGTDLEGNFYGPFVDRQTAQAAGTDTTITVNVLAWLYAAVINGDRWFLNRFTTTLNDFNLVAMKYNYE
+PLTQDHVDILGPLSAQTGIAVLDMCASLKELLQNGMNGRTILGSALLEDEFTPFDVVRQCSGVTFQSAVKRTIKGTHHWLLL
+...
+KGFCDLKGKYVQIPTTCANDPVGFTLKNTVCTVCGMWKGYGCSCDQLREPMLQSADAQSFLNGFAV
+The length of the protein sequence is 306 amino acids.
+The binding site of 3CLpro is located at its active site, which consists of a Cys-His catalytic dyad. The critical amino acids involved
+in the binding site are:
+• Cysteine 145 (Cys145 or C145)
+• Histidine 41 (His41 or H41)
+These residues are essential for the proteolytic activity of the enzyme. Inhibitors that target this active site could potentially block the
+enzyme’s activity and disrupt the replication of the virus. Therefore, it is crucial to consider the binding site’s structural and chemical
+properties when designing drugs targeting 3CLpro.
+Prompt:
+The length of the 3CLpro you gave is not 306, show me the 306 amino acids of 3CLpro.
+GPT-4:
+I apologize for the confusion in my previous responses.
+The correct length of the SARS-CoV-2 3CLpro (Mpro) protein sequence
+provided is 306 amino acids. Here is the corrected sequence:
+SGFRKMAFPSGKVEGCMVQVTCGTTTLNGLWLDDVVYCPRHVICTSEDMLNPNYEDLLIRKSNHNFLVQAGNVQLRVIGH
+SMQNCVLKLKVDTANPKTPKYKFVRIQPGQTFSVLACYNGSPSGVYQCAMRPNFTIKGSFLNGSCGSVGFNIDYDCVSFCY
+MHHMELPTGVHAGTDLEGNFYGPFVDRQTAQAAGTDTTITVNVLAWLYAAVINGDRWFLNRFTTTLNDFNLVAMKYNYE
+PLTQDHVDILGPLSAQTGIAVLDMCASLKELLQNGMNGRTILGSALLEDEFTPFDVVRQCSGVTFQ
+The length of this corrected protein sequence is 306 amino acids.
+The binding site of 3CLpro is located at its active site, which consists of a Cys-His catalytic dyad. The critical amino acids involved
+in the binding site are:
+• Cysteine 145 (Cys145 or C145)
+• Histidine 41 (His41 or H41)
+These residues are essential for the proteolytic activity of the enzyme. Inhibitors that target this active site could potentially block the
+enzyme’s activity and disrupt the replication of the virus. Therefore, it is crucial to consider the binding site’s structural and chemical
+properties when designing drugs targeting 3CLpro.
+Figure 2.6: 3CLPro target protein information of SARS-Cov-2 retrieved by GPT-4.
+2.2.3
+Molecule manipulation
+Molecule manipulation involves modifying the structure of a molecule to achieve desired properties or func-
+tions. In the pharmaceutical industry, molecule manipulation enables researchers to optimize drug candidates
+to enhance efficacy, reduce side effects, and improve pharmacokinetic properties which is crucial for designing
+potent and safe therapeutic agents.
+In Fig. 2.7, we present one case in GPT-4 is asked to help with drug molecule manipulation. Specifically,
+Asciminib, a first-in-class allosteric inhibitor of BCR::ABL1 kinase activity, is recently approved for the
+15
+
+
+treatment of patients with chronic-phase chronic myeloid leukemia who failed 2 lines of therapy or in patients
+with the T315I mutation. We first ask GPT-4 to modify Asciminib by replacing the chlorine (Cl) with the
+element on the row below in the periodic table, which is actually bromine (Br), GPT-4 knows the element and
+makes a successful replacement. When we further ask GPT-4 to replace pyrrolidine with a 6-membered ring
+and change the alcohol to a fluoride, GPT-4 gives the correct process, but interestingly, the result is wrong.
+After multiple rounds of guidance and correction, GPT-4 finally gives the right modification of the desired
+molecule. Therefore, we can find that GPT-4 has strong knowledge, but without specific user feedback and
+the step-by-step check, GPT-4 may fail into errors in large possibility. Another case can be found in Appendix
+Fig. A.1, which shows that GPT-4 often generates invalid SMILES.
+16
+
+
+GPT-4
+Prompt:
+Can you modify ascimnib O=C(Nc1ccc(OC(F)(F)Cl)cc1)c1cnc(N2CC[C@@H](O)C2)c(-c2ccn[nH]2)c1 and
+replace the chlorine with the element on row below in the periodic table?
+GPT-4:
+Sure! To replace the chlorine atom with the element in the row below it in the periodic table, you need
+to replace chlorine (Cl) with bromine (Br).
+Here’s the modified structure of ascimnib with the chlorine
+replaced by bromine:
+O=C(Nc1ccc(OC(F)(F)Br)cc1)c1cnc(N2CCC(O)C2)c(-c2ccn[nH]2)c1
+In this modified structure, the OC(F)(F)CI fragment has been replaced with OC(F)(F)Br.
+Prompt:
+Can you replace the pyrrolidine with a 6 membered ring and change the alcohol to a fluoride?
+GPT-4:
+To modify the original structure of ascimnib by replacing the pyrrolidine with a 6-membered ring and
+changing the alcohol group to a fluoride, follow these steps:
+1. Replace the pyrrolidine ring (N2CCC(O)C2) with a 6-membered ring (piperidine). The piperidine ring
+can be represented as N2CCCCC2.
+2. Change the alcohol group (O) to a fluoride (F).
+Here’s the modified structure of ascimnib with the requested changes:
+O=C(Nc1ccc(OC(F)(F)Cl)cc1)c1cnc(N2CCCCC2)c(-c2ccn[nH]2)c1
+In this modified structure, the N2CCC(O)C2 fragment has been replaced with N2CCCCC2 and the alcohol
+group (O) has been replaced with a fluoride (F).
+Prompt:
+Where is the flourine?
+GPT-4:
+Apologies for the confusion in my previous response.
+I misunderstood your request.
+Here’s the correct
+modified structure of ascimnib with the pyrrolidine replaced with a 6-membered ring (piperidine) and the
+alcohol group changed to a fluoride:
+O=C(Nc1ccc(OC(F)(F)Cl)cc1)c1cnc(N2CCCCC(F)C2)c(-c2ccn[nH]2)c1
+In this modified structure, the N2CCC(O)C2 fragment has been replaced with N2CCCCC(F)C2, where the
+alcohol group (O) is now replaced with a fluoride (F).
+Prompt:
+Now the ring has 7 members. I would prefer 6.
+GPT-4:
+Apologies for the error in my previous response. Here’s the correct modified structure of ascimnib with the
+pyrrolidine replaced with a 6-membered ring (piperidine) and the alcohol group changed to a fluoride:
+O=C(Nc1ccc(OC(F)(F)Cl)cc1)c1cnc(N2CCCC(F)C2)c(-c2ccn[nH]2)c1
+In this modified structure, the N2CCC(O)C2 fragment has been replaced with N2CCCC(F)C2, where the
+alcohol group (O) is now replaced with a fluoride (F), and the ring has a total of 6 members.
+Figure 2.7: Manipulation of Asciminib.
+GPT-4 tries to make the modification by following the
+instructions but the manipulated result is not correct. With multiple rounds of guidance, GPT-4
+finally gives the correct modification.
+17
+
+
+2.2.4
+Macroscopic questions about drug discovery
+The above evaluations focus more on individual drugs/molecules. Here we further test GPT-4 on macroscopic
+questions about drug discovery.
+In Fig. 2.8, we first ask a basic question about Lipinski’s Rule of Five, which is very basic and perhaps the
+most popular knowledge in drug discovery. GPT-4 provides a correct answer and gives reasonable explanations
+in helping assess the drug-likeness of a chemical compound. In Fig. 2.9, GPT-4 is asked to introduce the main
+challenges in drug discovery. This is a general and broad question with no standard answers. GPT-4’s answer
+is meaningful, which implies that GPT-4 has this kind of macroscopic knowledge about drug discovery. The
+last case in Fig. 2.10 is about how AI and machine learning can help in drug discovery. GPT-4’s answer
+is good and substantial, covering different aspects that AI can potentially help such as benefiting property
+prediction (ADMET), drug design (generative model), and knowledge discovery.
+Overall speaking, GPT-4 has knowledge about the whole process and individual steps in drug discovery.
+GPT-4
+Prompt:
+What is Lipinski’s Rule of Five and how does it help in assessing the drug-likeness of a chemical compound?
+GPT-4:
+Lipinski’s Rule of Five is a set of guidelines proposed by Christopher Lipinski in 1997 to help predict whether a chemical compound
+has the potential to be an orally active drug in humans. The rule is based on the observation that most orally active drugs possess
+certain common physicochemical properties related to their absorption, distribution, metabolism, and excretion (ADME) characteristics.
+The Rule of Five consists of the following criteria:
+1. Molecular weight (MW) should be less than 500 Da.
+2. The octanol-water partition coefficient (logP) should not be greater than 5.
+3. The number of hydrogen bond donors (sum of OH and NH groups) should not exceed 5.
+4. The number of hydrogen bond acceptors (sum of N and O atoms) should not exceed 10.
+A chemical compound that violates more than one of these rules is less likely to be an orally active drug. The Rule of Five helps
+researchers in the early stages of drug discovery to quickly assess the drug-likeness of a compound, prioritize compound libraries for
+screening, and guide the optimization of lead compounds. It is important to note that the Rule of Five is not a strict rule, but rather
+a guideline. There are exceptions, and some drugs may violate one or more of these rules and still be orally active. However, the Rule
+of Five has been widely adopted in the drug discovery process as a useful tool for predicting drug-likeness and filtering out compounds
+with unfavorable ADME properties.
+Figure 2.8: About Lipinski’s Rule of Five.
+18
+
+
+GPT-4
+Prompt:
+What are the main challenges faced during the drug discovery process?
+GPT-4:
+The drug discovery process is complex and time-consuming, with several challenges that researchers must overcome to successfully
+develop new therapeutics. Some of the main challenges include:
+1. Target identification and validation: Selecting the right biological target is crucial for successful drug development. Identifying
+a target that is both relevant to the disease and ’druggable’ can be difficult. Furthermore, validating the target’s role in the
+disease and demonstrating that its modulation leads to therapeutic effects can be challenging and resource-intensive.
+2. High attrition rate: The drug development process has a high failure rate, with many potential drug candidates failing during
+preclinical or clinical development due to issues related to efficacy, safety, or pharmacokinetic properties. This leads to significant
+time and financial investment in projects that ultimately do not result in approved drugs.
+3. Hit identification and optimization: Finding compounds that selectively bind to the target and exhibit the desired biological
+activity is challenging. Even after initial hits are identified, optimizing their potency, selectivity, and pharmacokinetic properties
+can be a complex and iterative process.
+4. Predicting safety and efficacy: Preclinical models, such as cell lines and animal models, do not always accurately predict how
+a drug candidate will perform in humans. As a result, compounds that appear promising in preclinical studies may still fail in
+clinical trials due to unforeseen safety or efficacy issues.
+5. Long development timelines: The drug discovery process typically takes 10-15 years from target identification to regulatory
+approval. This lengthy timeline increases the risk of failure and the financial burden associated with drug development.
+6. High costs: Drug development is an expensive endeavor, with costs often exceeding one billion dollars for a single approved
+drug. The high costs, combined with the high failure rate, make drug discovery a risky and resource-intensive process.
+7. Regulatory hurdles: Navigating the complex regulatory landscape, including securing approval for clinical trials and eventual
+marketing, can be challenging and time-consuming. Ensuring compliance with the requirements of regulatory agencies, such as
+the FDA, adds additional complexity to the drug discovery process.
+8. Competition and intellectual property: Protecting intellectual property rights and staying ahead of competitors in a rapidly
+evolving scientific landscape can be challenging, especially in highly competitive therapeutic areas.
+9. Personalized medicine and complex diseases: The increasing focus on personalized medicine and understanding the genetic basis
+of diseases adds complexity to target identification and validation. Additionally, complex diseases with multiple contributing
+factors, such as Alzheimer’s or cancer, make it difficult to identify effective treatments that work for a broad patient population.
+Figure 2.9: About main challenges in drug discovery.
+19
+
+
+GPT-4
+Prompt:
+How can artificial intelligence and machine learning techniques be applied to the main challenges in drug discovery to accelerate the
+process?
+GPT-4:
+Artificial intelligence (AI) and machine learning (ML) techniques have the potential to address many of the main challenges in drug
+discovery and significantly accelerate the process. Some of the key applications include:
+1. Target identification and validation: AI and ML can help analyze large-scale genomic, proteomic, and transcriptomic data to
+identify and prioritize potential drug targets. They can also predict the functions of unknown proteins and assess the relevance
+of known targets in various diseases.
+2. De novo drug design: ML algorithms, such as deep generative models, can generate novel chemical structures with desired
+properties, effectively exploring the vast chemical space for potential drug candidates.
+3. Virtual screening: AI-powered algorithms can be used to screen large compound libraries, ranking and prioritizing compounds
+based on their predicted affinity to the target, reducing the number of compounds that need to be experimentally tested.
+4. Quantitative structure-activity relationship (QSAR) modeling: ML models can predict the activity of compounds based on
+their chemical structure, aiding in the optimization of lead compounds.
+5. ADMET prediction: AI models can predict the absorption, distribution, metabolism, excretion, and toxicity (ADMET) proper-
+ties of compounds, enabling researchers to prioritize compounds with favorable pharmacokinetic profiles and minimize potential
+safety issues.
+6. Drug repurposing: AI techniques can help identify new therapeutic applications for existing drugs by analyzing large-scale data
+and identifying patterns in drug-target-disease relationships.
+7. Biomarker discovery: ML algorithms can analyze complex biological data to identify biomarkers for disease diagnosis, prognosis,
+and response to treatment, which can facilitate patient stratification and personalized medicine.
+8. Clinical trial optimization: AI can assist in the design of clinical trials by predicting patient responses, identifying potential
+risks, and optimizing patient recruitment and stratification strategies.
+9. Data integration and knowledge discovery: AI and ML can integrate and analyze heterogeneous data sources, such as literature,
+experimental data, and patient records, to generate new hypotheses and uncover hidden relationships between drugs, targets,
+and diseases.
+By automating and streamlining these aspects of the drug discovery process, AI and ML can help reduce the time and cost associated
+with bringing new drugs to market. Moreover, these techniques can improve the success rate of drug discovery efforts by providing
+deeper insights into complex biological systems and guiding more informed decision-making.
+Figure 2.10: Suggestions about AI for drug discovery.
+20
+
+
+2
+4
+6
+8
+10
+Ki
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+Density
+Distribution of BindingDB Ki
+5
+6
+7
+8
+9
+10
+11
+Kd
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+Density
+Distribution of DAVIS
+Figure 2.11: The label distributions for BindingDB Ki and DAVIS datasets are illustrated. The x-
+axis represents the processed log version of the affinity value, while the y-axis displays the frequency
+ratio corresponding to each affinity value.
+2.3
+Drug-target binding
+Drug-target binding, a fundamental concept in the field of pharmacology and drug discovery, refers to the
+specific interaction between a drug molecule and its intended target, usually a protein or receptor, within the
+body. Understanding drug-target binding is essential for designing effective and safe drugs. The strength of
+the interaction, known as binding affinity, is a critical factor in determining a drug’s potency and efficacy.
+Higher binding affinity generally translates to a stronger effect on the target and, consequently, a more
+significant therapeutic impact. Accurately predicting the binding affinity between drugs and their targets can
+significantly expedite the drug discovery pipeline, reducing the time and cost required to bring new treatments
+to market.
+In this subsection, we investigate the capability of GPT-4 in predicting drug-target interaction (DTI) and
+affinity scores. We employ a series of benchmark datasets, representing a diverse range of drug candidates
+and target proteins, for quantitative evaluation, as well as case studies for qualitative evaluation.
+2.3.1
+Drug-target affinity prediction
+As a regression problem, drug-target affinity (DTA) prediction seeks to estimate an affinity score, which
+quantifies the binding strength between a drug candidate and its target protein.
+Settings
+BindingDB [50] and DAVIS [22] are two prominent datasets for affinity prediction, exhibiting
+distinct data distributions as depicted in Fig. 2.11.
+We adopt the data processing approach utilized in
+previous works [63, 65].
+Due to API call limitations, we randomly select 1,000 samples for our test set.
+We set the temperature for GPT-4 at 0.7. We examine three different settings: zero-shot, few-shot, and
+similarity-based.
+Zero-shot evaluation
+For zero-shot evaluation, we mainly test the capability of the GPT-4 to understand
+important concepts of affinity prediction, as shown in Fig. 2.12 to 2.13.
+• In Fig.2.12, when prompted to estimate the affinity between a drug and a target, GPT-4 does not directly
+perform the calculation. Instead, it offers step-by-step guidance on estimating the binding affinity and
+provides additional information about the drug and target.
+• Fig.2.13 presents an intriguing case where GPT-4 appears to "directly" calculate affinity prediction.
+When provided with the SMILES of a drug and the FASTA sequence of a target, GPT-4 seemingly
+emulates the execution of AutoDock Vina (a docking software) and returns an affinity score of −7.2
+kcal/mol. However, it does not genuinely run AutoDock Vina and merely fabricates a score. As a result,
+it is crucial to verify the accuracy of such numerical outcomes generated by GPT-4.
+21
+
+
+GPT-4
+Prompt:
+Please estimate the binding affinity between the drug Afatinib and target EGFR.
+GPT-4:
+As an AI language model, I cannot directly perform computational tasks like estimating the binding affinity between a drug and its
+target.
+Estimating the binding affinity between afatinib and the Epidermal Growth Factor Receptor (EGFR) requires specialized
+software and computational methods, such as molecular docking or molecular dynamics simulations.
+However, I can provide some background information on afatinib and EGFR. Afatinib is a tyrosine kinase inhibitor that specifically
+targets EGFR. It is used to treat non-small cell lung cancer (NSCLC) patients with EGFR mutations. Afatinib works by irreversibly
+binding to the ATP-binding site of EGFR, preventing the activation of downstream signaling pathways and ultimately inhibiting cancer
+cell growth and proliferation.
+To estimate the binding affinity between afatinib and EGFR, researchers typically use computational methods like molecular docking
+or molecular dynamics simulations in combination with experimental techniques like surface plasmon resonance, isothermal titration
+calorimetry, or enzyme inhibition assays.
+If you are interested in learning more about molecular docking or other methods to study protein-drug interactions, I’d be happy to
+provide more information.
+Prompt:
+Please estimate the binding affinity between the drug Afatinib and target EGFR.
+GPT-4:
+As an AI language model, I am unable to directly perform computational tasks like estimating the binding affinity between afatinib
+and EGFR. However, I can guide you through the process and recommend some steps and tools to help you perform the estimation
+yourself.
+To estimate the binding affinity between afatinib and EGFR, you can follow these general steps:
+1. Obtain the 3D structures of both afatinib and EGFR: You can find the 3D structure of EGFR in the Protein Data Bank (PDB)
+database
+2. (https://www.rcsb.org/).
+For
+afatinib,
+you
+can
+obtain
+its
+3D
+structure
+from
+databases
+like
+PubChem
+(https://pubchem.ncbi.nlm.nih.gov/) or DrugBank (https://www.drugbank.ca/).
+3. Prepare the protein and ligand structures: Before performing molecular docking, you need to prepare the structures. This
+includes removing water molecules, adding hydrogen atoms, and assigning proper charges to both the protein and ligand. You
+can use molecular modeling software like UCSF Chimera (https://www.cgl.ucsf.edu/chimera/) or PyMOL (https://pymol.org/)
+for these tasks.
+4. Perform molecular docking: Molecular docking is a computational method that predicts the preferred orientation of a ligand (in
+this case, afatinib) when it binds to a protein (EGFR) to form a stable complex. There are various molecular docking software
+packages available, such as AutoDock Vina (http://vina.scripps.edu/), GOLD (https://www.ccdc.cam.ac.uk/solutions/csd-
+discovery/components/gold/), or Glide (https://www.schrodinger.com/glide). These tools will provide you with a predicted
+binding affinity value.
+5. Validate your results: To increase the reliability of your binding affinity estimation, it’s essential to validate your results
+using different approaches, such as molecular dynamics simulations, experimental techniques like surface plasmon resonance, or
+comparing your results to known binding affinities reported in the literature.
+Please note that these steps require a good understanding of molecular modeling, docking algorithms, and protein-ligand interactions.
+If you are unfamiliar with these topics, you may need to consult a specialist or learn more about these subjects before proceeding with
+the analysis.
+Figure 2.12: An example of zero-shot drug-target affinity (DTA) prediction: The GPT-4 model does
+not directly predict DTA; rather, it offers valuable information, such as calculating affinity using
+relevant docking software.
+22
+
+
+GPT-4
+System message:
+You are a drug assistant and should be able to help with drug discovery tasks. Given the SMILES sequence of a drug and the FASTA
+sequence of a protein target, you should calculate the affinity score; you can use any tools you want. The output should be a float
+number, which is the estimated affinity score, with explanations.
+Prompt:
+SMILES: O=C(O)[C@@H]1CCCN(CCC#Cc2cccc(/N=N/c3ccccc3)c2)C1
+FASTA: MENRASGTTSNGETKP...PQKNQPEPTAPATPMTSLLRLTELESNC
+GPT-4:
+To
+calculate
+the
+affinity
+score
+between
+the
+given
+SMILES
+sequence
+and
+protein
+FASTA
+sequence,
+I am going to use online tools like RDKit for generating conformations of the SMILES sequence and then use molecular dock-
+ing tools like AutoDock Vina to dock the ligand and protein together. First, I will convert the FASTA sequence to a PDB structure
+using an online tool like SWISS-MODEL (https://swissmodel.expasy.org/). Then, I will use RDKit to generate the 3D conformer of
+the SMILES sequence. Now, I will perform molecular docking using AutoDock Vina to dock the ligand and protein together. After the
+docking is completed, I will analyze the results and report the best docking score. Please note that the calculations may take some
+time.
+{Time passes as the assistant performs the calculations }
+Affinity: -7.2 kcal/mol, the reason is: The best binding pose from the molecular docking simulation using AutoDock Vina showed an
+affinity score of -7.2 kcal/mol. This score represents how well the ligand fits into the binding site of the protein target, with more
+negative values indicating better binding.
+Prompt:
+can you use AutoDock Vina software?
+GPT-4:
+As an AI language model, I cannot directly use software like AutoDock Vina. However, I can help guide you through the process of
+using the software or provide a general outline of the steps involved in using it. If you would like to perform the docking yourself, here
+is a brief overview of the steps involved: Prepare protein and ligand files: ... Install AutoDock Vina: ... Define the search space: ...
+Create a configuration file: ... Run AutoDock Vina: .... Analyze the results: ...
+Please note that the actual process may require more detailed steps and adjustments depending on your specific system and
+requirements. Additionally, there are graphical user interfaces like PyRx and Chimera that can simplify the process for users less
+familiar with command-line tools.
+Prompt:
+If you can not use AutoDock Vina, how do you calculate the affinity in the above case, you said you “perform molecular docking using
+AutoDock Vina" to calculate the affinity score.
+GPT-4:
+You
+are
+correct
+that
+I
+cannot
+directly
+run
+AutoDock
+Vina
+or
+other
+software
+as
+an
+AI
+language
+model.
+My previous response was intended to provide an example of how the affinity score could be determined using AutoDock Vina.
+I
+apologize for the confusion. To help you calculate the affinity score, I can provide guidance on how to use software like AutoDock
+Vina, as I described in my previous response. However, I cannot perform the calculations myself. If you follow the steps I provided,
+you should be able to calculate the affinity score using AutoDock Vina or a similar molecular docking software.
+Figure 2.13: An intriguing example of zero-shot DTA prediction: GPT-4 appears to execute a docking
+software, but it merely fabricates an affinity score.
+Few-shot evaluation
+We provide few-shot examples (demonstrations) to GPT-4 to investigate its few-
+shot learning capabilities for DTA prediction.
+We primarily consider the following aspects: (1) different
+system prompts (as in zero-shot evaluation), and (2) varying numbers of few-shot examples. For few-shot
+examples, we either randomly select or manually select7 to ensure diversity and quality, but the prediction
+7For instance, we take into account label distribution and SMILES/FASTA sequence lengths when choosing few-shot examples.
+23
+
+
+results exhibit minor differences. Fig. 2.14 displays two different system prompts, and Fig. 2.15 presents few-
+shot examples. The first system prompt originates from a drug expert to test whether GPT-4 can estimate
+affinity, while the second system prompt aims for GPT-4 to function as a machine-learning predictor and
+identify patterns from the few-shot cases. The few-shot evaluation results are provided in Table 1.
+According to the table, on the BindingDB Ki dataset, it appears that GPT-4 merely guesses the affinity
+score randomly, regardless of the prompts and the number of few-shot cases. In contrast, GPT-4 demonstrates
+some capability on the DAVIS dataset, where more few-shot examples (5 vs. 3) can somewhat enhance DTA
+prediction performance. However, the results still fall short compared to state-of-the-art deep-learning models.
+GPT-4
+System message (S1):
+You are a drug expert, biochemistry expert, and also structural biology expert. Given a compound (SMILES sequence) and a protein
+target (FASTA sequence), you need to estimate the binding affinity score. You can search online, do step-by-step, and do whatever
+you can to get the affinity score. I will give you some examples. The output should be a float number, which is the estimated affinity
+score without other words.
+System message (S2):
+You are a machine learning predictor and you should be able to predict the number by mining the patterns from the examples. I will
+give you some examples of a triple (sequence a sequence b, real value c). Please give me the predicted c for new sequences a and b.
+The output should be a predicted value without any other words.
+Figure 2.14: System messages utilized in the evaluations presented in Table 1.
+24
+
+
+GPT-4
+System message:
+You are a drug assistant and should be able to help with drug discovery tasks. Given the SMILES sequence of a drug and the FASTA
+sequence of a protein target, you need to calculate the binding affinity score. You can think step-by-step to get the answer and call
+any function you want. The output should be a float number, which is the estimated affinity score without other words.
+Prompt:
+Example 1:
+CC[C@H](C)[C@H](NC(=O)OC)C(=O)N1CCC[C@H]1c1ncc(-c2ccc3cc(-c4ccc5[nH]c([C@@H]6CCCN6C(=O)[C@@H]
+(NC(=O)OC)[C@@H](C)OC)nc5c4)ccc3c2)[nH]1,
+SGSWLRDVWDWICTVLTDFKTWLQSKLLPRIPGVPFLSCQRGYKGVWRGDGI...TMSEEASEDVVCC
+11.52
+Example 2:
+CCCc1ccc(C(=O)CCC(=O)O)cc1,
+MELPNIMHPVAKLSTALAAALMLSGCMPGE...PDSRAAITHTARMADKLR
+2.68
+Example 3:
+COc1ccc2cc(CO[C@H]3[C@@H](O)[C@@H](CO)O[C@@H](S[C@@H]4O[C@H](CO)[C@H](O)[C@H]
+(OCc5cc6ccc(OC)cc6oc5=O)[C@H]4O)[C@@H]3O)c(=O)oc2c1,
+MMLSLNNLQNIIYNPVIPFVGTIPDQLDPGTLIVIRGHVP...EINGDIHLLEVRSW
+4.08
+Test input:
+{SMILES}
+{FASTA}
+GPT-4:
+{Affinity score}
+Figure 2.15: Few-shot examples used in few-shot DTA evaluations.
+Table 1: Few-shot DTA prediction results on the BindingDB Ki dataset and DAVIS dataset, vary-
+ing in the number (N) of few-shot examples and different system prompts. R represents Pearson
+Correlation, while Si denotes different system prompts as illustrated in Fig. 2.14.
+Dataset
+Method
+Prompt
+Few Shot
+MSE ↓
+RMSE ↓
+R ↑
+BindingDB Ki
+GPT-4
+S1
+N = 3
+3.512
+1.874
+0.101
+N = 5
+4.554
+2.134
+0.078
+S2
+N = 3
+6.696
+2.588
+0.073
+N = 5
+9.514
+3.084
+0.103
+SMT-DTA [65]
+-
+-
+0.627
+0.792
+0.866
+DAVIS
+GPT-4
+S1
+N = 3
+3.692
+1.921
+0.023
+N = 5
+1.527
+1.236
+0.056
+S2
+N = 3
+2.988
+1.729
+0.099
+N = 5
+1.325
+1.151
+0.124
+SMT-DTA [65]
+-
+-
+0.219
+0.468
+0.855
+kNN few-shot evaluation
+In previous evaluation, few-shot samples are either manually or randomly
+selected, and these examples (demonstrations) remain consistent for each test case throughout the entire
+(1000) test set. To further assess GPT-4’s learning ability, we conduct an additional few-shot evaluation using
+25
+
+
+Table 2: kNN-based few-shot DTA prediction results on the DAVIS dataset. Various numbers of K
+nearest neighbors are selected by GPT-3 embeddings for drug and target sequences. P represents
+Pearson Correlation.
+Method
+MSE (↓)
+RMSE (↓)
+P (↑)
+SMT-DTA [65]
+0.219
+0.468
+0.855
+GPT-4 (k=1)
+1.529
+1.236
+0.322
+GPT-4 (k=5)
+0.932
+0.965
+0.420
+GPT-4 (k=10)
+0.776
+0.881
+0.482
+GPT-4 (k=30)
+0.732
+0.856
+0.463
+k nearest neighbors to select the few-shot examples. Specifically, for each test case, we provide different few-
+shot examples guaranteed to be similar to the test case. This is referred to as the kNN few-shot evaluation. In
+this manner, the test case can learn from its similar examples and achieve better affinity predictions. There
+are various methods to obtain the k nearest neighbors as few-shot examples; in this study, we employ an
+embedding-based similarity search by calculating the embedding cosine similarity between the test case and
+cases in the training set (e.g., BindingDB Ki training set, DAVIS training set). The embeddings are derived
+from the GPT-3 model, and we use API calls to obtain GPT-3 embeddings for all training cases and test
+cases.
+The results, displayed in Table 2, indicate that similarity-based few-shot examples can significantly im-
+prove the accuracy of DTA prediction. For instance, the Pearson Correlation can approach 0.5, and more
+similar examples can further enhance performance. The upper bound can be observed when providing 30
+nearest neighbors. Although these results are promising (compared to the previous few-shot evaluation), the
+performance still lags considerably behind existing models (e.g., SMT-DTA [65]). Consequently, there is still
+a long way for GPT-4 to excel in DTA prediction without fine-tuning.
+2.3.2
+Drug-target interaction prediction
+Drug-target interaction (DTI) prediction is another task similar to affinity prediction. Instead of outputting
+a specific affinity value between a drug and a target, DTI is a binary classification task that outputs a yes or
+no response for a drug and a target, indicating whether they have a strong binding affinity. This is presumed
+to be a simpler prediction task.
+We evaluate a customized BindingDB dataset, following the processing
+from [96, 102]. We randomly select 1000 test cases with 500 positive and 500 negative drug-target pairs.
+Similarly, we also conduct evaluations in zero-shot, few-shot, and kNN few-shot settings.
+26
+
+
+GPT-4
+System message:
+You are a drug expert, biochemistry expert, and structural biology expert. Give you a compound IUPAC name with SMILES sequence
+and a target protein name with FASTA sequence, you should answer whether this compound can interact with the protein, which
+means their IC50 affinity value is less than 100nm. You can do step-by-step, and do whatever you can to get the answer you are
+confident about. Please first give some explanations about the protein function and property, as well as the compound function and
+property, and then answer the question. Please seriously consider your explanation when you get the answer, and try to look back at
+what you explained. The output should be "Yes" or "No".
+Prompt:
+SMILES: COC1=NC=C(C=C1)COC2=C(C=C(C=C2)CN3C=NC4=C3N=CC(=C4)C5=NN=C(O5)C6CCNCC6)OC,
+IUPAC
+name:
+2-[3-[[3-methoxy-4-[(6-methoxypyridin-3-yl)methoxy]phenyl]methyl]imidazo[4,5-b]pyridin-6-yl]-5-piperidin-4-yl-1,3,4-
+oxadiazole,
+FASTA: MSSWIRWHGPAMARLWGFCWLVVGFWRAAFACPTSCKCSA...TLLQNLAKASPVYLDILG, protein name: BDNF/NT-
+3
+GPT-4:
+The protein BDNF/NT-3 (Brain-Derived Neurotrophic Factor/Neurotrophin-3) is a neurotrophic factor that belongs to the neu-
+rotrophin family. It plays a crucial role in the development, survival, and maintenance of neurons in the central and peripheral nervous
+systems. BDNF/NT-3 is involved in processes such as neuronal differentiation, synaptic plasticity, and regulation of axonal growth.
+Dysregulation of BDNF/NT-3 has been implicated in various neurological disorders, including Alzheimer’s disease, depression, and
+schizophrenia.
+The compound with the IUPAC name ... and SMILES sequence ... is a small molecule. Based on its structure, it seems to be an
+aromatic compound with multiple heterocyclic rings, methoxy groups, and a piperidine ring. The exact function of this compound is
+not provided, but based on its structure, it might be a kinase inhibitor or have other pharmacological activities.
+To determine whether this compound can interact with the BDNF/NT-3 protein, we can perform molecular docking simulations, which
+involve predicting the binding affinity and mode of interaction between the small molecule and protein. However, as an AI, I cannot
+perform such simulations directly.
+Based on the information available, it is not possible to definitively conclude whether the compound can interact with the BDNF/NT-3
+protein. Further experimental studies or computational simulations would be needed to answer this question with certainty.
+Figure 2.16: Example of zero-shot evaluation for drug-target interaction.
+When we give a self-
+refinement prompt, GPT-4 is highly likely to refuse to give the answer.
+Zero-shot and few-shot evaluation
+For the zero-shot evaluation, the system prompt is displayed
+in Fig. 2.17, and we provide GPT-4 with the compound’s IUPAC name, SMILES, target protein name,
+and FASTA sequence. From the DTA prediction, we observed that GPT-4 struggles to recognize these item
+mappings, so we supply more information for DTI prediction. We discover that: (1) GPT-4 randomly outputs
+‘Yes’ or ‘No’ for the interaction prediction when asked to output the binary label, and the explanations appear
+to be unreasonable; (2) GPT-4 occasionally declines to give an answer as to whether the drug and target can
+interact and recommends users to utilize docking tools (similar to DTA prediction); (3) With more stringent
+prompts, for example, asking GPT-4 to ‘check its explanations and answer and then provide a more confident
+answer’, GPT-4 predominantly replies ‘it is not possible to confidently answer whether the compound can
+interact with the protein’ as illustrated in Fig. 2.16.
+For the few-shot evaluation, the results are presented in Table 3. We vary the randomly sampled few-shot
+examples8 among {1,3,5,10,20}, and we observe that the classification results are not stable as the number
+of few-shot examples increases. Moreover, the results significantly lag behind trained deep-learning models,
+such as BridgeDTI [96].
+kNN few-shot evaluation
+Similarly, we conduct the embedding-based kNN few-shot evaluation on the
+BindingDB DTI prediction for GPT-4. The embeddings are also derived from GPT-3. For each test case,
+the nearest neighbors k range from {1,5,10,20,30}, and the results are displayed in Table 4. From the table,
+we can observe clear benefits from incorporating more similar drug-target interaction pairs. For instance,
+from k = 1 to k = 20, the accuracy, precision, recall, and F1 scores are significantly improved. GPT-4 even
+slightly outperforms the robust DTI model BridgeDTI [96], demonstrating a strong learning ability from the
+embedding-based kNN evaluation and the immense potential of GPT-4 for DTI prediction. This also indicates
+that the GPT embeddings perform well in the binary DTI classification task.
+8Since this is a binary classification task, each few-shot example consists of one positive pair and one negative pair.
+27
+
+
+Table 3: Few-shot DTI prediction results on the BindingDB dataset. N represents the number of
+randomly sampled few-shot examples.
+Method
+Accuracy
+Precision
+Recall
+F1
+BridgeDTI [96]
+0.898
+0.871
+0.918
+0.894
+GPT-4 (N=1)
+0.526
+0.564
+0.228
+0.325
+GPT-4 (N=5)
+0.545
+0.664
+0.182
+0.286
+GPT-4 (N=10)
+0.662
+0.739
+0.506
+0.600
+GPT-4 (N=20)
+0.585
+0.722
+0.276
+0.399
+GPT-4
+Zero-shot system message:
+You are a drug expert, biochemistry expert, and structural biology expert. Give you a compound IUPAC name with SMILES sequence
+and a target protein name with FASTA sequence, you should answer whether this compound can interact with the protein, which
+means their IC50 affinity value is less than 100nm. You can do step-by-step, do whatever you can to get the answer you are confident
+about. The output should start with ‘Yes’ or ‘No’, and then with explanations.
+Few-shot system message:
+You are a drug expert, biochemistry expert, and structural biology expert. Give you a compound IUPAC name with SMILES sequence
+and a target protein name with FASTA sequence, you should answer whether this compound can interact with the protein, which
+means their IC50 affinity value is less than 100nm. You can do step-by-step, do whatever you can to get the answer you are confident
+about. I will give you some examples. The output should start with ‘Yes’ or ‘No’, and then with explanations.
+kNN few-shot system message:
+You are a drug expert, biochemistry expert, and structural biology expert. Give you a compound IUPAC name with SMILES sequence
+and a target protein name with FASTA sequence, you should answer whether this compound can interact with the protein, which
+means their IC50 affinity value is less than 100nm. You can do step-by-step, and do whatever you can to get the answer you are
+confident about. I will give you some examples that are the nearest neighbors for the input case, which means the examples may have
+a similar effect to the input case. The output should start with ‘Yes’ or ‘No’.
+Figure 2.17: System messages used in zero-shot evaluation, the Table 3 few-shot and Table 4 kNN
+few-shot DTI evaluations.
+Table 4: kNN-based few-shot DTI prediction results on BindingDB dataset. The different number
+of K nearest neighbors are selected by GPT-3 embedding for drug and target sequences.
+Method
+Accuracy
+Precision
+Recall
+F1
+BridgeDTI [96]
+0.898
+0.871
+0.918
+0.894
+GPT-4 (k=1)
+0.828
+0.804
+0.866
+0.834
+GPT-4 (k=5)
+0.892
+0.912
+0.868
+0.889
+GPT-4 (k=10)
+0.896
+0.904
+0.886
+0.895
+GPT-4 (k=20)
+0.902
+0.879
+0.932
+0.905
+GPT-4 (k=30)
+0.885
+0.858
+0.928
+0.892
+28
+
+
+2.4
+Molecular property prediction
+In this subsection, we quantitatively evaluate GPT-4’s performance on two property prediction tasks selected
+from MoleculeNet [98]: one is to predict the blood-brain barrier penetration (BBBP) ability of a drug, and
+the other is to predict whether a drug has bioactivity with the P53 pathway (Tox21-p53). Both tasks are
+binary classifications. We use scaffold splitting [68]: for each molecule in the database, we extract its scaffold;
+then, based on the frequency of scaffolds, we assign the corresponding molecules to the training, validation,
+or test sets. This ensures that the molecules in the three sets exhibit structural differences.
+We observe that GPT-4 performs differently for different representations of the same molecule in our
+qualitative studies in Sec. 2.2.1. In the quantitative study here, we also investigate different representations.
+We first test GPT-4 with molecular SMILES or IUPAC names. The prompt for IUPAC is shown in the
+top box of Fig. 2.18. For SMILES-based prompts, we simply replace the words “IUPAC" with “SMILES".
+The results are reported in Table 5. Generally, GPT-4 with IUPAC as input achieves better results than with
+SMILES as input. Our conjecture is that IUPAC names represent molecules by explicitly using substructure
+names, which occur more frequently than SMILES in the training text used by GPT-4.
+Inspired by the success of few-shot (or in-context) learning of LLMs in natural language tasks, we conduct
+a 5-shot evaluation for BBBP using IUPAC names.
+The prompts are illustrated in Fig. 2.18.
+For each
+molecule in the test set, we select the five most similar molecules from the training set based on Morgan
+fingerprints. Interestingly, when compared to the zero-shot setting (the ‘IUPAC’ row in Table 5), we observe
+that the 5-shot accuracy and precision decrease (the ‘IUPAC (5-shot)’ row in Table 5), while its recall and F1
+increase. We suspect that this phenomenon is caused by our dataset-splitting method. Since scaffold splitting
+results in significant structural differences between the training and test sets, the five most similar molecules
+chosen as the few-shot cases may not be really similar to the test case. This structural difference between the
+few-shot examples and the text case can lead to biased and incorrect predictions.
+In addition to using SMILES and IUPAC, we also test on GPT-4 with drug names. We search for a
+molecular SMILES in DrugBank and retrieve its drug name. Out of the 204 drugs, 108 can be found in
+DrugBank with a name. We feed the names using a similar prompt as that in Fig. 2.18. The results are
+shown in the right half of Table 5, where the corresponding results of the 108 drugs by GPT-4 with SMILES
+and IUPAC inputs are also listed. We can see that by using molecular names, all four metrics show significant
+improvement. A possible explanation is that drug names appear more frequently (than IUPAC names and
+SMILES) in the training corpus of GPT-4.
+Full test set
+Subset with drug names
+Accuracy
+Precision
+Recall
+F1
+Accuracy
+Precision
+Recall
+F1
+SMILES
+59.8
+62.9
+57.0
+59.8
+57.4
+53.6
+60.0
+56.6
+IUPAC
+64.2
+69.8
+56.1
+62.2
+60.2
+57.4
+54.0
+55.7
+IUPAC (5-shot)
+62.7
+61.8
+75.7
+68.1
+56.5
+52.2
+72.0
+60.5
+Drug name
+70.4
+62.9
+88.0
+73.3
+Table 5: Prediction results of BBBP. There are 107 and 97 positive and negative samples in the test
+set.
+In the final analysis of BBBP, we assess GPT-4 in comparison to MolXPT [51], a GPT-based language
+model specifically trained on molecular SMILES and biomedical literature. MolXPT has 350M parameters
+and is fine-tuned on MoleculeNet. Notably, its performance on the complete test set surpasses that of GPT-4,
+with accuracy, precision, recall, and F1 scores of 70.1, 66.7, 86.0, and 75.1, respectively. This result reveals
+that, in the realm of molecular property prediction, fine-tuning a specialized model can yield comparable or
+superior results to GPT-4, indicating substantial room for GPT-4 to improve.
+29
+
+
+GPT-4
+System message:
+You are a drug discovery assistant that helps predict whether a molecule can cross the blood-brain barrier. The molecule is represented
+by the IUPAC name. First, you can try to generate a drug description, drug indication, and drug target. After that, you can think
+step by step and give the final answer, which should be either “Final answer: Yes” or “Final answer: No”.
+Prompt (zero-shot):
+Can the molecule with IUPAC name {IUPAC} cross the blood-brain barrier? Please think step by step.
+Prompt (few-shot):
+Example 1:
+Can the molecule with IUPAC name is (6R,7R)-3-(acetyloxymethyl)-8-oxo-7-[(2-phenylacetyl)amino]-5-thia-1-azabicyclo[4.2.0]oct-2-
+ene-2-carboxylic acid cross blood-brain barrier?
+Final answer: No
+Example 2:
+Can the molecule with IUPAC name is 1-(1-phenylpentan-2-yl)pyrrolidine cross blood-brain barrier?
+Final answer: Yes
+Example 3:
+Can the molecule with the IUPAC name is 3-phenylpropyl carbamate, cross the blood-brain barrier?
+Final answer: Yes
+Example 4:
+Can the molecule with IUPAC name is 1-[(2S)-4-acetyl-2-[[(3R)-3-hydroxypyrrolidin-1-yl]methyl]piperazin-1-yl]-2-phenylethanone, cross
+blood-brain barrier?
+Final answer: No
+Example 5:
+Can the molecule, whose IUPAC name is ethyl N-(1-phenylethylamino)carbamate, cross the blood-brain barrier?
+Final answer: Yes
+Question:
+Can
+the
+molecule
+with
+IUPAC
+name
+is
+(2S)-1-[(2S)-2-[[(2S)-1-ethoxy-1-oxo-4-phenylbutan-2-yl]amino]propanoyl]pyrrolidine-2-
+carboxylic acid cross blood-brain barrier? Please think step by step.
+Figure 2.18: Prompts for BBBP property prediction. A molecular is represented by its IUPAC name.
+Full test set
+Subset with drug names
+Accuracy
+Precision
+Recall
+F1
+Accuracy
+Precision
+Recall
+F1
+SMILES
+46.3
+35.5
+75.0
+48.2
+46.3
+34.4
+84.0
+48.8
+IUPAC
+58.3
+42.2
+68.1
+52.1
+43.9
+30.2
+64.0
+41.0
+IUPAC (5-shot)
+64.4
+40.7
+15.3
+22.2
+59.8
+27.8
+20.0
+23.3
+Drug name
+80.5
+80.0
+48.0
+60.0
+Table 6: Prediction results on the SRp53 set of Tox21 (briefly, Tox21-p53).
+Due to the quota
+limitation of GPT-4 API access, we choose all positive samples (72 samples) and randomly sample
+144 negative samples (twice the quantity of positive samples) from the test set for evaluation.
+The results of Tox21-p53 are reported in Table 6. Similarly, GPT-4 with IUPAC names as input outper-
+forms SMILES and the 5-shot results are much worse than the zero-shot result.
+An example of zero-shot BBBP prediction is illustrated in Fig. 2.19. GPT-4 generates accurate drug
+descriptions, indications, and targets, and subsequently draws reasonable conclusions.
+30
+
+
+GPT-4
+Step 1: Generate drug description
+The molecule with the IUPAC name N-[4-(methoxymethyl)-1-(2-thiophen-2-ylethyl)piperidin-4-yl]-N-phenylpropanamide is a synthetic
+compound featuring a piperidine ring substituted with various functional groups, including a thiophene moiety and a phenylpropanamide
+group.
+Step 2: Predict drug indication
+Based on its chemical structure, it is likely that this compound could act as a ligand for certain receptors, including opioid receptors
+or other G-protein coupled receptors (GPCRs). These types of receptors are often targeted for the treatment of pain, anxiety, or other
+neurological disorders.
+Step 3: Predict drug target
+Considering the presence of a piperidine ring and phenylpropanamide group, this molecule may potentially target opioid receptors, such
+as the mu-opioid receptor. Opioid receptor agonists are known for their analgesic effects and are commonly used in pain management.
+Step 4: Determine the likelihood of crossing the blood-brain barrier
+The blood-brain barrier (BBB) is a highly selective semipermeable barrier that separates the circulating blood from the brain and
+extracellular fluid in the central nervous system. For a molecule to cross the BBB, it should have certain properties such as appropriate
+size, lipophilicity, and the absence of charged groups.
+The given molecule has a relatively flexible structure and includes a balance of lipophilic and hydrophilic groups, which may enable it
+to passively diffuse across the BBB. Additionally, the presence of the piperidine ring and thiophene group may contribute to its ability
+to bind to transporters that can facilitate its passage across the BBB.
+Considering
+these
+factors,
+it
+is
+likely
+that
+the
+molecule
+N-[4-(methoxymethyl)-1-(2-thiophen-2-ylethyl)piperidin-4-yl]-N-
+phenylpropanamide can cross the blood-brain barrier.
+Final answer: Yes
+Figure 2.19: An example of BBBP prediction: Sufentanil (DrugBank id: DB00708). Green parts are
+verified to be correct.
+2.5
+Retrosynthesis
+Retrosynthesis serves as a critical tool in the drug discovery process, allowing chemists to strategically devise
+synthesis pathways for creating a desired compound from simpler starting materials.
+By deconstructing
+complex molecules into more straightforward components, chemists can determine the most efficient and
+cost-effective synthesis routes to develop new drug candidates. Consequently, retrosynthesis enables the rapid
+and efficient design and synthesis of novel drug candidates.
+In this subsection, we explore the proficiency of GPT-4 in comprehending chemical reactions and predicting
+potential reactants for products, both qualitatively and quantitatively.
+2.5.1
+Understanding chemical reactions
+We show two cases to demonstrate the capability of GPT-4 in understanding chemical reactions.
+In Fig. 2.21, we ask GPT-4 to act as an organic chemist and retrosynthesis expert and explain the given
+chemical reaction (represented by SMILES sequences).
+GPT-4 first translates the SMILES sequences to
+the names of the reactants and then explains the reaction mechanism. GPT-4 fails at the first step, i.e.,
+translating the SMILES CC(=O)c1ccc2[nH]ccc2c19 to the name 2-acetylindole, and translating the SMILES
+CC(C)(C)OC(=O)OC(=O)OC(C)(C)C10 to the name trimethylacetic anhydride.
+As shown in Fig. 2.20,
+although these names have very similar molecular graphs to the original SMILES, they are different molecules.
+As a result, the following explanation goes in the wrong direction.
+In Fig. 2.22, we ask GPT-4 to carefully think step by step to explain this chemical reaction. This time the
+explanation goes in the right direction: GPT-4 no longer translates the SMILES sequences into the names and
+9IUPAC name is 1-(1H-indol-5-yl)ethanone.
+10IUPAC name is tert-butyl (2-methylpropan-2-yl)oxycarbonyl carbonate.
+31
+
+
+(a) 1-(1H-indol-5-yl)ethanone
+(b) 2-acetylindole
+(c) Di-tert-butyl dicarbonate (d) trimethylacetic anhydride
+Figure 2.20: The 2D molecular graphs for two ground truth reactants, (a) and (c), and their translated
+names, (b) and (d), as generated by GPT-4. Although similar, they are not identical.
+GPT-4
+System message:
+You are an organic chemist and retrosynthesis expert and should be able to explain and predict chemical reactions. You are given a
+chemical reaction, including the SMILES sequences of both product and reactants, with multiple reactants connected by “.”.
+Prompt:
+Please explain this chemical reaction:
+Product: CC(=O)c1ccc2c(ccn2C(=O)OC(C)(C)C)c1
+Reactants: CC(=O)c1ccc2[nH]ccc2c1.CC(C)(C)OC(=O)OC(=O)OC(C)(C)C
+GPT-4:
+The chemical reaction you’ve provided involves two reactants:
+1. CC(=O)c1ccc2[nH]ccc2c1, which is also known as 2-acetylindole.
+2. CC(C)(C)OC(=O)OC(=O)OC(C)(C)C, which is pivaloyl anhydride or trimethylacetic anhydride.
+In this reaction, the 2-acetylindole undergoes an acylation reaction with the pivaloyl anhydride. The nitrogen atom in the indole ring
+(which has a hydrogen atom attached) acts as a nucleophile and attacks the carbonyl carbon of the pivaloyl anhydride. This leads to
+the opening of the anhydride ring and the formation of a new amide bond between the two reactants.
+The final product of this reaction is CC(=O)c1ccc2c(ccn2C(=O)OC(C)(C)C)c1, which can be described as a pivaloylated 2-acetylindole.
+Here’s the overall reaction: 2-acetylindole + pivaloyl anhydride →pivaloylated 2-acetylindole
+Figure 2.21: Example 1 of understanding chemical reactions.
+instead describes the functional groups in the molecule in detail. Unfortunately, it is still not correct: Di-tert-
+butyl dicarbonate does not have three esters (C=O) functional groups, and the explanation of the reaction
+mechanism is not fully correct, as we would get isobutene and CO2 as side products, not tert-butanolate.
+2.5.2
+Predicting retrosynthesis
+We quantitatively study GPT-4’s capability in single-step retrosynthesis prediction (i.e., predicting possible
+reactants for a given product), using the widely-used benchmark USPTO-50K dataset [74] and the few-shot
+setting.
+Settings
+The USPTO-50K dataset contains 50,037 chemical reactions extracted from US patents. We use
+the same data splitting as most literature, consisting of 40,029 reactions in the training set and 5,007 reactions
+in the test set. Due to the limitation of the API call, we select the first 500 samples from the USPTO-50K
+test set for testing. We use the top-1 accuracy as the evaluation metric and R-SMILES [110] as the main
+baseline, which is the state-of-the-art model specially designed for retrosynthesis prediction and trained on
+this dataset.
+32
+
+
+GPT-4
+System message:
+You are an organic chemist and retrosynthesis expert and can explain and predict chemical reactions.
+You are given a chemical
+reaction, including the SMILES sequence of both product and reactants, with multiple reactants connected by “.”.
+Prompt:
+Please explain this chemical reaction:
+Product: CC(=O)c1ccc2c(ccn2C(=O)OC(C)(C)C)c1
+Reactants: CC(=O)c1ccc2[nH]ccc2c1.CC(C)(C)OC(=O)OC(=O)OC(C)(C)C
+Let’s think step-by-step for this explanation task.
+GPT-4:
+This chemical reaction involves the formation of a new product from two given reactants. Let’s break down the reaction step by step:
+Reactants:
+1. CC(=O)c1ccc2[nH]ccc2c1: This is an aromatic compound containing a benzene ring with an adjacent 5-membered ring con-
+taining a nitrogen atom. The benzene ring has a ketone (C=O) functional group attached to one of its carbons.
+2. CC(C)(C)OC(=O)OC(=O)OC(C)(C)C: This is a triacyl compound consisting of three ester (C=O) functional groups, each
+connected to a central oxygen atom. The ester groups are bonded to a tert-butyl group (C(C)(C)C).
+Reaction:
+The reaction proceeds via nucleophilic aromatic substitution, where the nitrogen atom in the 5-membered ring of the first reactant acts
+as a nucleophile and attacks the carbonyl carbon (C=O) of one of the ester groups in the second reactant. This leads to the formation
+of a new C-N bond and the loss of a leaving group, which in this case is the tert-butyl group (C(C)(C)C) along with an oxygen atom.
+Product:
+CC(=O)c1ccc2c(ccn2C(=O)OC(C)(C)C)c1: The product is a fused aromatic compound containing a benzene ring and a 5-membered
+ring with a nitrogen atom. The benzene ring has a ketone (C=O) functional group, while the 5-membered ring has an ester group
+(C(=O)OC(C)(C)C) bonded to the nitrogen atom.
+Overall, the reaction involves the formation of a new C-N bond between the two reactants, resulting in a more complex fused aromatic
+compound as the product.
+Figure 2.22: Example 2 of understanding chemical reactions.
+33
+
+
+Table 7: Few-shot retrosynthesis prediction results on USPTO-50k datset.
+Method
+Top-1 Accuracy (↑)
+Invalid SMILES (↓)
+R-SMILES [110]
+53.6%
+0%
+GPT-4 (Zero-shot)
+0.2%
+17.8%
+GPT-4 (Zero-shot + IUPAC name)
+0.2%
+12.8%
+GPT-4 (Random, k=1)
+0.2%
+7.4%
+GPT-4 (Random, k=5)
+1.4%
+9.4%
+GPT-4 (Random, k=10)
+1.2%
+9.2%
+GPT-4 (Random, k=20)
+1.0%
+7.2%
+GPT-4 (Fingerprint similarity, k=1)
+12.8%
+9.2%
+GPT-4 (Fingerprint similarity, k=5)
+19.4%
+7%
+GPT-4 (Fingerprint similarity, k=10)
+20.2%
+4.8%
+GPT-4 (Fingerprint similarity, k=10 + IUPAC name)
+20.6%
+4.8%
+GPT-4 (Fingerprint similarity, k=20)
+19.4%
+4.4%
+Few-shot results
+We consider several aspects while evaluating GPT-4’s few-shot capability for retrosyn-
+thesis prediction: (1) different numbers of few-shot examples, and (2) different ways to obtain few-shot
+examples where we 
+
+Question:
+According to the two articles above, which of the following statements is incorrect?
+
+A. Using the following prompt to generate a specific molecular will get a better performance on molT5 than asking GPT-4:
+"The molecule is a sulfonated xanthene dye of absorption wavelength 573 nm and emission wavelength 591 nm. It has a role as a fluorochrome."
+B. Using the following prompt to predict protein-molecule affinity will get a better performance on GPT-4 than asking molT5:
+"SMILES: COC1=NC=C(C=C1)COC2=C(C=C(C=C2)CN3C=NC4=C3N=CC(=C4)C5=NN=C(O5)C6CCNCC6)OC, FASTA: MSSWIRWHGPAMARLWGFCWLVVGFWRAAFACPTSCKCSA...TLLQNLAKASPVYLDILG. You need to calculate the binding affinity score."
+C. When given few-shot examples, GPT-4 can produce results almost comparable to existing deep learning models on the Drug-Target Affinity (DTA) task.
+D. GPT-4 demonstrates a solid understanding of key information in evolutionary biology.
+
+Select the correct answer.

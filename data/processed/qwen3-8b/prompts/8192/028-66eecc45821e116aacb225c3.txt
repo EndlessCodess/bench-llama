@@ -1,0 +1,484 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+WORLD TRADE 
+ORGANIZATION 
+ 
+ 
+WT/DS379/R 
+22 October 2010 
+ 
+ 
+(10-5262) 
+ 
+ 
+ 
+Original:   English 
+ 
+ 
+UNITED STATES – DEFINITIVE ANTI-DUMPING AND 
+COUNTERVAILING DUTIES ON CERTAIN PRODUCTS 
+FROM CHINA  
+ 
+ 
+ 
+ 
+Report of the Panel 
+ 
+ 
+ 
+ 
+ 
+
+
+WT/DS379/R 
+Page 206 
+ 
+ 
+ 
+acting purely as intermediaries, on a transaction-by-transaction basis, rather than as 
+distributor/stockists or as bulk purchasers.  This is further suggested by the "ex-works" delivery terms 
+of a number of purchases865, a phrase generally synonymous with "ex-factory".  That said, there is no 
+reference in the USDOC's determination in the OTR investigation to any evidence regarding the 
+precise role played by the trading companies from which GTC and TUTRIC purchased rubber inputs, 
+nor any indication that the USDOC made inquiries in that regard.  Before us, the United States makes 
+no arguments in this respect.  We consider that, for the reasons explained above, given the 
+methodology that the USDOC chose to use to the establish the existence and amount of the benefit to 
+the tire producers from their purchases of inputs from trading companies, it was incumbent on the 
+USDOC to have investigated the precise role played by the trading companies, so as to ensure that its 
+methodology did not calculate a benefit in excess of that conferred by the government provision of 
+SOE-produced inputs. 
+12.58 The record evidence presented to us does not indicate that the USDOC undertook any such 
+inquiries.  Therefore, there is nothing before us that demonstrates that, under the particular facts of the 
+investigation, the USDOC's methodology could not and did not give rise to a calculation of benefit in 
+excess of that conferred by the provision of the inputs.  We therefore find on this basis that the 
+USDOC acted inconsistently with the United States' obligations under Article 1.1 and Article 14 of 
+the SCM Agreement. 
+XIII. 
+CHINA'S CONSEQUENTIAL CLAIMS 
+13.1 
+We now turn to various consequential claims raised by China.  In particular, at 
+paragraph B.1(e) of its request for establishment of the Panel, China alleges consequential violations 
+of Articles 10 and 32.1 of the SCM Agreement, and of Article VI:3 of the GATT 1994, "in connection 
+with all countervailing duty investigations, determinations and orders specified above" (i.e., specified 
+at paragraphs B.1(a)-(d) of the request for establishment of the Panel).  China requests findings in 
+respect of these consequential claims at paragraphs 468 (a), (b), (d), (e), (f), and (g) of its first written 
+submission, and at paragraphs 315 (a), (b), (c), (e), (f), (g), and (h) of its second written submission.  
+We note that China has presented no argumentation in support of these consequential claims, but 
+simply requests findings on them in the paragraphs just identified.  Particularly under these 
+circumstances, in the light of the findings we have made supra, we see no need to rule on these 
+consequential claims.  We therefore apply judicial economy in respect of all of them. 
+13.2 
+We recall, however, that in respect of its other allegations pursuant to Article 10 and 32.1 of 
+the SCM Agreement and Article VI:3 of the GATT 1994 (specifically, those raised in connection with 
+its claims addressed at Sections XI and XII.D.2 supra, and Section XIV, infra) China did present 
+argumentation.  As set forth in the respective sections and as summarized below at Section XVII, we 
+have examined and made findings in respect of these allegations.   
+XIV. 
+CHINA'S CLAIMS PERTAINING TO "DOUBLE REMEDIES" 
+A. 
+INTRODUCTION 
+14.1 
+We now consider China's claims with respect to "double remedies".  China's claims in this 
+respect arise from the concurrent imposition, by the United States, of countervailing duties and of 
+                                                   
+865 See Exhibit US-156.  Ex Works is defined as:  "An <Incoterm> whereby the seller is responsible 
+only for having the ordered <goods> available for pickup at the agreed place, which is usually the seller's own 
+premises.  The seller is also usually responsible for export packing to the extent that the transportation 
+particulars are made available [...]".  (A to Z of international trade, F. Reynolds (ICC Publishing S.A., 2002), 
+p. 79). 
+
+
+ 
+WT/DS379/R  
+ 
+Page 207 
+ 
+ 
+ 
+anti-dumping duties calculated pursuant to the USDOC's NME methodology on products from China 
+in the four sets of parallel anti-dumping and countervailing duty investigations at issue. 
+1. 
+Background 
+14.2 
+In anti-dumping investigations involving products from countries it considers to be non-
+market economies ("NMEs"), the USDOC calculates the normal value on the basis of surrogate values 
+taken from countries which it considers to be "market economies" rather than on the basis of the 
+prices or costs of production actually incurred by the investigated producer.866  Specifically, under its 
+NME methodology, the USDOC:  (i) determines the quantities of the factors of production (e.g. inputs, 
+labour, energy) actually used by the respondent producer in producing the investigated good; (ii) 
+multiplies those quantities by the prices of each of those factors based on a "surrogate value" from a 
+market economy country (or, where available, the actual price paid for an input imported from a 
+market economy country); and (iii) adds an amount for factory overhead, selling, general and 
+administrative (SG&A) expenses, and profit, calculated on the basis of ratios of these costs to the 
+costs of the other inputs in the surrogate country.867 
+14.3 
+The USDOC generally treats China as an NME in anti-dumping investigations, and did so in 
+the anti-dumping investigations at issue in this dispute.  As a result, the USDOC applied its NME 
+methodology in calculating the normal value for the investigated Chinese producers.  The normal 
+value so constructed was then used to determine these producers' dumping margins. 
+14.4 
+As China points out, the four countervailing duty investigations at issue in this dispute mark a 
+policy change on the part of the USDOC.  The USDOC had taken the position, in 1984, that its 
+countervailing duty legislation did not apply to imports from non-market economies:  In its 
+investigations on Wire Rod from Poland and from Czechoslovakia, the USDOC determined that it was 
+impossible to identify a "bounty" or "grant" within the meaning of U.S. countervailing duty law in 
+NMEs, because of the pervasive role played by the governments of such centrally-planned economies.  
+This interpretation of the U.S. countervailing duty statute was affirmed by the U.S. Court of Appeals 
+for the Federal Circuit in Georgetown Steel.868  In March 2007, the United States reversed this 
+longstanding policy of not applying U.S. countervailing duty legislation to NMEs:  In the CFS Paper 
+investigation, the USDOC considered that while still not a market economy, China's economy had 
+evolved sufficiently that it was possible to identify and countervail subsidies granted by China.869  At 
+the same time, the USDOC maintained China's NME status for purposes of applying the U.S. anti-
+dumping regime.870  Ultimately, no duties were imposed in the CFS Paper case.  Thus, the four 
+                                                   
+866 Section 773(c) of the U.S. Tariff Act of 1930 (codified at 19 U.S.C. 1677b(c)), Exhibit CHI-119.  
+The USDOC may, in anti-dumping investigations involving an NME country, determine that the industry being 
+investigated operates on market principles (market-oriented industry, or "MOI").  China indicates that the 
+USDOC has never found any industry in any country that it designates as an NME to be an MOI. 
+867 United States first written submission, para. 450. 
+868 Georgetown Steel Corporation v. United States, U.S. Court of Appeals for Federal Circuit, 
+18 September 1986, Exhibit CHI-90.  This USDOC policy was reaffirmed in the Preamble to the USDOC's 
+countervailing duty Regulations, Countervailing Duties:  Final Rule, 63 Fed. Reg. 65348, Exhibit CHI-91, 
+p. 65360. 
+869 Countervailing Duty Investigation of Coated Free Sheet Paper from the People's Republic of China 
+– Whether the Analytical Elements of the Georgetown Steel Opinion are Applicable to China's Present-Day 
+Economy ("Georgetown Steel Memo"), Exhibit CHI-89, p. 5; and Issues and Decision Memorandum for the 
+Antidumping Investigation of Certain Pneumatic Off-the-Road Tires from the People's Republic of China ("OTR 
+Anti-Dumping Duty I&D Memo"), Exhibit CHI-53, pp. 5-10. 
+870 In maintaining its qualification of China as an NME, the USDOC in August 2006 considered that 
+"market forces in China are not yet sufficiently developed" to allow it to rely on Chinese costs and prices in 
+establishing normal value.  (Final Affirmative Countervailing Duty Determination: Certain New Pneumatic Off-
+
+
+WT/DS379/R 
+Page 208 
+ 
+ 
+ 
+countervailing duty investigations at issue in the present dispute constitute the first instances of 
+imposition by the USDOC of countervailing duties on imports from an NME. 
+14.5 
+China claims that this imposition by the USDOC of countervailing duties concurrently with 
+anti-dumping duties calculated under the U.S. NME methodology results in the imposition of a 
+"double remedy".  China explains that by "double remedy" it means that the subsidies at issue are 
+"offset" twice, once through the imposition of the countervailing duties, and once through the 
+imposition of the anti-dumping duties, because of the manner in which the latter are calculated. 
+14.6 
+The Government of China and Chinese interested parties raised the issue of double remedies 
+in each of the four countervailing duty investigations before us.  In its determinations in three of the 
+investigations (LWS, LWR, and OTR), the USDOC indicated that it had no authority to address the 
+issue of double remedies in the context of countervailing duty investigations, and that if any 
+adjustment to avoid a double remedy were possible, it would only be in the context of anti-dumping 
+investigations.871  Interested parties also raised the issue in the CWP and OTR anti-dumping 
+investigations.  In the CWP anti-dumping investigation, the USDOC declined to make adjustments for 
+double remedies given that the interested party that had raised the issue had not received an individual 
+company-specific margin.  The USDOC also indicated that "Congress provided no anti-dumping 
+adjustment for CVDs imposed to offset subsidies that are not export subsidies".872  In the OTR anti-
+dumping investigation, the USDOC considered that interested parties had not established the 
+existence of a double remedy, and in particular had not provided sufficient evidence in support of 
+their arguments that domestic subsidies automatically lower prices or that they "pass through", pro 
+rata, to domestic prices.873  The USDOC also considered that the Chinese interested parties had not 
+demonstrated that they were "entitled to an adjustment under US AD law to prevent a presumed 
+double remedy from arising".874 
+                                                                                                                                                              
+the-Road Tires from the People's Republic of China – Final Loan Benchmark and Discount Rate, Exhibit CHI-
+88, Attachment 2). 
+871 For instance, in the LWR countervailing duty investigation, the USDOC addressed the double 
+counting arguments presented by respondents as follows: 
+ 
+"[...] The [Government of China and a respondent] have not cited to any statutory authority 
+that would allow us to terminate this countervailing duty investigation to avoid double 
+counting and the CVD law provides no authority to make an adjustment to the CVD 
+calculations to prevent double counting.  If any adjustment to avoid a double remedy is 
+possible, it would only be in the context of an antidumping investigation and no party raised 
+this claim in the companion antidumping investigation of LWR".  (Exhibit CHI-2, p. 19). 
+ 
+The USDOC made virtually identical statements in its determinations in the LWS and OTR 
+countervailing duty investigations.  (Exhibits CHI-3, p. 40 and CHI-4, p. 53).  In the CWP countervailing duty 
+investigation, the USDOC incorporated by reference its treatment of the issue in the concurrent anti-dumping 
+investigation.  (Exhibit CHI-1, p. 101). 
+ 
+872 Exhibit CHI-9, pp. 21-22. 
+873 Exhibit CHI-53, pp. 13-14.  The USDOC rejected the arguments that it must assume that domestic 
+subsidies necessarily result in lower export prices and that it had recognized that domestic subsidies lower prices 
+pro rata in both domestic or export markets, indicating that "when it has considered the issue, the Department 
+has sometimes presumed that, whatever the effect, if any, of domestic subsidies upon the prices subsequently 
+charged by their recipients, that effect would be the same for domestic prices and export prices".  (Id., p. 14). 
+874 In this respect, the USDOC stated that: 
+ 
+"As we noted in [CFS Paper], 'despite addressing the issue of parallel AD duties and CVDs 
+directly, and explicitly requiring that the amount of any CVDs to offset export subsidies be 
+added to U.S. price, Congress provided no adjustment for CVDs imposed by reason of 
+
+
+WT/DS379/R 
+Page 220 
+ 
+ 
+ 
+14.45 Also as a preliminary remark, we consider it appropriate to emphasize that the dispute before 
+us is limited to the consistency with the covered agreements of the USDOC's determinations in the 
+four sets of investigations at issue; the consistency of double remedies with U.S. law is not before us. 
+2. 
+General considerations with respect to the potential for "double remedies" to arise from 
+the simultaneous imposition of countervailing duties and of anti-dumping duties 
+calculated pursuant to the U.S. NME methodology 
+14.46 We first examine the parties' arguments with respect to whether the concurrent imposition of 
+anti-dumping duties calculated under the U.S. NME methodology and of countervailing duties results 
+in the imposition of double remedies. 
+(a) 
+Main arguments of the Parties 
+(i) 
+China 
+14.47 China argues that where anti-dumping duties calculated pursuant to a methodology that relies 
+on surrogate, market-determined, values (NME methodology) and countervailing duties are 
+simultaneously applied to imports of a same good, it necessarily results that any domestic subsidy 
+bestowed upon the production of that good is offset twice, once through the calculation of the 
+dumping margin, and once as a result of the imposition of the countervailing duties.930 
+14.48 By way of background, China notes that for a long time, the USDOC held the position that it 
+could not apply countervailing duties to countries which it determined to be non-market economies, a 
+position which the USDOC reversed in the CFS Paper case.931  The four investigations at issue in this 
+dispute represent the first instances in which the USDOC simultaneously imposed anti-dumping 
+duties calculated under its NME methodology and countervailing duties. 
+14.49 China notes that the issue of double remedies has been the subject of extensive discussions in 
+the United States and was acknowledged by all three branches of the Government of the United States, 
+including the USDOC itself.932  In addition, China argues that, more generally, the USDOC has 
+consistently recognized that the manner in which it calculates anti-dumping duties can offset subsidies, 
+including domestic subsidies.  In particular, China argues that in numerous anti-dumping 
+investigations of imports from market economy countries, the USDOC has recognized that by (i) 
+adding subsidies to the producer's cost of production; (ii) deducting countervailing duties from the 
+export price; or (iii) using a producer's reported costs, if these costs do not reflect subsidies received 
+(or otherwise using unsubsidized costs) to determine constructed normal value; it would effectively 
+                                                   
+930 See, e.g., China first written submission, para. 326. 
+931 Id., paras. 328-346.  See paras. 14.2-14.4, supra, for the Panel's discussion of the evolution of the 
+USDOC's position on the applicability of the U.S. countervailing duty regime to NMEs. 
+932 China oral statement at the first meeting of the Panel, para. 79; first written submission, paras. 347-
+354; oral statement at the second meeting of the Panel, para. 60.  China notably refers to a 2005 report of the 
+U.S. Government Accountability Office (the "GAO"), in which the GAO assessed whether it would be possible 
+for the USDOC to apply countervailing duties to imports from China; to draft legislation (which was adopted by 
+the U.S. House of Representatives but not the U.S. Senate) to provide the USDOC with explicit authority to 
+address the issue of double remedies, should it apply the U.S. countervailing duty legislation to NMEs; to the 
+recent decision of the U.S. Court of International Trade in GPX, (discussed in more detail below); and to 
+statements made by the USDOC in relation to the CFS Paper case.  (Id., referring, inter alia, to U.S. 
+Government Accountability Office, U.S. – China Trade:  Commerce Faces Practical and Legal Challenges in 
+Applying Countervailing Duties, GAO-05-474 (June 2005) ("GAO Report"), Exhibit CHI-121; United States 
+Trade Rights Enforcement Act, H.R. 3283, Exhibit CHI-122; and to United States Court of International Trade, 
+GPX International Tire Corporation and Hebei Starbright Tire Co., Ltd., v. United States ("GPX"), Exhibit 
+CHI-169). 
+
+
+ 
+WT/DS379/R  
+ 
+Page 221 
+ 
+ 
+ 
+collect countervailing duties a second time.933  China submits that the United States fails to explain 
+how the double remedy that arises from the use of an NME methodology differs from these other 
+forms of double remedies, which the USDOC has taken all necessary steps to avoid.934 
+14.50 In China's view, a double remedy arises in all instances of concurrent imposition of 
+countervailing duties and of anti-dumping duties calculated pursuant to a methodology relying on 
+surrogate values.935  This, in China's view, results from the overlapping rationales and effects of NME 
+methodologies and of countervailing duties:  China explains that the rationale for using an NME 
+methodology in an anti-dumping investigation subsumes the rationale for imposing countervailing 
+duties and that these are two different approaches for remedying the fact that a producer's costs and 
+prices were not determined by market forces.  China argues that when it uses its NME methodology, 
+the USDOC places the producer in the position of having unsubsidized, market-determined costs of 
+production,936 and calculates a dumping margin based on the difference between this market-
+determined cost of production and the producer's export price.  China explains that in doing so, the 
+USDOC necessarily captures any trade-distorting effects of alleged subsidies in the anti-dumping 
+margin.  Thus, having brought the producer's costs of production "to the market", and having 
+calculated a duty on this basis, the USDOC's NME methodology necessarily offsets any benefit that 
+the producer obtained by receiving financial contributions from the government on terms more 
+favourable than those available in the market.  When the USDOC simultaneously calculates the 
+amount of subsidization in a parallel countervailing duty investigation – again by placing the producer 
+in the position of having market-determined costs of production – it is repeating the same exercise 
+undertaken in the anti-dumping NME calculation.  Thus, China explains, the same subsidy is offset 
+twice. 
+14.51 China notes the United States' arguments that the use of an NME methodology may not 
+constitute a complete remedy for the subsidies.  Consistent with the explanation above, China argues 
+that the existence of a double remedy occurs entirely on the cost side of the equation.  Accordingly, 
+China rejects the United States' contention that the existence of a double remedy is a factual question 
+and depends, in particular, on whether subsidies pass through, pro rata, to U.S. prices.937  China 
+provides a number of examples from the investigations at issue (with respect to subsidies in the form 
+of the provision of inputs), as well as theoretical examples which it considers support its arguments in 
+this respect.938  China also rejects the United States' argument that the existence of a double remedy 
+                                                   
+933 China second written submission, paras. 214 and 227, response to Panel question 74 (first meeting).  
+China adds that in these investigations, the USDOC did not consider the existence of a double remedy to be 
+"theoretical", required any "evidence" or "presumptions" about the effects of subsidies on a producer's costs or 
+prices, or suggest that it had no legal obligation to avoid the double remedy that it had identified.  (China second 
+written submission, para. 215).  See Section XIV.C.5, infra, (Panel's consideration of China's claims under 
+Article I:1 of the GATT 1994), for a more detailed review of China's arguments in this respect. 
+934 China first written submission, para. 228. 
+935 Id., para. 374. 
+936 China argues that in calculating a constructed normal value, the USDOC seeks to ensure that the 
+surrogate values that it uses are, in fact, market-determined values and avoids the use of any surrogate value that 
+may itself be subsidized.  (China first written submission para. 371 and footnote 315, inter alia referring to 
+Omnibus Trade and Competitiveness Act of 1988, Exhibit CHI-123). 
+937 Id., paras. 330, 372 and 391-392; oral statement at the first meeting of the Panel, para. 81; second 
+written submission, paras. 219, 233-238, response to Panel question 73 (first meeting).  China considers that 
+whether subsidies pass through, pro rata, to U.S. prices, is entirely irrelevant.  But China argues that even 
+assuming that the United States were correct and that the existence of a double remedy depends on the effects of 
+subsidies on export prices, the only lawful basis on which an investigating authority could impose 
+countervailing duties would be to presume that the subsidies had precisely that effect.  (China second written 
+submission, para. 289 et seq.). 
+938 China first written submission, para. 395; oral statement at the first meeting of the Panel, para. 81; 
+second written submission, paras. 222-225, response to Panel question 73 (first meeting); response to Panel 
+question 26 (second meeting); Exhibit CHI-142 ("Further Examples of Offsetting the Same 'Subsidies' Twice"); 
+
+
+WT/DS379/R 
+Page 222 
+ 
+ 
+ 
+can be ascertained from a "mathematical" comparison between the dumping and countervailing duty 
+margins.  China's response to the United States' argument in this respect is that the use of an NME 
+methodology necessarily offsets any competitive advantage that the producer obtained from 
+countervailable subsidies, but that this does not mean that an anti-dumping margin determined 
+pursuant to an NME methodology is mathematically comparable to a countervailing duty margin 
+calculated in respect of the same product, because:  (i) the use of an NME methodology is meant to 
+address a broader set of distortions (e.g. non-specific subsidies); and (ii) the dumping margin is 
+dependent on the level of the producer's export price, a variable that plays no role in the 
+countervailing duty calculation.  Further, for China, the fact that, in a given instance, the USDOC 
+could theoretically arrive at a zero dumping margin does not alter the fact that in using an NME 
+methodology, it necessarily offset the benefit of any countervailable subsidies along the way.939 
+14.52 Overall, China considers that the theories put forward by the United States demonstrate that 
+the United States does not deny the existence of double remedies but rather, considers that the 
+existence of double remedies is solely a matter of degree that depends on certain factual 
+circumstances.940  Yet, China notes, in the investigations at issue, the USDOC did not take any steps 
+to determine the extent of the double remedy that may have arisen.941  In any event, China considers 
+that it has demonstrated, at a minimum, that there was at least "some overlap" between the method by 
+which the USDOC determined normal value in the anti-dumping investigations and the subsidies that 
+were identified and countervailed by the USDOC in the parallel countervailing duty investigations.942 
+14.53 Finally, China draws the Panel's attention to the 2009 decision of the U.S. Court of 
+International Trade ("CIT") in GPX International Tire v. United States, a judicial review of the 
+determination in the OTR investigation at issue in the present dispute.  In GPX, the CIT held that the 
+USDOC is obligated to avoid offsetting the same subsidies twice when it uses its NME methodology 
+in conjunction with countervailing duties.943  China notes that the CIT observed that the USDOC 
+addresses subsidization of NME producers "through the NME AD methodology" and that it is 
+fundamentally incompatible with the purposes of the countervailing duty laws to offset the same 
+subsidies twice; China also cites the CIT's conclusion that the USDOC has an obligation to investigate 
+and to avoid double remedies.  China posits that in GPX, the CIT rejected U.S. arguments that are 
+similar to those the United States makes before this Panel.944 
+(ii) 
+United States 
+14.54 The United States asks the Panel to reject China's argument that a double remedy results from 
+the imposition of countervailing duties concurrently with the imposition of anti-dumping duties 
+                                                                                                                                                              
+and Exhibit CHI-170 (examples, in scenarios in which subsidies "pass through" or do not "pass through" to 
+export prices). 
+939 China response to Panel question 93 (a)-(b) (first meeting). 
+940 See, e.g., China's second written submission, para. 305.  China also argues that the United States has 
+implicitly acknowledged before the Panel the potential for at least some degree of overlap between the two 
+remedies.  In particular, China notes the United States' statements that the use of an NME methodology to 
+determine normal value may not constitute a complete remedy for any subsidies received by the producer, and 
+that it will "not necessarily capture the full amount" of any subsidies.  China argues that these statements are 
+consistent with the USDOC's statement, in CFS Paper that "a possibility of double counting results from 
+simultaneous antidumping and CVD investigations" of imports from NME countries and with the statement by 
+the GAO that anti-dumping duties determined in accordance with the U.S. NME methodology "offset much of 
+the value of both export subsidies and domestic subsidies".  (China response to Panel Question 92 (first 
+meeting)). 
+941 China oral statement at the first meeting of the Panel, para. 82; second written submission, para. 305. 
+942 China response to Panel question 92 (first meeting). 
+943 China oral statement at the second meeting of the Panel, paras. 56-73. 
+944 Id. 
+
+
+ 
+WT/DS379/R  
+ 
+Page 223 
+ 
+ 
+ 
+calculated under the U.S. NME methodology.  In particular, the United States contests what in its 
+view is an argument of China that every calculation of a dumping margin using the NME 
+methodology will be artificially inflated by the full amount of subsidies that are remedied by 
+countervailing duties determined and imposed simultaneously on the subject goods.  The 
+United States argues that China has not provided evidence to support its arguments in this respect.945 
+14.55 The United States proffers that the theory advanced by China suggests that surrogate values 
+used to determine normal value under the U.S. NME methodology are the mathematical equivalent of 
+what actual production costs would be if China were a market economy plus the precise amount of 
+subsidization.  The United States challenges what it sees as the theoretical premises and the 
+assumptions underlying China's theory.  The United States argues that it cannot be assumed that 
+replacement of actual (subsidized) values of factor inputs with surrogate values under the NME 
+methodology results in an increase in the normal value by an amount that is equal to or greater than 
+the amount of the subsidy.  The United States argues that it cannot be assumed that the normal value 
+arrived at using the NME calculation is, in every instance, completely insulated from any of the 
+effects of the countervailed subsidy.  The United States posits that the subsidy could actually lower 
+the normal value, for instance by increasing a recipient's efficiency and reducing the quantity of 
+factors used in production, or affect the surrogate (third-country) prices and/or profit and expense 
+ratios.946  The United States further submits that another fundamental premise for China's arguments 
+is that subsidies reduce costs of production, pro rata; the United States contends that this would be a 
+necessary basis for arguing that normal values determined using the NME methodology are invariably 
+inflated by an amount that fully remedies the subsidy.  The United States considers it far from clear 
+that most subsidies achieve anything close to pro rata reductions in cost.947 
+14.56 The United States characterizes as "self-serving" the illustrations offered by China using the 
+investigations at issue in the current dispute, and asks the Panel not to consider that these establish 
+that double remedies were imposed in these investigations.  The United States disagrees with China's 
+suggestion that similarities between the surrogate values used in the anti-dumping calculations and the 
+benchmarks used in the countervailing duty investigations prove that the resulting duties remedy the 
+same economic "distortion".  In addition, the United States submits counter-examples to demonstrate 
+that in some instances, the surrogate values used by the USDOC in its dumping margin calculation 
+were in fact lower than both the producer's actual costs and the benchmarks used by the USDOC in its 
+calculation of the amount of the subsidy.948 
+14.57 Further, the United States argues that China incorrectly equates the normal value with the 
+anti-dumping remedy, and notes that normal values are only one side of the anti-dumping equation.949  
+The United States argues that even if it is assumed that a subsidy lowers the recipient's costs of 
+production, it may not pass-through to prices.950 
+14.58 The United States urges the Panel to reject the argument made by China that there are 
+"overlapping rationales" for (i) the use of NME methodologies in anti-dumping investigations and (ii) 
+the imposition of countervailing duties.  In the view of the United States, China mischaracterizes the 
+relevant rationales and incorrectly assumes that subsidization is among the market distortions that the 
+NME methodology is "meant to counteract".  The United States argues that under the GATT, the AD 
+                                                   
+945 United States first written submission, paras. 445-462; opening statement at the first meeting of the 
+Panel, para. 56; response to Panel question 73 (first meeting). 
+946 United States first written submission, paras. 451-454 and footnote 612; response to Panel 
+question 71 (first meeting); second written submission, paras. 203-207; response to Panel question 27 (second 
+meeting). 
+947 United States first written submission, paras. 455-459. 
+948 United States comments on China's response to Panel question 26 (second meeting). 
+949 United States second written submission, paras. 198-202. 
+950 United States response to Panel questions 71 (a) and 72 (first meeting). 
+
+
+WT/DS379/R 
+Page 224 
+ 
+ 
+ 
+Agreement, and China's Protocol of Accession, subsidization is not relevant to the application of the 
+NME methodology.  The United States submits in this regard that the USDOC does not and cannot 
+ensure that the NME constructed normal value is "subsidy-free", and that in some instances, including 
+in the investigations at issue, the surrogate value exceeds the producer's actual costs.951  The 
+United States further submits that the effects of subsidies on costs or prices is not, under the covered 
+agreements, relevant to the calculation of the amount of countervailing duties.  On the contrary, under 
+Article VI:3 of the GATT and Article 19.2 of the SCM Agreement, countervailing duties may be 
+imposed for the full amount of the subsidy found to exist, irrespective of the effects these subsidies.952 
+14.59 Finally, the United States argues that even if it is accepted at face value, the GAO Report does 
+not support China's argument that double remedies are inherent in the concurrent application of 
+countervailing duties to offset domestic subsidies and of anti-dumping duties calculated under an 
+NME methodology.  Rather, the United States argues, "the report agrees with Commerce's stated 
+position [that] the concurrent imposition of AD and CV duties could create some potential for 
+overlapping rationales".953  The United States also asks the Panel not to rely on, or consider 
+dispositive or even persuasive, the Opinion of the CIT in the GPX case.  The United States argues that 
+this decision represents the Court's ruling on U.S. law and results from other considerations than those 
+focussed on by China in the current dispute.  The United States notes that the CIT concludes that 
+some degree of double counting is likely and directs the USDOC to investigate the issue and report 
+back to the Court.  Further, the United States considers the CIT ruling to be in error and 
+
+Question:
+What are the differences between the Panel and the Appellate Body on the issue of double relief caused by the United States of double taxation?
+
+A. The panel held the thought that this problem cannot be resolved, but the Appellate held that the United States dual relief measures were consistent with SCM.
+B. The Appellate held the thought that this problem cannot be resolved in accordance with the provisions of the WTO, but the panel held that the United States dual relief measures were not consistent with Article 19.3 of the SCM.
+C. The Group believes that United States' non-market economy approach to China, i.e., the use of market economy countries with roughly the same level of economic status as China's economy, instead of using China's raw data, may provide relief to countervailing duty. The Appellate Body held that appropriate was not explicit but needed to be determined by reference to the collective circumstances and that the provision should not be read in an overly rigid manner.
+D. The Group found that the countervailing duty imposed by the United States was not levied at an appropriate amount and that it was levied in a significantly higher amount than the amount of the subsidy found to exist. The Appellate Body held that the WTO did not prohibit the simultaneous application of anti-dumping and countervailing provisions, and that, according to its findings, the amount of countervailing duties did not exceed the amount of subsidies found to exist.
+
+Select the correct answer.

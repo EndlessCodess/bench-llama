@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+When the positive integers with exactly three positive divisors are listed in ascending order, what is the fifth number listed?

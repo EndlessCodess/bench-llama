@@ -1,0 +1,4 @@
+Can you summarize the article about GME stocks?
+
+Input:
+Gamestop Corp. surged from a market value of slightly more than two billion dollars at the start of 2021 to nearly $24 billion as of late January. It was due to a rally of retail investors, prompted by discussion on Reddit's WallStreetBets forum and heavily shorted by a group of hedge funds.

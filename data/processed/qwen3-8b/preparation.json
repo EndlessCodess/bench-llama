@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-08-26T07:12:12.857163+00:00",
+  "dataset": "/data1/xuyang/projects/bench_test_llama/data/longbench-v2/data.json",
+  "dataset_sha256": "15d61c22d92c96900b3c4948b6aeea218d3214b676a65df48e7b8555604c7fe2",
+  "dataset_samples": 503,
+  "model": "/data1/xuyang/models/Qwen3-8B-DFlash-GGUF/Qwen3-8B-BF16.gguf",
+  "model_size": 16388044096,
+  "llama_server": "/data1/xuyang/projects/llama.cpp/build-cuda13/bin/llama-server",
+  "targets": [
+    2048,
+    8192,
+    16384,
+    28672
+  ],
+  "pool_size": 50,
+  "seed": 20260805,
+  "max_token_gap": 8,
+  "token_count_scope": "Qwen chat template including assistant generation prefix"
+}

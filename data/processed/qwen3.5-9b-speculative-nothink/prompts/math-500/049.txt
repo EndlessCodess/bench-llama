@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+A cylindrical beaker is 8 cm high and has a radius of 3 cm. How many such beakers of water will it take to fill a spherical tank of radius 6 cm?

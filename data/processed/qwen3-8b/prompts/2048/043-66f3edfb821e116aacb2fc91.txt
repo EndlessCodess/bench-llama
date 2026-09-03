@@ -1,0 +1,333 @@
+Please read the following context and answer the multiple-choice question.
+
+Context:
+2023.09
+v1.0
+User Manual
+
+
+ Searching for Keywords
+Search for keywords such as “battery” and “install” to find a topic. If you are using Adobe 
+Acrobat Reader to read this document, press Ctrl+F on Windows or Command+F on Mac 
+to begin a search.
+ Navigating to a Topic
+View a complete list of topics in the table of contents. Click on a topic to navigate to that 
+section.
+ Printing this Document
+This document supports high resolution printing.
+This document is copyrighted by DJI with all rights reserved. Unless otherwise authorized by 
+DJI, you are not eligible to use or allow others to use the document or any part of the document 
+by reproducing, transferring or selling the document. Users should only refer to this document 
+and the content thereof as instructions to operate DJI UAV. The document should not be used 
+for other purposes.
+
+
+DJI Mini 4 Pro User Manual
+© 2023 DJI All Rights Reserved.   3
+Using this Manual
+Legend
+Important
+Hints and Tips
+Reference
+Read Before the First Flight
+DJI
+TM provides users with tutorial videos and the following documents.
+1. Safety Guidelines
+2. Quick Start Guide
+3. User Manual
+It is recommended to watch all tutorial videos and read the safety guidelines before using for 
+the first time. Prepare for your first flight by reviewing the quick start guide and refer to this 
+user manual for more information.
+Video Tutorials
+Go to the address below or scan the QR code to watch the tutorial videos, which demonstrate 
+how to use the product safely:
+https://s.dji.com/guide66
+Download the DJI Fly App
+Make sure to use DJI Fly during flight. Scan the QR code above to download the latest version.
+•	The remote controller with screen has the DJI Fly app already installed. Users are 
+required to download DJI Fly to their mobile device when using the remote controller 
+without screen.
+•	The Android version of DJI Fly is compatible with Android v7.0 and later. The iOS version 
+of DJI Fly is compatible with iOS v11.0 and later.
+*	 For increased safety, flight is restricted to a height of 98.4 ft (30 m) and a range of 164 ft (50 m) when not 
+connected or logged into the app during flight. This applies to DJI Fly and all apps compatible with DJI 
+aircraft.
+
+
+DJI Mini 4 Pro User Manual
+4  © 2023 DJI All Rights Reserved. 
+Download DJI Assistant 2
+Download DJI ASSISTANT
+TM 2 (Consumer Drones Series) at:
+https://www.dji.com/downloads/softwares/dji-assistant-2-consumer-drones-series
+•	The operating temperature of this product is -10° to 40° C. It does not meet the 
+standard operating temperature for military-grade application (-55° to 125° C), which is 
+required to endure greater environmental variability. Operate the product appropriately 
+and only for applications that meet the operating temperature range requirements of 
+that grade.
+
+
+© 2023 DJI All Rights Reserved.   5
+Using this Manual	
+3
+Legend	
+3
+Read Before the First Flight	
+3
+Video Tutorials	
+3
+Download the DJI Fly App	
+3
+Download DJI Assistant 2	
+4
+Product Profile	
+9
+Introduction	
+9
+Feature Highlights	
+9
+Using for the First Time	
+10
+Preparing the Aircraft	
+10
+Preparing the Remote Controller	
+12
+Activating the Aircraft	
+13
+Binding the Aircraft and Remote Controller	
+13
+Firmware Update	
+13
+Diagram	
+14
+Aircraft	
+14
+DJI RC 2 Remote Controller	
+15
+DJI RC-N2 Remote Controller	
+16
+Flight and Safety	
+19
+Flight Environment Requirements	
+19
+Operating the Aircraft Responsibly	
+20
+Flight Restrictions	
+20
+GEO (Geospatial Environment Online) System	
+20
+Flight Limits	
+20
+Flight Altitude and Distance Limits	
+21
+Unlocking GEO Zones	
+22
+Pre-Flight Checklist	
+22
+Basic Flight	
+23
+Auto Takeoff/Landing	
+23
+Starting/Stopping the Motors	
+23
+Controlling the Aircraft	
+25
+Takeoff/Landing Procedures	
+26
+Video Suggestions and Tips	
+26
+Intelligent Flight Mode	
+27
+Contents
+
+
+DJI Mini 4 Pro User Manual
+6  © 2023 DJI All Rights Reserved. 
+FocusTrack	
+27
+MasterShots	
+34
+QuickShots	
+35
+Hyperlapse	
+37
+Waypoint Flight	
+40
+Cruise Control	
+45
+Aircraft	
+48
+Flight Mode	
+48
+Aircraft Status Indicators	
+49
+Return to Home	
+50
+Advanced RTH	
+51
+Landing Protection	
+56
+Precision Landing	
+56
+Vision Systems and 3D Infrared Sensing System	
+57
+Detection Range 	
+57
+Using the Vision Systems	
+58
+Advanced Pilot Assistance Systems	
+60
+Landing Protection	
+60
+Flight Recorder	
+61
+Propellers	
+61
+Attaching the propellers	
+61
+Detaching the propellers	
+61
+Intelligent Flight Battery	
+63
+Battery Features	
+63
+Using the Battery	
+64
+Charging the Battery	
+65
+Inserting/Removing the Battery	
+69
+Gimbal and Camera	
+69
+Gimbal Profile	
+69
+Gimbal Operation Modes	
+70
+Camera Profile	
+71
+Storing and Exporting Photos and Videos	
+72
+QuickTransfer	
+72
+Usage	
+72
+Remote Controller	
+75
+DJI RC 2	
+75
+Operation	
+75
+
+
+DJI Mini 4 Pro User Manual
+© 2023 DJI All Rights Reserved.   7
+Remote Controller LEDs	
+80
+Remote Controller Alert	
+80
+Optimal Transmission Zone	
+81
+Linking the Remote Controller	
+81
+Operating the Touchscreen	
+82
+Advanced Features	
+84
+DJI RC-N2	
+85
+Operation	
+85
+Battery Level LEDs	
+88
+Remote Controller Alert	
+89
+Optimal Transmission Zone	
+89
+Linking the Remote Controller	
+90
+DJI Fly App	
+92
+Home	
+92
+Camera View	
+93
+Button Descriptions	
+93
+Screen Shortcuts	
+97
+Settings	
+97
+Safety	
+97
+Control	
+98
+Camera	
+99
+Transmission	
+100
+About	
+100
+Appendix	
+102
+Specifications	
+102
+Firmware Update	
+110
+Using DJI Fly	
+110
+Using DJI Assistant 2 (Consumer Drones Series)	
+110
+Maintenance Instructions	
+110
+Troubleshooting Procedures	
+111
+Risk and Warnings	
+112
+Disposal	
+112
+Battery Disposal	
+112
+C0 Certification	
+113
+MTOM Statement	
+113
+FAR Remote ID Compliance Information	
+114
+Aftersales Information	
+115
+
+
+Product Profile
+This chapter introduces the major 
+features of the product.
+
+
+DJI Mini 4 Pro User Manual
+© 2023 DJI All Rights Reserved.   9
+Product Profile
+Introduction
+DJI Mini 4 Pro features both an omnidirectional vision system and a 3D infrared sensing system, 
+it is capable of hovering and flying indoors and outdoors, and can automatically Return to Home 
+while sensing obstacles in all directions. The aircraft also boasts a foldable and compact design, 
+weighing less than 249 g. The aircraft has a maximum flight time of 34 minutes when used with 
+the Intelligent Flight Battery, and 45 minutes with the Intelligent Flight Battery Plus.
+The aircraft is compatible with both the DJI RC 2 and DJI RC-N2 remote controllers. Refer to the 
+Remote Controller chapter for more information.
+Feature Highlights
+Gimbal and Camera: With a fully stabilized 3-axis gimbal and a 1/1.3″ sensor camera, DJI Mini 
+4 Pro is able to shoot 4K 60fps HDR and 4K 100fps video and 48MP photos. It also supports 
+switching between Landscape mode and Portrait mode with one tap in DJI Fly. The newly added 
+10-bit D-Log M color mode brings a more convenient experience for post-production color 
+correction, while HLG provides better dynamic range and color display performance.
+Video Transmission: With DJI’s long-range transmission O4 technology, the aircraft can offer 
+a maximum transmission range of 20 km and video quality at up to 1080p 60fps 
+
+Question:
+Under what circumstances will the return to home be triggered？
+
+A. User pressed  Return to Home Button.
+B. The action of the aircraft when the remote controller signal is lost was set to RTH in Setting >Safety > Advanced Safety Settings in DJI Fly.
+C. After the waypoint flight task end and the End of Flight behavior was set to RTH.
+D. When the aircraft intelligently determines that the battery power is only sufficient to complete the mission.
+
+Select the correct answer.

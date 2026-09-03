@@ -1,0 +1,4 @@
+Solve the following mathematics problem. Show your reasoning step by step, and put the final answer inside \boxed{}.
+
+Problem:
+If 4 daps = 7 yaps, and 5 yaps = 3 baps, how many daps equal 42 baps?
