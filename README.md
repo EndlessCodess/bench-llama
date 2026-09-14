@@ -479,6 +479,7 @@ baseline and delta are recorded.
 means over the successful formal runs, E2E is the mean `e2e_ms_measured`
 (converted to seconds), and peak memory is the maximum sampled device usage.
 Full per-turn detail stays in `runs.jsonl` and `runs.csv`.
+For speculative runs, these files also record proposed and accepted draft tokens, target verification steps, mean accepted draft tokens per verification, and mean advance length. The last value includes the one token produced by the target model at each verification step.
 
 Run `./bench_test.py --help` for all options or `./bench_test.py --list-cases`
 for the four fixed cases.

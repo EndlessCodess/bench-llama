@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "name": "lc-034-038-dspark-on-v1",
+  "description": "DSpark enabled for Alpaca, MATH-500, and HumanEval",
+  "experiment": {
+    "variable": "speculative_decoding",
+    "value": "dspark",
+    "model_key": "f16",
+    "draft_model_key": "dspark_bf16"
+  },
+  "cases": [
+    {"id": "LC-034", "dataset": "alpaca", "output_tokens": 512},
+    {"id": "LC-036", "dataset": "math-500", "output_tokens": 512},
+    {"id": "LC-038", "dataset": "humaneval", "output_tokens": 512}
+  ],
+  "runtime": {
+    "n_ctx": 262144,
+    "n_batch": 2048,
+    "n_ubatch": 512,
+    "n_gpu_layers": 99,
+    "parallel": 1,
+    "type_k": "f16",
+    "type_v": "f16",
+    "flash_attn": "auto",
+    "poll": 50,
+    "temperature": 0.0,
+    "seed": 42,
+    "ignore_eos": false,
+    "prefix_cache_hit_rate_pct": 0,
+    "draft_n_max": 7,
+    "draft_n_gpu_layers": 99,
+    "spec_type": "draft-dspark"
+  }
+}

@@ -1,4 +1,7 @@
 # Python
+# Local medical trace samples
+data/medical-langfuse/
+
 __pycache__/
 *.pyc
 *.pyo

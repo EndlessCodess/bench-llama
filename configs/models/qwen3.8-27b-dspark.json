@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "qwen3.8-27b-dspark",
+  "description": "Qwen3.8-27B Q4_0 benchmark profile with the RadixArk DSpark draft",
+  "processed_dir": "data/processed/qwen3.5-9b-speculative-nothink",
+  "model_key_aliases": {
+    "f16": "q4_0"
+  },
+  "runtime_overrides": {
+    "n_ctx": 8192,
+    "draft_n_max": 7,
+    "draft_n_gpu_layers": 99,
+    "spec_type": "draft-dspark"
+  },
+  "metadata": {
+    "target_family": "Qwen3.8-27B",
+    "target_precision": "Q4_0",
+    "target_train_context": 262144,
+    "draft_family": "RadixArk-Qwen3.8-27B-DSpark",
+    "draft_block_size": 7
+  }
+}

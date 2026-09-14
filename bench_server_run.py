@@ -31,6 +31,7 @@ def parse_args():
     parser.add_argument("--poll", type=int, default=50)
     parser.add_argument("--threads", type=int)
     parser.add_argument("--draft-model")
+    parser.add_argument("--spec-type", choices=["draft-dflash", "draft-dspark"], default="draft-dflash")
     parser.add_argument("--draft-n-max", type=int, default=15)
     parser.add_argument("--draft-ngl", type=int, default=99)
     parser.add_argument("--ignore-eos", dest="ignore_eos", action="store_true")
@@ -49,6 +50,28 @@ def request_json(url, body=None, timeout=30):
     request = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.load(response)
+
+
+def request_text(url, timeout=30):
+    with urllib.request.urlopen(url, timeout=timeout) as response:
+        return response.read().decode("utf-8")
+
+
+def speculative_metrics(base_url):
+    names = {
+        "llamacpp:spec_decode_num_draft_tokens_total": "draft_tokens",
+        "llamacpp:spec_decode_num_accepted_tokens_total": "draft_accepted",
+        "llamacpp:spec_decode_num_drafts_total": "draft_verification_steps",
+    }
+    result = {value: 0 for value in names.values()}
+    for line in request_text(base_url + "/metrics").splitlines():
+        if not line or line.startswith("#"):
+            continue
+        metric, _, value = line.partition(" ")
+        key = names.get(metric)
+        if key is not None:
+            result[key] = int(float(value))
+    return result
 
 
 def free_port():
@@ -124,6 +147,7 @@ def server_command(args, port):
         "--port", str(port),
         "--no-ui",
         "--no-warmup",
+        "--metrics",
     ]
     if args.threads is not None:
         command.extend(["--threads", str(args.threads)])
@@ -131,13 +155,13 @@ def server_command(args, port):
         command.extend([
             "--spec-draft-model", str(Path(args.draft_model).resolve()),
             "--spec-draft-ngl", str(args.draft_ngl),
-            "--spec-type", "draft-dflash",
+            "--spec-type", args.spec_type,
             "--spec-draft-n-max", str(args.draft_n_max),
         ])
     return command
 
 
-def run_request(base_url, row, args):
+def run_request(base_url, row, args, metrics_before):
     prompt = Path(row["prompt_file"]).read_text(encoding="utf-8")
     body = {
         "model": "benchmark",
@@ -161,12 +185,24 @@ def run_request(base_url, row, args):
     generation_ms = float(timings["predicted_ms"])
     draft_tokens = int(timings.get("draft_n", 0))
     draft_accepted = int(timings.get("draft_n_accepted", 0))
+    for _ in range(10):
+        metrics_after = speculative_metrics(base_url)
+        if draft_tokens == 0 or metrics_after["draft_tokens"] - metrics_before["draft_tokens"] >= draft_tokens:
+            break
+        time.sleep(0.01)
+    draft_verification_steps = max(
+        0,
+        metrics_after["draft_verification_steps"] - metrics_before["draft_verification_steps"],
+    )
     return {
         "prompt_tokens": prompt_tokens,
         "tokens_generated": generated,
         "draft_tokens": draft_tokens,
         "draft_accepted": draft_accepted,
         "draft_acceptance_rate": 100.0 * draft_accepted / draft_tokens if draft_tokens else 0.0,
+        "draft_verification_steps": draft_verification_steps,
+        "draft_mean_accepted_tokens": draft_accepted / draft_verification_steps if draft_verification_steps else 0.0,
+        "draft_mean_advance_length": 1.0 + draft_accepted / draft_verification_steps if draft_verification_steps else 0.0,
         "prompt_eval_ms_measured": prompt_ms,
         "ttft_ms_measured": prompt_ms,
         "generation_eval_ms_measured": generation_ms,
@@ -175,7 +211,7 @@ def run_request(base_url, row, args):
         "generation_tps_measured": float(timings["predicted_per_second"]),
         "finish_reason": response["choices"][0].get("finish_reason"),
         "output_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
-    }
+    }, metrics_after
 
 
 def main():
@@ -202,11 +238,12 @@ def main():
     proc = subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=sys.stderr, stderr=sys.stderr)
     try:
         wait_for_server("http://127.0.0.1:{}".format(port), proc)
+        metrics = speculative_metrics("http://127.0.0.1:{}".format(port))
         emit({
             "event": "model_loaded",
             "model": str(Path(args.model).resolve()),
             "server_command": command,
-            "speculative": "draft-dflash" if args.draft_model else "none",
+            "speculative": args.spec_type if args.draft_model else "none",
             "ignore_eos": args.ignore_eos,
         })
         for row in rows:
@@ -226,7 +263,7 @@ def main():
                 "n_predict": row["n_predict"],
             })
             try:
-                result = run_request("http://127.0.0.1:{}".format(port), row, args)
+                result, metrics = run_request("http://127.0.0.1:{}".format(port), row, args, metrics)
                 emit({
                     "event": "result",
                     **identity,

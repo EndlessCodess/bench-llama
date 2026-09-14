@@ -103,6 +103,9 @@ RUN_FIELDS = [
     "draft_tokens_measured",
     "draft_accepted_measured",
     "draft_acceptance_rate_measured",
+    "draft_verification_steps_measured",
+    "draft_mean_accepted_tokens_measured",
+    "draft_mean_advance_length_measured",
     "finish_reason",
     "output_sha256",
     "wall_time_s_measured",
@@ -147,6 +150,8 @@ SUMMARY_FIELDS = [
     "GPU计算单元峰值利用率(%)/Peak GPU Compute Utilization(%)",
     "GPU计算单元平均利用率(%)/Average GPU Compute Utilization(%)",
     "草稿接受率(%)/Draft Acceptance Rate(%)",
+    "平均每次验证接受草稿(tokens)/Mean Accepted Draft Tokens per Verification",
+    "平均每次验证推进长度(tokens)/Mean Advance Length per Verification",
 ]
 
 
@@ -333,7 +338,7 @@ def parse_args():
     parser.add_argument("--llama-server", help="llama-server executable used by the server benchmark adapter")
     parser.add_argument("--llama-cli", default=os.environ.get("LLAMA_CLI"), help=argparse.SUPPRESS)  # 已废弃别名：--llama-cli → --bench-run
     parser.add_argument("--model", default=os.environ.get("LLAMA_MODEL"), help="path to the GGUF model")  # GGUF 模型文件路径（默认取环境变量 LLAMA_MODEL）
-    parser.add_argument("--draft-model", help="path to a DFlash draft GGUF")
+    parser.add_argument("--draft-model", help="path to a speculative draft GGUF")
     parser.add_argument("--config", default=str(DEFAULT_BENCHMARK_CONFIG), help="benchmark case configuration")  # 用例配置文件（默认 configs/fair-baseline.json）
     parser.add_argument("--platform-config", default=str(DEFAULT_PLATFORM_CONFIG), help="platform profiles")  # 平台档案文件（默认 configs/platforms.json）
     parser.add_argument("--processed-dir", default=str(DEFAULT_PROCESSED_DIR))  # 预处理数据目录（prompts、metadata.jsonl 等）
@@ -360,6 +365,7 @@ def parse_args():
     parser.add_argument("--seed", type=int)  # 随机种子覆盖（默认 42，配合 temp 0 保证可复现）
     parser.add_argument("--draft-n-max", type=int)
     parser.add_argument("--draft-n-gpu-layers", type=int)
+    parser.add_argument("--spec-type", choices=["draft-dflash", "draft-dspark"])
     parser.add_argument("--ignore-eos", dest="ignore_eos", action="store_true")
     parser.add_argument("--no-ignore-eos", dest="ignore_eos", action="store_false")
     parser.set_defaults(ignore_eos=None)
@@ -478,6 +484,8 @@ def apply_runtime_defaults(args, runtime):
         args.draft_n_max = int(runtime.get("draft_n_max", 15))
     if args.draft_n_gpu_layers is None:
         args.draft_n_gpu_layers = int(runtime.get("draft_n_gpu_layers", 99))
+    if args.spec_type is None:
+        args.spec_type = runtime.get("spec_type", "draft-dflash")
     if args.ignore_eos is None:
         args.ignore_eos = bool(runtime.get("ignore_eos", True))
 
@@ -701,6 +709,7 @@ def build_bench_run_command(args, model_path, plan_path, n_gpu_layers):
         if args.draft_model:
             command.extend([
                 "--draft-model", str(Path(args.draft_model)),
+                "--spec-type", args.spec_type,
                 "--draft-n-max", str(args.draft_n_max),
                 "--draft-ngl", str(args.draft_n_gpu_layers),
             ])
@@ -1024,6 +1033,9 @@ def run_session(
                 record["draft_tokens_measured"] = draft_tokens if draft_tokens else None
                 record["draft_accepted_measured"] = event.get("draft_accepted") if draft_tokens else None
                 record["draft_acceptance_rate_measured"] = event.get("draft_acceptance_rate") if draft_tokens else None
+                record["draft_verification_steps_measured"] = event.get("draft_verification_steps") if draft_tokens else None
+                record["draft_mean_accepted_tokens_measured"] = event.get("draft_mean_accepted_tokens") if draft_tokens else None
+                record["draft_mean_advance_length_measured"] = event.get("draft_mean_advance_length") if draft_tokens else None
                 record["actual_prompt_tokens"] = event["prompt_tokens"]
                 generation_tps = record.get("generation_tps_measured")
                 if generation_tps is not None and generation_tps > 0.0:
@@ -1132,6 +1144,9 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
         "draft_tokens_measured",
         "draft_accepted_measured",
         "draft_acceptance_rate_measured",
+        "draft_verification_steps_measured",
+        "draft_mean_accepted_tokens_measured",
+        "draft_mean_advance_length_measured",
     ):
         metrics[field] = metric_summary(ok_records, field)
 
@@ -1178,6 +1193,13 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
     draft_accepted = sum(int(record.get("draft_accepted_measured") or 0) for record in ok_records)
     summary["草稿接受率(%)/Draft Acceptance Rate(%)"] = (
         round(100.0 * draft_accepted / draft_tokens, 2) if draft_tokens > 0 else None
+    )
+    draft_verification_steps = sum(int(record.get("draft_verification_steps_measured") or 0) for record in ok_records)
+    summary["平均每次验证接受草稿(tokens)/Mean Accepted Draft Tokens per Verification"] = (
+        round(draft_accepted / draft_verification_steps, 2) if draft_verification_steps > 0 else None
+    )
+    summary["平均每次验证推进长度(tokens)/Mean Advance Length per Verification"] = (
+        round(1.0 + draft_accepted / draft_verification_steps, 2) if draft_verification_steps > 0 else None
     )
     return summary
 
@@ -1248,8 +1270,8 @@ def main():
         raise ValueError("--bench-run or BENCH_RUN is required")
     if not args.model:
         raise ValueError("--model or LLAMA_MODEL is required")
-    if benchmark_config.get("experiment", {}).get("value") == "dflash" and not args.draft_model:
-        raise ValueError("the DFlash benchmark requires --draft-model")
+    if benchmark_config.get("experiment", {}).get("value") in ("dflash", "dspark") and not args.draft_model:
+        raise ValueError("the speculative benchmark requires --draft-model")
     bench_run = Path(args.bench_run).resolve()
     model_path = Path(args.model).resolve()
     draft_model_path = Path(args.draft_model).resolve() if args.draft_model else None
@@ -1379,7 +1401,7 @@ def main():
             "poll": args.poll,
             "temperature": args.temperature,
             "seed": args.seed,
-            "speculative_type": "draft-dflash" if draft_model_path is not None else "none",
+            "speculative_type": args.spec_type if draft_model_path is not None else "none",
             "draft_n_max": args.draft_n_max if draft_model_path is not None else None,
             "draft_n_gpu_layers": args.draft_n_gpu_layers if draft_model_path is not None else None,
             "threads": args.threads,
@@ -1409,7 +1431,10 @@ def main():
             "average_gpu_utilization_pct_measured": "arithmetic mean of NVML GPU compute utilization samples in each run window; the summary reports the mean across formal runs",
             "prompt_tps_measured": "prompt tokens per second during prefill, measured inside bench_run",
             "generation_tps_measured": "generated tokens per second during the generation phase, measured inside bench_run",
-            "draft_acceptance_rate_measured": "accepted DFlash draft tokens divided by proposed draft tokens; zero for non-speculative cases",
+            "draft_acceptance_rate_measured": "accepted speculative draft tokens divided by proposed draft tokens; zero for non-speculative cases",
+            "draft_verification_steps_measured": "number of target-model speculative verification steps, measured from the llama-server Prometheus counters",
+            "draft_mean_accepted_tokens_measured": "accepted speculative draft tokens divided by target-model verification steps",
+            "draft_mean_advance_length_measured": "one target token plus the mean number of accepted draft tokens per verification step",
             "derived_fields": "fields ending in _est are estimates derived from measured values",
         },
     }

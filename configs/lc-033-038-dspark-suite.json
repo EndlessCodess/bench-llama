@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "lc-033-038-dspark-v1",
+  "description": "Paired Qwen3 DSpark benchmark for Alpaca, MATH-500, and HumanEval",
+  "jobs": [
+    {
+      "id": "dspark-off",
+      "group": 6,
+      "config": "lc-033-037-dflash-off.json",
+      "model_key": "f16",
+      "runner": "server",
+      "rounds": 1,
+      "processed_dir": "data/processed/qwen3.5-9b-speculative-nothink"
+    },
+    {
+      "id": "dspark-on",
+      "group": 6,
+      "config": "lc-034-038-dspark-on.json",
+      "model_key": "f16",
+      "draft_model_key": "dspark_bf16",
+      "runner": "server",
+      "rounds": 1,
+      "processed_dir": "data/processed/qwen3.5-9b-speculative-nothink"
+    }
+  ]
+}

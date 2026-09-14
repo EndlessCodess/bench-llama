@@ -60,6 +60,7 @@ PROFILE_RUNTIME_ARGS = {
     "seed": "--seed",
     "draft_n_max": "--draft-n-max",
     "draft_n_gpu_layers": "--draft-n-gpu-layers",
+    "spec_type": "--spec-type",
 }
 
 
@@ -75,7 +76,7 @@ def parse_args():
     parser.add_argument("--model", action="append", default=[], metavar="KEY=PATH")  # 模型映射，如 f16=/path/F16.gguf；KEY 必须覆盖套件用到的全部 model_key
     parser.add_argument("--job", action="append", default=[], help="job id or comma-separated job ids")  # 只跑指定 job（可重复/逗号分隔）
     parser.add_argument("--group", action="append", default=[], metavar="N",
-                        help="worksheet category: 0=fair baseline, 1=weight quantization, 2=KV cache precision, 3=attention backend, 4=polling, 5=backend graph execution, 6=DFlash; repeatable or comma-separated")  # 只跑指定实验类别
+                        help="worksheet category: 0=fair baseline, 1=weight quantization, 2=KV cache precision, 3=attention backend, 4=polling, 5=backend graph execution, 6=speculative decoding; repeatable or comma-separated")  # 只跑指定实验类别
     parser.add_argument("--platform", default="auto")  # 平台档案名（cuda/cann/metal/cpu），auto 自动检测
     parser.add_argument("--platform-config", default=str(PROJECT_ROOT / "configs" / "platforms.json"))  # 平台档案文件
     parser.add_argument("--processed-dir")  # 预处理数据目录；显式值优先于 model profile

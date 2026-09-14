@@ -310,6 +310,8 @@ LLAMA_MODEL=/path/to/model.gguf \
 
 `summary.csv` / `summary.json` 输出五项核心指标，表头为双语“中文/英文”，每个 case 一行：首令牌延迟(ms)/TTFT(ms)、每令牌时间(ms/token)/TPOT(ms/token)、令牌间延迟(ms/token)/ITL(ms/token)、端到端耗时(s)/E2E(s)、峰值显存(GB)/Peak Memory(GB)。TTFT/TPOT/ITL 取正式轮次均值，E2E 为 `e2e_ms_measured` 均值（换算为秒），峰值显存取采样最大值。逐轮明细仍保留在 `runs.jsonl` 和 `runs.csv` 中。
 
+投机解码还会逐请求记录草稿 token 数、接受数、目标模型验证步数、每次验证平均接受草稿数和平均推进长度。平均推进长度包含目标模型在每次验证中产生的 1 个 token。
+
 运行 `./bench_test.py --help` 查看完整参数，运行 `./bench_test.py --list-cases` 查看四个固定测试项。
 
 ## LC-001 至 LC-028

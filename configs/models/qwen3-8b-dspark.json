@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "qwen3-8b-dspark",
+  "description": "Qwen3-8B BF16 benchmark profile with the official DSpark draft",
+  "processed_dir": "data/processed/qwen3.5-9b-speculative-nothink",
+  "model_key_aliases": {
+    "f16": "bf16"
+  },
+  "runtime_overrides": {
+    "n_ctx": 40960,
+    "draft_n_max": 7,
+    "draft_n_gpu_layers": 99,
+    "spec_type": "draft-dspark"
+  },
+  "metadata": {
+    "target_family": "Qwen3-8B",
+    "target_precision": "BF16",
+    "target_train_context": 40960,
+    "draft_family": "Qwen3-8B-DSpark",
+    "draft_block_size": 7
+  }
+}

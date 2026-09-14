@@ -60,7 +60,9 @@
 // =============================================================================
 
 #include "llama.h"
+#include "common.h"
 #include "sampling.h" // common_sampler_init / common_sampler_sample / common_sampler_free
+#include "speculative.h"
 #include "chat.h"     // common_chat_templates_* (matches the llama-server /apply-template path)
 
 #include <clocale>
@@ -190,6 +192,7 @@ static Fields common_fields(const char *event, const std::string &case_id,
 struct BenchArgs
 {
     std::string model_path;           // GGUF 模型文件（必需）
+    std::string draft_model_path;     // optional DFlash draft GGUF
     std::string plan_path;            // plan.tsv 路径（必需，见 read_plan）
     uint32_t n_ctx = 262144;          // 上下文窗口长度（KV 容量）
     uint32_t n_batch = 2048;          // 逻辑 batch：prefill 按此切片
@@ -202,6 +205,9 @@ struct BenchArgs
     uint32_t seed = 42;               // 采样 RNG 种子（temp<=0 时仅记录，不影响输出）
     int32_t n_threads = 0;            // CPU 线程数；0 = auto（取硬件并发数）
     int32_t poll = 50;                // 线程池轮询级别；-1 = 用库默认（LC-025..028 测 0）
+    int32_t draft_n_max = 15;         // maximum DFlash draft tokens per block
+    int32_t draft_n_gpu_layers = 99;  // draft layers to offload
+    bool ignore_eos = true;           // generate exactly n_predict tokens when enabled
     bool show_version = false;        // --version：打印系统信息后退出
     std::string dump_template;        // 调试：把 chat 模板应用到该 prompt 文件并打印结果
 };
@@ -210,6 +216,7 @@ static void print_usage(const char *argv0)
 {
     fprintf(stderr, "usage: %s --model model.gguf --plan plan.tsv [options]\n", argv0);
     fprintf(stderr, "  -m, --model <path>        GGUF model file (required)\n");
+    fprintf(stderr, "      --draft-model <path>  DFlash draft GGUF (optional)\n");
     fprintf(stderr, "      --plan <path>         TSV plan file (required)\n");
     fprintf(stderr, "  -c, --n-ctx <n>           context size (default 262144)\n");
     fprintf(stderr, "  -b, --n-batch <n>         logical batch size (default 2048)\n");
@@ -222,6 +229,9 @@ static void print_usage(const char *argv0)
     fprintf(stderr, "      --seed <n>            RNG seed (default 42)\n");
     fprintf(stderr, "  -t, --threads <n>         CPU threads, 0 = auto (default 0)\n");
     fprintf(stderr, "      --poll <n>            threadpool polling level, -1 = default (default 50)\n");
+    fprintf(stderr, "      --draft-n-max <n>     maximum DFlash draft tokens (default 15)\n");
+    fprintf(stderr, "      --draft-ngl <n>       draft layers to offload (default 99)\n");
+    fprintf(stderr, "      --[no-]ignore-eos     force exact output length (default enabled)\n");
     fprintf(stderr, "      --version             print system info and exit\n");
 }
 
@@ -274,6 +284,10 @@ static int parse_args(int argc, char **argv, BenchArgs &args)
         {
             args.model_path = need_value(i, arg, inline_value);
         }
+        else if (strcmp(key, "--draft-model") == 0)
+        {
+            args.draft_model_path = need_value(i, arg, inline_value);
+        }
         else if (strcmp(key, "--plan") == 0)
         {
             args.plan_path = need_value(i, arg, inline_value);
@@ -321,6 +335,22 @@ static int parse_args(int argc, char **argv, BenchArgs &args)
         else if (strcmp(key, "--poll") == 0)
         {
             args.poll = atoi(need_value(i, arg, inline_value));
+        }
+        else if (strcmp(key, "--draft-n-max") == 0)
+        {
+            args.draft_n_max = atoi(need_value(i, arg, inline_value));
+        }
+        else if (strcmp(key, "--draft-ngl") == 0)
+        {
+            args.draft_n_gpu_layers = atoi(need_value(i, arg, inline_value));
+        }
+        else if (strcmp(key, "--ignore-eos") == 0)
+        {
+            args.ignore_eos = true;
+        }
+        else if (strcmp(key, "--no-ignore-eos") == 0)
+        {
+            args.ignore_eos = false;
         }
         else if (strcmp(key, "--version") == 0)
         {
@@ -604,6 +634,7 @@ static bool apply_chat_template(const llama_model *model, const std::string &use
     inputs.messages.push_back(msg);
     inputs.add_generation_prompt = true;
     inputs.use_jinja = true;
+    inputs.enable_thinking = false;
 
     common_chat_params params = common_chat_templates_apply(tmpls.get(), inputs);
     if (params.prompt.empty())
@@ -653,6 +684,8 @@ struct RunResult
     int prompt_tokens = 0;
     int tokens_generated = 0;
     int expected_tokens = -1;
+    int draft_tokens = 0;
+    int draft_accepted = 0;
 };
 
 // 执行一轮完整的单轮生成。返回 false 时 err 给出原因，该轮失败但不影响后续轮。
@@ -663,7 +696,7 @@ struct RunResult
 //   TTFT = t_first_avail − t0（首 token 采样完即可得，无需额外 decode）
 //   每个 decode 后必须 llama_synchronize(ctx)：CUDA 是异步的，不解同步
 //   ggml_time_us 取到的只是"提交时刻"，不是 GPU 实际完成时刻。
-static bool run_one(llama_context *ctx, const llama_vocab *vocab, common_sampler *smpl,
+static bool run_one_standard(llama_context *ctx, const llama_vocab *vocab, common_sampler *smpl,
                     const RunPlan &plan, const BenchArgs &args, RunResult &res, std::string &err)
 {
     // clear the KV cache: every run is an independent single-turn request
@@ -851,6 +884,286 @@ static bool run_one(llama_context *ctx, const llama_vocab *vocab, common_sampler
     return true;
 }
 
+static bool run_one_dflash(llama_context *ctx_tgt, llama_context *ctx_dft,
+                           common_speculative *spec, const llama_vocab *vocab,
+                           common_sampler *&smpl, const RunPlan &plan,
+                           const BenchArgs &args, RunResult &res, std::string &err)
+{
+    const llama_seq_id seq_id = 0;
+    llama_memory_clear(llama_get_memory(ctx_tgt), false);
+    llama_memory_clear(llama_get_memory(ctx_dft), false);
+    common_sampler_reset(smpl);
+
+    std::ifstream fin(plan.prompt_file, std::ios::binary);
+    if (!fin)
+    {
+        err = "cannot open prompt file: " + plan.prompt_file;
+        return false;
+    }
+    std::string raw((std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
+    if (!valid_utf8(raw))
+    {
+        err = "prompt file is not valid UTF-8: " + plan.prompt_file;
+        return false;
+    }
+
+    std::string templated;
+    std::string tpl_err;
+    if (!apply_chat_template(llama_get_model(ctx_tgt), raw, templated, tpl_err))
+    {
+        err = "chat template failed: " + tpl_err;
+        return false;
+    }
+    llama_tokens tokens;
+    if (!tokenize_prompt(vocab, templated, tokens) || tokens.empty())
+    {
+        err = "tokenize failed";
+        return false;
+    }
+
+    const int n_prompt = (int)tokens.size();
+    const int n_predict = plan.n_predict;
+    if (n_prompt + n_predict > (int64_t)args.n_ctx)
+    {
+        err = "prompt (" + std::to_string(n_prompt) + " tokens) + n_predict (" +
+              std::to_string(n_predict) + ") exceeds n_ctx (" + std::to_string(args.n_ctx) + ")";
+        return false;
+    }
+
+    Fields sf = common_fields("run_start", plan.case_id, plan.phase, plan.phase_run, plan.manifest_run);
+    sf.push_back({"source_id", jstr(plan.source_id)});
+    sf.push_back({"prompt_file", jstr(plan.prompt_file)});
+    sf.push_back({"prompt_tokens", jint(n_prompt)});
+    sf.push_back({"expected_tokens", jint(plan.expected_tokens)});
+    sf.push_back({"n_predict", jint(n_predict)});
+    sf.push_back({"t0_us", jint(ggml_time_us())});
+    emit_object(std::move(sf));
+
+    const int64_t t0 = ggml_time_us();
+    llama_batch prompt = llama_batch_init(std::max(1, n_prompt - 1), 0, 1);
+    for (int i = 0; i < n_prompt - 1; ++i)
+    {
+        prompt.token[i] = tokens[i];
+        prompt.pos[i] = i;
+        prompt.n_seq_id[i] = 1;
+        prompt.seq_id[i][0] = seq_id;
+        prompt.logits[i] = 0;
+    }
+
+    for (int i = 0; i < n_prompt - 1; i += (int)args.n_batch)
+    {
+        const int32_t n_tokens = std::min<int32_t>(args.n_batch, n_prompt - 1 - i);
+        llama_batch view = {
+            n_tokens,
+            prompt.token + i,
+            nullptr,
+            prompt.pos + i,
+            prompt.n_seq_id + i,
+            prompt.seq_id + i,
+            prompt.logits + i,
+        };
+        if (llama_decode(ctx_tgt, view) != 0)
+        {
+            llama_batch_free(prompt);
+            err = "DFlash target prefill decode failed";
+            return false;
+        }
+        llama_synchronize(ctx_tgt);
+        if (!common_speculative_process(spec, view))
+        {
+            llama_batch_free(prompt);
+            err = "DFlash prompt processing failed";
+            return false;
+        }
+    }
+
+    llama_token id_last = tokens.back();
+    llama_tokens prompt_tgt(tokens.begin(), tokens.end() - 1);
+    prompt_tgt.reserve(llama_n_ctx(ctx_tgt));
+    int n_past = n_prompt - 1;
+    common_speculative_begin(spec, seq_id, prompt_tgt);
+    const int64_t t_pp_end = ggml_time_us();
+
+    const bool use_ckpt_tgt = common_context_can_seq_rm(ctx_tgt) == COMMON_CONTEXT_SEQ_RM_TYPE_FULL;
+    const bool use_ckpt_dft = common_context_can_seq_rm(ctx_dft) == COMMON_CONTEXT_SEQ_RM_TYPE_FULL;
+    common_prompt_checkpoint ckpt;
+    llama_tokens draft;
+    llama_batch batch_tgt = llama_batch_init(llama_n_batch(ctx_tgt), 0, 1);
+
+    int n_generated = 0;
+    int n_drafted = 0;
+    int n_accepted = 0;
+    int64_t t_first_avail = 0;
+
+    while (true)
+    {
+        if (n_generated >= n_predict)
+        {
+            common_batch_clear(batch_tgt);
+            common_batch_add(batch_tgt, id_last, n_past, {seq_id}, true);
+            if (llama_decode(ctx_tgt, batch_tgt) != 0)
+            {
+                err = "DFlash final target decode failed";
+                llama_batch_free(batch_tgt);
+                llama_batch_free(prompt);
+                return false;
+            }
+            llama_synchronize(ctx_tgt);
+            if (!common_speculative_process(spec, batch_tgt))
+            {
+                err = "DFlash final target processing failed";
+                llama_batch_free(batch_tgt);
+                llama_batch_free(prompt);
+                return false;
+            }
+            break;
+        }
+
+        if (draft.empty())
+        {
+            ckpt.update_pos(prompt_tgt.size(),
+                            llama_memory_seq_pos_min(llama_get_memory(ctx_tgt), seq_id),
+                            llama_memory_seq_pos_max(llama_get_memory(ctx_tgt), seq_id));
+            if (use_ckpt_dft)
+            {
+                ckpt.update_dft(ctx_dft, seq_id, LLAMA_STATE_SEQ_FLAGS_PARTIAL_ONLY);
+            }
+
+            int n_draft_max = (int)llama_n_ctx(ctx_tgt) - n_past - 2;
+            n_draft_max = std::min(n_draft_max, n_predict - n_generated - 1);
+            n_draft_max = std::max(n_draft_max, 0);
+            common_speculative_get_draft_params(spec, seq_id) = {
+                true, n_draft_max, n_past, id_last, &prompt_tgt, &draft,
+            };
+            common_speculative_draft(spec);
+
+            if (!draft.empty() && use_ckpt_tgt)
+            {
+                ckpt.update_tgt(ctx_tgt, seq_id, LLAMA_STATE_SEQ_FLAGS_PARTIAL_ONLY);
+            }
+            if (use_ckpt_dft)
+            {
+                ckpt.load_dft(ctx_dft, seq_id, LLAMA_STATE_SEQ_FLAGS_PARTIAL_ONLY);
+            }
+            llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, ckpt.pos_max + 1, -1);
+        }
+
+        common_batch_clear(batch_tgt);
+        common_batch_add(batch_tgt, id_last, n_past++, {seq_id}, true);
+        for (size_t i = 0; i < draft.size(); ++i)
+        {
+            common_batch_add(batch_tgt, draft[i], n_past + i, {seq_id}, true);
+        }
+        if (llama_decode(ctx_tgt, batch_tgt) != 0)
+        {
+            err = "DFlash target verification decode failed";
+            llama_batch_free(batch_tgt);
+            llama_batch_free(prompt);
+            return false;
+        }
+        llama_synchronize(ctx_tgt);
+        if (!common_speculative_process(spec, batch_tgt))
+        {
+            err = "DFlash target verification processing failed";
+            llama_batch_free(batch_tgt);
+            llama_batch_free(prompt);
+            return false;
+        }
+
+        common_sampler_ptr smpl_save;
+        if (use_ckpt_tgt)
+        {
+            smpl_save.reset(common_sampler_clone(smpl));
+        }
+        const size_t n_draft = draft.size();
+        llama_tokens ids = common_sampler_sample_and_accept_n(smpl, ctx_tgt, draft);
+        if (ids.empty())
+        {
+            err = "DFlash target sampler returned no tokens";
+            llama_batch_free(batch_tgt);
+            llama_batch_free(prompt);
+            return false;
+        }
+
+        if (!args.ignore_eos)
+        {
+            auto eog = std::find_if(ids.begin(), ids.end(), [vocab](llama_token id) {
+                return llama_vocab_is_eog(vocab, id);
+            });
+            if (eog != ids.end())
+            {
+                const size_t n_before_eog = std::distance(ids.begin(), eog);
+                n_drafted += n_draft;
+                n_accepted += std::min(n_before_eog, n_draft);
+                if (t_first_avail == 0)
+                {
+                    t_first_avail = ggml_time_us();
+                }
+                for (size_t i = 0; i < n_before_eog && n_generated < n_predict; ++i)
+                {
+                    prompt_tgt.push_back(id_last);
+                    id_last = ids[i];
+                    ++n_generated;
+                }
+                break;
+            }
+        }
+
+        if (use_ckpt_tgt && ids.size() - 1 < n_draft)
+        {
+            draft = std::move(ids);
+            ckpt.load_tgt(ctx_tgt, seq_id, LLAMA_STATE_SEQ_FLAGS_PARTIAL_ONLY);
+            llama_memory_seq_rm(llama_get_memory(ctx_tgt), seq_id, ckpt.pos_max + 1, -1);
+            ckpt.load_dft(ctx_dft, seq_id, LLAMA_STATE_SEQ_FLAGS_PARTIAL_ONLY);
+            llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, ckpt.pos_max + 1, -1);
+            prompt_tgt.resize(ckpt.n_tokens);
+            common_sampler_free(smpl);
+            smpl = smpl_save.release();
+            n_past = (int)prompt_tgt.size();
+            continue;
+        }
+
+        const size_t n_remaining = n_predict - n_generated;
+        const size_t n_emit = std::min(ids.size(), n_remaining);
+        const size_t n_draft_relevant = n_remaining > 0 ? std::min(n_draft, n_remaining - 1) : 0;
+        const size_t n_accept = n_emit > 0 ? std::min(ids.size() - 1, n_emit - 1) : 0;
+        common_speculative_accept(spec, seq_id, n_accept);
+        n_past += n_accept;
+        n_drafted += n_draft_relevant;
+        n_accepted += n_accept;
+
+        if (t_first_avail == 0)
+        {
+            t_first_avail = ggml_time_us();
+        }
+        for (size_t i = 0; i < n_emit; ++i)
+        {
+            prompt_tgt.push_back(id_last);
+            id_last = ids[i];
+            ++n_generated;
+        }
+        draft.clear();
+        llama_memory_seq_rm(llama_get_memory(ctx_tgt), seq_id, n_past, -1);
+        llama_memory_seq_rm(llama_get_memory(ctx_dft), seq_id, n_past, -1);
+    }
+
+    const int64_t t_end = ggml_time_us();
+    res.prompt_eval_ms = (t_pp_end - t0) / 1000.0;
+    res.ttft_ms = (t_first_avail - t0) / 1000.0;
+    res.generation_eval_ms = (t_end - t_pp_end) / 1000.0;
+    res.e2e_ms = (t_end - t0) / 1000.0;
+    res.prompt_tokens = n_prompt;
+    res.expected_tokens = plan.expected_tokens;
+    res.tokens_generated = n_generated;
+    res.draft_tokens = n_drafted;
+    res.draft_accepted = n_accepted;
+    res.ok = true;
+
+    llama_batch_free(batch_tgt);
+    llama_batch_free(prompt);
+    return true;
+}
+
 // ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
@@ -933,6 +1246,11 @@ int main(int argc, char **argv)
         fprintf(stderr, "bench_run: invalid --flash-attn value: '%s'\n", args.flash_attn.c_str());
         return 2;
     }
+    if (!args.draft_model_path.empty() && args.draft_n_max <= 0)
+    {
+        fprintf(stderr, "bench_run: --draft-n-max must be positive\n");
+        return 2;
+    }
 
     std::vector<RunPlan> runs;
     if (read_plan(args.plan_path, runs) != 0)
@@ -966,6 +1284,13 @@ int main(int argc, char **argv)
     cparams.type_k = parse_cache_type(args.cache_type_k);
     cparams.type_v = parse_cache_type(args.cache_type_v);
     cparams.flash_attn_type = parse_flash_attn(args.flash_attn);
+    if (!args.draft_model_path.empty())
+    {
+        const auto limits = common_speculative_get_output_limits(args.n_batch, 1, args.draft_n_max);
+        cparams.n_rs_seq = args.draft_n_max;
+        cparams.n_outputs_max = limits.total;
+        cparams.n_outputs_max_per_seq = limits.per_seq;
+    }
 
     llama_context *ctx = llama_init_from_model(model, cparams);
     if (ctx == nullptr)
@@ -975,12 +1300,58 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    common_speculative_init_result_ptr spec_init;
+    common_speculative_ptr spec;
+    llama_context *ctx_dft = nullptr;
+    if (!args.draft_model_path.empty())
+    {
+        common_params params;
+        params.model.path = args.model_path;
+        params.n_ctx = args.n_ctx;
+        params.n_batch = args.n_batch;
+        params.n_ubatch = args.n_ubatch;
+        params.n_parallel = 1;
+        params.n_gpu_layers = args.n_gpu_layers;
+        params.cache_type_k = parse_cache_type(args.cache_type_k);
+        params.cache_type_v = parse_cache_type(args.cache_type_v);
+        params.speculative.types = {COMMON_SPECULATIVE_TYPE_DRAFT_DFLASH};
+        params.speculative.draft.mparams.path = args.draft_model_path;
+        params.speculative.draft.n_max = args.draft_n_max;
+        params.speculative.draft.n_gpu_layers = args.draft_n_gpu_layers;
+
+        common_params params_dft = common_base_params_to_speculative(params);
+        spec_init = common_speculative_init_from_params(params_dft, model, ctx);
+        ctx_dft = spec_init->context();
+        if (ctx_dft == nullptr)
+        {
+            fprintf(stderr, "bench_run: failed to load DFlash draft model: %s\n", args.draft_model_path.c_str());
+            llama_free(ctx);
+            llama_model_free(model);
+            return 1;
+        }
+        params.speculative.draft.ctx_tgt = ctx;
+        params.speculative.draft.ctx_dft = ctx_dft;
+        spec.reset(common_speculative_init(params.speculative, 1));
+        if (!spec)
+        {
+            fprintf(stderr, "bench_run: failed to initialize DFlash\n");
+            spec_init.reset();
+            llama_free(ctx);
+            llama_model_free(model);
+            return 1;
+        }
+    }
+
     // threadpool with the requested polling level (replicates llama-cli --poll)
     // 附加带指定 poll 级别的 CPU 线程池（复刻 --poll；失败仅告警，不阻止运行）
     ggml_threadpool_t tp = create_threadpool(args.n_threads, args.poll);
     if (tp != nullptr)
     {
         llama_attach_threadpool(ctx, tp, tp);
+        if (ctx_dft != nullptr)
+        {
+            llama_attach_threadpool(ctx_dft, tp, tp);
+        }
     }
 
     // sampler: llama-cli defaults (greedy at temp <= 0) + EOG suppression
@@ -988,11 +1359,16 @@ int main(int argc, char **argv)
     common_params_sampling sparams;
     sparams.temp = args.temp;
     sparams.seed = args.seed;
-    add_eog_bias(model, sparams);
+    if (args.ignore_eos)
+    {
+        add_eog_bias(model, sparams);
+    }
     common_sampler *smpl = common_sampler_init(model, sparams);
     if (smpl == nullptr)
     {
         fprintf(stderr, "bench_run: failed to initialize the sampler\n");
+        spec.reset();
+        spec_init.reset();
         llama_free(ctx);
         llama_model_free(model);
         return 1;
@@ -1013,6 +1389,10 @@ int main(int argc, char **argv)
     mf.push_back({"temp", jnum(args.temp)});
     mf.push_back({"seed", jint(args.seed)});
     mf.push_back({"poll", jint(args.poll)});
+    mf.push_back({"speculative", jstr(args.draft_model_path.empty() ? "none" : "draft-dflash")});
+    mf.push_back({"draft_model", jstr(args.draft_model_path)});
+    mf.push_back({"draft_n_max", jint(args.draft_n_max)});
+    mf.push_back({"ignore_eos", args.ignore_eos ? "true" : "false"});
     emit_object(std::move(mf));
 
     int failed = 0;
@@ -1027,7 +1407,10 @@ int main(int argc, char **argv)
 
         RunResult res;
         std::string run_err;
-        if (!run_one(ctx, vocab, smpl, r, args, res, run_err))
+        const bool ok = spec ?
+            run_one_dflash(ctx, ctx_dft, spec.get(), vocab, smpl, r, args, res, run_err) :
+            run_one_standard(ctx, vocab, smpl, r, args, res, run_err);
+        if (!ok)
         {
             // 运行前失败（prompt 文件缺失/模板失败/超 n_ctx 等）：发 error 事件
             ++failed;
@@ -1050,7 +1433,7 @@ int main(int argc, char **argv)
             wf.push_back({"message", jstr("prompt_tokens (" + std::to_string(res.prompt_tokens) + ") != expected_tokens (" + std::to_string(res.expected_tokens) + ")")});
             emit_object(std::move(wf));
         }
-        if (res.tokens_generated != r.n_predict)
+        if (args.ignore_eos && res.tokens_generated != r.n_predict)
         {
             Fields wf = common_fields("warn", r.case_id, r.phase, r.phase_run, r.manifest_run);
             wf.push_back({"message", jstr("generation stopped early: tokens_generated (" + std::to_string(res.tokens_generated) + ") != n_predict (" + std::to_string(r.n_predict) + ")")});
@@ -1084,6 +1467,9 @@ int main(int argc, char **argv)
         rf.push_back({"expected_tokens", jint(res.expected_tokens)});// metadata 预期值（校验用）
         rf.push_back({"n_predict", jint(r.n_predict)});              // 计划生成的输出 token 数
         rf.push_back({"tokens_generated", jint(res.tokens_generated)}); // 实际生成的个数（正常 = n_predict）
+        rf.push_back({"draft_tokens", jint(res.draft_tokens)});
+        rf.push_back({"draft_accepted", jint(res.draft_accepted)});
+        rf.push_back({"draft_acceptance_rate", jnum(res.draft_tokens > 0 ? 100.0 * res.draft_accepted / res.draft_tokens : 0.0)});
         // ── ③ 四项实测耗时（ms）───────────────────────────────────────
         // prompt_eval_ms       = 纯 prefill（t_pp_end − t0）
         // ttft_ms              = prefill + 采样（t_first_avail − t0；首 token 由 prefill
@@ -1129,6 +1515,8 @@ int main(int argc, char **argv)
 
     // 释放资源（进程即将退出，主要保证 CUDA 上下文干净释放、不污染下个进程）
     common_sampler_free(smpl);
+    spec.reset();
+    spec_init.reset();
     llama_free(ctx);
     llama_model_free(model);
 

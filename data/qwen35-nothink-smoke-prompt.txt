@@ -1,0 +1,7 @@
+<|im_start|>user
+Create a short story showcasing the friendship between two animals.<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+
