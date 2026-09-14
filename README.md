@@ -151,12 +151,33 @@ cmake --build build -j
 ```
 
 - `LLAMA_CPP_ROOT` is the llama.cpp source tree (for headers and `common/`).
-- `LLAMA_CPP_BUILD` is the build directory containing
-  `bin/{libllama,libllama-common,libggml,libggml-base}.so`; the executable
-  resolves them at runtime via `$ORIGIN` rpath. Point it at the CANN or Metal
-  build when running on those platforms.
+- `LLAMA_CPP_BUILD` is the build directory containing the shared libraries in
+  `bin/` (`.so` on Linux and `.dylib` on macOS). Point it at the CUDA, CANN, or
+  Metal build made for the target platform.
 - `--version` prints the llama.cpp system info; a bare run with a 2-line
   `plan.tsv` and `n_predict=8` is a quick smoke test.
+
+### One-command macOS / Apple Metal test
+
+Place `llama.cpp` and this repository next to each other, then run:
+
+```bash
+cd bench_test_llama
+./macos_bench.sh --model /path/to/Qwen3.5-9B.gguf
+```
+
+This builds Release + Metal versions of llama.cpp and `bench_run`, then runs
+one LC-001 warmup and one formal request as a smoke test. Run the formal
+LC-001 through LC-004 baseline only after the smoke test succeeds:
+
+```bash
+./macos_bench.sh --model /path/to/Qwen3.5-9B.gguf --full
+```
+
+Use `--llama-root /path/to/llama.cpp` when the repositories are not siblings.
+Apple Silicon uses unified memory, so the current result records process RSS
+instead of reporting it as dedicated GPU memory. TTFT, TPOT, ITL, and E2E are
+collected normally.
 
 ## LC-001 through LC-028
 

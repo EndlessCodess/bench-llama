@@ -134,8 +134,33 @@ cmake --build build -j
 ```
 
 - `LLAMA_CPP_ROOT`：llama.cpp 源码树（头文件与 `common/`）。
-- `LLAMA_CPP_BUILD`：包含 `bin/{libllama,libllama-common,libggml,libggml-base}.so` 的构建目录；可执行文件通过 `$ORIGIN` rpath 在运行时解析。CANN / Metal 平台把该变量指向对应的构建目录即可。
+- `LLAMA_CPP_BUILD`：包含 `bin/{libllama,libllama-common,libggml,libggml-base}` 共享库的构建目录。Linux 使用 `.so`，macOS 使用 `.dylib`。
 - `--version` 打印 llama.cpp 系统信息；用手写两行 `plan.tsv`（`n_predict=8`）裸跑一次是快速冒烟方式。
+
+### macOS / Apple Metal 一键测试
+
+推荐把两个仓库放在同一级目录：
+
+```text
+workspace/
+|-- llama.cpp/
+`-- bench_test_llama/
+```
+
+在 Apple Silicon Mac 上安装 Xcode Command Line Tools 和 CMake，准备好 Qwen3.5-9B GGUF 后执行：
+
+```bash
+cd bench_test_llama
+./macos_bench.sh --model /path/to/Qwen3.5-9B.gguf
+```
+
+该命令会构建 Release + Metal 版本的 llama.cpp 和 `bench_run`，然后执行 LC-001 的 `1 次预热 + 1 次正式`冒烟测试。确认可运行后再执行正式基线：
+
+```bash
+./macos_bench.sh --model /path/to/Qwen3.5-9B.gguf --full
+```
+
+正式模式复用仓库中的固定 prompt 和运行清单，执行 LC-001 至 LC-004。若 llama.cpp 不在同级目录，增加 `--llama-root /path/to/llama.cpp`。Metal 使用统一内存，因此当前结果记录进程 RSS，不把它冒充为独立显存占用；TTFT、TPOT、ITL 和 E2E 指标可正常比较。
 
 ## 环境要求
 
