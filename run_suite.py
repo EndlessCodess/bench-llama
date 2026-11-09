@@ -88,6 +88,8 @@ def parse_args():
     parser.add_argument("--memory-command")  # 自定义显存查询命令（输出 MiB 数值）
     parser.add_argument("--timeout", type=float, default=0.0)  # 每轮超时秒数（0=不超时）
     parser.add_argument("--rounds", type=int)  # 覆盖 suite job 的轮数；job 未指定时默认 1
+    parser.add_argument("--warmup-runs", type=int, help="warmup requests per case per round")
+    parser.add_argument("--formal-runs", type=int, help="formal requests per case per round")
     parser.add_argument("--env", action="append", default=[], metavar="KEY=VALUE")  # 附加子进程环境变量
     parser.add_argument("--extra-arg", action="append", default=[])  # 附加 bench_run 参数（透传）
     parser.add_argument("--skip-model-hash", action="store_true")  # 跳过模型 SHA-256 计算（省时间，结果缺校验值）
@@ -95,7 +97,12 @@ def parse_args():
     parser.add_argument("--continue-on-error", action="store_true")  # 某 job 失败仍继续跑后续 job（默认 fail-fast）
     parser.add_argument("--smoke", action="store_true", help="run one formal invocation of each job's first case")  # 冒烟模式：每个 job 仅第一个 case 跑 1 轮
     parser.add_argument("--dry-run", action="store_true", help="validate all cases and print one command per case")  # 只校验不执行
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.warmup_runs is not None and args.warmup_runs < 0:
+        parser.error("--warmup-runs must be non-negative")
+    if args.formal_runs is not None and args.formal_runs <= 0:
+        parser.error("--formal-runs must be positive")
+    return args
 
 
 def parse_assignments(values, label):
@@ -294,6 +301,10 @@ def append_common_args(command, args, processed_dir, rounds):
             command.extend([option, str(args.profile_runtime[key])])
     if rounds != 1:
         command.extend(["--rounds", str(rounds)])
+    if args.warmup_runs is not None:
+        command.extend(["--warmup-runs", str(args.warmup_runs)])
+    if args.formal_runs is not None:
+        command.extend(["--formal-runs", str(args.formal_runs)])
     if args.skip_prompt_hash_check:
         command.append("--skip-prompt-hash-check")
     for value in args.env:
@@ -318,8 +329,9 @@ def write_csv(path, rows):
 def add_speculative_comparisons(rows):
     pairs = {"LC-034": "LC-033", "LC-036": "LC-035", "LC-038": "LC-037"}
     by_case = {row.get("case_id"): row for row in rows}
-    for enabled_case, baseline_case in pairs.items():
-        enabled = by_case.get(enabled_case)
+    for enabled in rows:
+        enabled_case = enabled.get("case_id")
+        baseline_case = pairs.get(enabled_case)
         baseline = by_case.get(baseline_case)
         if enabled is None or baseline is None:
             continue
@@ -342,12 +354,6 @@ def main():
     # ① 校验 bench_run 可执行文件、加载套件配置、解析模型映射：
     #    套件用到的每个 model_key（f16/q8_0/q4_k_m）都必须有 --model KEY=PATH 提供
     args = parse_args()
-    if not args.bench_run:
-        raise ValueError("--bench-run or BENCH_RUN is required")
-    bench_run = Path(args.bench_run).resolve()
-    if not bench_run.is_file() or not os.access(bench_run, os.X_OK):
-        raise ValueError("bench_run is not executable: {}".format(bench_run))
-
     profile_path, profile = load_model_profile(args.model_profile)
     args.profile_runtime = profile.get("runtime_overrides", {}) if profile else {}
     processed_dir_explicit = args.processed_dir is not None
@@ -357,6 +363,13 @@ def main():
     selected_ids = selected_job_ids(args.job)
     selected_group_ids = selected_groups(args.group)
     suite_path, suite, jobs = load_suite(args.suite, selected_ids, selected_group_ids)
+    bench_run = None
+    if any(job.get("runner", "bench") == "bench" for job in jobs):
+        if not args.bench_run:
+            raise ValueError("--bench-run or BENCH_RUN is required for native benchmark jobs")
+        bench_run = Path(args.bench_run).resolve()
+        if not bench_run.is_file() or not os.access(bench_run, os.X_OK):
+            raise ValueError("bench_run is not executable: {}".format(bench_run))
     jobs = [{
         **job,
         "resolved_model_key": profile_model_key(profile, job["model_key"]),
@@ -425,9 +438,13 @@ def main():
         print("suite: {}".format(suite["name"]))
         if profile:
             print("model profile: {} ({})".format(profile["name"], profile_path))
-        print("dry-run validates every case with one representative formal command")
+        print("dry-run validates every case with requested counts (default: one formal request)")
         for job, command in base_commands:
-            command.extend(["--warmup-runs", "0", "--formal-runs", "1", "--dry-run"])
+            if args.warmup_runs is None:
+                command.extend(["--warmup-runs", "0"])
+            if args.formal_runs is None:
+                command.extend(["--formal-runs", "1"])
+            command.append("--dry-run")
             print("\n[{}] {}".format(job_label(job), shlex.join(command)), flush=True)
             result = subprocess.run(command, check=False)
             if result.returncode != 0 and not args.continue_on_error:
@@ -538,7 +555,7 @@ def main():
         "mode": "smoke" if args.smoke else "formal",
         "platform": args.platform,
         "physical_device_index": args.device_index,
-        "bench_run": str(bench_run),
+        "bench_run": str(bench_run) if bench_run else None,
         "llama_server": str(Path(args.llama_server).resolve()) if args.llama_server else None,
         "models": models,
         "jobs": run_jobs,

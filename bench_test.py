@@ -113,6 +113,7 @@ RUN_FIELDS = [
     "peak_process_rss_mib_measured",
     "device_memory_baseline_mib_measured",
     "peak_device_memory_mib_measured",
+    "average_device_memory_mib_measured",
     "device_memory_delta_mib_measured",
     "peak_gpu_utilization_pct_measured",
     "average_gpu_utilization_pct_measured",
@@ -147,6 +148,7 @@ SUMMARY_FIELDS = [
     "端到端耗时(s)/E2E(s)",
     "吞吐率(token/s)/Throughput(token/s)",
     "峰值显存(GB)/Peak Memory(GB)",
+    "平均显存(GB)/Average Memory(GB)",
     "GPU计算单元峰值利用率(%)/Peak GPU Compute Utilization(%)",
     "GPU计算单元平均利用率(%)/Average GPU Compute Utilization(%)",
     "草稿接受率(%)/Draft Acceptance Rate(%)",
@@ -231,6 +233,38 @@ class NvmlMemoryReader:
         self.lib.nvmlShutdown()
 
 
+class NpuSmiReader:
+    """Read whole-device DDR use and AICore usage from one npu-smi snapshot."""
+
+    def __init__(self, device_index):
+        self.device_index = device_index
+        self.snapshot = None
+
+    def read_snapshot(self):
+        result = subprocess.run(
+            ["npu-smi", "info"], text=True, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, check=True, timeout=10,
+        )
+        for line in result.stdout.splitlines():
+            match = re.match(
+                r"^\|\s*\d+\s+(\d+)\s*\|\s*[0-9a-fA-F]{4}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}\.\d+\s*\|\s*(\d+)\s+(\d+)\s*/",
+                line,
+            )
+            if match and int(match.group(1)) == self.device_index:
+                self.snapshot = (float(match.group(3)), float(match.group(2)))
+                return self.snapshot
+        raise RuntimeError("npu-smi did not report device {}".format(self.device_index))
+
+    def read_mib(self):
+        return self.read_snapshot()[0]
+
+    def read_gpu_utilization_pct(self):
+        return self.snapshot[1]
+
+    def close(self):
+        pass
+
+
 # 进程资源监视器：后台线程每 interval 秒采样一次
 #   - RSS：/proc/<pid>/status 的 VmRSS（读取失败退回 ps -o rss=）；
 #   - 显存：NVML（NvmlMemoryReader）或外部命令（read_memory_command）；
@@ -247,6 +281,8 @@ class ProcessMonitor:
         self.device_index = device_index
         self.peak_rss_mib = 0.0
         self.peak_device_mib = 0.0
+        self.device_memory_sum_mib = 0.0
+        self.device_memory_samples = 0
         self.peak_gpu_utilization_pct = None
         self.gpu_utilization_sum_pct = 0.0
         self.gpu_utilization_samples = 0
@@ -267,6 +303,8 @@ class ProcessMonitor:
         main thread right after this, before the run starts decoding)."""
         self.peak_rss_mib = 0.0
         self.peak_device_mib = 0.0
+        self.device_memory_sum_mib = 0.0
+        self.device_memory_samples = 0
         self.peak_gpu_utilization_pct = None
         self.gpu_utilization_sum_pct = 0.0
         self.gpu_utilization_samples = 0
@@ -307,7 +345,11 @@ class ProcessMonitor:
 
     def _sample(self):
         self.peak_rss_mib = max(self.peak_rss_mib, self._read_rss_mib())
-        self.peak_device_mib = max(self.peak_device_mib, self._read_device_mib())
+        device_mib = self._read_device_mib()
+        if self.memory_reader is not None or self.memory_command:
+            self.peak_device_mib = max(self.peak_device_mib, device_mib)
+            self.device_memory_sum_mib += device_mib
+            self.device_memory_samples += 1
         utilization = self._read_gpu_utilization_pct()
         if utilization is not None:
             if self.peak_gpu_utilization_pct is None:
@@ -321,6 +363,11 @@ class ProcessMonitor:
         if self.gpu_utilization_samples == 0:
             return None
         return self.gpu_utilization_sum_pct / self.gpu_utilization_samples
+
+    def average_device_memory_mib(self):
+        if self.device_memory_samples == 0:
+            return None
+        return self.device_memory_sum_mib / self.device_memory_samples
 
     def _run(self):
         try:
@@ -365,7 +412,7 @@ def parse_args():
     parser.add_argument("--seed", type=int)  # 随机种子覆盖（默认 42，配合 temp 0 保证可复现）
     parser.add_argument("--draft-n-max", type=int)
     parser.add_argument("--draft-n-gpu-layers", type=int)
-    parser.add_argument("--spec-type", choices=["draft-dflash", "draft-dspark"])
+    parser.add_argument("--spec-type", choices=["draft-eagle3", "draft-dflash", "draft-dspark"])
     parser.add_argument("--ignore-eos", dest="ignore_eos", action="store_true")
     parser.add_argument("--no-ignore-eos", dest="ignore_eos", action="store_false")
     parser.set_defaults(ignore_eos=None)
@@ -480,6 +527,8 @@ def apply_runtime_defaults(args, runtime):
     for argument, key in mapping.items():
         if getattr(args, argument) is None:
             setattr(args, argument, runtime[key])
+    if args.threads is None:
+        args.threads = runtime.get("threads")
     if args.draft_n_max is None:
         args.draft_n_max = int(runtime.get("draft_n_max", 15))
     if args.draft_n_gpu_layers is None:
@@ -523,7 +572,7 @@ def platform_settings(profile, device_index, backend_device, default_n_gpu_layer
     backend_device = backend_device or str(profile["backend_device"]).format(device_index=device_index)
     n_gpu_layers = int(profile.get("n_gpu_layers", default_n_gpu_layers))
     memory_monitor = profile.get("memory_monitor", "none")
-    if memory_monitor not in ("none", "nvml"):
+    if memory_monitor not in ("none", "nvml", "npu-smi"):
         raise ValueError("unsupported memory monitor: {}".format(memory_monitor))
     return environment, backend_device, n_gpu_layers, memory_monitor
 
@@ -747,6 +796,7 @@ class StreamReader(threading.Thread):
                 line = raw.decode("utf-8", errors="replace")
                 if self.echo is not None:
                     self.echo.write(line)
+                    self.echo.flush()
                 with self.condition:
                     try:
                         event = json.loads(line)
@@ -899,9 +949,9 @@ def run_session(
     #    采样线程负责窗口内峰值；NVML 不可用时降级到自定义命令
     nvml = None
     device_monitor_enabled = False
-    if memory_monitor == "nvml":
+    if memory_monitor in ("nvml", "npu-smi"):
         try:
-            nvml = NvmlMemoryReader(args.device_index)
+            nvml = NvmlMemoryReader(args.device_index) if memory_monitor == "nvml" else NpuSmiReader(args.device_index)
             device_monitor_enabled = True
         except Exception as exc:
             print("warning: NVML monitoring unavailable: {}".format(exc), file=sys.stderr)
@@ -1049,6 +1099,9 @@ def run_session(
                 record["peak_process_rss_mib_measured"] = monitor.peak_rss_mib
                 record["device_memory_baseline_mib_measured"] = baseline_mib
                 record["peak_device_memory_mib_measured"] = monitor.peak_device_mib if device_monitor_enabled else None
+                record["average_device_memory_mib_measured"] = (
+                    monitor.average_device_memory_mib() if device_monitor_enabled else None
+                )
                 record["device_memory_delta_mib_measured"] = (
                     max(0.0, monitor.peak_device_mib - baseline_mib)
                     if device_monitor_enabled and baseline_mib is not None else None
@@ -1138,6 +1191,7 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
         "throughput_tok_s_est",
         "peak_process_rss_mib_measured",
         "peak_device_memory_mib_measured",
+        "average_device_memory_mib_measured",
         "device_memory_delta_mib_measured",
         "peak_gpu_utilization_pct_measured",
         "average_gpu_utilization_pct_measured",
@@ -1181,6 +1235,10 @@ def summarize_case(case_id, case, records, warmup_runs, formal_runs, rounds, pla
     summary["吞吐率(token/s)/Throughput(token/s)"] = rounded(metrics.get("throughput_tok_s_est"))
     summary["峰值显存(GB)/Peak Memory(GB)"] = (
         None if not peak else round(peak["max"] / 1024.0, 2)
+    )
+    average_memory = metrics.get("average_device_memory_mib_measured")
+    summary["平均显存(GB)/Average Memory(GB)"] = (
+        None if not average_memory else round(average_memory["mean"] / 1024.0, 2)
     )
     peak_gpu_utilization = metrics.get("peak_gpu_utilization_pct_measured")
     summary["GPU计算单元峰值利用率(%)/Peak GPU Compute Utilization(%)"] = (
@@ -1466,7 +1524,7 @@ def main():
             # 单个测试lc01/02/03/04的多轮循环：每轮 = 一次全新 bench_run 进程（模型重载、warmup 重新吸收冷启动）
             for round_num in range(1, args.rounds + 1):  # 每轮 = 一次全新 bench_run 进程（模型重载、warmup 重新吸收冷启动）
 
-                # 105次 run_session() → 105 条记录（5 预热 + 100 正式）写入 runs.jsonl，每次都是一个 bench_run 进程，保证每轮都是独立的单轮请求（KV 清空），符合 vLLM/SGLang 的持久引擎语义
+                # One session loads the model once and runs all warmup/formal requests.
                 round_records = run_session(
                     args,
                     round_num,

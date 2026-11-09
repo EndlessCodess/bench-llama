@@ -546,3 +546,9 @@ machines.
 Large models, the raw dataset, processed prompt text, and raw result logs should
 normally be excluded from Git. Download scripts, checksums, manifests, schemas,
 and summary tables are sufficient for reproducibility.
+
+## Speculative decoding only
+
+For paired LC33-LC38 baseline/DFlash tests with an existing `llama-server`, see
+[speculative benchmark instructions](docs/speculative-benchmark.md).
+The server workflow does not require building `bench_run`.

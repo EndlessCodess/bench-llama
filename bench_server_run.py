@@ -31,7 +31,7 @@ def parse_args():
     parser.add_argument("--poll", type=int, default=50)
     parser.add_argument("--threads", type=int)
     parser.add_argument("--draft-model")
-    parser.add_argument("--spec-type", choices=["draft-dflash", "draft-dspark"], default="draft-dflash")
+    parser.add_argument("--spec-type", choices=["draft-eagle3", "draft-dflash", "draft-dspark"], default="draft-dflash")
     parser.add_argument("--draft-n-max", type=int, default=15)
     parser.add_argument("--draft-ngl", type=int, default=99)
     parser.add_argument("--ignore-eos", dest="ignore_eos", action="store_true")
@@ -211,6 +211,7 @@ def run_request(base_url, row, args, metrics_before):
         "generation_tps_measured": float(timings["predicted_per_second"]),
         "finish_reason": response["choices"][0].get("finish_reason"),
         "output_sha256": hashlib.sha256(content.encode("utf-8")).hexdigest(),
+        "output_text": content,
     }, metrics_after
 
 

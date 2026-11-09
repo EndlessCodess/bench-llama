@@ -515,3 +515,8 @@ CUDA 默认通过 NVML 采集整卡显存。其他平台可以用 `--memory-comm
 - 不要把旧 mock 数据当作正式测试结果。
 
 模型文件、原始数据集、处理后的 prompt 和原始运行日志通常不应提交到 Git。下载脚本、校验值、manifest、结果格式和汇总表已经足够用于复现。
+
+## 投机解码专用入口
+
+LC33-LC38 的 baseline/DFlash 配对测试使用已有的 `llama-server`，无需编译本仓库的 `bench_run`。
+启动命令、样本规则和日志说明见[投机解码测试说明](docs/speculative-benchmark.md)。

@@ -45,7 +45,7 @@
         "ASCEND_RT_VISIBLE_DEVICES": "{device_index}"
       },
       "backend_device": "CANN0",
-      "memory_monitor": "none",
+      "memory_monitor": "npu-smi",
       "graph_execution": {
         "supported": false,
         "build_option": "USE_ACL_GRAPH=OFF",

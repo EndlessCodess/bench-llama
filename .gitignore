@@ -36,6 +36,12 @@ results/
 
 # Build artifacts
 build/
+build-*/
+results-local/
+profile/
+*.gguf
+*.safetensors
+*.zip
 
 # Obsolete run-version archives & old manifest snapshots (kept locally only)
 data/processed/qwen3.5-9b-5x10-archive/
