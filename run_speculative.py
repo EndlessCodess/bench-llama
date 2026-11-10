@@ -11,6 +11,7 @@ import sys
 
 import bench_test
 import run_suite
+from bench_server_run import HUMANEVAL_STOP_SEQUENCES
 
 
 ROOT = Path(__file__).resolve().parent
@@ -179,7 +180,9 @@ def main():
     save(args.output_dir / "protocol.json", {**vars(args), "llama_server": str(args.llama_server), "model": str(args.model),
          "draft_model": str(args.draft_model), "processed_dir": str(args.processed_dir), "output_dir": str(args.output_dir),
          "max_output_tokens": 512, "cache_prompt": False, "thinking": False, "temperature": 0, "seed": 42,
-         "execution_order": "round-major, baseline/draft paired per dataset"})
+         "execution_order": "round-major, baseline/draft paired per dataset", "prompt_protocol_version": 2,
+         "dataset_request_modes": {dataset: "completion" if dataset == "humaneval" else "chat" for dataset in args.datasets},
+         "dataset_stop_sequences": {"humaneval": HUMANEVAL_STOP_SEQUENCES} if "humaneval" in args.datasets else {}})
     suite = prepare_suite(args, args.output_dir / "configs")
     smoke_suite = prepare_suite(args, args.output_dir / "smoke-configs", smoke=True)
     environment = os.environ.copy()

@@ -1,6 +1,3 @@
-Complete the following Python function. Return the completed code.
-
-```python
 
 
 def below_threshold(l: list, t: int):
@@ -10,5 +7,3 @@ def below_threshold(l: list, t: int):
     >>> below_threshold([1, 20, 4, 10], 5)
     False
     """
-
-```

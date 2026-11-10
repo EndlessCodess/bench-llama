@@ -57,6 +57,8 @@ import tempfile
 import threading
 import time
 
+from bench_server_run import validate_humaneval_prompt
+
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 DEFAULT_PROCESSED_DIR = PROJECT_ROOT / "data" / "processed" / "qwen3.5-9b"
@@ -72,6 +74,7 @@ DEFAULT_PLATFORM_CONFIG = PROJECT_ROOT / "configs" / "platforms.json"
 #   *_est       = 由实测值在本脚本推导的估计值（如端到端吞吐率）；
 #   保留全部字段，使 runs.csv 自描述、无需查代码即知每列含义。
 RUN_FIELDS = [
+    "request_mode",
     "case_id",
     "dataset",
     "status",
@@ -690,6 +693,10 @@ def validate_prompts(processed_dir, cases, selected_cases, selections_by_case, m
             if relative not in metadata:
                 raise ValueError("prompt is missing from metadata: {}".format(relative))
             item = metadata[relative]
+            if case.get("dataset") == "humaneval":
+                if item.get("request_mode") != "completion":
+                    raise ValueError("HumanEval metadata must declare request_mode=completion; regenerate or retokenize the raw prompt pool")
+                validate_humaneval_prompt(path.read_text(encoding="utf-8"))
             if item["source_id"] != selection["source_id"]:
                 raise ValueError("source_id mismatch for {}".format(relative))
             if target is not None and int(item["target_tokens"]) != target:
@@ -1077,6 +1084,7 @@ def run_session(
                               "e2e_ms_measured", "prompt_tps_measured", "generation_tps_measured"):
                     record[field] = event.get(field)
                 record["tokens_generated"] = event.get("tokens_generated")
+                record["request_mode"] = event.get("request_mode")
                 record["finish_reason"] = event.get("finish_reason")
                 record["output_sha256"] = event.get("output_sha256")
                 draft_tokens = event.get("draft_tokens")
@@ -1305,6 +1313,8 @@ def main():
 
     # ② 加载预处理数据：200 个 prompt 文件、105 轮运行清单（run-manifest.json）、每条 prompt 的元数据档案
     selected_cases = select_cases(args.case, cases)  # --case 过滤后实际要测的用例
+    if any(cases[case_id].get("dataset") == "humaneval" for case_id in selected_cases) and not args.llama_server:
+        raise ValueError("HumanEval raw completion requires --llama-server or a suite job with runner=server")
     processed_dir = Path(args.processed_dir).resolve()
     manifest, preparation, metadata = load_inputs(processed_dir)
     warmup_runs = manifest["warmup_runs"] if args.warmup_runs is None else args.warmup_runs  # 5 预热轮

@@ -1,6 +1,3 @@
-Complete the following Python function. Return the completed code.
-
-```python
 
 def check_if_last_char_is_a_letter(txt):
     '''
@@ -15,5 +12,3 @@ def check_if_last_char_is_a_letter(txt):
     check_if_last_char_is_a_letter("apple pi e ") ➞ False
     check_if_last_char_is_a_letter("") ➞ False 
     '''
-
-```

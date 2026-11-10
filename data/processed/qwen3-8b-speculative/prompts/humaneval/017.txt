@@ -1,6 +1,3 @@
-Complete the following Python function. Return the completed code.
-
-```python
 
 def tri(n):
     """Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in 
@@ -19,5 +16,3 @@ def tri(n):
     Examples:
     tri(3) = [1, 3, 2, 8]
     """
-
-```

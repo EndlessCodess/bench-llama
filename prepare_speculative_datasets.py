@@ -53,8 +53,7 @@ def load_datasets(args):
 
     humaneval = []
     for row in read_parquet(args.humaneval):
-        prompt = "Complete the following Python function. Return the completed code.\n\n```python\n" + row["prompt"] + "\n```"
-        humaneval.append({"source_id": row["task_id"], "prompt": prompt})
+        humaneval.append({"source_id": row["task_id"], "prompt": row["prompt"]})
 
     return {"alpaca": alpaca, "math-500": math500, "humaneval": humaneval}
 
@@ -88,7 +87,8 @@ def main():
                 path = args.output / relative
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(row["prompt"], encoding="utf-8")
-                actual_tokens = tokenizer.count_prompt_tokens(row["prompt"])
+                mode = "completion" if dataset == "humaneval" else "chat"
+                actual_tokens = tokenizer.count_prompt_tokens(row["prompt"], chat=mode == "chat")
                 metadata.append({
                     "dataset": dataset,
                     "pool_index": pool_index,
@@ -99,6 +99,7 @@ def main():
                     "prompt_sha256": hashlib.sha256(row["prompt"].encode("utf-8")).hexdigest(),
                     "target_tokens": actual_tokens,
                     "actual_tokens": actual_tokens,
+                    "request_mode": mode,
                 })
                 print("{} [{}/{}] tokens={}".format(dataset, pool_index + 1, args.pool_size, actual_tokens), flush=True)
 
@@ -126,6 +127,8 @@ def main():
         "formal_runs": args.formal_runs,
         "pool_size": args.pool_size,
         "datasets": list(datasets),
+        "request_modes": {"alpaca": "chat", "math-500": "chat", "humaneval": "completion"},
+        "prompt_protocol_version": 2,
         "selections": selections,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (args.output / "preparation.json").write_text(json.dumps({

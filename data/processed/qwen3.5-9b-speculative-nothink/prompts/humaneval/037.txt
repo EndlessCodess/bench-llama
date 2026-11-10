@@ -1,6 +1,3 @@
-Complete the following Python function. Return the completed code.
-
-```python
 
 def search(lst):
     '''
@@ -13,5 +10,3 @@ def search(lst):
         search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3
         search([5, 5, 4, 4, 4]) == -1
     '''
-
-```

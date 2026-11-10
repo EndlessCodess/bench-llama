@@ -2848,5 +2848,11 @@
       "source_id": "HumanEval/88",
       "prompt_file": "prompts/humaneval/049.txt"
     }
-  ]
+  ],
+  "prompt_protocol_version": 2,
+  "request_modes": {
+    "alpaca": "chat",
+    "math-500": "chat",
+    "humaneval": "completion"
+  }
 }

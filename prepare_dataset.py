@@ -134,7 +134,8 @@ def request_json(base_url, method, path, payload=None, timeout=120.0):
         headers=headers,
         method=method,
     )
-    with urllib.request.urlopen(request, timeout=timeout) as response:
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    with opener.open(request, timeout=timeout) as response:
         return json.load(response)
 
 
@@ -161,6 +162,8 @@ class TokenizerServer:
             "512",
             "-ngl",
             "0",
+            "--device",
+            "none",
             "--no-warmup",
             "--host",
             "127.0.0.1",
@@ -172,7 +175,7 @@ class TokenizerServer:
         ]
         environment = os.environ.copy()
         environment["CUDA_VISIBLE_DEVICES"] = ""
-        environment["ASCEND_RT_VISIBLE_DEVICES"] = ""
+        environment.pop("ASCEND_RT_VISIBLE_DEVICES", None)
         self.process = subprocess.Popen(
             command,
             stdout=self.log_handle,
@@ -222,15 +225,15 @@ class TokenizerServer:
         )
         return response["prompt"]
 
-    def count_prompt_tokens(self, content):
-        formatted = self.apply_template(content)
+    def count_prompt_tokens(self, content, *, chat=True):
+        formatted = self.apply_template(content) if chat else content
         response = request_json(
             self.base_url,
             "POST",
             "/tokenize",
             {
                 "content": formatted,
-                "add_special": False,
+                "add_special": not chat,
                 "parse_special": True,
             },
             timeout=self.timeout,

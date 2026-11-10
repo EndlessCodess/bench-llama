@@ -14,6 +14,9 @@ import urllib.error
 import urllib.request
 
 
+HUMANEVAL_STOP_SEQUENCES = ["\nclass", "\ndef", "\n#", "\nif", "\nprint"]
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Run benchmark plans through llama-server")
     parser.add_argument("--llama-server", default=os.environ.get("LLAMA_SERVER"))
@@ -161,24 +164,44 @@ def server_command(args, port):
     return command
 
 
+def request_mode(row):
+    if row.get("case_id") in ("LC-037", "LC-038") or row.get("source_id", "").startswith("HumanEval/"):
+        return "completion"
+    return "chat"
+
+
+def validate_humaneval_prompt(prompt):
+    if prompt.startswith("Complete the following Python function."):
+        raise ValueError("HumanEval must use the original dataset prompt; regenerate the old wrapped prompt pool")
+
+
 def run_request(base_url, row, args, metrics_before):
     prompt = Path(row["prompt_file"]).read_text(encoding="utf-8")
+    mode = request_mode(row)
     body = {
         "model": "benchmark",
-        "messages": [{"role": "user", "content": prompt}],
         "max_tokens": row["n_predict"],
         "temperature": args.temp,
         "seed": args.seed,
         "cache_prompt": False,
-        "chat_template_kwargs": {"enable_thinking": False},
         "stream": False,
     }
+    if mode == "completion":
+        validate_humaneval_prompt(prompt)
+        body["prompt"] = prompt
+        body["stop"] = HUMANEVAL_STOP_SEQUENCES
+        endpoint = "/v1/completions"
+    else:
+        body["messages"] = [{"role": "user", "content": prompt}]
+        body["chat_template_kwargs"] = {"enable_thinking": False}
+        endpoint = "/v1/chat/completions"
     if args.ignore_eos:
         body["ignore_eos"] = True
-    response = request_json(base_url + "/v1/chat/completions", body, timeout=1800)
+    response = request_json(base_url + endpoint, body, timeout=1800)
     timings = response["timings"]
     usage = response["usage"]
-    content = response["choices"][0]["message"].get("content", "")
+    choice = response["choices"][0]
+    content = choice["text"] if mode == "completion" else choice["message"].get("content", "")
     prompt_tokens = int(usage["prompt_tokens"])
     generated = int(usage["completion_tokens"])
     prompt_ms = float(timings["prompt_ms"])
@@ -195,6 +218,8 @@ def run_request(base_url, row, args, metrics_before):
         metrics_after["draft_verification_steps"] - metrics_before["draft_verification_steps"],
     )
     return {
+        "request_mode": mode,
+        "stop_sequences": body.get("stop", []),
         "prompt_tokens": prompt_tokens,
         "tokens_generated": generated,
         "draft_tokens": draft_tokens,
@@ -262,6 +287,7 @@ def main():
                 "prompt_tokens": row["expected_tokens"],
                 "expected_tokens": row["expected_tokens"],
                 "n_predict": row["n_predict"],
+                "request_mode": request_mode(row),
             })
             try:
                 result, metrics = run_request("http://127.0.0.1:{}".format(port), row, args, metrics)

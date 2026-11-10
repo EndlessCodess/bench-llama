@@ -20,6 +20,9 @@ Python 只调度完整请求、采集结果；草稿生成、目标验证和状�
 - `n_ctx=8192`，`batch=512`，`ubatch=512`，CPU 线程数 8，F16 KV。
 - DFlash 每轮最多提出 15 个草稿 token；每条请求最多生成 512 个 token，遇到 EOS 提前结束。
 - 温度 0、seed 42，关闭 thinking 和 prompt cache。
+- HumanEval 原样使用数据集的 `prompt`（函数签名、docstring及示例），通过 `/v1/completions`
+  生成后续补全；不添加自然语言指令、Markdown代码块或chat template。保留原始空白和换行。
+  Alpaca、MATH-500仍通过chat接口执行。
 - 正式运行之前，自动对所有选定场景各跑一条最多输出 64 token 的 smoke。
 - smoke 检查有效输出，以及 DFlash 的草稿提出数和接受数；不满足时阻止正式运行。
   `smoke-check.json` 单独记录短输出是否与 baseline 一致，这不等于证明严格无损。
@@ -118,6 +121,13 @@ results-local/speculative-NEW/
 `decode_tps` 是逐请求 decode 速度的均值，对应 CLI 的 Generation；`吞吐率(token/s)/Throughput(token/s)`
 沿用原表格定义，使用完整请求耗时，二者不能混用。TPOT 加速比使用 baseline 平均 TPOT 除以 DFlash 平均 TPOT。
 TTFT 字段沿用当前适配器的服务端 `prompt_ms`；非流式请求不测量客户端收到首个 token 的真实网络延迟。
+
+`protocol.json`记录`prompt_protocol_version=2`和各数据集的请求模式；逐请求记录也保存`request_mode`。
+HumanEval输出仅为模型新生成的continuation。按[原论文 §3.2](https://arxiv.org/pdf/2107.03374)，
+遇到`\nclass`、`\ndef`、`\n#`、`\nif`、`\nprint`等顶层代码结束串就停止，另保留EOS及512-token上限。
+停止串记录在`protocol.json`的`dataset_stop_sequences`中，本项目不计算pass@k。
+截至提交`2f2aa2a`的旧HumanEval数据使用过“返回完整代码”的chat包装，其历史速度和接受率属于旧协议，
+不可与本版原始补全结果混合。旧的chat模式HumanEval元数据会在运行前被拒绝。
 
 310P 的显存和 AI Core 数据来自 `npu-smi info` 定时采样，统计的是整卡，其他进程会影响读数。
 AI Core 利用率不是 Cube/Vector 指令流水线忙时间。结果、profile、GGUF 和构建目录由 `.gitignore` 排除。

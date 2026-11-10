@@ -21,5 +21,17 @@
       "path": "/data1/xuyang/projects/bench_test_llama/data/humaneval/openai_humaneval/test-00000-of-00001.parquet",
       "sha256": "2f2871a15fbc95b6c683043359f4ed8e144c5a1c4f24f25f66bc51f598dfcfb6"
     }
-  }
+  },
+  "prompt_protocol_version": 2,
+  "request_modes": {
+    "alpaca": "chat",
+    "math-500": "chat",
+    "humaneval": "completion"
+  },
+  "humaneval_raw_source": {
+    "repository": "openai/human-eval",
+    "file": "data/HumanEval.jsonl.gz",
+    "sha256": "b796127e635a67f93fb35c04f4cb03cf06f38c8072ee7cee8833d7bee06979ef"
+  },
+  "humaneval_tokenizer_model": "Qwen3.5-9B-Q8_0.gguf"
 }

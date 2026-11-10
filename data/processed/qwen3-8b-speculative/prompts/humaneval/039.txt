@@ -1,6 +1,3 @@
-Complete the following Python function. Return the completed code.
-
-```python
 
 
 def change_base(x: int, base: int):
@@ -14,5 +11,3 @@ def change_base(x: int, base: int):
     >>> change_base(7, 2)
     '111'
     """
-
-```

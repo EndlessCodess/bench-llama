@@ -1,6 +1,3 @@
-Complete the following Python function. Return the completed code.
-
-```python
 
 
 def encode_shift(s: str):
@@ -14,5 +11,3 @@ def decode_shift(s: str):
     """
     takes as input string encoded with encode_shift function. Returns decoded string.
     """
-
-```
